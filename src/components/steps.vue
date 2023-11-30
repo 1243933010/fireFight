@@ -7,8 +7,8 @@
                     <div class="content">
                         <div class="content-left"><i class="el-icon-success" style="color: red;"></i></div>
                         <div class="content-right">
-                            <span>{{ item.title }}</span>
-                            <i class="el-icon-success" v-if="item.isInput"></i>
+                            <span :class="item.isActive?'active':''">{{ item.title }}</span>
+                            <i class="el-icon-success" v-if="item.isInput&&!item.isActive"></i>
                         </div>
                     </div>
                 </li>
@@ -39,6 +39,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.active{
+    color: red;
+}
 .step {
     // width: 200rpx;
     background-color: bisque;
