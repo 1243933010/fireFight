@@ -45,20 +45,26 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-form-item prop="code" class="code-box">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="code"
-          v-model="loginForm.code"
-          placeholder="请输入验证码"
-          name="code"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
+      <div class="code-box">
+        <el-form-item prop="code">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="code"
+            v-model="loginForm.code"
+            placeholder="请输入验证码"
+            name="code"
+            type="text"
+            tabindex="1"
+            autocomplete="on"
+          />
+        </el-form-item>
+        
+        <div class="code-img">
+          <img src="" alt="" class="img">
+        </div>
+      </div>
 
       <el-button :loading="loading" type="primary" class="login-btn" @click.native.prevent="handleLogin">Login</el-button>
 
