@@ -49,23 +49,36 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles).concat(filterAsyncRoutes([{
-          path: '/icon',
-          component: Layout,
-          children: [
-            {
-              path: 'index',
-              component: () => import('@/views/icons/index'),
-              name: 'Icons',
-              meta: { title: 'testtest', icon: 'icon', noCache: true }
-            }
-          ]
-        }], roles))
-      }
+      let accessedRoutes;
+      console.log(roles,'---')
+      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles).concat(filterAsyncRoutes([{
+        path: '/icon',
+        component: Layout,
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/icons/index'),
+            name: 'Icons',
+            meta: { title: 'testtest', icon: 'icon', noCache: true }
+          }
+        ]
+      }], roles))
+      // if (roles.includes('admin')) {
+      //   accessedRoutes = asyncRoutes || []
+      // } else {
+      //   accessedRoutes = filterAsyncRoutes(asyncRoutes, roles).concat(filterAsyncRoutes([{
+      //     path: '/icon',
+      //     component: Layout,
+      //     children: [
+      //       {
+      //         path: 'index',
+      //         component: () => import('@/views/icons/index'),
+      //         name: 'Icons',
+      //         meta: { title: 'testtest', icon: 'icon', noCache: true }
+      //       }
+      //     ]
+      //   }], roles))
+      // }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

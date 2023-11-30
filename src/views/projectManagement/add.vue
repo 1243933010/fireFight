@@ -47,7 +47,10 @@ export default {
     },
     computed: {
         stepList() {
-            return [{title:'审批人',isInput:this.formInline.user},{title:'活动区域',isInput:this.formInline.region}]
+            return [
+                {title:'审批人',isInput:this.formInline.user,isActive:!this.formInline.user&&this.formInline.region},
+                {title:'活动区域',isInput:this.formInline.region,isActive:false}
+            ]
         }
     },
     mounted() {
