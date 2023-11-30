@@ -10,54 +10,11 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device !== 'mobile'">
-        <div style="padding-top: 15px;box-sizing: border-box;margin-right: 10px;" @click="openMessage">
-          <el-badge :value="12" class="item">
-            <img style="width: 20px;" src="../../assets/message.png" alt="">
-          </el-badge>
-        </div>
-      </template>
-
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      
 
     </div>
 
-    <el-dialog title="代办项目提示" :modal="false" center :visible.sync="dialogVisible" width="50%">
-
-      <el-table :data="list" border fit highlight-current-row style="z-index: 10000;position: relative;">
-        <el-table-column align="center" label="ID" width="95">
-          <template slot-scope="scope">
-            {{ scope.$index }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Title">
-          <template slot-scope="scope">
-            {{ scope.row.title }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Author" align="center">
-          <template slot-scope="scope">
-            <span>{{ scope.row.content }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="Pageviews" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.time }}
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-dialog>
+    
   </div>
 </template>
 
