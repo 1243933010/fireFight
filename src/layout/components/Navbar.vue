@@ -127,11 +127,11 @@ export default {
 }
 
 .navbar {
+  border-radius: 10px 10px 0 0;
   height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   .hamburger-container {
     line-height: 46px;
