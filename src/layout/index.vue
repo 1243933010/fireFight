@@ -1,6 +1,10 @@
 <template>
   <div class="pages">
     <div class="header">
+      <div class="city-bg">
+        <img src="../assets/city_bg.png" class="img" />
+      </div>
+
       <div class="left-log">
         <div class="logo">
           <img src="../assets/logo.png" class="img" />
@@ -20,7 +24,6 @@
     </div>
 
     <div :class="classObj" class="app-wrapper">
-      <div>11</div>
       <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
       <sidebar class="sidebar-container" />
       <div :class="{hasTagsView:needTagsView}" class="main-container">
@@ -86,13 +89,31 @@ export default {
   .pages {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
 
   .header {
+    padding: 20px 50px 20px 30px;
     display: flex;
     justify-content: space-between;
+    height: 85px;
+    background: linear-gradient(0deg, #EEF4FA 0%, #7DBCED 100%);
+    position: relative;
+
+    .city-bg {
+      width: 300px;
+      position: absolute;
+      top: 50%;
+      right: 100px;
+      transform: translateY(-50%);
+
+      .img {
+        width: 100%;
+      }
+    }
 
     .left-log {
+      display: flex;
       .logo {
         margin-right: 55px;
         height: 100%;
@@ -104,25 +125,44 @@ export default {
       }
 
       .platform-name {
-        color: #FC5835;
+        color: #FC5535;
         font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
 
     .avatar-team-name {
+      display: flex;
+      align-items: center;
       .message-icon {
+        margin-right: 20px;
+        width: 18px;
+        font-size: 0;
+
         .img {
-          
+          width: 100%;
         }
       }
 
       .team-name {
-
+        margin-right: 15px;
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
       }
 
       .avatar {
+        border-radius: 50%;
+        border: 4px solid #E5E5E5;
+        width: 48px;
+        height: 48px;
+        overflow: hidden;
         .img {
-
+          width: 100%;
+          height: 100%;
+          background-color: #fff;
         }
       }
     }
@@ -149,15 +189,6 @@ export default {
     height: 100%;
     position: absolute;
     z-index: 999;
-  }
-
-  .fixed-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - #{$sideBarWidth});
-    transition: width 0.28s;
   }
 
   .hideSidebar .fixed-header {
