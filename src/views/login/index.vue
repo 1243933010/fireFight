@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">深圳市消防救援支队采购业务工作管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入账号"
           name="username"
           type="text"
           tabindex="1"
@@ -31,7 +31,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="请输入密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -45,9 +45,30 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <div class="code-box">
+        <el-form-item prop="code">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="code"
+            v-model="loginForm.code"
+            placeholder="请输入验证码"
+            name="code"
+            type="text"
+            tabindex="1"
+            autocomplete="on"
+          />
+        </el-form-item>
+        
+        <div class="code-img">
+          <img src="" alt="" class="img">
+        </div>
+      </div>
 
-      <div style="position:relative">
+      <el-button :loading="loading" type="primary" class="login-btn" @click.native.prevent="handleLogin">Login</el-button>
+
+      <!-- <div style="position:relative">
         <div class="tips">
           <span>Username : admin</span>
           <span>Password : any</span>
@@ -60,7 +81,7 @@
         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
           Or connect with
         </el-button>
-      </div>
+      </div> -->
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -98,7 +119,8 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
+        code: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -227,7 +249,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: #454545;
       height: 47px;
       caret-color: $cursor;
 
@@ -239,10 +261,10 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
+    margin: 0 auto 25px;
+    border: 1px solid #DCDCDC;
+    background: transparent;
+    width: calc(100% - 20%);
   }
 }
 </style>
@@ -259,12 +281,12 @@ $light_gray:#eee;
   overflow: hidden;
 
   .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    padding: 27px 27px 34px;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
   }
 
   .tips {
@@ -288,14 +310,25 @@ $light_gray:#eee;
   }
 
   .title-container {
+    margin-bottom: 27px;
     position: relative;
 
     .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
+      font-size: 24px;
       font-weight: bold;
+      color: #101010;
+    }
+  }
+
+  .code-box {
+    display: flex;
+    justify-content: space-between;
+    .code-img {
+      width: 35%;
+
+      img {
+        height: 100%;
+      }
     }
   }
 
@@ -313,6 +346,18 @@ $light_gray:#eee;
     position: absolute;
     right: 0;
     bottom: 6px;
+  }
+
+  .login-btn {
+    margin: 26px auto 0;
+    border-radius: 0;
+    border-color: #3a62d7;
+    width: calc(100% - 20%);
+    background-color: #3a62d7;
+    color: rgba(255, 255, 255, 1);
+    font-size: 16px;
+    text-align: center;
+    display: block;
   }
 
   @media only screen and (max-width: 470px) {
