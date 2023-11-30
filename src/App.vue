@@ -9,3 +9,9 @@ export default {
   name: 'App'
 }
 </script>
+
+<style>
+#app {
+  font-family: "PingFang SC", Arial, sans-serif;
+}
+</style>

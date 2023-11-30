@@ -1,17 +1,38 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div>11</div>
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
-        <tags-view v-if="needTagsView" />
+  <div class="pages">
+    <div class="header">
+      <div class="left-log">
+        <div class="logo">
+          <img src="../assets/logo.png" class="img" />
+        </div>
+        <div class="platform-name">采购业务工作管理系统</div>
       </div>
-      <app-main />
-      <!-- <right-panel v-if="showSettings">
-        <settings />
-      </right-panel> -->
+
+      <div class="avatar-team-name">
+        <div class="message-icon">
+          <img src="../assets/message_yellow.png" class="img" />
+        </div>
+        <div class="team-name">深圳市福田区消防救援大队</div>
+        <div class="avatar">
+          <img src="" class="img" />
+        </div>
+      </div>
+    </div>
+
+    <div :class="classObj" class="app-wrapper">
+      <div>11</div>
+      <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+      <sidebar class="sidebar-container" />
+      <div :class="{hasTagsView:needTagsView}" class="main-container">
+        <div :class="{'fixed-header':fixedHeader}">
+          <navbar />
+          <tags-view v-if="needTagsView" />
+        </div>
+        <app-main />
+        <!-- <right-panel v-if="showSettings">
+          <settings />
+        </right-panel> -->
+      </div>
     </div>
   </div>
 </template>
@@ -62,11 +83,57 @@ export default {
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
 
+  .pages {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .left-log {
+      .logo {
+        margin-right: 55px;
+        height: 100%;
+        font-size: 0;
+
+        img {
+          height: 100%;
+        }
+      }
+
+      .platform-name {
+        color: #FC5835;
+        font-size: 24px;
+      }
+    }
+
+    .avatar-team-name {
+      .message-icon {
+        .img {
+          
+        }
+      }
+
+      .team-name {
+
+      }
+
+      .avatar {
+        .img {
+
+        }
+      }
+    }
+  }
+
   .app-wrapper {
     @include clearfix;
     position: relative;
-    height: 100%;
     width: 100%;
+    min-height: 10%;
+    flex-grow: 1;
 
     &.mobile.openSidebar {
       position: fixed;
