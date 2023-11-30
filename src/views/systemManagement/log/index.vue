@@ -1,28 +1,28 @@
 <template>
     <div>
-        <el-form ref="form" size="small" inline :model="form" label-width="120px">
-            <el-form-item label="系统模块">
-                <el-input v-model="form.name" />
+        <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
+            <el-form-item label="系统模块" props="name">
+                <el-input v-model="form.name" placeholder="请输入系统模块" />
             </el-form-item>
             <el-form-item label="操作人员">
-                <el-select v-model="form.region">
+                <el-select v-model="form.region" placeholder="请输入操作人员">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
             <el-form-item label="类型">
-                <el-select v-model="form.region">
+                <el-select v-model="form.region" placeholder="请输入类型">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="form.region">
+                <el-select v-model="form.region" placeholder="请输入状态">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="操作时间">
+            <el-form-item label="操作时间" placeholder="请输入操作时间">
                 <el-date-picker v-model="form.region" type="daterange" range-separator="至" start-placeholder="开始日期"
                     end-placeholder="结束日期">
                 </el-date-picker>
@@ -32,30 +32,32 @@
                 <el-button type="primary">重置</el-button>
             </el-form-item>
         </el-form>
-        <div>
-            <el-button type="primary">删除</el-button>
-            <el-button type="primary">清空</el-button>
-            <el-button type="primary">导出</el-button>
+        <div style="margin-bottom: 8px;">
+            <el-button style="background: linear-gradient(0deg, #FC4935 0%, #FC6235 100%);color: white;"
+                size="small">删除</el-button>
+            <el-button size="small">导出</el-button>
         </div>
         <div class="list">
-            <el-table :data="list" style="width: 100%" border fit highlight-current-row>
+            <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
+                <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="title" label="日志编号" width="180"></el-table-column>
                 <el-table-column prop="title1" label="系统模块" width="180"></el-table-column>
                 <el-table-column prop="title2" label="操作类型"></el-table-column>
-                <el-table-column prop="title2" label="请求方式"></el-table-column>
+                <!-- <el-table-column prop="title2" label="请求方式"></el-table-column> -->
                 <el-table-column prop="title2" label="操作人员"></el-table-column>
                 <el-table-column prop="title2" label="主机"></el-table-column>
                 <el-table-column prop="title2" label="操作状态"></el-table-column>
                 <el-table-column prop="title2" label="操作日期"></el-table-column>
-                <el-table-column align="center" prop="created_at" label="操作" width="200">
+                <el-table-column align="center" prop="created_at" label="操作状态" width="200">
                     <template slot-scope="scope">
                         <span>详细</span>
                     </template>
                 </el-table-column>
             </el-table>
             <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
-                :page-size="paginationObj.pageSize" :total="paginationObj.total"  layout="total, sizes, prev, pager, next, jumper"
-                @size-change="pageSizeChangeHandle" @current-change="pageCurrentChangeHandle" />
+                :page-size="paginationObj.pageSize" :total="paginationObj.total"
+                layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
+                @current-change="pageCurrentChangeHandle" />
         </div>
     </div>
 </template>
@@ -86,8 +88,11 @@ export default {
         }
     },
     methods: {
-        async query(){
-            
+        setTitle({ rowIndex, columnIndex }) {
+            return "background:#D2DFF9;color:#404659;font-size:14px;";
+        },
+        async query() {
+
         },
         onSubmit() {
             this.$message('submit!')
@@ -117,6 +122,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.form {
+    background-color: white;
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
+
 .list {
     width: 100%;
     height: 100%;
