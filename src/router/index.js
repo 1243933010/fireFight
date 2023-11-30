@@ -150,7 +150,7 @@ export const asyncRoutes = [
         path: 'projectManagementAdd',
         component: () => import('@/views/projectManagement/add'),
         name: 'projectManagementAdd',
-        meta: { title: 'projectManagementAdd', icon: 'dashboard', affix: true },
+        meta: { title: '项目管理新增', icon: 'dashboard', affix: true },
         hidden:true
       },
       {

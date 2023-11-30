@@ -1,8 +1,12 @@
 <template>
-    <div>
+    <div style="height: 100%;">
         <div class="box">
             <div class="box-left">
                 <div class="steps">
+                    <div class="title">
+                        <img src="../../assets/liucheng.png" alt="" srcset="">
+                        <span>流程指引</span>
+                    </div>
                     <Steps :stepList="stepList" />
                 </div>
                 <div class="form">
@@ -67,12 +71,32 @@ export default {
 <style lang="scss" scoped>
 .box {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
 
     .box-left {
         display: flex;
         flex-direction: row;
+    }
+}
+.steps{
+    width: 135px;
+    height: 100%;
+    border-right: 1px solid #EAEDEC;
+    title{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 42px;
+        img{
+            width: 14px;
+            margin-right: 8px;
+        }
+        span{
+            color: #404659;
+            font-size: 16px;
+        }
     }
 }
 </style>
