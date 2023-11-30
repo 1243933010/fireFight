@@ -24,15 +24,15 @@
         <div class="list">
             <el-table :data="list" style="width: 100%" border fit highlight-current-row>
                 <el-table-column type="index" label="序号"  width="100"></el-table-column>
-                <el-table-column prop="title" label="标题" width="180"></el-table-column>
-                <el-table-column prop="title1" label="接收部门" width="180"></el-table-column>
-                <el-table-column prop="title2" label="内容"></el-table-column>
-                <el-table-column prop="title2" label="发布时间"></el-table-column>
+                <el-table-column prop="title" label="角色编号" width="180"></el-table-column>
+                <el-table-column prop="title1" label="角色名称" width="180"></el-table-column>
+                <el-table-column prop="title2" label="状态"></el-table-column>
+                <el-table-column prop="title2" label="创建时间"></el-table-column>
                 <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button @click="handleType(1)" type="primary" size="small">详情</el-button>
-                        <el-button  @click="handleType(2)" type="primary" size="small">编辑</el-button>
-                        <el-button @click="handleType(3)"  type="primary" size="small">删除</el-button>
+                        <el-button @click="handleType(1)" type="primary" size="small">修改</el-button>
+                        <el-button  @click="handleType(2)" type="primary" size="small">删除</el-button>
+                        <el-button @click="handleType(3)"  type="primary" size="small">菜单分配</el-button>
                     </template>
                 </el-table-column>
             </el-table>

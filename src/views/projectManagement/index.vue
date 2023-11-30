@@ -2,74 +2,86 @@
     <div>
         <el-form ref="form" size="small" inline :model="form" label-width="120px">
             <el-form-item label="项目名称">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.name" placeholder="请输入项目名称" />
             </el-form-item>
             <el-form-item label="项目类型">
-                <el-select v-model="form.region">
+                <el-select v-model="form.region" placeholder="请输入项目类型">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="部门名称">
-                <el-select v-model="form.region">
+            <el-form-item label="所属部门">
+                <el-select v-model="form.region" placeholder="请输入所属部门">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="招标方式">
-                <el-select v-model="form.region">
+            <el-form-item label="采购方式">
+                <el-select v-model="form.region" placeholder="请输入采购方式">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="审核状态">
-                <el-select v-model="form.region">
+            <el-form-item label="申请时间">
+                <el-select v-model="form.region" placeholder="请输入申请时间">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="Activity time">
-                <el-col :span="11">
-                    <!-- <el-date-picker v-model="form.region" type="date" placeholder="Pick a date" style="width: 100%;" /> -->
-                    <el-date-picker v-model="form.region" type="daterange" range-separator="至" start-placeholder="开始日期"
-                        end-placeholder="结束日期">
-                    </el-date-picker>
-                </el-col>
+            <el-form-item label="申请时间">
+                <el-date-picker v-model="form.region" type="daterange" range-separator="至" start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-col :span="11">
-                    <el-button type="primary">搜索</el-button>
+                    <el-button type="primary"> 搜索</el-button>
                 </el-col>
             </el-form-item>
         </el-form>
         <div class="list">
             <div class="list-box">
-                <div class="title"><span>项目列表</span></div>
-                <div class="add"><el-button @click="projectAdd" type="primary">新增</el-button></div>
+                <div class="title">
+                    <i class="el-icon-s-unfold" style="color:#C4CAD5;margin-right: 2px;"></i>
+                    <span style="color: #454D65;font-size: 16px;">项目列表</span>
+                </div>
+                <div class="add" @click="projectAdd">
+                    <!-- <div @click="projectAdd">
+                        <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
+                        <span>新增</span>
+                    </div> -->
+                    <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
+                    <span>新增</span>
+                </div>
             </div>
             <div class="">
                 <div v-for="(item, index) in list" :key="index" class="item">
                     <div class="item-top">
                         <div class="title">{{ item.title }}</div>
-                        <div>公开招标</div>
-                        <div>内审完成</div>
+                        <div class="status1" v-if="item.status == 0"><span>公开招标</span></div>
+                        <div class="status1" v-if="item.status == 1"><span>不公开招标</span></div>
+
+                        <div class="status2" v-if="item.status == 0"><span>内审完成</span></div>
+                        <div class="status22" v-if="item.status == 1"><span>内审中</span></div>
+                        <div class="status222" v-if="item.status == 2"><span>初始化</span></div>
+
                     </div>
                     <div class="item-con">
                         <div class="item-con-left">
                             <div class="item-con-left-o">
-                                <div>项目编号:{{ item.title1 }}</div>
-                                <div>采购单位:{{ item.title2 }}</div>
-                                <div>采购申请时间:{{ item.title3 }}</div>
+                                <div><span class="label">项目编号:</span><span class="text">{{ item.title }}</span></div>
+                                <div><span class="label">采购单位:</span><span class="text">{{ item.title }}</span></div>
+                                <div><span class="label">采购申请时间:</span><span class="text">{{ item.title }}</span></div>
                             </div>
                             <div class="item-con-left-t">
-                                <div>项目类型:{{ item.title4 }}</div>
-                                <div>预算金额:{{ item.title5 }}</div>
-                                <div>代理机构名称:{{ item.title6 }}</div>
+                                <div><span class="label">项目类型:</span><span class="text">{{ item.title }}</span></div>
+                                <div><span class="label">预算金额:</span><span class="text">{{ item.title }}</span></div>
+                                <div><span class="label">代理机构名称:</span><span class="text">{{ item.title }}</span></div>
                             </div>
                         </div>
                         <div class="item-con-right">
                             <div class="item-con-right-btn1" @click="openDetail(item)">详情</div>
-                            <div class="item-con-right-btn2"  @click="openDetail">编辑</div>
+                            <div class="item-con-right-btn2" @click="openDetail">编辑</div>
                             <div class="item-con-right-btn3">删除</div>
                         </div>
                     </div>
@@ -91,17 +103,17 @@ export default {
                 region: ''
             },
             list: [
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
+                { status: 0, title: 'test', },
+                { status: 1, title: 'test', },
+                { status: 0, title: 'test', },
+                { status: 1, title: 'test', },
+                { status: 1, title: 'test', },
+                { status: 1, title: 'test', },
             ]
         }
     },
-    mounted(){
-        console.log(router.options,this.$router)
+    mounted() {
+        console.log(router.options, this.$router)
     },
     methods: {
         onSubmit() {
@@ -113,11 +125,11 @@ export default {
                 type: 'warning'
             })
         },
-        openDetail(item){
+        openDetail(item) {
             console.log(item)
         },
-        projectAdd(){
-            this.$router.push({name:'projectManagementAdd',params:{}})
+        projectAdd() {
+            this.$router.push({ name: 'projectManagementAdd', params: {} })
         }
     }
 }
@@ -127,14 +139,32 @@ export default {
 .list {
     width: 100%;
     height: 100%;
-    background-color: #EBEFFE;
-    padding: 0 30px;
+    background-color: #F3F5F9;
+    padding: 20px 30px;
     box-sizing: border-box;
 
     .list-box {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 16px;
+
+        .add {
+            width: 90px;
+            height: 33px;
+            background: linear-gradient(0deg, #2D6DFF 0%, #6280F5 100%);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: white;
+
+            span {
+                margin-left: 5px;
+                padding-top: 5px;
+            }
+        }
 
     }
 
@@ -142,12 +172,53 @@ export default {
         background-color: white;
         border-radius: 20px;
         width: 100%;
-
+        margin-bottom: 5px;
+        position: relative;
+        box-sizing: border-box;
+        padding: 24px 0 18px 44px;
         .item-top {
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 27px;
+
+            .title {
+                color: #454D65;
+                font-size: 14px;
+                margin-right: 10px;
+            }
+
+            .status1,
+            .status2,.status222,.status22 {
+                width: 66px;
+                height: 24px;
+                background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
+                border-radius: 4px;
+                margin-right: 10px;
+                color: #FEFEFF;
+                font-size: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+            }
+
+            .status2 {
+                background: linear-gradient(0deg, #FC6435 0%, #FC4835 100%);
+                color: white;
+            }
+
+            .status22 {
+                background: linear-gradient(0deg, #394779 0%, #2A2E3E 100%);
+                
+
+            }
+
+            .status222 {
+                background: linear-gradient(0deg, #FCAA35 0%, #FCA135 100%);
+               
+
+            }
         }
 
         .item-con {
@@ -158,15 +229,30 @@ export default {
 
                 font-size: 20px;
 
-                .item-con-left-o,.item-con-left-t {
+                .item-con-left-o,
+                .item-con-left-t {
                     // margin-right: 25px;
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
 
                     div {
-                        min-width:250px ;
+                        min-width: 250px;
                         margin-right: 25px;
+                    }
+                }
+
+                .item-con-left-o,
+                .item-con-left-t {
+                    .label {
+                        color: #B2B6CC;
+                        font-size: 14px;
+                        margin-right: 12px;
+                    }
+
+                    .text {
+                        color: #60667A;
+                        font-size: 14px;
                     }
                 }
 
@@ -177,9 +263,35 @@ export default {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-
+                
+                box-sizing: border-box;
+                position: absolute;
+                top: 40%;
+                right: 0;
                 div {
-                    margin: 0 5px;
+                    // margin: 0 5px;
+                    width: 70px;
+                    height: 33px;
+                    background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
+                    border-radius: 4px;
+                    margin-right: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-size: 12px;
+                }
+
+                .item-con-right-btn1 {
+                    background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
+                }
+
+                .item-con-right-btn2 {
+                    background-color: #DCE3FD;
+                }
+
+                .item-con-right-btn3 {
+                    background: linear-gradient(0deg, #FC4835 0%, #FC6235 100%);
                 }
             }
         }
