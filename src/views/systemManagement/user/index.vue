@@ -48,7 +48,7 @@
                         <!-- <el-button type="primary">重置</el-button> -->
                     </el-form-item>
                 </el-form>
-                <div style="margin-bottom: 10px;display: flex;flex-direction: row;">
+                <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
                     <div class="botton btn5" @click="addBtn">新增</div>
                     <div class="botton btn6" @click="addBtn">删除</div>
                     <div class="botton btn7" @click="addBtn">导出</div>
@@ -308,6 +308,7 @@ export default {
         padding-left: 31px;
         color: #454D65;
         font-size: 14px;
+        overflow-y: auto;
 
         .box {
             .item {

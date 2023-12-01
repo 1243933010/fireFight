@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="tab-icon">
+            <img src="../../../assets/clock.png" alt="">
+            <span>筛选</span>
+        </div>
         <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
             <el-form-item label="标题名称">
                 <el-input v-model="form.name" />
@@ -20,7 +24,7 @@
                 <el-button type="primary">重置</el-button>
             </el-form-item>
         </el-form>
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 10px;padding-left: 50px;">
             <el-button size='small' @click="addBtn" type="primary">新增</el-button>
         </div>
         <div class="list">
@@ -122,6 +126,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/btn.scss";
 .btn {
     width: 59px;
     height: 28px;
@@ -151,7 +156,7 @@ export default {
 
 .form {
     background-color: white;
-    padding: 36px 0;
+    padding: 0 0 36px 0;
     margin-bottom: 21px;
 }
 

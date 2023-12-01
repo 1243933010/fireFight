@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="tab-icon">
+            <img src="../../../assets/clock.png" alt="">
+            <span>筛选</span>
+        </div>
         <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
             <el-form-item label="系统模块" props="name">
                 <el-input v-model="form.name" placeholder="请输入系统模块" />
@@ -32,7 +36,7 @@
                 <el-button type="primary">重置</el-button>
             </el-form-item>
         </el-form>
-        <div style="margin-bottom: 8px;">
+        <div style="margin-bottom: 8px;padding-left: 50px;">
             <el-button style="background: linear-gradient(0deg, #FC4935 0%, #FC6235 100%);color: white;"
                 size="small">删除</el-button>
             <el-button size="small">导出</el-button>
@@ -122,9 +126,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/btn.scss";
 .form {
     background-color: white;
-    padding-top: 30px;
+    // padding-top: 30px;
     margin-bottom: 30px;
 }
 

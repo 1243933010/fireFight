@@ -214,6 +214,7 @@ export default {
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
+              localStorage.setItem('dialog',true)
               this.$router.push({
                 path: this.redirect || "/",
                 query: this.otherQuery,
