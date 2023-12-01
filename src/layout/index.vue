@@ -283,10 +283,7 @@ export default {
   z-index: 999;
 }
 
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px)
-}
-
 .mobile .fixed-header {
   width: 100%;
-}</style>
+}
+</style>
