@@ -1,20 +1,22 @@
 <template>
   <div class="navbar">
-    <hamburger
+    <!-- <hamburger
       id="hamburger-container"
       :is-active="sidebar.opened"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
-    />
+    /> -->
+    <div class="back" @click="back">返回</div>
 
+    <span class="radio"></span>
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      
+
 
     </div>
 
-    
+
   </div>
 </template>
 
@@ -54,6 +56,9 @@ export default {
     }
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     async openMessage() {
       console.log('1111')
       this.dialogVisible = true
@@ -89,6 +94,32 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .back {
+    width: 60px;
+    height: 31px;
+    background: #FFFFFF;
+    border: 1px solid #EAEDEC;
+    border-radius: 6px;
+    color: #404659;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 17px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .radio {
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(0deg, #FF8A01 0%, #FF4F01 100%);
+    border-radius: 50%;
+  }
 
   .hamburger-container {
     line-height: 46px;

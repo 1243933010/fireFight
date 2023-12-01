@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form ref="form" size="small" inline :model="form" label-width="120px" class="form-container">
+        <el-form  ref="form" size="small" inline :model="form" label-width="120px" class="form-container">
             <el-form-item label="项目名称">
                 <el-input v-model="form.name" placeholder="请输入项目名称" />
             </el-form-item>
@@ -138,6 +138,7 @@ export default {
 <style lang="scss" scoped>
 .form-container {
     background-color: #fff;
+    padding-top: 20px;
 }
 .list {
     width: 100%;

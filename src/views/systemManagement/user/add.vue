@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog title="代办项目提示" center :visible.sync="dialogVisible" width="50%" :show-close="false">
+        <el-dialog title="添加用户" center :visible.sync="dialogVisible" width="50%" :show-close="false">
             <el-form class="form" ref="formInfo" :rules="rules" size="small" :model="formInfo" label-width="120px">
                 <el-col :span="8">
                     <el-form-item label="消息标题" prop="name" placeholder="请输入消息标题">
@@ -32,8 +32,8 @@
                 </el-form-item>
             </el-form>
             <div class="btn">
-                <div class="btn1">取消</div>
-                <div class="btn2">发布</div>
+                <div class="btn1">确定</div>
+                <div class="btn2">取消</div>
             </div>
         </el-dialog>
     </div>

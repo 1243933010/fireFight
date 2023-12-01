@@ -43,19 +43,6 @@ export default {
     };
   },
   mounted() {},
-  watch: {
-    // stepList: {
-    //   handler(newArray) {
-    //     for (let i = 0; i < newArray.length; i++) {
-    //       this.stepCount = i;
-    //       if (!(!newArray[i].isActive && newArray[i].isInput)) {
-    //         break;
-    //       }
-    //     }
-    //   },
-    //   deep: true,
-    // },
-  },
 };
 </script>
 
