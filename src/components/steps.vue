@@ -1,20 +1,21 @@
 <template>
   <div class="step">
     <ul class="step-list">
-      <div class="line">
+      <!-- <div class="line">
         <div class="done" :style="`height: ${stepCount * 53}px`"></div>
         <div
           class="doing"
           :style="`height: calc(100% - ${stepCount * 53}px)`"
         ></div>
-      </div>
+      </div> -->
       <li
         class="step-item"
         v-for="(item, index) in stepList"
         :key="index"
         :class="{ undone: item.isActive, done: item.isInput }"
       >
-        <div class="space-box" v-if="index !== stepList.length - 1"></div>
+        <div class="space-box" v-if="index !== 0"></div>
+        <div class="line" v-if="index !== 0"></div>
         <div class="step-text">
           <div class="icon">
             <img src="../assets/gou.png" class="img" />
@@ -43,17 +44,17 @@ export default {
   },
   mounted() {},
   watch: {
-    stepList: {
-      handler(newArray) {
-        for (let i = 0; i < newArray.length; i++) {
-          this.stepCount = i;
-          if (!(!newArray[i].isActive && newArray[i].isInput)) {
-            break;
-          }
-        }
-      },
-      deep: true,
-    },
+    // stepList: {
+    //   handler(newArray) {
+    //     for (let i = 0; i < newArray.length; i++) {
+    //       this.stepCount = i;
+    //       if (!(!newArray[i].isActive && newArray[i].isInput)) {
+    //         break;
+    //       }
+    //     }
+    //   },
+    //   deep: true,
+    // },
   },
 };
 </script>
@@ -84,7 +85,7 @@ export default {
         align-items: center;
 
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
 
         .icon {
@@ -118,6 +119,11 @@ export default {
             border: none;
           }
         }
+
+        .line {
+          background: linear-gradient(0deg, #3958f8 0%, #378cf7 100%);
+          transition: height 0.5s;
+        }
       }
 
       &.undone {
@@ -128,7 +134,14 @@ export default {
         }
       }
 
-      &:last-child {
+      &.undone + .done {
+        .line {
+          background: #eaedec;
+          transition: height 0.5s;
+        }
+      }
+
+      &:first-child {
         .step-text {
           position: static;
         }
@@ -138,26 +151,15 @@ export default {
         width: 100%;
         height: 53px;
       }
-    }
 
-    .line {
-      width: 3px;
-      height: 100%;
-
-      position: absolute;
-      top: 0;
-      left: 6px;
-
-      .done {
-        background: linear-gradient(0deg, #3958f8 0%, #378cf7 100%);
-        height: 0;
-        transition: height 0.5s;
-      }
-
-      .doing {
+      .line {
+        width: 3px;
         height: 100%;
         background: #eaedec;
-        transition: height 0.5s;
+
+        position: absolute;
+        top: 0;
+        left: 6px;
       }
     }
   }
