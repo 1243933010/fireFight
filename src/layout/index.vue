@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <div class="header">
+    <!-- <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -20,7 +20,6 @@
         </div>
         <div class="team-name">深圳市福田区消防救援大队</div>
         <div class="avatar">
-          <!-- <img src="" class="img" /> -->
           <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
             <div class="avatar-wrapper">
               <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -35,7 +34,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -46,9 +45,6 @@
           <tags-view v-if="needTagsView" />
         </div>
         <app-main />
-        <!-- <right-panel v-if="showSettings">
-          <settings />
-        </right-panel> -->
       </div>
     </div>
     <el-dialog title="代办项目提示"  center :visible.sync="dialogVisible" width="50%">
