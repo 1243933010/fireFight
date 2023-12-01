@@ -6,8 +6,8 @@
                     <div class="item" v-for="(item, index) in treeList" :key="index">
                         <div class="title" @click="handleClick('parent', index)">
                             <span :class="index == parentInd ? 'active' : ''">{{ item.title }}</span>
-                            <i v-if="index !== parentInd" class="el-icon-arrow-right"></i>
-                            <i v-if="index == parentInd" class="el-icon-arrow-down"></i>
+                            <i v-if="item.children.length>0&&index !== parentInd" class="el-icon-arrow-right"></i>
+                            <i v-if="item.children.length>0&&index == parentInd" class="el-icon-arrow-down"></i>
 
                         </div>
                         <div class="child">
@@ -101,20 +101,77 @@ export default {
     data() {
         return {
             treeList: [
-                {
-                    title: '支队机关各处室', id: 1,
-                    children: [
-                        { title: '办公室', id: 1, children: [] },
-                        { title: '指挥中心', id: 1, children: [] },
-                        { title: '作战训练处', id: 1, children: [] }]
-                },
+                // {
+                //     title: '支队机关各处室', id: 1,
+                //     children: [
+                //         { title: '办公室', id: 1, children: [] },
+                //         { title: '指挥中心', id: 1, children: [] },
+                //         { title: '作战训练处', id: 1, children: [] }]
+                // },
                 {
                     title: '深圳市消防救援支队', id: 1,
                     children: [
-                        { title: '深圳市消防救援支队特勤大队', id: 1, children: [] },
-                        { title: '深圳市消防救援支队大亚湾特勤大队', id: 1, children: [] },
-                        { title: '深圳市福田区消防救援大队', id: 1, children: [] }]
-                }
+                        { title: '办公室', id: 1, children: [] },
+                        { title: '指挥中心', id: 1, children: [] },
+                        { title: '作战训练处', id: 1, children: [] },
+                        { title: '信息通信处', id: 1, children: [] },
+                        { title: '组织教育处', id: 1, children: [] },
+                        { title: '人事处', id: 1, children: [] },
+                        { title: '队务处', id: 1, children: [] },
+                        { title: '法制与社会消防工作处', id: 1, children: [] },
+                        { title: '重点保卫处', id: 1, children: [] },
+                        { title: '新闻宣传处', id: 1, children: [] },
+                        { title: '后勤装备处', id: 1, children: [] },
+                        { title: '财务处', id: 1, children: [] },
+                        { title: '战勤保障处', id: 1, children: [] },
+                        { title: '采购办', id: 1, children: [] },
+                        { title: '基建工作专班', id: 1, children: [] },
+                        { title: '督察队', id: 1, children: [] },
+                        { title: '应急通信与车辆勤务站', id: 1, children: [] },
+                    ]
+                },
+                {
+                    title: '深圳市消防救援支队特勤大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市消防救援支队大亚湾特勤大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市消防救援支队水上大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市福田区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市罗湖区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市南山区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市盐田区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市宝安区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市龙岗区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市龙华区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市光明区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市坪山区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市大鹏新区消防救援大队', id: 1,children: []
+                },
+                {
+                    title: '深圳市深汕特别合作区消防救援大队', id: 1,children: []
+                },
             ],
             parentInd: 0,
             childInd: 0,
