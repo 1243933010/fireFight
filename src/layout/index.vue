@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <!-- <div class="header">
+    <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -34,7 +34,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -47,8 +47,10 @@
         <app-main />
       </div>
     </div>
-    <el-dialog title="代办项目提示"  center :visible.sync="dialogVisible" width="50%">
-
+    <el-dialog title="代办项目提示"  center :visible.sync="dialogVisible" width="50%" :show-close="false">
+      <div class="close">
+        <img @click="dialogVisible=false" src="../assets/close_icon.png" alt="" srcset="">
+      </div>
       <el-table :data="list" border fit highlight-current-row style="z-index: 10000;position: relative;">
         <el-table-column align="center" label="ID" width="95">
           <template slot-scope="scope">
@@ -125,7 +127,19 @@ export default {
       listLoading: false
     }
   },
+  mounted(){
+    let dialog = localStorage.getItem('dialog');
+    console.log(dialog)
+    if(dialog=='true'){
+      this.dialogVisible = true
+      localStorage.setItem('dialog',false)
+    }
+  },
   methods: {
+    async logout() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
     async openMessage() {
       console.log('1111')
       this.dialogVisible = true
@@ -140,7 +154,25 @@ export default {
 <style lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 @import "~@/styles/variables.scss";
+::v-deep .el-dialog__header {
+    background: linear-gradient(0deg, #2E6DFF 0%, #6280F5 100%);
 
+    .el-dialog__title {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+}
+.close{
+      position: absolute;
+      top: 10px;
+      right: 18px;
+      img{
+        width: 31px;
+        height: 31px;
+      }
+    }
 .pages {
   display: flex;
   flex-direction: column;

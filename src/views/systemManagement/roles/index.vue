@@ -1,26 +1,28 @@
 <template>
     <div>
-        <el-form ref="form" size="small" inline :model="form" label-width="120px">
-            <el-form-item label="角色名称">
-                <el-input v-model="form.name" />
+        <div class="tab-icon">
+            <img src="../../../assets/clock.png" alt="">
+            <span>筛选</span>
+        </div>
+        <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
+            <el-form-item label="部门名称">
+                <el-input v-model="form.name" placeholder="请输入部门名称" />
             </el-form-item>
-            <el-form-item label="状态">
-                <el-select v-model="form.region">
+            <el-form-item label="用户状态">
+                <el-select v-model="form.region" placeholder="请选择用户状态"  >
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary">搜索</el-button>
-                <el-button type="primary">重置</el-button>
+                <!-- <el-button type="primary">重置</el-button> -->
             </el-form-item>
         </el-form>
-        <div>
-            <el-button type="primary">新增</el-button>
-            <el-button type="primary">修改</el-button>
-            <el-button type="primary">删除</el-button>
-
-        </div>
+        <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
+                    <div class="botton btn5" @click="addBtn">新增</div>
+                    <div class="botton btn6" @click="addBtn">删除</div>
+                </div>
         <div class="list">
             <el-table :data="list" style="width: 100%" border fit highlight-current-row>
                 <el-table-column type="index" label="序号"  width="100"></el-table-column>
@@ -71,6 +73,7 @@ export default {
         }
     },
     methods: {
+        addBtn(){},
         async query() {
 
         },
@@ -105,6 +108,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/btn.scss";
+.botton {
+    width: 59px;
+    height: 28px;
+    background: #DCE3FD;
+    color: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 16px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn5 {
+    background: #1D70FF;
+    color: #FEFEFF;
+}
+
+.btn6 {
+    background: linear-gradient(0deg, #FC4935 0%, #FC6235 100%);
+    color: #FEFEFF;
+}
+
+.btn7 {
+    background: #EAEDEC;
+    color: #454D65;
+}
+.form{
+            // padding-top: 20px;
+            background-color: white;
+            margin-bottom: 30px;
+        }
 .list {
     width: 100%;
     height: 100%;
