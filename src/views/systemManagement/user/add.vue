@@ -2,33 +2,50 @@
     <div>
         <el-dialog title="添加用户" center :visible.sync="dialogVisible" width="50%" :show-close="false">
             <el-form class="form" ref="formInfo" :rules="rules" size="small" :model="formInfo" label-width="120px">
-                <el-col :span="8">
-                    <el-form-item label="消息标题" prop="name" placeholder="请输入消息标题">
-                        <el-input v-model="formInfo.name" />
+                <el-col :span="12">
+                    <el-form-item label="用户姓名" prop="name">
+                        <el-input v-model="formInfo.name" placeholder="请输入用户姓名" />
                     </el-form-item>
                 </el-col>
-                <el-form-item label="接收部门" prop="region" placeholder="请选择接收部门">
-                    <el-select v-model="formInfo.region">
-                        <el-option label="Zone one" value="shanghai" />
-                        <el-option label="Zone two" value="beijing" />
-                    </el-select>
+                <el-col :span="12">
+                    <el-form-item label="所属部门" prop="region">
+                        <el-select v-model="formInfo.region" placeholder="请选择所属部门">
+                            <el-option label="Zone one" value="shanghai" />
+                            <el-option label="Zone two" value="beijing" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="手机号" prop="region">
+                        <el-input v-model="formInfo.name" placeholder="请输入手机号" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="登录账号" prop="region">
+                        <el-input v-model="formInfo.name" placeholder="请输入登录账号" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="登录密码" prop="region">
+                        <el-input v-model="formInfo.name" placeholder="请输入登录密码" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="角色" prop="region">
+                        <el-select v-model="formInfo.region" placeholder="请选择角色">
+                            <el-option label="Zone one" value="shanghai" />
+                            <el-option label="Zone two" value="beijing" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-form-item label="状态" prop="region">
+                    <el-radio-group v-model="formInfo.region">
+                        <el-radio :label="3">正常</el-radio>
+                        <el-radio :label="6">停用</el-radio>
+                    </el-radio-group>
                 </el-form-item>
-                <el-form-item label="消息内容" prop="name" style="width: 100%;">
-                    <el-input v-model="formInfo.name" type="textarea" />
-                </el-form-item>
-                <el-form-item label="附件上传" prop="name" style="width: 100%;">
-                    <div>1111</div>
-                    <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/"
-                        :show-file-list="false" :limit="3" :on-exceed="handleExceed" :file-list="fileList"
-                        :on-progress="handleProgress">
-                        <div style="display: flex;flex-direction: row;align-items: center;">
-                            <div class="upload">
-                                <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                                <span>上传文件</span>
-                            </div>
-                            <div slot="tip" class="el-upload__tip">支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</div>
-                        </div>
-                    </el-upload>
+                <el-form-item label="备注" prop="name" style="width: 100%;">
+                    <el-input v-model="formInfo.name" type="textarea" placeholder="请输入备注" />
                 </el-form-item>
             </el-form>
             <div class="btn">
@@ -51,6 +68,9 @@ export default {
             dialogVisible: false,
             rules: {
                 name: [
+                    { required: true, message: '请输入名称', trigger: 'blur' },
+                ],
+                region: [
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ]
             },
@@ -128,12 +148,15 @@ export default {
         align-items: center;
         margin: 0 10px;
     }
-    .btn1{
+
+    .btn1 {
         background: #DCE3FD;
         color: #2D6CFF;
     }
-    .btn2{
+
+    .btn2 {
         background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
         color: #FEFEFF;
     }
-}</style>
+}
+</style>

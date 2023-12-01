@@ -180,6 +180,7 @@ export default {
         position: relative;
         box-sizing: border-box;
         padding: 24px 0 18px 44px;
+        // font-size: 14px;
         .item-top {
             display: flex;
             flex-direction: row;

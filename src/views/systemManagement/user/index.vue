@@ -23,23 +23,29 @@
             </div>
             <div class="right">
                 <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
-                    <el-form-item label="标题名称">
+                    <el-form-item label="用户姓名" placeholder="请输入用户姓名">
                         <el-input v-model="form.name" />
                     </el-form-item>
-                    <el-form-item label="接收部门">
-                        <el-select v-model="form.region">
+                    <el-form-item label="部门名称">
+                        <el-select v-model="form.region" placeholder="请输入用户姓名">
                             <el-option label="Zone one" value="shanghai" />
                             <el-option label="Zone two" value="beijing" />
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="时间">
+                    <el-form-item label="用户状态">
+                        <el-select v-model="form.region" placeholder="请输入用户姓名">
+                            <el-option label="Zone one" value="shanghai" />
+                            <el-option label="Zone two" value="beijing" />
+                        </el-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="时间">
                         <el-date-picker v-model="form.region" type="daterange" range-separator="至" start-placeholder="开始日期"
                             end-placeholder="结束日期">
                         </el-date-picker>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item>
                         <el-button type="primary">搜索</el-button>
-                        <el-button type="primary">重置</el-button>
+                        <!-- <el-button type="primary">重置</el-button> -->
                     </el-form-item>
                 </el-form>
                 <div style="margin-bottom: 10px;display: flex;flex-direction: row;">
@@ -50,16 +56,16 @@
                 <div class="list">
                     <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit
                         highlight-current-row>
-                        <el-table-column type="selection" width="55"></el-table-column>
-                        <el-table-column type="index" label="序号" width="100"></el-table-column>
-                        <el-table-column prop="title" label="姓名" width="180"></el-table-column>
-                        <el-table-column prop="title" label="用户角色" width="180"></el-table-column>
+                        <el-table-column type="selection" width="45"></el-table-column>
+                        <el-table-column type="index" label="序号" width="50"></el-table-column>
+                        <el-table-column prop="title" label="姓名" width="100"></el-table-column>
+                        <el-table-column prop="title" label="用户角色" width="80"></el-table-column>
                         <el-table-column prop="title" label="登录账号"></el-table-column>
                         <el-table-column prop="title" label="部门名称"></el-table-column>
                         <el-table-column prop="title" label="手机号"></el-table-column>
                         <el-table-column prop="title" label="状态"></el-table-column>
                         <el-table-column prop="title" label="创建时间"></el-table-column>
-                        <el-table-column align="center" prop="created_at" label="操作" width="400">
+                        <el-table-column align="center" prop="created_at" label="操作" width="300">
                             <template slot-scope="scope">
                                 <div style="display: flex;flex-direction: row;align-items: center;">
                                     <div class="btn btn1" @click="handleType(2)">编辑</div>
@@ -82,13 +88,16 @@
 
             </div>
         </div>
+        <AddDialog  ref="add" />
     </div>
 </template>
 
 
 
 <script>
+import AddDialog from './add.vue'
 export default {
+    components:{AddDialog},
     data() {
         return {
             treeList: [
@@ -130,7 +139,7 @@ export default {
     },
     methods: {
         addBtn() {
-
+            this.$refs.add.open();
         },
         setTitle({ rowIndex, columnIndex }) {
             return "background:#D2DFF9;color:#404659;font-size:14px;";
@@ -231,6 +240,7 @@ export default {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    
 
     .left {
         width: 310px;
@@ -245,7 +255,7 @@ export default {
         .box {
             .item {
                 margin-bottom: 10px;
-
+                // font-size: 14px;
                 .title {
                     cursor: pointer;
                     margin-bottom: 25px;
@@ -270,6 +280,11 @@ export default {
     .right {
         min-width: 500px;
         flex-grow: 1;
+        .form{
+            padding-top: 20px;
+            background-color: white;
+            margin-bottom: 30px;
+        }
         // background: green;
     }
 }</style>
