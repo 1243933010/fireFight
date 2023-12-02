@@ -98,11 +98,11 @@
 
   .hideSidebar {
     .sidebar-container {
-      width: 54px !important;
+      width: 200px !important;
     }
 
     .main-container {
-      margin-left: 54px;
+      margin-left: 200px;
     }
 
     .submenu-title-noDropdown {
@@ -128,17 +128,17 @@
       &>.el-submenu__title {
         padding: 0 !important;
 
-        .svg-icon {
-          margin-left: 20px;
-        }
+        // .svg-icon {
+        //   margin-left: 20px;
+        // }
 
-        .sub-el-icon {
-          margin-left: 19px;
-        }
+        // .sub-el-icon {
+        //   margin-left: 19px;
+        // }
 
-        .el-submenu__icon-arrow {
-          display: none;
-        }
+        // .el-submenu__icon-arrow {
+        //   display: none;
+        // }
       }
     }
 

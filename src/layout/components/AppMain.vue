@@ -28,7 +28,7 @@ export default {
   margin-top: 4px;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
   min-height: 50%;
   flex-grow: 1;
 }

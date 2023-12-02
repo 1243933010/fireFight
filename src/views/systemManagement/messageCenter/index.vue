@@ -1,49 +1,24 @@
 <template>
     <div>
-        <div class="tab-icon">
-            <img src="../../../assets/liucheng.png" alt="">
-            <span>筛选</span>
-        </div>
-        <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
-            <el-form-item label="标题名称">
-                <el-input v-model="form.name" />
-            </el-form-item>
-            <el-form-item label="接收部门">
-                <el-select v-model="form.region">
-                    <el-option label="Zone one" value="shanghai" />
-                    <el-option label="Zone two" value="beijing" />
-                </el-select>
-            </el-form-item>
-            <el-form-item label="时间">
-                <el-date-picker v-model="form.region" type="daterange" range-separator="至" start-placeholder="开始日期"
-                    end-placeholder="结束日期">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary">搜索</el-button>
-                <el-button type="primary">重置</el-button>
-            </el-form-item>
-        </el-form>
-        <div style="margin-bottom: 10px;padding-left: 50px;">
-            <el-button size='small' @click="addBtn" type="primary">新增</el-button>
-        </div>
+        <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 30px;padding-top: 20px;">
+                    <div class="botton btn5" @click="addBtn">标记已读</div>
+                </div>
         <div class="list">
-            <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
-                <el-table-column type="index" label="序号" width="100"></el-table-column>
-                <el-table-column prop="title" label="标题" width="180"></el-table-column>
-                <el-table-column prop="title1" label="接收部门" width="180"></el-table-column>
-                <el-table-column prop="title2" label="内容"></el-table-column>
-                <el-table-column prop="title2" label="发布时间"></el-table-column>
+            <el-table :data="list" style="width: 100%" border fit highlight-current-row>
+                <el-table-column type="selection" label="勾选" width="45"></el-table-column>
+                <el-table-column type="index" label="序号"  width="100"></el-table-column>
+                <el-table-column prop="title" label="消息标题" width="180"></el-table-column>
+                <el-table-column prop="title1" label="消息内容" width="180"></el-table-column>
+                <el-table-column prop="title2" label="消息时间"></el-table-column>
+                <el-table-column prop="title2" label="创建时间"></el-table-column>
                 <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
-                        <div style="display: flex;flex-direction: row;align-items: center;">
-                            <div class="btn btn1" @click="handleType(2)">编辑</div>
-                            <div class="btn btn2" @click="handleType(2)">删除</div>
-                            <div class="btn btn3" @click="handleType(2)">详情</div>
-                        </div>
-                        <!-- <el-button style="background: #DCE3FD;color: #3E72FB;border: none;"  @click="handleType(2)" type="primary" size="small">编辑</el-button>
-                        <el-button style="background: linear-gradient(0deg, #FC4835 0%, #FC6235 100%);color: #FEFEFF;" @click="handleType(3)"  type="primary" size="small">删除</el-button>
-                        <el-button style="background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);color: #FEFEFF;" @click="handleType(1)" type="primary" size="small">详情</el-button> -->
+                        <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
+                    <div class="botton btn5" @click="goDetail(item)">详情</div>
+                    <div class="botton btn7" @click="addBtn">标记已读</div>
+                    <div class="botton btn6" @click="addBtn">删除</div>
+                </div>
+                        
                     </template>
                 </el-table-column>
             </el-table>
@@ -53,17 +28,13 @@
                 @current-change="pageCurrentChangeHandle" />
         </div>
 
-        <AddDialog ref="add" />
     </div>
 </template>
 
 
 
 <script>
-// import Pagination from '@/components/Pagination'
-import AddDialog from './add.vue'
 export default {
-    components:{AddDialog},
     data() {
         return {
             form: {
@@ -86,14 +57,14 @@ export default {
         }
     },
     methods: {
-        setTitle({ rowIndex, columnIndex }) {
-            return "background:#D2DFF9;color:#404659;font-size:14px;";
-        },
-        async query() {
-
+        goDetail(item){
+            this.$router.push({path:'/messageCenter/detail'})
         },
         addBtn(){
             this.$refs.add.open();
+        },
+        async query() {
+
         },
         onSubmit() {
             this.$message('submit!')
@@ -118,8 +89,8 @@ export default {
             this.page = val
             this.query()
         },
-        handleType(type) {
-            this.$router.push({ name: 'messageNotificationEdit', params: { id: 1 } })
+        handleType(type){
+            this.$router.push({name:'messageNotificationEdit',params:{id:1}})
         }
     }
 }
@@ -127,10 +98,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
-.btn {
+.botton {
     width: 59px;
     height: 28px;
     background: #DCE3FD;
+    color: #FFFFFF;
     border-radius: 4px;
     margin-right: 16px;
     font-size: 12px;
@@ -138,35 +110,31 @@ export default {
     justify-content: center;
     align-items: center;
 }
-
-.btn1 {
-    background: #DCE3FD;
-    color: #3E72FB;
-}
-
-.btn2 {
-    background: linear-gradient(0deg, #FC4835 0%, #FC6235 100%);
-    color: #FEFEFF;
-}
-
-.btn3 {
+.btn5 {
     background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
     color: #FEFEFF;
 }
 
-.form {
-    background-color: white;
-    padding: 0 0 36px 0;
-    margin-bottom: 21px;
+.btn6 {
+    background: linear-gradient(0deg, #FC4935 0%, #FC6235 100%);
+    color: #FEFEFF;
 }
 
+.btn7 {
+    background: #DCE3FD;
+    color: #3E72FB;
+}
+.form{
+            // padding-top: 20px;
+            background-color: white;
+            margin-bottom: 30px;
+        }
 .list {
     width: 100%;
     height: 100%;
     background-color: #EBEFFE;
-    // padding: 0 30px;
-
-    // box-sizing: border-box;
+    padding: 0 30px;
+    box-sizing: border-box;
 
     .list-box {
         display: flex;
@@ -222,4 +190,5 @@ export default {
             }
         }
     }
-}</style>
+}
+</style>

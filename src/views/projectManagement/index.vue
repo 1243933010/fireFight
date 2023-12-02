@@ -1,6 +1,10 @@
 <template>
     <div>
-        <el-form  ref="form" size="small" inline :model="form" label-width="120px" class="form-container">
+        <div class="tab-icon">
+            <img src="../../assets/liucheng.png" alt="">
+            <span>筛选</span>
+        </div>
+        <el-form  ref="form" size="small" inline :model="form" label-width="90px" class="form-container">
             <el-form-item label="项目名称">
                 <el-input v-model="form.name" placeholder="请输入项目名称" />
             </el-form-item>
@@ -136,9 +140,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/btn.scss";
 .form-container {
     background-color: #fff;
-    padding-top: 20px;
+    // padding-top: 20px;
 }
 .list {
     width: 100%;

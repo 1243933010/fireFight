@@ -131,12 +131,35 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/messageCenter',
+    name:'messageCenter',
+    component: Layout,
+    hidden:true,
+    meta: {
+      title: '消息中心',
+      // icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [{
+      path: 'messageCenter',
+      name: 'messageCenter',
+      component: () => import('@/views/systemManagement/messageCenter/index'),
+      meta: { title: '消息中心' }
+    },
+    {
+      path: 'detail',
+      name: 'detail',
+      component: () => import('@/views/systemManagement/messageCenter/detail'),
+      meta: { title: '详情', }
+    }]
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/projectManagement',
     meta: {
       title: '项目管理',
-      icon: 'lock',
+      icon: 'svg_icon1',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -144,26 +167,26 @@ export const asyncRoutes = [
         path: 'projectManagement',
         component: () => import('@/views/projectManagement/index'),
         name: 'projectManagement',
-        meta: { title: '项目管理', icon: 'dashboard', affix: true }
+        meta: { title: '项目管理', affix: true }
       },
       {
         path: 'projectManagementAdd',
         component: () => import('@/views/projectManagement/add'),
         name: 'projectManagementAdd',
-        meta: { title: '项目管理新增', icon: 'dashboard', affix: true },
+        meta: { title: '项目管理新增', affix: true },
         hidden:true
       },
       {
         path: 'ImplementationCommission',
         component: () => import('@/views/ImplementationCommission/index'),
         name: 'ImplementationCommission',
-        meta: { title: '实施委托列表', icon: 'dashboard', affix: true }
+        meta: { title: '实施委托列表', affix: true }
       },
       {
         path: 'evaluation',
         component: () => import('@/views/evaluation/index'),
         name: 'evaluation',
-        meta: { title: '开评标', icon: 'dashboard', affix: true }
+        meta: { title: '开评标', affix: true }
       },
     ]
   },
@@ -171,22 +194,24 @@ export const asyncRoutes = [
     path: '/thirdProjects',
     component: Layout,
     redirect: '/thirdProjects',
+    meta: { title: '三方项目列表', icon: 'svg_icon2' },
     children: [{
       path: 'thirdProjects',
       name: 'thirdProjects',
       component: () => import('@/views/thirdProjects/index'),
-      meta: { title: '三方项目列表', icon: 'dashboard' }
+      meta: { title: '三方项目列表',}
     }]
   },
   {
     path: '/contractManagement',
     component: Layout,
     redirect: '/contractManagement',
+    meta: { title: '合同管理', icon: 'svg_icon3' },
     children: [{
       path: 'contractManagement',
       name: 'contractManagement',
       component: () => import('@/views/contractManagement/index'),
-      meta: { title: '合同管理', icon: 'dashboard' }
+      meta: { title: '合同管理', }
     }]
   },
   {
@@ -195,57 +220,57 @@ export const asyncRoutes = [
     redirect: '/statistics',
     meta: {
       title: '统计分析',
-      icon: 'lock',
+      icon: 'svg_icon4',
       roles: [ 'admin','editor'] // you can set roles in root nav
     },
     children: [{
       path: 'statistics',
       name: 'statistics',
       component: () => import('@/views/statistics/index'),
-      meta: { title: '统计分析', icon: 'dashboard' }
+      meta: { title: '统计分析', }
     }]
   },
   {
     path: '/systemManagement',
     component: Layout,
     redirect: '/systemManagement/user',
-    meta: { title: '系统管理', icon: 'el-icon-s-help' },
+    meta: { title: '系统管理', icon: 'svg_icon5' },
     children: [{
       path: 'user',
       name: 'user',
       component: () => import('@/views/systemManagement/user/index'),
-      meta: { title: '用户管理', icon: 'dashboard' }
+      meta: { title: '用户管理',  }
     },
     {
       path: 'department',
       name: 'department',
       component: () => import('@/views/systemManagement/department/index'),
-      meta: { title: '部门管理', icon: 'dashboard' }
+      meta: { title: '部门管理', }
     },
     {
       path: 'roles',
       name: 'roles',
       component: () => import('@/views/systemManagement/roles/index'),
-      meta: { title: '角色管理', icon: 'dashboard' }
+      meta: { title: '角色管理',  }
     },
     {
       path: 'messageNotification',
       name: 'messageNotification',
       component: () => import('@/views/systemManagement/messageNotification/index'),
-      meta: { title: '消息通知管理', icon: 'dashboard' }
+      meta: { title: '消息通知管理',  }
     },
     {
       path: 'messageNotification/edit',
       name: 'messageNotificationEdit',
       component: () => import('@/views/systemManagement/messageNotification/add'),
-      meta: { title: '消息通知编辑', icon: 'dashboard' },
+      meta: { title: '消息通知编辑', },
       hidden: true
     },
     {
       path: 'log',
       name: 'log',
       component: () => import('@/views/systemManagement/log/index'),
-      meta: { title: '日志管理', icon: 'dashboard' }
+      meta: { title: '日志管理',  }
     },
   ]
   },

@@ -1,5 +1,11 @@
 <template>
   <div class="step">
+    <div class="title">
+      <div class="icon">
+        <img src="../assets/liucheng.png" srcset="" />
+      </div>
+      <span>流程指引</span>
+    </div>
     <ul class="step-list">
       <!-- <div class="line">
         <div class="done" :style="`height: ${stepCount * 53}px`"></div>
@@ -8,19 +14,17 @@
           :style="`height: calc(100% - ${stepCount * 53}px)`"
         ></div>
       </div> -->
-      <li
-        class="step-item"
-        v-for="(item, index) in stepList"
-        :key="index"
-        :class="{ undone: item.isActive, done: item.isInput }"
-      >
+      <li class="step-item" v-for="(item, index) in stepList" :key="index"
+        :class="{ undone: item.isActive, done: item.isInput }">
         <div class="space-box" v-if="index !== 0"></div>
         <div class="line" v-if="index !== 0"></div>
         <div class="step-text">
           <div class="icon">
             <img src="../assets/gou.png" class="img" />
           </div>
-          <div class="text">{{ item.title }}</div>
+          <div class="text" v-if="item.isInput">{{ item.title }}</div>
+          <div class="text file-text" v-if="!item.isInput">请输入{{ item.title }}</div>
+
         </div>
       </li>
     </ul>
@@ -42,18 +46,39 @@ export default {
       isOver: false,
     };
   },
-  mounted() {},
+  mounted() { },
 };
 </script>
 
 <style lang="scss" scoped>
 .step {
-  width: 100%;
+  width: 150px;
   height: 100%;
   background-color: #fff;
   box-sizing: border-box;
   min-height: 50%;
   flex-grow: 1;
+  border-right: 2px solid #EAEDEC;
+
+  .title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 42px;
+    padding-top: 20px;
+    .icon {
+      width: 14px;
+      margin-right: 8px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    span {
+      color: #404659;
+      font-size: 16px;
+    }
+  }
 
   .step-list {
     margin: 0;
@@ -97,6 +122,9 @@ export default {
           font-size: 14px;
           color: #404659;
         }
+        .file-text{
+          color: red;
+        }
       }
 
       &.done {
@@ -121,7 +149,7 @@ export default {
         }
       }
 
-      &.undone + .done {
+      &.undone+.done {
         .line {
           background: #eaedec;
           transition: height 0.5s;

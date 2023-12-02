@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="tab-icon">
-            <img src="../../../assets/clock.png" alt="">
+            <img src="../../../assets/liucheng.png" alt="">
             <span>筛选</span>
         </div>
-        <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
+        <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
             <el-form-item label="部门名称">
                 <el-input v-model="form.name" placeholder="请输入部门名称" />
             </el-form-item>
@@ -43,14 +43,17 @@
                 layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
                 @current-change="pageCurrentChangeHandle" />
         </div>
+
+        <AddDialog ref="add" />
     </div>
 </template>
 
 
 
 <script>
-// import Pagination from '@/components/Pagination'
+import AddDialog from './add.vue'
 export default {
+    components:{AddDialog},
     data() {
         return {
             form: {
@@ -73,7 +76,9 @@ export default {
         }
     },
     methods: {
-        addBtn(){},
+        addBtn(){
+            this.$refs.add.open();
+        },
         async query() {
 
         },

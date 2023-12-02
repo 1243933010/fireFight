@@ -5,7 +5,8 @@
       <!-- :collapse="isCollapse" -->
       <el-menu
         :default-active="activeMenu"
-        
+        @select="handleSelect"
+        @open="open"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
@@ -49,6 +50,15 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    },
+    
+  },
+  methods:{
+    handleSelect(e){
+      console.log(e,this.item)
+    },
+    open(e){
+      console.log(e,'---')
     }
   }
 }

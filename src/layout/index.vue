@@ -141,8 +141,9 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     async openMessage() {
-      console.log('1111')
-      this.dialogVisible = true
+      // console.log('1111')
+      // this.dialogVisible = true
+      this.$router.push({name:'messageCenter'})
     },
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })

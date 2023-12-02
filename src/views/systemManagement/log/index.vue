@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="tab-icon">
-            <img src="../../../assets/clock.png" alt="">
+            <img src="../../../assets/liucheng.png" alt="">
             <span>筛选</span>
         </div>
-        <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
+        <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
             <el-form-item label="系统模块" props="name">
                 <el-input v-model="form.name" placeholder="请输入系统模块" />
             </el-form-item>
