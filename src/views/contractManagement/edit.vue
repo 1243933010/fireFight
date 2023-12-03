@@ -5,15 +5,15 @@
           <div class="steps">
             <Steps :stepList="stepList" />
           </div>
-          <div class="form">
-            <div class="step1">
-              <div class="item" :class="index !== 0 ? 'active' : ''" v-for="(item, index) in stepsList" :key="index">
-                <img v-if="index == 0" src="../../assets/step_icon_check.png" alt="" srcset="">
-                <img v-if="index !== 0" src="../../assets/step_icon.png" alt="" srcset="">
-                <span>{{ item.title }}</span>
-                <div></div>
-              </div>
-            </div>
+          <div class="form" style="padding-top: 50px;">
+            <!-- <div class="step1">
+                <div class="item" :class="index !== 0 ? 'active' : ''" v-for="(item, index) in stepsList" :key="index">
+                  <img v-if="index == 0" src="../../assets/step_icon_check.png" alt="" srcset="">
+                  <img v-if="index !== 0" src="../../assets/step_icon.png" alt="" srcset="">
+                  <span>{{ item.title }}</span>
+                  <div></div>
+                </div>
+              </div> -->
             <el-form :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline" label-width="100px">
               <el-col :span="12">
                 <el-form-item label="需求单位" prop="input1">
@@ -115,6 +115,31 @@
                       下列情形之一的，可不专门面向中小企业预留采购份额。</span>
                   </div>
   
+                </el-form-item>
+              </el-col>
+              <el-col :span="13">
+                <el-form-item label="采购代理名称" prop="input13">
+                  <el-select v-model="formInfo.input13" placeholder="请选择采购代理名称">
+                    <el-option label="Zone one" value="shanghai" />
+                    <el-option label="Zone two" value="beijing" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item prop="input14">
+                  <!-- <el-input v-model="formInfo.input11" type="text" /> -->
+                  <div class="upload-class">
+                    <div class="label"><span>抽取采购代理机构登记</span></div>
+                    <div class="upload-class-con">
+                      <span class="span">1111</span>
+                      <div class="upload-btn">
+                        <div class="btn">
+                          <img src="../../assets/upload_icon.png" alt="" srcset="">
+                          <span>上传文件</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </el-form-item>
               </el-col>
               <!-- <el-form-item> -->
@@ -326,7 +351,7 @@
       </div>
     </div>
   </template>
-  
+    
   <script>
   import Steps from "@/components/steps.vue";
   import { addMixins } from './mixins'
@@ -361,8 +386,44 @@
     },
   };
   </script>
-  
+    
   <style lang="scss" scoped>
+  .upload-class {
+    .label{
+      color: #404659;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+  
+    .upload-class-con{
+      display: flex;
+     flex-direction: row;
+     align-items: center;
+     .span{
+      margin-right: 35px;
+     }
+      .upload-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      .btn {
+        width: 100px;
+        height: 36px;
+        border: 1px solid #2D6CFF;
+        // background: #FFFFFF;
+        border-radius: 4px;
+        margin-right: 19px;
+      }
+  
+      span {
+        font-size: 12px;
+        color: #A6A9BC;
+      }
+    }
+    }
+  }
+  
   .radio-item-child {
     padding-left: 20px;
   }
@@ -416,6 +477,7 @@
       }
     }
   }
+  
   .btn {
     width: 100%;
     display: flex;
@@ -423,6 +485,7 @@
     justify-content: center;
     align-items: center;
   }
+  
   .btnn {
     width: 100%;
     display: flex;
@@ -452,15 +515,18 @@
       background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
       color: #FEFEFF;
     }
+  
     .btn3 {
       background: white;
       border: 1px solid #A7AABD;
       color: #404659;
     }
+  
     .btn4 {
       background: linear-gradient(0deg, #6080F6 0%, #2D6CFF 100%);
       color: #FEFEFF;
     }
+  
     .btn5 {
       background: linear-gradient(0deg, #FC6235 0%, #FC4935 100%);
       color: #FEFEFF;
@@ -668,7 +734,8 @@
                     border-radius: 4px;
                     margin-right: 19px;
                   }
-                  span{
+  
+                  span {
                     font-size: 12px;
                     color: #A6A9BC;
                   }
@@ -681,5 +748,6 @@
         }
       }
     }
-  }</style>
-  
+  }
+  </style>
+    

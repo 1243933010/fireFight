@@ -183,6 +183,13 @@ export const asyncRoutes = [
         meta: { title: '实施委托列表', affix: true }
       },
       {
+        path: 'ImplementationCommission/edit',
+        component: () => import('@/views/ImplementationCommission/edit'),
+        name: 'ImplementationCommissionEdit',
+        meta: { title: '实施委托编辑', affix: true },
+        hidden:true
+      },
+      {
         path: 'evaluation',
         component: () => import('@/views/evaluation/index'),
         name: 'evaluation',
@@ -200,6 +207,13 @@ export const asyncRoutes = [
       name: 'thirdProjects',
       component: () => import('@/views/thirdProjects/index'),
       meta: { title: '三方项目列表',}
+    },
+    {
+      path: 'thirdProjects/edit',
+      name: 'thirdProjectsEdit',
+      hidden:true,
+      component: () => import('@/views/thirdProjects/edit'),
+      meta: { title: '三方项目编辑',}
     }]
   },
   {
@@ -212,6 +226,13 @@ export const asyncRoutes = [
       name: 'contractManagement',
       component: () => import('@/views/contractManagement/index'),
       meta: { title: '合同管理', }
+    },
+    {
+      path: 'contractManagement/edit',
+      name: 'contractEdit',
+      component: () => import('@/views/contractManagement/edit'),
+      meta: { title: '合同编辑', },
+      hidden:true
     }]
   },
   {

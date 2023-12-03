@@ -20,6 +20,8 @@ export const addMixins = {
                 input10: "",
                 input11: "",
                 input12: "",
+                input13:'',
+                input14:''
             },
             rules: {
                 input1: [
@@ -57,6 +59,12 @@ export const addMixins = {
                 ],
                 input12: [
                     { required: true, message: '请选择是否面向中小微企', trigger: 'blur' },
+                ],
+                input13: [
+                    { required: true, message: '请选择采购代理名称', trigger: 'blur' },
+                ],
+                input14: [
+                    { required: true, message: '抽取采购代理机构登记', trigger: 'blur' },
                 ],
             },
             activeIndex: 0,

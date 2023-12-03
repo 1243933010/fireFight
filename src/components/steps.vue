@@ -22,8 +22,8 @@
           <div class="icon">
             <img src="../assets/gou.png" class="img" />
           </div>
-          <div class="text" v-if="item.isInput">{{ item.title }}</div>
-          <div class="text file-text" v-if="!item.isInput">请输入{{ item.title }}</div>
+          <div class="text" :class="item.isActive?'file-text':''">{{ item.title }}</div>
+          <!-- <div class="text " v-if="item.isActive">请输入{{ item.title }}</div> -->
 
         </div>
       </li>

@@ -9,25 +9,25 @@
                 <el-input v-model="form.name" placeholder="请输入项目名称" />
             </el-form-item>
             <el-form-item label="项目类型">
-                <el-select v-model="form.region" placeholder="请输入项目类型">
+                <el-select v-model="form.region" placeholder="请选择项目类型">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
             <el-form-item label="所属部门">
-                <el-select v-model="form.region" placeholder="请输入所属部门">
+                <el-select v-model="form.region" placeholder="请选择所属部门">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
             <el-form-item label="采购方式">
-                <el-select v-model="form.region" placeholder="请输入采购方式">
+                <el-select v-model="form.region" placeholder="请选择采购方式">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="申请时间">
-                <el-select v-model="form.region" placeholder="请输入申请时间">
+            <el-form-item label="审核状态">
+                <el-select v-model="form.region" placeholder="请选择审核状态">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="item-con-right">
                             <div class="item-con-right-btn1" @click="openDetail(item)">详情</div>
-                            <div class="item-con-right-btn2" @click="openDetail">编辑</div>
+                            <div class="item-con-right-btn2" @click="openDetail(item)">编辑</div>
                             <div class="item-con-right-btn3">删除</div>
                         </div>
                     </div>
