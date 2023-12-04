@@ -11,22 +11,7 @@ export const addMixins = {
             
            
             
-            fileForm: {
-                text1: '',
-                fileList1: [
-                    { title: '这是文件名称', type: 'pdf', url: '1111' },
-                    { title: '这是文件名称', type: 'pdf', url: '1111' },
-                ],
-                text2: '',
-                fileList2: [],
-                text3: '',
-                fileList3: [],
-                text4: '',
-                fileList4: [],
-                text5: '',
-                fileList5: [],
-            },
-            
+           
            
             startForm:{
                 fileList1:[],
