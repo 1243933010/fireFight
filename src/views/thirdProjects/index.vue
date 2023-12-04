@@ -43,14 +43,10 @@
                     <i class="el-icon-s-unfold" style="color:#C4CAD5;margin-right: 2px;"></i>
                     <span style="color: #454D65;font-size: 16px;">项目列表</span>
                 </div>
-                <div class="add" @click="projectAdd">
-                    <!-- <div @click="projectAdd">
-                        <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
-                        <span>新增</span>
-                    </div> -->
+                <!-- <div class="add" @click="projectAdd">
                     <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
                     <span>新增</span>
-                </div>
+                </div> -->
             </div>
             <div class="">
                 <div v-for="(item, index) in list" :key="index" class="item">
@@ -128,7 +124,7 @@ export default {
             this.$router.push({name:'thirdProjectsEdit',parmas:{}})
         },
         projectAdd() {
-            this.$router.push({ name: 'projectManagementAdd', params: {} })
+            // this.$router.push({ name: 'projectManagementAdd', params: {} })
         }
     }
 }

@@ -195,6 +195,12 @@ export const asyncRoutes = [
         name: 'evaluation',
         meta: { title: '开评标', affix: true }
       },
+      {
+        path: 'contractManagement',
+        name: 'contractManagement',
+        component: () => import('@/views/contractManagement/index'),
+        meta: { title: '合同管理', }
+      },
     ]
   },
   {
@@ -216,25 +222,25 @@ export const asyncRoutes = [
       meta: { title: '三方项目编辑',}
     }]
   },
-  {
-    path: '/contractManagement',
-    component: Layout,
-    redirect: '/contractManagement',
-    meta: { title: '合同管理', icon: 'svg_icon3' },
-    children: [{
-      path: 'contractManagement',
-      name: 'contractManagement',
-      component: () => import('@/views/contractManagement/index'),
-      meta: { title: '合同管理', }
-    },
-    {
-      path: 'contractManagement/edit',
-      name: 'contractEdit',
-      component: () => import('@/views/contractManagement/edit'),
-      meta: { title: '合同编辑', },
-      hidden:true
-    }]
-  },
+  // {
+  //   path: '/contractManagement',
+  //   component: Layout,
+  //   redirect: '/contractManagement',
+  //   meta: { title: '合同管理', icon: 'svg_icon3' },
+  //   children: [{
+  //     path: 'contractManagement',
+  //     name: 'contractManagement',
+  //     component: () => import('@/views/contractManagement/index'),
+  //     meta: { title: '合同管理', }
+  //   },
+  //   {
+  //     path: 'contractManagement/edit',
+  //     name: 'contractEdit',
+  //     component: () => import('@/views/contractManagement/edit'),
+  //     meta: { title: '合同编辑', },
+  //     hidden:true
+  //   }]
+  // },
   {
     path: '/statistics',
     component: Layout,

@@ -14,33 +14,33 @@
                 <div></div>
               </div>
             </div> -->
-          <el-form :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline" label-width="100px">
+          <el-form :inline="true" :rules="rules"  :model="formInfo" class="demo-form-inline" label-width="100px">
             <el-col :span="12">
               <el-form-item label="需求单位" prop="input1">
-                <el-select v-model="formInfo.input1" placeholder="请选择需求单位">
+                <el-select v-model="formInfo.input1" placeholder="请选择需求单位"  :disabled="true">
                   <el-option label="Zone one" value="shanghai" />
                   <el-option label="Zone two" value="beijing" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="项目负责人" prop="input2" placeholder="请输入项目负责人">
-                <el-input v-model="formInfo.input2" />
+              <el-form-item label="项目负责人" prop="input2" placeholder="请输入项目负责人" >
+                <el-input v-model="formInfo.input2"  :disabled="true"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="联系电话" prop="input3" placeholder="请输入联系电话">
-                <el-input v-model="formInfo.input3" />
+              <el-form-item label="联系电话" prop="input3" placeholder="请输入联系电话" >
+                <el-input v-model="formInfo.input3"  :disabled="true"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="项目名称" prop="input4" placeholder="请输入项目名称">
-                <el-input v-model="formInfo.input4" />
+              <el-form-item label="项目名称" prop="input4" placeholder="请输入项目名称" >
+                <el-input v-model="formInfo.input4"  :disabled="true"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="项目类型" prop="input5">
-                <el-select v-model="formInfo.input5" placeholder="请选择项目类型">
+                <el-select v-model="formInfo.input5" placeholder="请选择项目类型" :disabled="true">
                   <el-option label="Zone one" value="shanghai" />
                   <el-option label="Zone two" value="beijing" />
                 </el-select>
@@ -48,22 +48,22 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="项目编号" prop="input6" placeholder="请输入项目编号">
-                <el-input v-model="formInfo.input6" />
+                <el-input v-model="formInfo.input6" :disabled="true" />
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="审计金额" prop="input7" placeholder="请输入审计金额">
-                <el-input v-model="formInfo.input7" type="number" />
+                <el-input v-model="formInfo.input7" type="number"  :disabled="true"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="预算金额" prop="input8" placeholder="请输入预算金额">
-                <el-input v-model="formInfo.input8" type="number" />
+                <el-input v-model="formInfo.input8" type="number"  :disabled="true"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="采购方式" prop="input9">
-                <el-select v-model="formInfo.input9" placeholder="请选择采购方式">
+                <el-select v-model="formInfo.input9" placeholder="请选择采购方式" :disabled="true">
                   <el-option label="Zone one" value="shanghai" />
                   <el-option label="Zone two" value="beijing" />
                 </el-select>
@@ -71,13 +71,13 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="采购意向公开日期" prop="input10">
-                <el-date-picker v-model="formInfo.input10" type="date" placeholder="请选择采购意向公开日期">
+                <el-date-picker v-model="formInfo.input10" type="date" placeholder="请选择采购意向公开日期" :disabled="true">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="采购意向公告链接" prop="input11" placeholder="请输入采购意向公告链接" label-width="150px">
-                <el-input v-model="formInfo.input11" type="text" />
+                <el-input v-model="formInfo.input11" type="text" :disabled="true" />
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -118,7 +118,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="13">
-              <el-form-item label="采购代理名称" prop="input13">
+              <el-form-item label="采购代理名称" prop="input13"  >
                 <el-select v-model="formInfo.input13" placeholder="请选择采购代理名称">
                   <el-option label="Zone one" value="shanghai" />
                   <el-option label="Zone two" value="beijing" />
@@ -162,11 +162,12 @@
             <img src="../../assets/liucheng.png" alt="">
             <span>附件</span>
           </div>
-          <div class="file-form">
+          <el-form :disabeld="true">
+            <div class="file-form">
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>采购意向</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input type="textarea"  :disabled="true" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -179,20 +180,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>纪保预算审核报告书</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -205,20 +206,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>采购需求</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -231,20 +232,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>实施计划</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -257,20 +258,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>审查意见书</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -283,20 +284,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>大队党委会</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -309,20 +310,20 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
             <div class="file-form-item">
               <div class="left">
                 <div class="title"><span>支队党委会</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="input"><el-input :disabled="true" type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
                 </div>
               </div>
               <div class="right">
@@ -335,17 +336,18 @@
                       <div class="delete"><img src="../../assets/delete_icon.png" alt="" srcset=""></div>
                     </div>
                   </div>
-                  <div class="upload-btn">
+                  <!-- <div class="upload-btn">
                     <div class="btn">
                       <img src="../../assets/upload_icon.png" alt="" srcset="">
                       <span>上传文件</span>
                     </div>
                     <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
           </div>
+          </el-form>
         </div>
       </div>
     </div>
