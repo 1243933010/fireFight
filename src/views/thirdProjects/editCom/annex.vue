@@ -15,23 +15,7 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"><span>附件</span></div>
-                <div class="upload">
-                  <div class="file-list">
-                    <div class="item" v-for="(item, index) in fileForm.fileList1" :key="index">
-                      <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                      <span>{{ item.title }}.{{ item.type }}</span>
-                      <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                    </div>
-                  </div>
-                  <div class="upload-btn">
-                    <div class="btn">
-                      <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                      <span>上传文件</span>
-                    </div>
-                    <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
-                </div>
+                <UploadCom title="附件" :fileList="fileForm.fileList1" />
               </div>
             </div>
             <div class="file-form-item">
@@ -41,23 +25,7 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"><span>附件</span></div>
-                <div class="upload">
-                  <div class="file-list">
-                    <div class="item" v-for="(item, index) in fileForm.fileList2" :key="index">
-                      <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                      <span>{{ item.title }}.{{ item.type }}</span>
-                      <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                    </div>
-                  </div>
-                  <div class="upload-btn">
-                    <div class="btn">
-                      <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                      <span>上传文件</span>
-                    </div>
-                    <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
-                </div>
+                <UploadCom title="附件" :fileList="fileForm.fileList2" />
               </div>
             </div>
             <div class="file-form-item">
@@ -67,23 +35,7 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"><span>附件</span></div>
-                <div class="upload">
-                  <div class="file-list">
-                    <div class="item" v-for="(item, index) in fileForm.fileList3" :key="index">
-                      <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                      <span>{{ item.title }}.{{ item.type }}</span>
-                      <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                    </div>
-                  </div>
-                  <div class="upload-btn">
-                    <div class="btn">
-                      <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                      <span>上传文件</span>
-                    </div>
-                    <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
-                </div>
+                <UploadCom title="附件" :fileList="fileForm.fileList3" />
               </div>
             </div>
 
@@ -94,23 +46,7 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"><span>附件</span></div>
-                <div class="upload">
-                  <div class="file-list">
-                    <div class="item" v-for="(item, index) in fileForm.fileList5" :key="index">
-                      <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                      <span>{{ item.title }}.{{ item.type }}</span>
-                      <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                    </div>
-                  </div>
-                  <div class="upload-btn">
-                    <div class="btn">
-                      <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                      <span>上传文件</span>
-                    </div>
-                    <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
-                </div>
+                <UploadCom title="附件" :fileList="fileForm.fileList5" />
               </div>
             </div>
             <div class="file-form-item">
@@ -120,23 +56,7 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"><span>附件</span></div>
-                <div class="upload">
-                  <div class="file-list">
-                    <div class="item" v-for="(item, index) in fileForm.fileList4" :key="index">
-                      <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                      <span>{{ item.title }}.{{ item.type }}</span>
-                      <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                    </div>
-                  </div>
-                  <div class="upload-btn">
-                    <div class="btn">
-                      <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                      <span>上传文件</span>
-                    </div>
-                    <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                  </div>
-                </div>
+                <UploadCom title="附件" :fileList="fileForm.fileList4" />
               </div>
             </div>
           </div>
@@ -146,7 +66,9 @@
 
 
 <script>
+import UploadCom from './uploadCom.vue'
 export default{
+    components:{UploadCom},
     data(){
         return{
             fileForm: {

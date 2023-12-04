@@ -1,6 +1,9 @@
 <template>
     <div>
         <el-dialog title="代办项目提示" center :visible.sync="dialogVisible" width="50%" :show-close="false">
+            <div class="close">
+                <img @click="dialogVisible=false" src="../../../assets/close_icon.png" alt="" srcset="">
+            </div>
             <el-form class="form" ref="formInfo" :rules="rules" size="small" :model="formInfo" label-width="120px">
                 <el-col :span="12">
                 <el-form-item label="上级部门" prop="region" placeholder="请选择接收部门">
@@ -81,6 +84,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
 ::v-deep .el-dialog__header {
     background: linear-gradient(0deg, #2E6DFF 0%, #6280F5 100%);
 

@@ -14,29 +14,9 @@
                 <div class="file-form">
                   <div class="file-form-item">
                     <div class="left">
-                      <!-- <div class="title"><span>支队/大队采购例会</span></div> -->
-                      <!-- <div class="input">
-                    <el-input type="textarea" :rows="4" v-model="fileForm.input1" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
-                  </div> -->
                     </div>
-                    <div class="right">
-                      <div class="title"><span><span style="color: red;">*</span> 采购代理机构招标文件(发售稿)</span></div>
-                      <div class="upload">
-                        <div class="file-list">
-                          <div class="item" v-for="(item, index) in thirdForm.fileList1" :key="index">
-                            <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
-                            <span class="span">{{ item.title }}.{{ item.type }}</span>
-                            <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
-                          </div>
-                        </div>
-                        <div class="upload-btn">
-                          <div class="btn">
-                            <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="">
-                            <span class="span">上传文件</span>
-                          </div>
-                          <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
-                        </div>
-                      </div>
+                    <div class="right" style="display: flex;flex-direction: column;">
+                      <UploadCom title="采购代理机构招标文件(发售稿)" flex="row" :fileList="thirdForm.fileList3" />
                     </div>
                   </div>
                 </div>
@@ -72,7 +52,7 @@
             </el-col>
             <el-col :span="24">
 
-              <UploadCom title="投标报名登记表" />
+              <UploadCom title="投标报名登记表" :fileList="thirdForm.fileList3" />
             </el-col>
             <el-col :span="12">
               <el-form-item label="开评标日期" prop="input4">
@@ -105,7 +85,7 @@ export default{
 
 
                 fileList1: [],
-                fileList3:[],
+                fileList3:[{title:'111',url:'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
 
 
                 dialogImageUrl: '',

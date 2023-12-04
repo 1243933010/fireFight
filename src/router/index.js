@@ -201,6 +201,13 @@ export const asyncRoutes = [
         component: () => import('@/views/contractManagement/index'),
         meta: { title: '合同管理', }
       },
+      {
+      path: 'contractManagement/edit',
+      name: 'contractEdit',
+      component: () => import('@/views/contractManagement/edit'),
+      meta: { title: '合同编辑', },
+      hidden:true
+    }
     ]
   },
   {

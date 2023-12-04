@@ -9,22 +9,33 @@
           <div class="background-icon">
             <span class="title">基本信息</span>
           </div>
-          
+
           <BasicMsg />
 
           <!-- 三方基本信息录入 -->
           <div class="background-icon">
             <span class="title">三方基本信息录入</span>
           </div>
-          
+
           <ThirdCom />
           <!-- 开标 -->
           <div class="background-icon">
             <span class="title">开标</span>
           </div>
           <div style="padding-left: 30px;">
-            
+
             <StartCom />
+          </div>
+
+            <BidCom />
+
+             <!-- 中标单位 -->
+          <div class="background-icon">
+            <span class="title">中标单位</span>
+          </div>
+          <div style="padding-left: 30px;">
+
+            <SuccessfulBidder />
           </div>
           <div class="btnn">
             <div class="btn1">取消</div>
@@ -38,6 +49,7 @@
       <div>
         <AnnexCom />
       </div>
+      
     </div>
   </div>
 </template>
@@ -49,10 +61,12 @@ import BasicMsg from './editCom/basicMsg.vue'
 import ThirdCom from './editCom/thirdCom.vue'
 import StartCom from './editCom/start.vue'
 import AnnexCom from './editCom/annex.vue'
+import BidCom from './editCom/bid.vue'
+import SuccessfulBidder from './editCom/successfulBidder.vue'
 
 export default {
   mixins: [addMixins],
-  components: { Steps,BasicMsg,ThirdCom,StartCom,AnnexCom },
+  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom, BidCom,SuccessfulBidder},
   data() {
     return {
 
@@ -95,6 +109,7 @@ export default {
   
 <style lang="scss" scoped>
 @import url('./mixins.scss');
+
 
 .background-icon {
   width: 300px;

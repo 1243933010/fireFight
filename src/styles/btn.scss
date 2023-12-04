@@ -107,10 +107,15 @@
   font-weight: 600;
   background-color: white;
   padding: 20px 22px;
-  img{
+  margin-bottom: 20px;
+  .img{
     width: 14px;
     height: 14px;
     margin-right: 10px;
     
+  }
+  .span{
+    color: #454D65;
+    font-size: 16px;
   }
 }

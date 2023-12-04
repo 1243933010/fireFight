@@ -1,42 +1,19 @@
 <template>
     <div>
-        <el-dialog title="代办项目提示" center :visible.sync="dialogVisible" width="50%" :show-close="false">
+        <el-dialog title="合同上传" center :visible.sync="dialogVisible" width="50%" :show-close="false">
             <div class="close">
-                <img @click="dialogVisible=false" src="../../../assets/close_icon.png" alt="" srcset="">
+                <img @click="dialogVisible=false" src="../../assets/close_icon.png" alt="" srcset="">
             </div>
-            <el-form class="form" ref="formInfo" :rules="rules" size="small" :model="formInfo" label-width="120px">
-                <el-col :span="8">
-                    <el-form-item label="消息标题" prop="name" placeholder="请输入消息标题">
-                        <el-input v-model="formInfo.name" />
-                    </el-form-item>
-                </el-col>
-                <el-form-item label="接收部门" prop="region" placeholder="请选择接收部门">
-                    <el-select v-model="formInfo.region">
-                        <el-option label="Zone one" value="shanghai" />
-                        <el-option label="Zone two" value="beijing" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="消息内容" prop="name" style="width: 100%;">
-                    <el-input v-model="formInfo.name" type="textarea" />
-                </el-form-item>
-                <el-form-item label="附件上传" prop="name" style="width: 100%;">
-                    <div>1111</div>
-                    <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/"
-                        :show-file-list="false" :limit="3" :on-exceed="handleExceed" :file-list="fileList"
-                        :on-progress="handleProgress">
-                        <div style="display: flex;flex-direction: row;align-items: center;">
-                            <div class="upload">
-                                <img src="../../../assets/upload_icon.png" alt="" srcset="">
-                                <span>上传文件</span>
-                            </div>
-                            <div slot="tip" class="el-upload__tip">支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</div>
-                        </div>
-                    </el-upload>
-                </el-form-item>
-            </el-form>
+           <div class="upload-class">
+            <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+           </div>
             <div class="btn">
                 <div class="btn1">取消</div>
-                <div class="btn2">发布</div>
+                <div class="btn2">上传</div>
             </div>
         </el-dialog>
     </div>
@@ -86,11 +63,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.upload-class{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .close {
     position: absolute;
     top: 8px;
     right: 10px;
 }
+
 ::v-deep .el-dialog__header {
     background: linear-gradient(0deg, #2E6DFF 0%, #6280F5 100%);
 
@@ -124,6 +107,7 @@ export default {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 
     div {
         width: 86px;
@@ -136,12 +120,15 @@ export default {
         align-items: center;
         margin: 0 10px;
     }
-    .btn1{
+
+    .btn1 {
         background: #DCE3FD;
         color: #2D6CFF;
     }
-    .btn2{
+
+    .btn2 {
         background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
         color: #FEFEFF;
     }
-}</style>
+}
+</style>

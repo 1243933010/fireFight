@@ -28,7 +28,7 @@
 
         .upload {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
 
           .file-list {
             display: flex;
@@ -61,10 +61,10 @@
 
           .upload-btn {
             display: flex;
-            justify-content: center;
             align-items: center;
             font-size: 12px;
             color: #A6A9BC;
+            flex-direction: row;
 
             .btn {
               width: 100px;
