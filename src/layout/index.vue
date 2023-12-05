@@ -26,10 +26,13 @@
               <i class="el-icon-caret-bottom" />
             </div>
             <el-dropdown-menu slot="dropdown">
-
+              <el-dropdown-item divided @click.native="goMe">
+                <span style="display:block;">个人中心</span>
+              </el-dropdown-item>
               <el-dropdown-item divided @click.native="logout">
                 <span style="display:block;">退出</span>
               </el-dropdown-item>
+              
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -136,6 +139,9 @@ export default {
     }
   },
   methods: {
+    async goMe(){
+      this.$router.push({name:"meCenter"})
+    },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)

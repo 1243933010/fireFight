@@ -131,6 +131,29 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/meCenter',
+    name:'meCenter',
+    component: Layout,
+    hidden:true,
+    meta: {
+      title: '个人中心',
+      // icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [{
+      path: 'meCenter',
+      name: 'meCenter',
+      component: () => import('@/views/systemManagement/me/index'),
+      meta: { title: '' }
+    },
+    {
+      path: 'password',
+      name: 'password',
+      component: () => import('@/views/systemManagement/me/password'),
+      meta: { title: '修改密码', }
+    }]
+  },
+  {
     path: '/messageCenter',
     name:'messageCenter',
     component: Layout,

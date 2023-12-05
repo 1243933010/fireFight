@@ -46,9 +46,7 @@
           </div>
         </div>
       </div>
-      <div>
-        <AnnexCom />
-      </div>
+      <AnnexCom />
       
     </div>
   </div>

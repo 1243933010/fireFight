@@ -9,7 +9,7 @@
                 <span>添加单位</span>
             </div>
         </div>
-        <div style="padding-left: 30px;">
+        <div >
             <div class="item" v-for="(item, index) in list" :key="index">
                 <el-form :ref="item.ref" style="padding-left: 30px;" :inline="true" :rules="item.rules" :model="item.form">
                     <el-col :span="24">

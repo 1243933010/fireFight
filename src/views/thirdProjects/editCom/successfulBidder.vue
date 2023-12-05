@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form ref="thirdForm" style="padding-left: 30px;" :inline="true" :rules="thirdFormRules" :model="thirdForm"
+        <el-form ref="thirdForm" style="" :inline="true" :rules="thirdFormRules" :model="thirdForm"
             class="demo-form-inline">
             <el-col :span="12">
                 <el-form-item label="中标金额" prop="input3">
