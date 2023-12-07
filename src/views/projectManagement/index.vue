@@ -130,7 +130,8 @@ export default {
             })
         },
         openDetail(item) {
-            console.log(item)
+            console.log(item,'---')
+            this.$router.push({name:'projectManagementDetail'})
         },
         projectAdd() {
             this.$router.push({ name: 'projectManagementAdd', params: {} })

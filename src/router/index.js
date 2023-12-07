@@ -198,6 +198,12 @@ export const asyncRoutes = [
         name: 'projectManagementAdd',
         meta: { title: '项目管理新增', affix: true },
         hidden:true
+      },{
+        path: 'projectManagementDetail',
+        component: () => import('@/views/projectManagement/detail'),
+        name: 'projectManagementDetail',
+        meta: { title: '项目管理详情', affix: true },
+        hidden:true
       },
       {
         path: 'ImplementationCommission',
