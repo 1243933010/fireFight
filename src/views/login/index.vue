@@ -131,7 +131,7 @@ export default {
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      if (!value) {
         callback(new Error("Please enter the correct user name"));
       } else {
         callback();
@@ -146,7 +146,7 @@ export default {
     };
     return {
       loginForm: {
-        username: "admin",
+        username: "17600000000",
         password: "111111",
         code: "",
       },
@@ -325,7 +325,7 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background: url(/static/img/login_bg.e1658324.png) no-repeat left top / cover;
+  background: url("../../assets/login_bg.png") no-repeat left top / cover;
   overflow: hidden;
 
   .login-form {
