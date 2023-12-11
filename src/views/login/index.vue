@@ -69,7 +69,7 @@
           </span>
           <el-input
             ref="code"
-            v-model="loginForm.code"
+            v-model="loginForm.captcha"
             placeholder="请输入验证码"
             name="code"
             type="text"
@@ -79,7 +79,7 @@
         </div>
 
         <div class="code-img">
-          <img src="" alt="" class="img" />
+          <img :src="captcha" alt="" class="img" @click="refreshImg" />
         </div>
       </el-form-item>
 
@@ -148,7 +148,8 @@ export default {
       loginForm: {
         username: "17600000000",
         password: "111111",
-        code: "",
+        captcha: "",
+        timestamp:''
       },
       loginRules: {
         username: [
@@ -165,6 +166,8 @@ export default {
       redirect: undefined,
       otherQuery: {},
       memberPwd: false,
+      captcha:`http://sz.fire.goldkites.com/get_captcha?timestamp=${new Date().getTime()}`
+      
     };
   },
   watch: {
@@ -182,6 +185,7 @@ export default {
   created() {
     // window.addEventListener('storage', this.afterQRScan)
   },
+
   mounted() {
     if (this.loginForm.username === "") {
       this.$refs.username.focus();
@@ -192,7 +196,11 @@ export default {
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
+ 
   methods: {
+    refreshImg(){
+      this.captcha = `http://sz.fire.goldkites.com/get_captcha?timestamp=${new Date().getTime()}`
+    },
     checkCapslock(e) {
       const { key } = e;
       this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
@@ -211,8 +219,11 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true;
+          // console.log(this.captcha.slice(this.captcha.indexOf('=')+1,this.captcha.length))
+          let from = this.loginForm;
+          from.timestamp = this.captcha.slice(this.captcha.indexOf('=')+1,this.captcha.length);
           this.$store
-            .dispatch("user/login", this.loginForm)
+            .dispatch("user/login", from)
             .then(() => {
               localStorage.setItem('dialog',true)
               this.$router.push({
@@ -238,24 +249,6 @@ export default {
         return acc;
       }, {});
     },
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   },
 };
 </script>
@@ -325,7 +318,7 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background: url("../../assets/login_bg.png") no-repeat left top / cover;
+  // background: url("../../assets/login_bg.png") no-repeat left top / cover;
   overflow: hidden;
 
   .login-form {
