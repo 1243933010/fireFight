@@ -104,14 +104,14 @@
 
               </el-form-item>
             </el-col>
-            <!-- <el-col :span="12">
+            <el-col :span="12">
               <el-form-item label="采购代理机构名称" prop="input13">
                 <el-select v-model="formInfo.input13" placeholder="请选择采购代理机构名称" >
                   <el-option label="Zone one" value="shanghai" />
                   <el-option label="Zone two" value="beijing" />
                 </el-select>
               </el-form-item>
-            </el-col> -->
+            </el-col>
           </el-form>
     </div>
 </template>

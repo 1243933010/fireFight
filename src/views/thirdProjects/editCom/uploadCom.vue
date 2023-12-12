@@ -12,15 +12,17 @@
                                 <div class="item" v-for="(item, index) in fileList" :key="index">
                                     <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
                                     <span class="span">{{ item.title }}.{{ item.type }}</span>
-                                    <div class="delete"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
+                                    <div class="delete" @click="deleteFile(item,index)"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
                                 </div>
                             </div>
                             <div class="upload-btn">
                                 <div class="btn">
                                     <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="">
-                                    <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/"
+                                    <el-upload class="upload-demo" :action="uploadUrl"
+                                        :headers="headers"
                                         :show-file-list="false" :limit="3" :on-exceed="handleExceed" :file-list="fileList"
-                                        :on-progress="handleProgress">
+                                        :on-progress="handleProgress"
+                                        :on-success="handleSuccess">
                                         <div style="display: flex;flex-direction: row;align-items: center;">
                                             <div class="upload">
                                                 <!-- <img src="../../../assets/upload_icon.png" alt="" srcset=""> -->
@@ -43,6 +45,7 @@
 
 
 <script>
+import { getToken } from '@/utils/auth'
 export default {
     props: {
         title: {
@@ -54,17 +57,38 @@ export default {
             default:[]
         },
     },
+    
     data() {
         return {
 
         }
     },
+    computed:{
+        uploadUrl(){
+            return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
+        },
+        headers(){
+            return {
+                "Authorization":`Bearer ${getToken()}`
+            }
+        }
+    },
     methods:{
+        deleteFile(item,index){
+            this.fileList.splice(index,1)
+        },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
         },
         handleProgress(e, file, fileList) {
-            console.log(e, file, fileList)
+            // console.log(e, file, fileList)
+        },
+        handleSuccess(e, file, fileList){
+            console.log(e, file, fileList,'----')
+            if(e.code===200){
+                e.data.title = e.data.file_name;
+                this.fileList.push(e.data);
+            }
         }
     }
 }

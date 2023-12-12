@@ -218,12 +218,12 @@ export const asyncRoutes = [
         meta: { title: '实施委托编辑', affix: true },
         hidden:true
       },
-      {
-        path: 'evaluation',
-        component: () => import('@/views/evaluation/index'),
-        name: 'evaluation',
-        meta: { title: '开评标', affix: true }
-      },
+      // {
+      //   path: 'evaluation',
+      //   component: () => import('@/views/evaluation/index'),
+      //   name: 'evaluation',
+      //   meta: { title: '开评标', affix: true }
+      // },
       {
         path: 'contractManagement',
         name: 'contractManagement',

@@ -1,13 +1,7 @@
 export const addMixins = {
     data() {
         return {
-            stepsList: [
-                { title: '项目信息录入' },
-                { title: '实施委托' },
-                { title: '开评标' },
-                { title: '完成' },
-            ],
-           
+
             
            
             
@@ -30,12 +24,12 @@ export const addMixins = {
         stepList() {
             return [
                 {
-                    title: "基本信息",
+                    title: "招标",
                     isInput: true,
                     isActive: true,
                 },
                 {
-                    title: "三方基本信息录入",
+                    title: "招标",
                     isInput: true,
                     isActive: true,
                 },
@@ -45,25 +39,15 @@ export const addMixins = {
                     isActive: true,
                 },
                 {
-                    title: "投标单位",
+                    title: "中标",
                     isInput: true,
                     isActive: true,
                 },
-                {
-                    title: "中标单位",
-                    isInput: true,
-                    isActive: true,
-                },
-                {
-                    title: "中标公告",
-                    isInput: true,
-                    isActive: true,
-                },
-                {
-                    title: "附件",
-                    isInput: true,
-                    isActive: true,
-                },
+                // {
+                //     title: "附件",
+                //     isInput: true,
+                //     isActive: true,
+                // },
                 // {
                 //     title: "项目负责人",
                 //     isInput: this.formInfo.input2,

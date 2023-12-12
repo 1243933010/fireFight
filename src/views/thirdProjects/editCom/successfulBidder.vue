@@ -10,6 +10,25 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
+                <el-form-item label="中标单位" prop="input3">
+                    <el-input v-model="thirdForm.input3" placeholder="请输入中标单位">
+                    </el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="联系姓名" prop="input3">
+                    <el-input v-model="thirdForm.input3" placeholder="请输入联系人">
+                    </el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="联系电话" prop="input3">
+                    <el-input v-model="thirdForm.input3" placeholder="请输入联系电话">
+                    </el-input>
+                </el-form-item>
+            </el-col>
+            
+            <el-col :span="24">
                 <el-form-item label="上传图片" prop="input3">
                     <el-upload action="#" list-type="picture-card" :auto-upload="false" size="small">
                         <i slot="default" class="el-icon-plus"></i>
@@ -23,6 +42,12 @@
                             </span>
                         </div>
                     </el-upload>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="公式链接" prop="input3">
+                    <el-input v-model="thirdForm.input3" placeholder="请输入公式链接">
+                    </el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12">

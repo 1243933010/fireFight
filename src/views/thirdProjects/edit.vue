@@ -14,13 +14,13 @@
 
           <!-- 三方基本信息录入 -->
           <div class="background-icon">
-            <span class="title">三方基本信息录入</span>
+            <span class="title">招标</span>
           </div>
 
           <ThirdCom />
           <!-- 开标 -->
           <div class="background-icon">
-            <span class="title">开标</span>
+            <span class="title">开评标</span>
           </div>
           <div style="padding-left: 30px;">
 
@@ -31,18 +31,18 @@
 
              <!-- 中标单位 -->
           <div class="background-icon">
-            <span class="title">中标单位</span>
+            <span class="title">中标</span>
           </div>
           <div style="padding-left: 30px;">
 
             <SuccessfulBidder />
           </div>
           <div class="btnn">
-            <div class="btn1">取消</div>
+            <!-- <div class="btn1">取消</div> -->
             <div class="btn2">提交</div>
             <div class="btn3">保存草稿</div>
-            <div class="btn4">通过</div>
-            <div class="btn5">驳回</div>
+            <!-- <div class="btn4">通过</div> -->
+            <!-- <div class="btn5">驳回</div> -->
           </div>
         </div>
       </div>
