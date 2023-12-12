@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: '/vue-element-admin/user/info',
+    url: '/user/user_roles_info',
     method: 'get',
     // params: { token }
   })
