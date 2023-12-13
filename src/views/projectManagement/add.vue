@@ -14,7 +14,7 @@
               <div></div>
             </div>
           </div>
-          
+
           <BasicMsg :disabled="false" />
           <div class="btnn">
             <div class="btn1">取消</div>
@@ -26,14 +26,8 @@
         </div>
       </div>
       <div class="box-right">
-        <div class="files">
-          <div class="title1">
-            <img src="../../assets/liucheng.png" alt="">
-            <span>附件</span>
-          </div>
           <div class="file-form">
-           <AnnexCom />
-          </div>
+            <AnnexCom />
         </div>
       </div>
     </div>
@@ -47,30 +41,24 @@
 
 import Steps from "@/components/steps.vue";
 import { addMixins } from './mixins'
-import AnnexCom from '../thirdProjects/editCom/annex.vue'
+import AnnexCom from './annex.vue'
 import BasicMsg from './basicMsg.vue'
+import { mapState, mapGetters } from 'vuex'
 export default {
   mixins: [addMixins],
-  components: { Steps,AnnexCom,BasicMsg },
+  components: { Steps, AnnexCom, BasicMsg },
   data() {
     return {
 
     };
   },
-
-  mounted() { 
-    // console.log( this.$store.state)
-  },
-  computed:{
-    // stepList(){
-    //   return this.$store.state.projectManagementAdd.stepList
-    // }
+  mounted() {
   },
   methods: {
     onSubmit() {
       console.log("submit!");
     },
-    
+
   },
 };
 </script>
@@ -129,6 +117,7 @@ export default {
     }
   }
 }
+
 .btn {
   width: 100%;
   display: flex;
@@ -136,6 +125,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .btnn {
   width: 100%;
   display: flex;
@@ -165,15 +155,18 @@ export default {
     background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
     color: #FEFEFF;
   }
+
   .btn3 {
     background: white;
     border: 1px solid #A7AABD;
     color: #404659;
   }
+
   .btn4 {
     background: linear-gradient(0deg, #6080F6 0%, #2D6CFF 100%);
     color: #FEFEFF;
   }
+
   .btn5 {
     background: linear-gradient(0deg, #FC6235 0%, #FC4935 100%);
     color: #FEFEFF;
@@ -381,7 +374,8 @@ export default {
                   border-radius: 4px;
                   margin-right: 19px;
                 }
-                span{
+
+                span {
                   font-size: 12px;
                   color: #A6A9BC;
                 }

@@ -75,7 +75,8 @@ export default {
     },
     methods:{
         deleteFile(item,index){
-            this.fileList.splice(index,1)
+            // this.fileList.splice(index,1)
+            this.$emit('updateFile',index)
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -87,7 +88,8 @@ export default {
             console.log(e, file, fileList,'----')
             if(e.code===200){
                 e.data.title = e.data.file_name;
-                this.fileList.push(e.data);
+                this.$emit('updateFile',e.data)
+                // this.fileList.push(e.data);
             }
         }
     }

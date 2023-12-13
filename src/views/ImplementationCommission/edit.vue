@@ -10,26 +10,41 @@
             <span class="title">基本信息</span>
           </div>
 
-          <BasicMsg />
+          <BasicMsg :disabled="true" />
 
-          <!-- 三方基本信息录入 -->
-          <div class="background-icon">
-            <span class="title">三方基本信息录入</span>
+          <div>
+            <el-form ref="formInfo"  :inline="true" :rules="rules" :model="formInfo"
+              class="demo-form-inline" label-width="100px">
+              <el-col :span="12">
+                <el-form-item label="采购代理名称" prop="input1" label-width="115px">
+                  <el-select v-model="formInfo.input1" placeholder="请选择采购代理名称">
+                    <el-option label="Zone one" value="shanghai" />
+                    <el-option label="Zone two" value="beijing" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="抽取采购代理机构登记" prop="input3" label-width="170px">
+                  <el-upload action="#" list-type="picture-card" :auto-upload="false" :limit="4"
+                    :file-list="formInfo.fileList">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                      <span class="el-upload-list__item-actions">
+                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                          <i class="el-icon-delete"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-form>
           </div>
 
-          <!-- <ThirdCom /> -->
-          <!-- 开标 -->
-          <div class="background-icon">
-            <span class="title">开标</span>
-          </div>
-          <div style="padding-left: 30px;">
 
-            
-          </div>
 
-           
 
-         
           <div class="btnn">
             <div class="btn1">取消</div>
             <div class="btn2">提交</div>
@@ -40,7 +55,7 @@
         </div>
       </div>
       <AnnexCom />
-      
+
     </div>
   </div>
 </template>
@@ -51,16 +66,27 @@ import { addMixins } from '../thirdProjects/mixins'
 import BasicMsg from '../thirdProjects/editCom/basicMsg.vue'
 import ThirdCom from '../thirdProjects/editCom/thirdCom.vue'
 import StartCom from '../thirdProjects/editCom/start.vue'
-import AnnexCom from '../thirdProjects/editCom/annex.vue'
+import AnnexCom from './annex.vue'
 import BidCom from '../thirdProjects/editCom/bid.vue'
 import SuccessfulBidder from '../thirdProjects/editCom/successfulBidder.vue'
 
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom, BidCom,SuccessfulBidder},
+  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom, BidCom, SuccessfulBidder },
   data() {
     return {
-
+      formInfo: {
+        input1: '',
+        fileList: []
+      },
+      rules: {
+        input1: [
+          { required: true, message: '请选择需求单位', trigger: 'blur' },
+        ],
+        fileList: [
+          { required: true, message: '请选择需求单位', trigger: 'blur' },
+        ],
+      }
     };
   },
 

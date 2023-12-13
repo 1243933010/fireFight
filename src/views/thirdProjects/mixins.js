@@ -1,12 +1,6 @@
 export const addMixins = {
     data() {
-        return {
-
-            
-           
-            
-           
-           
+        return { 
             startForm:{
                 fileList1:[],
                 fileList2:[],
