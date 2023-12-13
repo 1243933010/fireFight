@@ -1,7 +1,6 @@
 
 
 const state = {
-  test:'111',
   formInfo: {
     demand_department_id: "",
     project_leader: "",

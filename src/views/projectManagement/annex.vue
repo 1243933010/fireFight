@@ -3,7 +3,7 @@
         <div class="files">
           <div class="title1">
             <img src="../../assets/liucheng.png" alt="">
-            <span>附件{{  }}</span>
+            <span>附件</span>
           </div>
           <div class="file-form">
             <div class="file-form-item" v-for="(item,index) in project_attachments" :key="index">
