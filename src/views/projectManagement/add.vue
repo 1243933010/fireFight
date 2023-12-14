@@ -181,10 +181,11 @@ export default {
   justify-content: space-between;
 
   .box-left {
+    width: 65%;
     display: flex;
     height: auto;
     background-color: white;
-    max-width: 1000px;
+    // max-width: 1000px;
 
     .form {
       min-width: 500px;
