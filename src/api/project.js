@@ -8,3 +8,11 @@ export function projectAdd(data) {
     })
   }
   
+  export function projectList(pv) {
+    return request({
+      url: '/project/list',
+      method: 'get',
+      params: { pv }
+    })
+  }
+  
