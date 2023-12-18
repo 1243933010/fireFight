@@ -59,7 +59,7 @@
       </el-col>
       <el-col :span="12">
         <el-form-item label="采购意向公开日期" prop="public_date">
-          <el-date-picker v-model="formInfo.public_date" type="date" placeholder="请选择采购意向公开日期">
+          <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.public_date" type="date" placeholder="请选择采购意向公开日期">
           </el-date-picker>
         </el-form-item>
       </el-col>
@@ -83,7 +83,7 @@
                 <div class="radio-class " :class="childRadioIndex == ind ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
                   <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
-                    type="number"></el-input>
+                    type="text"></el-input>
                   <span>{{ ite.label2 }}</span>
                 </span>
               </div>
@@ -149,18 +149,7 @@ export default {
       activeIndex: 0,
       childRadioBool: false,
       childRadioIndex: 0,
-      radioLabelList: [
-        { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },
-        {
-          label: '否: 预留预算总额的货物类、服务类项目不低于30%，工程类项目不低于40%，由需求单位根据实际情况填写专门面向中小企业采购。', child: [
-            { label1: '采购项目整体或者设置采购包专门面向中小企业采购', checked: false, },
-            { label1: '供应商以联合体形式参加采购活动，联合体中中小企业承担预算总额的', checked: false, label2: '%部分', num: 0 },
-            { label1: '获得采购合同的供应商将采购项目中的', checked: false, label2: '%分包给一家或者多家中小企业', num: 0 },
-
-          ], checked: false,
-        },
-        { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
-      ],
+      
       procurementMethodSelect: [
         [
           { label: '公开招标', value: '1' },
@@ -210,9 +199,9 @@ export default {
             element.child.forEach((val,ind)=>{
               if(val.checked&&val.num==undefined){
                 this.formInfo.input12 = 'true'
-              }else if(val.checked&&val.num!==undefined&&val.num==0){
+              }else if(val.checked&&val.num!==undefined&&!val.num){
                 this.formInfo.input12 = ''
-              }else if(val.checked&&val.num!==undefined&&val.num!==0){
+              }else if(val.checked&&val.num!==undefined&&val.num){
                 this.formInfo.input12 = 'true'
               }
             })
@@ -226,9 +215,24 @@ export default {
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
     },
-
+    radioLabelList(){
+      return this.$store.state.projectManagementAdd.radioLabelList
+    }
   },
   methods: {
+  verifyForm(callback){
+
+    this.$refs.formInfo.validate((valid) => {
+         callback(valid)
+          if (valid) {
+           return true;
+          } else {
+           
+            return false;
+          }
+
+        });
+  },
     setIndex(ind) {
       this.activeIndex = ind;
       this.childRadioBool = false;
@@ -246,7 +250,7 @@ export default {
       item.child.forEach(element => {
         element.checked = false;
         if (element.num !== undefined) {
-          element.num = 0;
+          element.num = '';
         }
       });
       this.childRadioIndex = ind;

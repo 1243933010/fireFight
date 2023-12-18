@@ -16,3 +16,10 @@ export function projectAdd(data) {
     })
   }
   
+  export function projectDetail(pv) {
+    return request({
+      url: `/project/info/${pv}`,
+      method: 'get',
+    })
+  }
+  

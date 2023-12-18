@@ -15,10 +15,10 @@
             </div>
           </div>
 
-          <BasicMsg :disabled="false" />
+          <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <div class="btn1">取消</div>
-            <div class="btn2">提交</div>
+            <div class="btn2" @click="submitFnc">提交</div>
             <div class="btn3">保存草稿</div>
             <div class="btn4">通过</div>
             <div class="btn5">驳回</div>
@@ -27,7 +27,7 @@
       </div>
       <div class="box-right">
           <div class="file-form">
-            <AnnexCom />
+            <AnnexCom ref="annexCom" />
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@ import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
 import BasicMsg from './basicMsg.vue'
 import { mapState, mapGetters } from 'vuex'
+import {projectAdd} from '@/api/project'
 export default {
   mixins: [addMixins],
   components: { Steps, AnnexCom, BasicMsg },
@@ -55,8 +56,38 @@ export default {
   mounted() {
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+   async submitFnc() {
+    console.log(this.$store.state.user)
+      let state = this.$store.state.projectManagementAdd;
+      let form = {...state.formInfo};
+      form.project_attachments = state.project_attachments
+      form.radioLabelList = state.radioLabelList;
+      form.small_company = JSON.stringify(state.radioLabelList)
+      console.log(form)
+     
+      let bool = false;
+       this.$refs.basicMsg.verifyForm((bools)=>{
+        bool = bools
+      })
+      console.log(bool,'===')
+      let fileBool = true;
+      this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
+        if(val.files.length==0){
+          fileBool = false;
+        }
+      })
+      if(!bool){
+        this.$message.error('表单必须填写')
+        return
+      }
+      if(!fileBool){
+        this.$message.error('附件必须上传')
+        return
+      }
+      console.log(form);
+      return 
+      let res = await projectAdd(form);
+      console.log(res)
     },
 
   },

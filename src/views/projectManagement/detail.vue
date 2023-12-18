@@ -44,6 +44,7 @@ import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
 import BasicMsg from './basicMsg.vue'
 import { mapState, mapGetters } from 'vuex'
+import { projectDetail } from "@/api/project";
 export default {
   mixins: [addMixins],
   components: { Steps, AnnexCom, BasicMsg },
@@ -54,7 +55,9 @@ export default {
   },
 
   mounted() {
-    // console.log( this.$store.state)
+    let route = this.$route;
+    console.log( route)
+    this.getDetail(route.params.id);
   },
   computed: {
     // ...mapGetters([
@@ -63,6 +66,10 @@ export default {
     
   },
   methods: {
+    async getDetail(id){
+      let res = await projectDetail(id);
+      console.log(res)
+    },
     onSubmit() {
       console.log("submit!");
     },
