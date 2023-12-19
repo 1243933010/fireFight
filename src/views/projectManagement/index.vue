@@ -81,7 +81,7 @@
               <span>{{ item.register_status_text }}</span>
             </div>
             <div class="status2" >
-              <span>邀请招标</span>
+              <span>{{ item.procurement_method_text }}</span>
             </div>
           </div>
           <div class="item-con">
@@ -128,12 +128,12 @@
         </div>
       </div>
     </div>
-    <div>
+    <div style="display: flex;justify-content: space-between;flex-direction: row-reverse;">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="form.current_page"
-        :page-sizes="[100, 200, 300, 400]"
+        :page-sizes="[10, 20, 30, 40]"
         :page-size="form.per_page"
         layout="total, sizes, prev, pager, next, jumper"
         :total="form.total"
@@ -162,12 +162,13 @@ export default {
   },
   mixins: [addMixins],
   mounted() {
-    // console.log(router.options, this.$router);
+    console.log(this.$store.state.user);
     this.query();
   },
   methods: {
     async query() {
-      let res = await projectList();
+      let form = {current_page:this.form.current_page,per_page:this.form.per_page}
+      let res = await projectList(this.form);
       console.log(res)
       if(res.code==200){
         this.form.total = res.data.total;

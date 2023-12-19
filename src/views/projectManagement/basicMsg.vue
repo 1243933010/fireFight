@@ -5,8 +5,7 @@
       <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">
           <el-select v-model="formInfo.demand_department_id" placeholder="请选择需求单位">
-            <el-option label="Zone one" value="shanghai" />
-            <el-option label="Zone two" value="beijing" />
+            <el-option v-for="(item,index) in selectList" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
       </el-col>
@@ -217,6 +216,10 @@ export default {
     },
     radioLabelList(){
       return this.$store.state.projectManagementAdd.radioLabelList
+    },
+    selectList(){
+      console.log(this.$store.state.user,'---')
+      return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]
     }
   },
   methods: {

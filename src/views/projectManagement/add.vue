@@ -18,8 +18,8 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <div class="btn1">取消</div>
-            <div class="btn2" @click="submitFnc">提交</div>
-            <div class="btn3">保存草稿</div>
+            <div class="btn2">提交</div>
+            <div class="btn3" @click="submitFnc">保存草稿</div>
             <div class="btn4">通过</div>
             <div class="btn5">驳回</div>
           </div>
@@ -85,9 +85,14 @@ export default {
         return
       }
       console.log(form);
-      return 
       let res = await projectAdd(form);
       console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.success(res.msg);
     },
 
   },
