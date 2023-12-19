@@ -207,6 +207,13 @@ export const asyncRoutes = [
         hidden:true
       },
       {
+        path: 'projectManagementEdit',
+        component: () => import('@/views/projectManagement/edit'),
+        name: 'projectManagementEdit',
+        meta: { title: '项目管理编辑', affix: true },
+        hidden:true
+      },
+      {
         path: 'ImplementationCommission',
         component: () => import('@/views/ImplementationCommission/index'),
         name: 'ImplementationCommission',
@@ -257,7 +264,8 @@ export const asyncRoutes = [
       hidden:true,
       component: () => import('@/views/thirdProjects/edit'),
       meta: { title: '三方项目编辑',}
-    }]
+    },
+  ]
   },
   // {
   //   path: '/contractManagement',

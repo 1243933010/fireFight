@@ -17,11 +17,11 @@
 
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
-            <div class="btn1">取消</div>
-            <div class="btn2">提交</div>
+            <!-- <div class="btn1">取消</div> -->
+            <!-- <div class="btn2" @click="submitForm" >提交</div> -->
             <div class="btn3" @click="submitFnc">保存草稿</div>
-            <div class="btn4">通过</div>
-            <div class="btn5">驳回</div>
+            <!-- <div class="btn4">通过</div> -->
+            <!-- <div class="btn5">驳回</div> -->
           </div>
         </div>
       </div>

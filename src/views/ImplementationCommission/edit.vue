@@ -18,17 +18,21 @@
               <el-col :span="12">
                 <el-form-item label="采购代理名称" prop="input1" label-width="115px">
                   <el-select v-model="formInfo.input1" placeholder="请选择采购代理名称">
-                    <el-option label="Zone one" value="shanghai" />
-                    <el-option label="Zone two" value="beijing" />
+                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="抽取采购代理机构登记" prop="input3" label-width="170px">
-                  <el-upload action="#" list-type="picture-card" :auto-upload="false" :limit="4"
-                    :file-list="formInfo.fileList">
+                <el-form-item label="抽取采购代理机构登记" prop="fileList" label-width="170px">
+                  <el-upload :action="uploadUrl"
+                      :headers="headers" list-type="picture-card"  :limit="1"
+                    :file-list="formInfo.fileList"
+                    :before-upload="beforeAvatarUpload"
+                    :on-success="handleSuccess">
                     <i slot="default" class="el-icon-plus"></i>
+                    <div class="el-upload__tip" slot="tip">只能上传图片或视频</div>
                     <div slot="file" slot-scope="{file}">
+                     
                       <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
                       <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-delete" @click="handleRemove(file)">
@@ -62,23 +66,16 @@
   
 <script>
 import Steps from "@/components/steps.vue";
-import { addMixins } from '../thirdProjects/mixins'
-import BasicMsg from '../thirdProjects/editCom/basicMsg.vue'
-import ThirdCom from '../thirdProjects/editCom/thirdCom.vue'
-import StartCom from '../thirdProjects/editCom/start.vue'
+import { addMixins } from './mixins'
+import BasicMsg from './basicMsg.vue'
 import AnnexCom from './annex.vue'
-import BidCom from '../thirdProjects/editCom/bid.vue'
-import SuccessfulBidder from '../thirdProjects/editCom/successfulBidder.vue'
-
+import { projectDetail,agentList } from "@/api/project";
+import { getToken } from '@/utils/auth'
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom, BidCom, SuccessfulBidder },
+  components: { Steps, BasicMsg,  AnnexCom, },
   data() {
     return {
-      formInfo: {
-        input1: '',
-        fileList: []
-      },
       rules: {
         input1: [
           { required: true, message: '请选择需求单位', trigger: 'blur' },
@@ -86,12 +83,67 @@ export default {
         fileList: [
           { required: true, message: '请选择需求单位', trigger: 'blur' },
         ],
-      }
+      },
+      agentArr:[]
     };
   },
 
-  mounted() { },
+  mounted() { 
+    let route = this.$route;
+    console.log( route)
+    this.getDetail(route.params.id);
+    this.getAgentList();
+  },
+  computed:{
+        uploadUrl(){
+            return  process.env.VUE_APP_UPLOAD_API+`/project/save_agent_check/${this.$route.params.id}`
+            // return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
+        },
+        headers(){
+            return {
+                "Authorization":`Bearer ${getToken()}`
+            }
+        },
+        formInfo(){
+          return this.$store.state.projectManagementAdd.ImplementationCommissionForm
+        }
+    },
   methods: {
+    async getDetail(id){
+      let res = await projectDetail(id);
+      if(res.code==200){
+       
+        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
+        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.attachments_content);
+        this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
+
+      }
+    },
+    async getAgentList(){
+      let res = await agentList();
+      // console.log(res)
+      if(res.code==200){
+        this.agentArr = res.data;
+      }
+    },
+    beforeAvatarUpload(file) {
+      console.log(this.uploadUrl)
+        const isJPG = file.type.includes('image');
+        const isVideo = file.type.includes('mp4');
+
+        if (!isJPG&&!isVideo) {
+          this.$message.error('上传头像图片只能图片或视频!');
+        }
+        return isJPG ||isVideo;
+      },
+      handleSuccess(e, file, fileList){
+            // console.log(e, file, fileList,'----')
+            if(e.code===200){
+                // e.data.title = e.data.file_name;
+                // this.$emit('updateFile',e.data)
+                this.formInfo.fileList.push(e.data);
+            }
+        },
     onSubmit() {
       console.log("submit!");
     },
@@ -109,17 +161,11 @@ export default {
       this.childRadioIndex = ind;
 
     },
-    handleRemove(file) {
-      console.log(this.dialogImageUrl)
-      console.log(file);
+    handleRemove(file,fileList) {
+      // this.formInfo.fileList.splice()
+      // console.log(this.dialogImageUrl)
+      console.log(file,fileList);
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleDownload(file) {
-      console.log(file);
-    }
   },
 };
 </script>

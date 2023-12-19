@@ -72,14 +72,14 @@
           <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
           <div v-for="(item, index) in radioLabelList" :key="index">
-            <div class="radio-item" @click="setIndex(index)">
-              <div class="radio-class" :class="item.checked ? 'active' : ''"></div>
+            <div class="radio-item"  v-if="item.child.length == 0">
+              <div  v-if="item.child.length == 0" class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
 
             </div>
             <div class="radio-item-child" v-if="item.child.length > 0 && item.checked">
-              <div class="radio-item" v-for="(ite, ind) in item.child" :key="ind" @click="setChildIndex(item, ite, ind)">
-                <div class="radio-class " :class="ite.checked ? 'active' : ''"></div>
+              <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind" >
+                <div class="radio-class " v-if="ite.checked" :class="ite.checked ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
                   <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
                     type="text"></el-input>
@@ -216,7 +216,14 @@ export default {
       return this.$store.state.projectManagementAdd.formInfo
     },
     radioLabelList(){
-      return this.$store.state.projectManagementAdd.radioLabelList
+      let arr = [];
+      this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
+        if(val.checked){
+          arr.push(val)
+        }
+      })
+      return arr
+      // return this.$store.state.projectManagementAdd.radioLabelList
     },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]
@@ -235,30 +242,7 @@ export default {
 
         });
   },
-    setIndex(ind) {
-      // this.activeIndex = ind;
-      this.childRadioBool = false;
-      this.radioLabelList.forEach(element => {
-        element.checked = false;
-      });
-      this.radioLabelList[ind].checked = true;
-      if (ind == 1) {
-        this.childRadioBool = true;
-        this.childRadioIndex = 0;
-      }
-      // console.log(this.$store.state.projectManagementAdd.radioLabelList)
-    },
-    setChildIndex(item, ite, ind) {
-      item.child.forEach(element => {
-        element.checked = false;
-        if (element.num !== undefined) {
-          element.num = '';
-        }
-      });
-      this.childRadioIndex = ind;
-      ite.checked = true;
-      // console.log(this.$store.state.projectManagementAdd.radioLabelList)
-    }
+
   }
 }
 </script>

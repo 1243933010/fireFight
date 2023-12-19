@@ -52,6 +52,15 @@ export function projectEdit(data) {
       data
     })
   }
+    
+  //项目管理删除
+  export function projectDelete(data) {
+    return request({
+      url: `/project/destroy/5`,
+      method: 'post',
+      data
+    })
+  }
   
 
   //---------------
@@ -65,3 +74,11 @@ export function projectEdit(data) {
     })
   }
   
+    //实施委托列表
+    export function agentList() {
+      return request({
+        url: `/project/agent_list`,
+        method: 'get',
+      })
+    }
+    

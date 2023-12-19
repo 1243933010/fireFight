@@ -13,7 +13,7 @@ const state = {
     procurement_method: "",
     public_date: "",
     notice_link: "",
-    input12: "true",
+    input12: "",
     small_company:'',//是否面向小微企业，不展示
   },
   project_attachments:[
@@ -37,42 +37,31 @@ const state = {
     },
     { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
   ],
-  // fileForm: {
-  //   text1: '',
-  //   fileList1: [
-  //     { title: '这是文件名称', type: 'pdf', url: '1111' },
-  //     { title: '这是文件名称', type: 'pdf', url: '1111' },
-  //   ],
-  //   text2: '',
-  //   fileList2: [],
-  //   text3: '',
-  //   fileList3: [],
-  //   text4: '',
-  //   fileList4: [],
-  //   text5: '',
-  //   fileList5: [],
-  //   text6: '',
-  //   fileList6: [],
-  //   text7: '',
-  //   fileList7: [],
-  // },
+  //实施委托
+  ImplementationCommissionForm:{
+    input1: '',
+    fileList: []
+  }
 }
 
 
 const mutations = {
   UPDATE_FORMINFO: (state, form) => {
-    console.log('-----')
     state.formInfo = form;
-    // eslint-disable-next-line no-prototype-builtins
-    // if (state.hasOwnProperty(key)) {
-    //   state[key] = value
-    // }
   },
   UPDATE_PROJECT_ATTACHMENTS:(state,list)=>{
     state.project_attachments = list;
   },
   UPDATE_RADIOLABELLIST:(state,list)=>{
     state.radioLabelList = list;
+  },
+  update_ImplementationCommissionForm:(state,type,data)=>{
+    if(type=='form'){
+      state.ImplementationCommissionForm.input1 = data;
+    }else{
+      state.ImplementationCommissionForm.fileList = data;
+    }
+    
   }
 }
 

@@ -12,6 +12,7 @@ export const addMixins = {
     },
     computed: {
         stepList() {
+            console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
             return [
                 {
                     title: "需求单位",

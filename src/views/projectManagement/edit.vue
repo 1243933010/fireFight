@@ -15,15 +15,13 @@
             </div>
           </div>
 
-          <BasicMsg :disabled="true" />
+          <BasicMsg :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <!-- <div class="btn2" @click="submitForm">提交</div> -->
-            <!-- <div class="btn3" @click="submitFnc">保存草稿</div> -->
-            <!-- <div class="btn4">通过</div>
-            <div class="btn5">驳回</div> -->
-            <div class="btn2" @click="auditFnc" v-if="formInfo.status==1" v-permission="['department_auditor']">初审</div>
-            <div class="btn2" @click="auditFncEnd" v-if="formInfo.status==3" v-permission="['procure_auditor']">终审</div>
+            <div class="btn2" @click="submitForm"  v-if="formInfo.status==0" v-permission="['department_auditor']">提交</div>
+            <div class="btn3" @click="submitFnc"   v-if="formInfo.status==0" v-permission="['department_auditor']">保存草稿</div>
+            <!-- <div class="btn4">通过</div> -->
+            <!-- <div class="btn5">驳回</div> -->
           </div>
         </div>
       </div>
@@ -33,8 +31,6 @@
         </div>
       </div>
     </div>
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[{label:'通过',value:3},{label:'拒绝',value:2}]" />
-    <checkDialog ref="checkDialogEnd" title="终审审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:5},{label:'拒绝',value:4}]" />
   </div>
 </template>
 
@@ -48,11 +44,10 @@ import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
 import BasicMsg from './basicMsg.vue'
 import { mapState, mapGetters } from 'vuex'
-import { projectEdit,projectDetail,projectAudit } from "@/api/project";
-import checkDialog from '@/components/checkDialog.vue'
+import { projectEdit,projectDetail,projectSubmit } from "@/api/project";
 export default {
   mixins: [addMixins],
-  components: { Steps, AnnexCom, BasicMsg,checkDialog },
+  components: { Steps, AnnexCom, BasicMsg },
   data() {
     return {
 
@@ -61,7 +56,7 @@ export default {
 
   mounted() {
     let route = this.$route;
-    console.log( this.$store.getters)
+    console.log( route)
     this.getDetail(route.params.id);
   },
   computed: {
@@ -72,11 +67,22 @@ export default {
       console.log( this.$store.state.projectManagementAdd.formInfo)
       return this.$store.state.projectManagementAdd.formInfo
     }
+    
   },
   methods: {
+    async submitForm() {
+      let res = await projectSubmit({id:this.$store.state.projectManagementAdd.formInfo.id})
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
     async getDetail(id){
       let res = await projectDetail(id);
-      // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
+      console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
       if(res.code==200){
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
@@ -85,72 +91,47 @@ export default {
 
       }
     },
-    async auditFnc(){
-      this.$refs.checkDialog.openDialog(true)
+    onSubmit() {
+      console.log("submit!");
     },
-    async auditFncEnd(){
-      this.$refs.checkDialogEnd.openDialog(true)
-    },
-    async auditEmit(e){
-      console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
-      console.log(res)
-      if(res.code==200){
-        this.$message.success(res.msg);
-        this.$router.go(-1)
-        return
-      }
-      this.$message.error(res.msg);
-    },
-    async auditEmitEnd(e){
-      console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
-      console.log(res)
-      if(res.code==200){
-        this.$message.success(res.msg);
-        this.$router.go(-1)
-        return
-      }
-      this.$message.error(res.msg);
-    },
-    // async submitFnc() {
-    // console.log(this.$store.state.user)
-    //   let state = this.$store.state.projectManagementAdd;
-    //   let form = {...state.formInfo};
-    //   form.project_attachments = state.project_attachments
-    //   form.radioLabelList = state.radioLabelList;
-    //   form.small_company = JSON.stringify(state.radioLabelList)
-    //   console.log(form)
+    async submitFnc() {
+    console.log(this.$store.state.user)
+      let state = this.$store.state.projectManagementAdd;
+      let form = {...state.formInfo};
+      form.project_attachments = state.project_attachments
+      form.radioLabelList = state.radioLabelList;
+      form.small_company = JSON.stringify(state.radioLabelList)
+      console.log(form)
      
-    //   let bool = false;
-    //    this.$refs.basicMsg.verifyForm((bools)=>{
-    //     bool = bools
-    //   })
-    //   console.log(bool,'===')
-    //   let fileBool = true;
-    //   this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
-    //     if(val.files.length==0){
-    //       fileBool = false;
-    //     }
-    //   })
-    //   if(!bool){
-    //     this.$message.error('表单必须填写')
-    //     return
-    //   }
-    //   if(!fileBool){
-    //     this.$message.error('附件必须上传')
-    //     return
-    //   }
-    //   console.log(form);
-      // let res = await projectEdit(form);
-      // console.log(res)
-      // if(res.code==200){
-      //   this.$message.success(res.msg);
-      //   this.$router.go(-1)
-      //   return
-      // }
-      // this.$message.error(res.msg);
-    // },
+      let bool = false;
+       this.$refs.basicMsg.verifyForm((bools)=>{
+        bool = bools
+      })
+      console.log(bool,'===')
+      let fileBool = true;
+      this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
+        if(val.files.length==0){
+          fileBool = false;
+        }
+      })
+      if(!bool){
+        this.$message.error('表单必须填写')
+        return
+      }
+      if(!fileBool){
+        this.$message.error('附件必须上传')
+        return
+      }
+      console.log(form);
+      let res = await projectEdit(form);
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.success(res.msg);
+    },
 
   },
 };

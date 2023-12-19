@@ -119,10 +119,10 @@
               <div class="item-con-right-btn1" @click="openDetail(item)">
                 详情
               </div>
-              <div class="item-con-right-btn2" @click="openDetail(item)">
+              <div class="item-con-right-btn2" @click="openEdit(item)">
                 编辑
               </div>
-              <div class="item-con-right-btn3">删除</div>
+              <div class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
 
 <script>
 import router from "@/router/index";
-import { projectList } from "@/api/project";
+import { projectList,projectDelete } from "@/api/project";
 import { addMixins } from './mixins'
 export default {
   data() {
@@ -187,15 +187,47 @@ export default {
         this.query();
       },
     openDetail(item) {
-      console.log(item, "---");
       this.resetFields();
       this.$router.push({ name: "projectManagementDetail",params:{id:item.id} });
      
+    },
+    openEdit(item){
+      this.resetFields();
+      this.$router.push({ name: "projectManagementEdit",params:{id:item.id} });
     },
     projectAdd() {
         this.resetFields();
       this.$router.push({ name: "projectManagementAdd", params: {} });
     },
+    deleteItem(item){
+      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
+          let res = await projectDelete(item.id);
+          console.log(res)
+          if(res.code===200){
+            this.$message({
+            type: 'success',
+            message: res.msg
+          });
+          this.form.property = 1;
+          this.query()
+          }else{
+            this.$message({
+            type: 'error',
+            message: res.msg
+          });
+          }
+         
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    }
   },
 };
 </script>
