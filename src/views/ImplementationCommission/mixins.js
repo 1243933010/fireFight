@@ -78,13 +78,13 @@ export const addMixins = {
                 },
                 {
                     title: "采购代理名称",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.input,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.input && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length > 0),
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
                 },
                 {
                     title: "抽取采购代理机构登记",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length>0,
-                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length==0 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
+                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length==0 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
                 },
                 {
                     title: "采购意向",

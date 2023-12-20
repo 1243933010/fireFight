@@ -13,29 +13,63 @@
           <BasicMsg :disabled="true" />
 
           <div>
-            <el-form ref="formInfo"  :inline="true" :rules="rules" :model="formInfo"
-              class="demo-form-inline" label-width="100px">
+            <el-form
+              ref="formInfo"
+              :inline="true"
+              :rules="rules"
+              :model="formInfo"
+              class="demo-form-inline"
+              label-width="100px"
+            >
               <el-col :span="12">
-                <el-form-item label="采购代理名称" prop="input" label-width="115px">
-                  <el-select v-model="formInfo.input" placeholder="请选择采购代理名称">
-                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
+                <el-form-item
+                  label="采购代理名称"
+                  prop="agent_id"
+                  label-width="115px"
+                >
+                  <el-select
+                    v-model="formInfo.agent_id"
+                    placeholder="请选择采购代理名称"
+                  >
+                    <el-option
+                      v-for="(item, index) in agentArr"
+                      :key="index"
+                      :label="item.name"
+                      :value="item.id"
+                    />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="抽取采购代理机构登记" prop="fileList" label-width="170px">
-                  <el-upload :action="uploadUrl"
-                      :headers="headers" list-type="picture-card"  :limit="1"
-                    :file-list="formInfo.fileList"
+                <el-form-item
+                  label="抽取采购代理机构登记"
+                  prop="files"
+                  label-width="170px"
+                >
+                  <el-upload
+                    :action="uploadUrl"
+                    :headers="headers"
+                    list-type="picture-card"
+                    :limit="1"
+                    :file-list="formInfo.files"
                     :before-upload="beforeAvatarUpload"
-                    :on-success="handleSuccess">
+                    :on-success="handleSuccess"
+                  >
                     <i slot="default" class="el-icon-plus"></i>
-                    <div class="el-upload__tip" slot="tip">只能上传图片或视频</div>
-                    <div slot="file" slot-scope="{file}">
-                     
-                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                    <div class="el-upload__tip" slot="tip">
+                      只能上传图片或视频
+                    </div>
+                    <div slot="file" slot-scope="{ file }">
+                      <img
+                        class="el-upload-list__item-thumbnail"
+                        :src="file.url"
+                        alt=""
+                      />
                       <span class="el-upload-list__item-actions">
-                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                        <span
+                          class="el-upload-list__item-delete"
+                          @click="handleRemove(file)"
+                        >
                           <i class="el-icon-delete"></i>
                         </span>
                       </span>
@@ -46,112 +80,233 @@
             </el-form>
           </div>
 
-
-
-
           <div class="btnn">
-            <div class="btn1" @click="()=>{this.$router.go(-1)}">返回</div>
-            <div class="btn2"  v-if="projectInfo.status==5" v-permission="['project_registrar']">提交</div>
-            <div class="btn3"  v-if="projectInfo.status==5" v-permission="['project_registrar']">保存草稿</div>
-            <div class="btn4" @click="auditFnc"  v-if="projectInfo.status==6" v-permission="['department_auditor']">初审</div>
-            <div class="btn4" @click="auditFncEnd"  v-if="projectInfo.status==8" v-permission="['department_auditor']">终审</div>
+            <div
+              class="btn1"
+              @click="
+                () => {
+                  this.$router.go(-1);
+                }
+              "
+            >
+              返回
+            </div>
+            <div
+              class="btn2"
+              @click="submitForm"
+              v-if="projectInfo.status == 6"
+              v-permission="['project_registrar']"
+            >
+              提交
+            </div>
+            <div
+              class="btn3"
+              @click="saveForm"
+              v-if="projectInfo.status == 5"
+              v-permission="['project_registrar']"
+            >
+              保存草稿
+            </div>
+            <div
+              class="btn4"
+              @click="auditFnc"
+              v-if="projectInfo.status == 7"
+              v-permission="['department_auditor']"
+            >
+              初审
+            </div>
+            <div
+              class="btn4"
+              @click="auditFncEnd"
+              v-if="projectInfo.status == 9"
+              v-permission="['department_auditor']"
+            >
+              终审
+            </div>
           </div>
         </div>
       </div>
       <AnnexCom />
-
     </div>
 
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[{label:'通过',value:8},{label:'拒绝',value:7}]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:10},{label:'拒绝',value:9}]" />
+    <checkDialog
+      ref="checkDialog"
+      title="初审"
+      @auditEmit="auditEmit"
+      :radioList="[
+        { label: '拒绝', value: 8 },
+        { label: '通过', value: 9 },
+      ]"
+    />
+    <checkDialog
+      ref="checkDialogEnd"
+      title="终审"
+      @auditEmit="auditEmitEnd"
+      :radioList="[
+        { label: '拒绝', value: 10 },
+        { label: '通过', value: 11 },
+      ]"
+    />
   </div>
 </template>
-  
+
 <script>
 import Steps from "@/components/steps.vue";
-import { addMixins } from './mixins'
-import BasicMsg from './basicMsg.vue'
-import AnnexCom from './annex.vue'
-import { projectDetail,agentList } from "@/api/project";
-import { getToken } from '@/utils/auth'
-import checkDialog from '@/components/checkDialog.vue'
+import { addMixins } from "./mixins";
+import BasicMsg from "./basicMsg.vue";
+import AnnexCom from "./annex.vue";
+import {
+  projectDetail,
+  agentList,
+  saveImplement,
+  submitImplement,
+  projectAudit
+} from "@/api/project";
+import { getToken } from "@/utils/auth";
+import checkDialog from "@/components/checkDialog.vue";
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg,  AnnexCom,checkDialog },
+  components: { Steps, BasicMsg, AnnexCom, checkDialog },
   data() {
     return {
       rules: {
-        input: [
-          { required: true, message: '请选择需求单位', trigger: 'blur' },
+        agent_id: [
+          { required: true, message: "请选择需求单位", trigger: "blur" },
         ],
-        fileList: [
-          { required: true, message: '请选择需求单位', trigger: 'blur' },
-        ],
+        files: [{ required: true, message: "请上传图片或者视频", trigger: "blur" }],
       },
-      agentArr:[]
+      agentArr: [],
     };
   },
 
-  mounted() { 
+  mounted() {
     let route = this.$route;
-    console.log( route)
+    console.log(route);
     this.getDetail(route.params.id);
     this.getAgentList();
   },
-  computed:{
-        uploadUrl(){
-            return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
-        },
-        headers(){
-            return {
-                "Authorization":`Bearer ${getToken()}`
-            }
-        },
-        formInfo(){
-          return this.$store.state.projectManagementAdd.ImplementationCommissionForm
-        },
-        projectInfo(){
-          return this.$store.state.projectManagementAdd.formInfo
-        }
+  computed: {
+    uploadUrl() {
+      return process.env.VUE_APP_UPLOAD_API + "/user/upload_file";
     },
+    headers() {
+      return {
+        Authorization: `Bearer ${getToken()}`,
+      };
+    },
+    formInfo() {
+      return this.$store.state.projectManagementAdd
+        .ImplementationCommissionForm;
+    },
+    projectInfo() {
+      return this.$store.state.projectManagementAdd.formInfo;
+    },
+  },
   methods: {
-    async getDetail(id){
-      let res = await projectDetail(id);
+    async auditFnc(){
+      this.$refs.checkDialog.openDialog(true)
+    },
+    async auditFncEnd(){
+      this.$refs.checkDialogEnd.openDialog(true)
+    },
+    async auditEmit(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
       if(res.code==200){
-       
-        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
-        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.attachments_content);
-        this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
-
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+    async auditEmitEnd(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+    async getDetail(id) {
+      let res = await projectDetail(id);
+      if (res.code == 200) {
+        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
+          ...res.data,
+          input12: "true",
+        });
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.attachments_content
+        );
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
       }
     },
-    async getAgentList(){
+    async getAgentList() {
       let res = await agentList();
       // console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         this.agentArr = res.data;
       }
     },
     beforeAvatarUpload(file) {
-      console.log(this.uploadUrl)
-        const isJPG = file.type.includes('image');
-        const isVideo = file.type.includes('mp4');
+      console.log(this.uploadUrl);
+      const isJPG = file.type.includes("image");
+      const isVideo = file.type.includes("mp4");
 
-        if (!isJPG&&!isVideo) {
-          this.$message.error('上传头像图片只能图片或视频!');
+      if (!isJPG && !isVideo) {
+        this.$message.error("上传头像图片只能图片或视频!");
+      }
+      return isJPG || isVideo;
+    },
+    handleSuccess(e, file, fileList) {
+      console.log(e, file, fileList, "----");
+      if (e.code === 200) {
+        // e.data.title = e.data.file_name;
+        // this.$emit('updateFile',e.data)
+        this.formInfo.files.push(e.data);
+      }
+    },
+    //提交
+    async submitForm() {
+      this.$refs.formInfo.validate(async (valid) => {
+        if (valid) {
+          let res = await submitImplement(this.projectInfo.id);
+          console.log(res);
+          if (res.code == 200) {
+            this.$message.success(res.msg);
+            this.$router.go(-1);
+            return;
+          }
+          this.$message.error(res.msg);
+        } else {
+          return false;
         }
-        return isJPG ||isVideo;
-      },
-      handleSuccess(e, file, fileList){
-            // console.log(e, file, fileList,'----')
-            if(e.code===200){
-                // e.data.title = e.data.file_name;
-                // this.$emit('updateFile',e.data)
-                this.formInfo.fileList.push(e.data);
-            }
-        },
-    onSubmit() {
-      console.log("submit!");
+      });
+    },
+    async saveForm() {
+      this.$refs.formInfo.validate(async (valid) => {
+        if (valid) {
+          let form = this.formInfo;
+          form.id = this.projectInfo.id;
+          let res = await saveImplement(form);
+          console.log(res);
+          if (res.code == 200) {
+            this.$message.success(res.msg);
+            this.$router.go(-1);
+            return;
+          }
+          this.$message.error(res.msg);
+        } else {
+          return false;
+        }
+      });
     },
     setIndex(ind) {
       this.activeIndex = ind;
@@ -165,20 +320,18 @@ export default {
       this.childInput1 = 0;
       this.childInput2 = 0;
       this.childRadioIndex = ind;
-
     },
-    handleRemove(file,fileList) {
+    handleRemove(file, fileList) {
       // this.formInfo.fileList.splice()
       // console.log(this.dialogImageUrl)
-      console.log(file,fileList);
+      console.log(file, fileList);
     },
   },
 };
 </script>
-  
-<style lang="scss" scoped>
-@import url('../thirdProjects/mixins.scss');
 
+<style lang="scss" scoped>
+@import url("../thirdProjects/mixins.scss");
 
 .background-icon {
   width: 300px;
@@ -226,12 +379,12 @@ export default {
     margin-right: 10px;
 
     &::after {
-      content: '';
+      content: "";
       width: 0;
       height: 0;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
-      transition: transform .15s ease-in;
+      transition: transform 0.15s ease-in;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -269,7 +422,7 @@ export default {
   div {
     width: 86px;
     height: 36px;
-    background: #DCE3FD;
+    background: #dce3fd;
     border-radius: 4px;
     font-size: 12px;
     display: flex;
@@ -279,29 +432,29 @@ export default {
   }
 
   .btn1 {
-    background: #DCE3FD;
-    color: #3E72FB;
+    background: #dce3fd;
+    color: #3e72fb;
   }
 
   .btn2 {
-    background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn3 {
     background: white;
-    border: 1px solid #A7AABD;
+    border: 1px solid #a7aabd;
     color: #404659;
   }
 
   .btn4 {
-    background: linear-gradient(0deg, #6080F6 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6080f6 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn5 {
-    background: linear-gradient(0deg, #FC6235 0%, #FC4935 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #fc6235 0%, #fc4935 100%);
+    color: #fefeff;
   }
 }
 
@@ -325,7 +478,6 @@ export default {
       flex-grow: 1;
       background-color: white;
       padding-bottom: 35px;
-
     }
 
     // max-width: 1100px;
@@ -340,7 +492,7 @@ export default {
 
       .item {
         font-size: 14px;
-        color: #1D70FF;
+        color: #1d70ff;
         margin-right: 46px;
         display: flex;
         flex-direction: row;
@@ -358,15 +510,23 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(90deg, #1D70FF 0%, rgba(29, 112, 255, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #1d70ff 0%,
+            rgba(29, 112, 255, 0) 100%
+          );
         }
       }
 
       .active {
-        color: #A6A9BC;
+        color: #a6a9bc;
 
         div {
-          background: linear-gradient(90deg, #A6A9BC 0%, rgba(166, 169, 188, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #a6a9bc 0%,
+            rgba(166, 169, 188, 0) 100%
+          );
         }
       }
     }
@@ -403,8 +563,5 @@ export default {
       }
     }
   }
-
-
 }
 </style>
-  

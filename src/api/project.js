@@ -100,3 +100,14 @@ export function projectEdit(data) {
       })
     }
     
+
+
+    //-------
+     //第三方列表
+  export function agentProjectList(params) {
+    return request({
+      url: `/project/agent_project_list`,
+      method: 'get',
+      params
+    })
+  }

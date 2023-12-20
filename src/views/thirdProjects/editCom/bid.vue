@@ -1,9 +1,11 @@
 <template>
     <div>
+       
         <div class="bid">
-            <div class="background-icon">
+            <!-- <div class="background-icon">
                 <span class="title">投标单位</span>
-            </div>
+            </div> -->
+            <div></div>
             <div class="add" @click="addForm">
                 <img src="../../../assets/add_icon1.png" alt="" srcset="">
                 <span>添加单位</span>
@@ -11,7 +13,7 @@
         </div>
         <div >
             <div class="item" v-for="(item, index) in list" :key="index">
-                <el-form :ref="item.ref" style="padding-left: 30px;" :inline="true" :rules="item.rules" :model="item.form">
+                <el-form :ref="item.ref" :inline="true" :rules="item.rules" :model="item.form">
                     <el-col :span="24">
                         <el-form-item label="参与投标单位" prop="input1" placeholder="请输入参与投标单位">
                             <el-input v-model="item.form.input1" />
@@ -36,6 +38,36 @@
                 </el-form>
             </div>
         </div>
+        <el-row>
+            <el-col :span="24">
+        <div class="box-right">
+        <div class="files">
+          <div class="title1">
+            <img src="../../../assets/liucheng.png" alt="">
+            <span>附件</span>
+          </div>
+          <div class="file-form">
+            
+            <div class="file-form-item">
+             
+              <div class="right">
+                <UploadCom title="附件" :fileList="fileForm.fileList3" />
+              </div>
+              <div class="left">
+                <div class="title"><span>参与评审专家信息</span></div>
+                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </el-col>
+    </el-row>
+    <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
+      <el-button type="normal">保存草稿</el-button>
+      <el-button type="primary">提交</el-button>
+    </div>
     </div>
 </template>
 
@@ -69,7 +101,22 @@ export default {
                         input1: [{ required: true, message: '请输入参与投标单位', trigger: 'blur' },]
                     }
                 }
-            ]
+            ],
+            fileForm: {
+                text1: '',
+                fileList1: [
+                    { title: '这是文件名称', type: 'pdf', url: '1111' },
+                    { title: '这是文件名称', type: 'pdf', url: '1111' },
+                ],
+                text2: '',
+                fileList2: [],
+                text3: '',
+                fileList3: [],
+                text4: '',
+                fileList4: [],
+                text5: '',
+                fileList5: [],
+            },
         }
     },
     methods: {
@@ -156,4 +203,121 @@ export default {
         }
     }
 }
+.box-right {
+    display: flex;
+    flex-grow: 1;
+    background-color: white;
+    box-sizing: border-box;
+    // border-left: 1px solid #EAEDEC;
+
+    .files {
+      box-sizing: border-box;
+      padding-top: 20px;
+      padding-left: 20px;
+      width: 100%;
+
+      .title1 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 16px;
+        color: #454D65;
+        font-weight: 600;
+        margin-bottom: 20px;
+
+        img {
+          width: 14px;
+          margin-right: 8px;
+        }
+      }
+
+      .file-form {
+        .file-form-item {
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 40px;
+
+          .left {
+            width: 50%;
+
+            .title {
+              color: #404659;
+              font-size: 14px;
+              font-weight: 600;
+              margin-bottom: 14px;
+            }
+          }
+
+          .right {
+            width: 50%;
+            box-sizing: border-box;
+            padding-left: 16px;
+
+            .title {
+              color: #404659;
+              font-size: 14px;
+              font-weight: 600;
+              margin-bottom: 14px;
+            }
+
+            .upload {
+              display: flex;
+              flex-direction: column;
+
+              .file-list {
+                display: flex;
+                flex-direction: column;
+
+                .item {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  margin-bottom: 13px;
+
+                  .file-icon {
+                    width: 16px;
+                    height: 13px;
+                    margin-right: 6px;
+                  }
+
+                  span {
+                    color: #404659;
+                    font-size: 14px;
+                    margin-right: 12px;
+                  }
+
+                  .delete {
+                    width: 14px;
+                    height: 15px;
+                  }
+                }
+              }
+
+              .upload-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .btn {
+                  width: 100px;
+                  height: 36px;
+                  border: 1px solid #2D6CFF;
+                  // background: #FFFFFF;
+                  border-radius: 4px;
+                  margin-right: 19px;
+                }
+
+                span {
+                  font-size: 12px;
+                  color: #A6A9BC;
+                }
+              }
+            }
+          }
+
+          // align-items: center;
+        }
+      }
+    }
+  }
 </style>

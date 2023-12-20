@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-col :span="12">
+        <el-row>
+            <el-col :span="12">
             <UploadCom title="投标人签到表" :fileList="[]" />
         </el-col>
         <el-col :span="12">
@@ -27,16 +28,21 @@
         <el-col :span="12">
             <UploadCom title="评标结果确认函" :fileList="[]" />
         </el-col>
+        
        
+        <el-col :span="24"> <BidCom /> </el-col>
+    </el-row>
     </div>
 </template>
 
 
 
 <script>
+import BidCom from './bid.vue'
+
 import UploadCom from './uploadCom.vue'
 export default{
-    components:{UploadCom},
+    components:{UploadCom,BidCom},
     data(){
         return{
 

@@ -10,7 +10,7 @@
             <span class="title">基本信息</span>
           </div>
 
-          <BasicMsg />
+          <BasicMsg :disabled="true" />
 
           <!-- 三方基本信息录入 -->
           <div class="background-icon">
@@ -19,16 +19,16 @@
 
           <ThirdCom />
           <!-- 开标 -->
-          <!-- <div class="background-icon">
+          <div class="background-icon">
             <span class="title">开评标</span>
-          </div> -->
+          </div>
           <!-- <div></div> -->
           <div style="padding-left: 30px;">
 
             <StartCom />
           </div>
 
-            <BidCom />
+            <!-- <BidCom /> -->
 
              <!-- 中标单位 -->
           <div class="background-icon">
@@ -47,8 +47,8 @@
           </div>
         </div>
       </div>
-      <AnnexCom />
-      
+      <!-- <AnnexCom /> -->
+      <div></div>
     </div>
   </div>
 </template>
@@ -60,48 +60,56 @@ import BasicMsg from './editCom/basicMsg.vue'
 import ThirdCom from './editCom/thirdCom.vue'
 import StartCom from './editCom/start.vue'
 import AnnexCom from './editCom/annex.vue'
-import BidCom from './editCom/bid.vue'
+// import BidCom from './editCom/bid.vue'
 import SuccessfulBidder from './editCom/successfulBidder.vue'
-
+import {
+  projectDetail,
+  agentList,
+  saveImplement,
+  submitImplement,
+  projectAudit
+} from "@/api/project";
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom, BidCom,SuccessfulBidder},
+  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom,SuccessfulBidder},
   data() {
     return {
 
     };
   },
 
-  mounted() { },
+  mounted() { 
+    let route = this.$route;
+    this.getDetail(route.params.id);
+    this.getAgentList();
+  },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
-    setIndex(ind) {
-      this.activeIndex = ind;
-      this.childRadioBool = false;
-      if (this.activeIndex == 1) {
-        this.childRadioBool = true;
-        this.childRadioIndex = 0;
+    async getDetail(id) {
+      let res = await projectDetail(id);
+      if (res.code == 200) {
+        this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
+          ...res.data,
+          input12: "true",
+        });
+        this.$store.commit(
+          "thirdProjects/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.attachments_content
+        );
+        this.$store.commit(
+          "thirdProjects/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
       }
     },
-    setChildIndex(ind) {
-      this.childInput1 = 0;
-      this.childInput2 = 0;
-      this.childRadioIndex = ind;
+    async getAgentList() {
+      let res = await agentList();
+      // console.log(res)
+      if (res.code == 200) {
+        this.agentArr = res.data;
+      }
+    },
 
-    },
-    handleRemove(file) {
-      console.log(this.dialogImageUrl)
-      console.log(file);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleDownload(file) {
-      console.log(file);
-    }
+
   },
 };
 </script>

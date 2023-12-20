@@ -213,10 +213,10 @@ export default {
   },
   computed: {
     formInfo() {
-      return this.$store.state.projectManagementAdd.formInfo
+      return this.$store.state.thirdProjects.formInfo
     },
     radioLabelList(){
-      return this.$store.state.projectManagementAdd.radioLabelList
+      return this.$store.state.thirdProjects.radioLabelList
     },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]

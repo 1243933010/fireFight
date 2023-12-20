@@ -112,7 +112,7 @@
                 <div class="item-con-right-btn1" @click="openDetail(item)">
                   详情
                 </div>
-                <div class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
+                <div  v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
               </div>
             </div>
           </div>

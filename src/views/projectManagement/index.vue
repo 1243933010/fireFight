@@ -122,7 +122,7 @@
               <div class="item-con-right-btn2" @click="openEdit(item)">
                 编辑
               </div>
-              <div class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
+              <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
             </div>
           </div>
         </div>
