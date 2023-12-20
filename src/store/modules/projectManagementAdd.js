@@ -39,7 +39,7 @@ const state = {
   ],
   //实施委托
   ImplementationCommissionForm:{
-    input1: '',
+    input: '',
     fileList: []
   }
 }

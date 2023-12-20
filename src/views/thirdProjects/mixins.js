@@ -17,11 +17,11 @@ export const addMixins = {
     computed: {
         stepList() {
             return [
-                {
-                    title: "招标",
-                    isInput: true,
-                    isActive: true,
-                },
+                // {
+                //     title: "招标",
+                //     isInput: true,
+                //     isActive: true,
+                // },
                 {
                     title: "招标",
                     isInput: true,

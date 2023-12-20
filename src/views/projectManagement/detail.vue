@@ -34,7 +34,7 @@
       </div>
     </div>
     <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[{label:'通过',value:3},{label:'拒绝',value:2}]" />
-    <checkDialog ref="checkDialogEnd" title="终审审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:5},{label:'拒绝',value:4}]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:5},{label:'拒绝',value:4}]" />
   </div>
 </template>
 

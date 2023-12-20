@@ -82,3 +82,21 @@ export function projectEdit(data) {
       })
     }
     
+     //实施委托保存草稿
+     export function saveImplement(data) {
+      return request({
+        url: `/project/save_implement_data/${data.id}`,
+        method: 'post',
+        data
+      })
+    }
+    
+     //实施委托提交
+     export function submitImplement(id) {
+      return request({
+        url: `/project/submit_implement`,
+        method: 'post',
+        data:{id}
+      })
+    }
+    

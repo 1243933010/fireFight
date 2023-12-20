@@ -16,8 +16,8 @@
             <el-form ref="formInfo"  :inline="true" :rules="rules" :model="formInfo"
               class="demo-form-inline" label-width="100px">
               <el-col :span="12">
-                <el-form-item label="采购代理名称" prop="input1" label-width="115px">
-                  <el-select v-model="formInfo.input1" placeholder="请选择采购代理名称">
+                <el-form-item label="采购代理名称" prop="input" label-width="115px">
+                  <el-select v-model="formInfo.input" placeholder="请选择采购代理名称">
                     <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
                   </el-select>
                 </el-form-item>
@@ -50,17 +50,20 @@
 
 
           <div class="btnn">
-            <div class="btn1">取消</div>
-            <div class="btn2">提交</div>
-            <div class="btn3">保存草稿</div>
-            <div class="btn4">通过</div>
-            <div class="btn5">驳回</div>
+            <div class="btn1" @click="()=>{this.$router.go(-1)}">返回</div>
+            <div class="btn2"  v-if="projectInfo.status==5" v-permission="['project_registrar']">提交</div>
+            <div class="btn3"  v-if="projectInfo.status==5" v-permission="['project_registrar']">保存草稿</div>
+            <div class="btn4" @click="auditFnc"  v-if="projectInfo.status==6" v-permission="['department_auditor']">初审</div>
+            <div class="btn4" @click="auditFncEnd"  v-if="projectInfo.status==8" v-permission="['department_auditor']">终审</div>
           </div>
         </div>
       </div>
       <AnnexCom />
 
     </div>
+
+    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[{label:'通过',value:8},{label:'拒绝',value:7}]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:10},{label:'拒绝',value:9}]" />
   </div>
 </template>
   
@@ -71,13 +74,14 @@ import BasicMsg from './basicMsg.vue'
 import AnnexCom from './annex.vue'
 import { projectDetail,agentList } from "@/api/project";
 import { getToken } from '@/utils/auth'
+import checkDialog from '@/components/checkDialog.vue'
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg,  AnnexCom, },
+  components: { Steps, BasicMsg,  AnnexCom,checkDialog },
   data() {
     return {
       rules: {
-        input1: [
+        input: [
           { required: true, message: '请选择需求单位', trigger: 'blur' },
         ],
         fileList: [
@@ -96,8 +100,7 @@ export default {
   },
   computed:{
         uploadUrl(){
-            return  process.env.VUE_APP_UPLOAD_API+`/project/save_agent_check/${this.$route.params.id}`
-            // return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
+            return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
         },
         headers(){
             return {
@@ -106,6 +109,9 @@ export default {
         },
         formInfo(){
           return this.$store.state.projectManagementAdd.ImplementationCommissionForm
+        },
+        projectInfo(){
+          return this.$store.state.projectManagementAdd.formInfo
         }
     },
   methods: {

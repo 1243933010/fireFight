@@ -64,7 +64,7 @@
           ></i>
           <span style="color: #454d65; font-size: 16px">项目列表</span>
         </div>
-        <div class="add" @click="projectAdd">
+        <div class="add" @click="projectAdd" v-permission="['project_registrar']">
           <!-- <div @click="projectAdd">
                         <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
                         <span>新增</span>

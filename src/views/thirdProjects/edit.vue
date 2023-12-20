@@ -19,9 +19,10 @@
 
           <ThirdCom />
           <!-- 开标 -->
-          <div class="background-icon">
+          <!-- <div class="background-icon">
             <span class="title">开评标</span>
-          </div>
+          </div> -->
+          <!-- <div></div> -->
           <div style="padding-left: 30px;">
 
             <StartCom />

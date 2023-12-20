@@ -72,7 +72,19 @@ export const addMixins = {
                 {
                     title: "是否面向中小微企",
                     isInput: this.$store.state.projectManagementAdd.formInfo.input12,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
+                    // isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
+                    isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.input),
+                   
+                },
+                {
+                    title: "采购代理名称",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.input,
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.input && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length > 0),
+                },
+                {
+                    title: "抽取采购代理机构登记",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length>0,
+                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.fileList.length==0 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
                 },
                 {
                     title: "采购意向",
@@ -185,6 +197,34 @@ export const addMixins = {
                 { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
               ])
         },
+        async auditFnc(){
+            this.$refs.checkDialog.openDialog(true)
+          },
+          async auditFncEnd(){
+            this.$refs.checkDialogEnd.openDialog(true)
+          },
+          async auditEmit(e){
+            console.log(e)
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            console.log(res)
+            if(res.code==200){
+              this.$message.success(res.msg);
+              this.$router.go(-1)
+              return
+            }
+            this.$message.error(res.msg);
+          },
+          async auditEmitEnd(e){
+            console.log(e)
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            console.log(res)
+            if(res.code==200){
+              this.$message.success(res.msg);
+              this.$router.go(-1)
+              return
+            }
+            this.$message.error(res.msg);
+          },
       
     },
 
