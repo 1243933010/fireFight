@@ -144,7 +144,7 @@
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
       <el-button @click="saveFnc"  v-if="projectInfo.status == 11" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  v-if="projectInfo.status == 12" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button  @click="submitFnc"  v-if="projectInfo.status == 12" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 13" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
@@ -161,7 +161,8 @@ import UploadCom from "./uploadCom.vue";
 import checkDialog from "@/components/checkDialog.vue";
 import {
   bidBaseSave,
-  projectAudit
+  projectAudit,
+  bidBaseSubmit
 } from "@/api/project";
 import { getToken } from '@/utils/auth'
 export default {
@@ -250,7 +251,7 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
@@ -261,7 +262,7 @@ export default {
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
@@ -301,7 +302,17 @@ export default {
           }
 
         });
-    }
+    },
+   async submitFnc(){
+           let res = await bidBaseSubmit(this.projectInfo.id);
+           console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            setTimeout(()=>{this.$router.go(-1)},1000)
+            return
+           }
+           this.$message.error(res.msg)
+    },
   }
 };
 </script>

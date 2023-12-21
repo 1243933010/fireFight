@@ -57,6 +57,40 @@ const state = {
         {type:'bid_authorization',title:'委托招标函',description:'',files:[]},
         {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[]},
       ]
+    },
+    startData:{
+      bid_files_list:[
+        {type:'bid_user_login',title:'投标人签到表',files:[]},
+        {type:'bid_open_log',title:'开标记录表',files:[]},
+        {type:'buyer_auth_bid',title:'采购人评标代表授权书',files:[]},
+        {type:'committee_login',title:'评标委员会签到表',files:[]},
+        {type:'bid_rules',title:'评标规则',files:[]},
+        {type:'quality_check',title:'资格审查表、符合性审查表',files:[]},
+        {type:'bid_process_file',title:'评标过程资料',files:[]},
+        {type:'bid_report',title:'评标报告',files:[]},
+        {type:'bid_result_confirm',title:'评标结果确认函',files:[]},
+      ],
+      bid_units:[
+        {amount:'',name:"",contact:'',files:[]},
+        {amount:'',name:"",contact:'',files:[]},
+        {amount:'',name:"",contact:'',files:[]},
+      ],
+      project_attachments:[
+        {type:'expert_info',title:'参与评审专家信息',files:[],description:''},
+      ]
+    },
+    resultData:{
+      bid_success_amount:'',
+      bid_success_unit:'',
+      bid_success_phone:'',
+      bid_success_contact:'',
+      bid_success_link:'',
+      bid_success_publish_date:'',
+      bid_success_unit_type:'',
+      bid_success_unit_per:'',
+      bid_success_notice_date:'',
+      bid_success_photo:[],
+      bid_success_notice:[],
     }
   }
 }
@@ -80,7 +114,19 @@ const mutations = {
       state.ImplementationCommissionForm.files = data.data;
     }
     
-  }
+  },
+  update_bidBaseProject:(state,form)=>{
+    state.thirdData.bidBaseProject = form;
+  },
+  update_startData_bid_files_list:(state,list)=>{
+    state.thirdData.bid_files_list = list;
+  },
+  update_startData_bid_units:(state,list)=>{
+    state.thirdData.bid_units = list;
+  },
+  update_startData_project_attachments:(state,list)=>{
+    state.thirdData.project_attachments = list;
+  },
 }
 
 export default {

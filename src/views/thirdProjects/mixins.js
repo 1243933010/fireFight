@@ -2,17 +2,7 @@ export const addMixins = {
 
     data() {
         return { 
-            startForm:{
-                fileList1:[],
-                fileList2:[],
-                fileList3:[],
-                fileList4:[],
-                fileList5:[],
-                fileList6:[],
-                fileList7:[],
-                fileList8:[],
-                fileList9:[],
-            }
+          
         }
     },
     computed: {
@@ -25,7 +15,7 @@ export const addMixins = {
                 },
                 {
                     title: "开标",
-                    isInput: true,
+                    isInput: this.bid_files_list_bool&&this.bid_units_bool&&this.project_attachments_bool,
                     isActive: true,
                 },
                 {
@@ -36,6 +26,35 @@ export const addMixins = {
                
             ]
 
+        },
+        bid_units_bool(){
+            let bool = true;
+            this.$store.state.thirdProjects.thirdData.startData.bid_units.forEach(element => {
+                if(!element.amount||!element.name||!element.contact||!element.files){
+                    bool = false
+                }
+            });
+            return bool
+        },
+        bid_files_list_bool(){
+            let bool = true;
+            // console.log( this.$store.state.thirdProjects.startData.project_attachments)
+            this.$store.state.thirdProjects.thirdData.startData.bid_files_list.forEach(element => {
+                if(!element.files){
+                    bool = false
+                }
+            });
+            return bool
+        },
+        project_attachments_bool(){
+            let bool = true;
+            // console.log( this.$store.state.thirdProjects.startData.project_attachments)
+            this.$store.state.thirdProjects.thirdData.startData.project_attachments.forEach(element => {
+                if(!element.files){
+                    bool = false
+                }
+            });
+            return bool
         },
         projectInfo() {
             return this.$store.state.thirdProjects.formInfo;

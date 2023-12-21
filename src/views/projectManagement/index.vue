@@ -294,7 +294,8 @@ export default {
       .status2,
       .status222,
       .status22 {
-        width: 86px;
+        box-sizing: border-box;
+          padding: 0 5px;
         height: 24px;
         background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
         border-radius: 4px;

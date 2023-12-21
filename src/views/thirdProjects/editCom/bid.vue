@@ -11,31 +11,15 @@
                 <span>添加单位</span>
             </div>
         </div>
-        <div >
-            <div class="item" v-for="(item, index) in list" :key="index">
-                <el-form :ref="item.ref" :inline="true" :rules="item.rules" :model="item.form">
-                    <el-col :span="24">
-                        <el-form-item label="参与投标单位" prop="input1" placeholder="请输入参与投标单位">
-                            <el-input v-model="item.form.input1" />
-                        </el-form-item>
-                        <div class="float" v-if="index>2" @click="deleteItem(index)">
-                            <div>删除</div>
-                        </div>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="参与投标报价金额" prop="input1" placeholder="请输入参与投标报价金额">
-                            <el-input v-model="item.form.input1" type="number" />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="参与投标联系人" prop="input1" placeholder="请输入参与投标联系人">
-                            <el-input v-model="item.form.input1" />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="24">
-                        <UploadCom title="投标文件" :fileList="item.form.fileList1" />
-                    </el-col>
-                </el-form>
+        <div  class="item-form">
+          
+            <div class="item" v-for="(item, index) in startData.bid_units" :key="index">
+              <!-- <el-input type="text" :rows="4" v-model="item.name" placeholder="我部已申请采购一批消防器材望上级批准。" v-show="true">  </el-input> -->
+              <div class="input"><span class="color">*</span>参与投标单位: <el-input style="width: 200px;" v-model="item.name" type="text" placeholder="请输入参与投标单位" > </el-input><div class="float" v-if="index>2" @click="deleteItem(index)"><div>删除</div>
+                        </div></div>
+              <div class="input1"><span class="color">*</span>参与投标报价金额: <el-input style="width: 200px;" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额" ></el-input></div>
+              <div class="input1"><span class="color">*</span>参与投标联系人: <el-input style="width: 200px;" v-model="item.contact" type="text" placeholder="请输入参与投标联系人" ></el-input></div>
+              <UploadCom title="投标文件" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item.files,index)" />
             </div>
         </div>
         <el-row>
@@ -48,15 +32,16 @@
           </div>
           <div class="file-form">
             
-            <div class="file-form-item">
-             
-              <div class="right">
-                <UploadCom title="附件" :fileList="fileForm.fileList3" />
-              </div>
+            <div class="file-form-item" v-for="(item,index) in startData.project_attachments" :key="index">
               <div class="left">
-                <div class="title"><span>参与评审专家信息</span></div>
-                <div class="input"><el-input type="textarea" :rows="4" placeholder="我部已申请采购一批消防器材望上级批准。"> </el-input>
+                <div class="title"><span>{{ item.title }}</span></div>
+                <div class="input">
+                  <el-input type="textarea" :rows="4" v-model="item.description" placeholder="我部已申请采购一批消防器材望上级批准。">
+                  </el-input>
                 </div>
+              </div>
+              <div class="right">
+                <UploadCom title="附件" :fileList="item.files" @updateFile="(e)=>updateFile(e,item.files,index)" />
               </div>
             </div>
           </div>
@@ -65,8 +50,9 @@
     </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button  v-if="projectInfo.status == 17" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  v-if="projectInfo.status == 18" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <!-- v-if="projectInfo.status == 17" -->
+      <el-button v-if="projectInfo.status == 17"  @click="saveFnc"  v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button   @click="submitFnc"  v-if="projectInfo.status == 18" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 19" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 21" v-permission="['department_auditor']"  type="primary">终审</el-button>
     </div>
@@ -80,68 +66,39 @@
 <script >
 import UploadCom from './uploadCom.vue'
 import checkDialog from "@/components/checkDialog.vue";
+import { bidOpenSave ,bidOpenSubmit,projectAudit} from "@/api/project";
 
 export default {
     components: { UploadCom,checkDialog },
     data() {
         return {
-            list: [
-                {
-                    ref: 'ref1',
-                    form: { input1: "", fileList1: [] },
-                    rules: {
-                        input1: [{ required: true, message: '请输入参与投标单位', trigger: 'blur' },]
-                    }
-                },
-                {
-                    ref: 'ref2',
-                    form: { input1: "", fileList1: [] },
-                    rules: {
-                        input1: [{ required: true, message: '请输入参与投标单位', trigger: 'blur' },]
-                    }
-                },
-                {
-                    ref: 'ref3',
-                    form: { input1: "", fileList1: [] },
-                    rules: {
-                        input1: [{ required: true, message: '请输入参与投标单位', trigger: 'blur' },]
-                    }
-                }
-            ],
-            fileForm: {
-                text1: '',
-                fileList1: [
-                    { title: '这是文件名称', type: 'pdf', url: '1111' },
-                    { title: '这是文件名称', type: 'pdf', url: '1111' },
-                ],
-                text2: '',
-                fileList2: [],
-                text3: '',
-                fileList3: [],
-                text4: '',
-                fileList4: [],
-                text5: '',
-                fileList5: [],
-            },
+
         }
     },
     computed:{
     projectInfo() {
       return this.$store.state.thirdProjects.formInfo;
     },
+    startData() {
+      console.log(this.$store.state.thirdProjects.thirdData.startData)
+      return this.$store.state.thirdProjects.thirdData.startData;
+    },
   },
   methods:{
+    updateFile(e,item,index){
+        console.log(e,item,index)
+        if(typeof e == 'number'){
+          itemm.splice(e,1)
+        }else{
+          item.push(e)
+        }
+        console.log(this.$store.state.projectManagementAdd.project_attachments)
+      },
     addForm() {
-            this.list.push({
-                ref: `ref${this.list.length + 1}`,
-                form: { input1: "", fileList1: [] },
-                rules: {
-                    input1: [{ required: true, message: '请输入参与投标单位', trigger: 'blur' },]
-                }
-            })
+            this.startData.bid_units.push({amount:'',name:"",contact:'',files:[] })
         },
         deleteItem(index){
-            this.list.splice(index,1)
+          this.startData.bid_units.splice(index,1)
         },
     async auditFnc(){
       this.$refs.checkDialog.openDialog(true)
@@ -151,7 +108,7 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
@@ -162,7 +119,7 @@ export default {
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
@@ -171,12 +128,82 @@ export default {
       }
       this.$message.error(res.msg);
     },
+    async saveFnc(){
+      let bid_units = this.$store.state.thirdProjects.thirdData.startData.bid_units;
+      let bid_files_list =  this.$store.state.thirdProjects.thirdData.startData.bid_files_list;
+      let project_attachments =  this.$store.state.thirdProjects.thirdData.startData.project_attachments;
+
+
+      // return
+      for(let i = 0;i<bid_units.length;i++){
+        if(i<=3){
+          if(!bid_units[i].amount||!bid_units[i].name||!bid_units[i].contact||!bid_units[i].files){
+            this.$message.error('请填写至少三个单位信息');
+            return
+           }
+        }
+      }
+
+      
+      for(let i = 0;i<bid_files_list.length;i++){
+        if(!bid_files_list[i].files){
+            this.$message.error('请上传文件');
+            return
+           }
+      }
+      for(let i = 0;i<project_attachments.length;i++){
+ if(project_attachments[i].files.length==0){
+     this.$message.error('请上传附件');
+     return
+    }
+}
+      
+        let form =  this.$store.state.thirdProjects.thirdData.startData;
+           form.id= this.projectInfo.id;
+           let res = await bidOpenSave(form);
+           console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            setTimeout(()=>{this.$router.go(-1)},1000)
+            return
+           }
+           this.$message.error(res.msg)
+    },
+   async submitFnc(){
+           let res = await bidOpenSubmit(this.projectInfo.id);
+           console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            setTimeout(()=>{this.$router.go(-1)},1000)
+            return
+           }
+           this.$message.error(res.msg)
+    },
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
+.item-form{
+  .item{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .input,.input1{
+      width: 100%;
+      font-size: 14px;
+      margin-bottom: 15px;
+      .color{
+        color: red;
+      }
+    }
+    .input1{
+      width: 50%;
+    }
+  }
+}
 .float {
     padding-right: 30px;
     padding-top: 0px;
@@ -252,7 +279,7 @@ export default {
     .files {
       box-sizing: border-box;
       padding-top: 20px;
-      padding-left: 20px;
+      // padding-left: 20px;
       width: 100%;
 
       .title1 {

@@ -5,31 +5,31 @@
       style=""
       :inline="true"
       :rules="thirdFormRules"
-      :model="thirdForm"
+      :model="resultData"
       class="demo-form-inline"
     >
       <el-col :span="12">
-        <el-form-item label="中标金额" prop="input3">
-          <el-input v-model="thirdForm.input3" placeholder="请输入中标金额">
+        <el-form-item label="中标金额" prop="bid_success_amount">
+          <el-input v-model="resultData.bid_success_amount" placeholder="请输入中标金额">
             <span slot="suffix">元</span>
           </el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="中标单位" prop="input3">
-          <el-input v-model="thirdForm.input3" placeholder="请输入中标单位">
+        <el-form-item label="中标单位" prop="bid_success_unit">
+          <el-input v-model="resultData.bid_success_unit" placeholder="请输入中标单位">
           </el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="联系姓名" prop="input3">
-          <el-input v-model="thirdForm.input3" placeholder="请输入联系人">
+        <el-form-item label="联系姓名" prop="bid_success_contact">
+          <el-input v-model="resultData.bid_success_contact" placeholder="请输入联系人">
           </el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="联系电话" prop="input3">
-          <el-input v-model="thirdForm.input3" placeholder="请输入联系电话">
+        <el-form-item label="联系电话" prop="bid_success_phone">
+          <el-input v-model="resultData.bid_success_phone" placeholder="请输入联系电话">
           </el-input>
         </el-form-item>
       </el-col>
@@ -37,36 +37,43 @@
       <el-col :span="24">
         <el-form-item label="上传图片" prop="input3">
           <el-upload
-            action="#"
-            list-type="picture-card"
-            :auto-upload="false"
-            size="small"
-          >
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{ file }">
-              <!-- <img class="el-upload-list__item-thumbnail" :src="file.url" alt=""> -->
-              <span class="el-upload-list__item-actions">
-                <span
-                  class="el-upload-list__item-delete"
-                  @click="handleRemove(file)"
-                >
-                  <i class="el-icon-delete"></i>
+             :action="uploadUrl"
+             :headers="headers"
+              list-type="picture-card"
+              :limit="4"
+              :file-list="resultData.bid_success_photo"
+              :on-progress="handleProgress"
+              :on-success="handleSuccess"
+            >
+              <i slot="default" class="el-icon-plus"></i>
+              <div slot="file" slot-scope="{ file }">
+                <img
+                  class="el-upload-list__item-thumbnail"
+                  :src="file.url"
+                  alt=""
+                />
+                <span class="el-upload-list__item-actions">
+                  <span
+                    class="el-upload-list__item-delete"
+                    @click="handleRemove(file)"
+                  >
+                    <i class="el-icon-delete"></i>
+                  </span>
                 </span>
-              </span>
-            </div>
-          </el-upload>
+              </div>
+            </el-upload>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="公式链接" prop="input3">
-          <el-input v-model="thirdForm.input3" placeholder="请输入公式链接">
+        <el-form-item label="公示链接" prop="bid_success_link">
+          <el-input v-model="resultData.bid_success_link" placeholder="请输入公示链接">
           </el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="发布中标公告日期" prop="input1">
+        <el-form-item label="发布中标公告日期" prop="bid_success_publish_date">
           <el-date-picker
-            v-model="thirdForm.input1"
+            v-model="resultData.bid_success_publish_date"
             type="date"
             placeholder="请选择发布中标公告日期"
           >
@@ -74,21 +81,21 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="中标供应商企业类型" prop="input1">
+        <el-form-item label="中标供应商企业类型" prop="bid_success_unit_type">
           <el-select
-            v-model="thirdForm.input3"
-            placeholder="请选择需求单位"
-            :disabled="true"
+            v-model="resultData.bid_success_unit_type"
+            placeholder="请选择中标供应商企业类型"
           >
-            <el-option label="Zone one" value="shanghai" />
-            <el-option label="Zone two" value="beijing" />
+            <el-option label="大型" value="大型" />
+            <el-option label="中型" value="中型" />
+            <el-option label="小微" value="小微" />
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="中标供应商企份额" prop="input3">
+        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per">
           <el-input
-            v-model="thirdForm.input3"
+            v-model="resultData.bid_success_unit_per"
             placeholder="请输入中标供应商企份额"
           >
             <span slot="suffix">%</span>
@@ -97,10 +104,11 @@
       </el-col>
 
       <el-col :span="12">
-        <el-form-item label="中标通知书日期" prop="input4">
+        <el-form-item label="中标通知书日期" prop="bid_success_notice_date">
           <el-date-picker
-            v-model="thirdForm.input4"
+            v-model="resultData.bid_success_notice_date"
             type="date"
+            value-format="yyyy-MM-dd"
             placeholder="请选择开评标日期"
           >
           </el-date-picker>
@@ -109,7 +117,7 @@
       <el-col :span="13">
         <UploadCom
           title="中标通知书/成交结果通知书"
-          :fileList="thirdForm.fileList3"
+          :fileList="resultData.bid_success_notice"
         />
       </el-col>
     </el-form>
@@ -135,7 +143,7 @@
                   </div>
                 </div>
                 <div class="right">
-                  <UploadCom title="附件" :fileList="fileForm.fileList4" />
+                  <!-- <UploadCom title="附件" :fileList="fileForm.fileList4" /> -->
                 </div>
               </div>
             </div>
@@ -160,94 +168,56 @@
 <script>
 import UploadCom from "./uploadCom.vue";
 import checkDialog from "@/components/checkDialog.vue";
+import { getToken } from '@/utils/auth'
 export default {
   components: { UploadCom ,checkDialog},
   data() {
     return {
-      thirdForm: {
-        input1: "",
-        input2: "",
-        input3: "",
-        input4: "",
-        input5: "",
-
-        fileList1: [],
-        fileList3: [
-          {
-            title: "111",
-            url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-          },
-          {
-            title: "111",
-            url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-          },
-        ],
-
-        dialogImageUrl: "",
-        dialogVisible: false,
-        disabled: false,
-        fileList2: [
-          {
-            name: "111",
-            url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-          },
-        ],
-      },
       thirdFormRules: {
-        input1: [
-          {
-            required: true,
-            message: "请选择采购意向公开日期",
-            trigger: "blur",
-          },
-        ],
-        input2: [
-          {
-            required: true,
-            message: "请选择发布招标公告日期",
-            trigger: "blur",
-          },
-        ],
-        input3: [
-          { required: true, message: "请输入公示链接", trigger: "blur" },
-        ],
-        fileList1: [
-          {
-            required: true,
-            message: "请上传采购代理机构招标文件(发售稿)",
-            trigger: "blur",
-          },
-        ],
-        input4: [
-          { required: true, message: "请输入开评标日期", trigger: "blur" },
-        ],
-        input5: [
-          { required: true, message: "请输入是否有质疑/澄清", trigger: "blur" },
-        ],
+        bid_success_publish_date: [{ required: true, message: "请选择中标发布日期",trigger: "blur",},],
+        bid_success_notice_date: [{ required: true, message: "请选择标告知书日期", trigger: "blur", }, ],
+        bid_success_amount: [{ required: true, message: "请输入中标金额", trigger: "blur" }, ],
+        bid_success_unit: [{ required: true, message: "请输入单位", trigger: "blur" }, ],
+        bid_success_phone: [{ required: true, message: "请输入电话", trigger: "blur" }, ],
+        bid_success_contact: [{ required: true, message: "请输入联系人", trigger: "blur" }, ],
+        bid_success_link: [{ required: true, message: "请输入公示链接", trigger: "blur" }, ],
+        bid_success_unit_type: [{ required: true, message: "请输入企业类型", trigger: "blur" }, ],
+        bid_success_unit_per: [{ required: true, message: "请输入企业份额", trigger: "blur" }, ],
+        bid_success_photo: [{ required: true, message: "请上传中标图片", trigger: "blur" }, ],
+        bid_success_notice: [{ required: true, message: "请上传中标告知书", trigger: "blur" }, ],
       },
-      fileForm: {
-        text1: "",
-        fileList1: [
-          { title: "这是文件名称", type: "pdf", url: "1111" },
-          { title: "这是文件名称", type: "pdf", url: "1111" },
-        ],
-        text2: "",
-        fileList2: [],
-        text3: "",
-        fileList3: [],
-        text4: "",
-        fileList4: [],
-        text5: "",
-        fileList5: [],
-      },
+     
     };
   },
   computed:{
     projectInfo() {
       return this.$store.state.thirdProjects.formInfo;
     },
+    resultData(){
+      return this.$store.state.thirdProjects.thirdData.resultData;
+    },
+    uploadUrl(){
+            return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
+        },
+        headers(){
+            return {
+                "Authorization":`Bearer ${getToken()}`
+            }
+        },
   },
   methods:{
+    handleProgress(e, file, fileList) {
+            // console.log(e, file, fileList)
+        },
+        handleSuccess(e, file, fileList){
+            console.log(e, file, fileList,'----')
+            if(e.code===200){
+                e.data.title = e.data.file_name;
+                this.resultData.bid_success_photo.push(e.data)
+                // this.$emit('updateFile',e.data)
+                // this.fileList.push(e.data);
+            }
+        },
     async auditFnc(){
       this.$refs.checkDialog.openDialog(true)
     },

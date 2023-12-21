@@ -85,7 +85,7 @@ import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState, mapGetters } from 'vuex'
-
+import {needDo} from '@/api/project'
 export default {
   name: 'Layout',
   components: {
@@ -137,12 +137,17 @@ export default {
   mounted(){
     let dialog = localStorage.getItem('dialog');
     console.log(dialog)
-    if(dialog=='true'){
-      this.dialogVisible = true
+    // if(dialog=='true'){
+      this.dialogVisible = true;
+      this.getList();
       localStorage.setItem('dialog',false)
-    }
+    // }
   },
   methods: {
+    async getList(){
+      let res = await needDo();
+      console.log(res)
+    },
     async goMe(){
       this.$router.push({name:"meCenter"})
     },

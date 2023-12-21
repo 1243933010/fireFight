@@ -40,8 +40,8 @@
           </div>
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <div class="btn2">提交</div>
-            <div class="btn3">保存草稿</div>
+            <!-- <div class="btn2">提交</div> -->
+            <!-- <div class="btn3">保存草稿</div> -->
             <!-- <div class="btn4">通过</div> -->
             <!-- <div class="btn5">驳回</div> -->
           </div>
@@ -107,7 +107,17 @@ export default {
           "thirdProjects/update_ImplementationCommissionForm",
           {type:'form',
           data:res.data.agent_id});
+
+          //
+          this.$store.commit(
+          "thirdProjects/update_bidBaseProject", res.data.bid_info);
+          this.$store.commit(
+          "thirdProjects/update_bid_units", res.data.bid_units);
+          this.$store.commit(
+          "thirdProjects/update_project_attachments", res.data.bid_info);
       }
+      
+      
     },
     async getAgentList() {
       let res = await agentList();

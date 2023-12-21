@@ -127,3 +127,48 @@ export function projectEdit(data) {
       data:{id}
     })
   }
+
+  //保存开评标信息
+  export function bidOpenSave(data) {
+    return request({
+      url: `/project/bid_open_save`,
+      method: 'post',
+      data
+    })
+  }
+  //提交开评标信息
+  export function bidOpenSubmit(id) {
+    return request({
+      url: `/project/submit_bid_open`,
+      method: 'post',
+      data:{id}
+    })
+  }
+
+    //保存中标信息
+    export function bidResultSave(data) {
+      return request({
+        url: `/project/bid_result_save`,
+        method: 'post',
+        data
+      })
+    }
+    //提交中标信息
+    export function resultOpenSubmit(id) {
+      return request({
+        url: `/project/submit_bid_result`,
+        method: 'post',
+        data:{id}
+      })
+    }
+
+
+
+    //-----
+     //提交中标信息
+     export function needDo() {
+      return request({
+        url: `/user/need_do`,
+        method: 'get'
+      })
+    }

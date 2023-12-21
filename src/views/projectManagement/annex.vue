@@ -116,8 +116,8 @@ export default{
     methods:{
       updateFile(e,item,index){
         console.log(e,item,index)
-        if(typeof e ==number){
-          itemm.files.splice(e,1)
+        if(typeof e =='number'){
+          item.files.splice(e,1)
         }else{
           item.files.push(e)
         }
