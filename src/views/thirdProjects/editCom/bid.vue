@@ -65,9 +65,13 @@
     </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button type="normal">保存草稿</el-button>
-      <el-button type="primary">提交</el-button>
+      <el-button  v-if="projectInfo.status == 17" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  v-if="projectInfo.status == 18" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button  @click="auditFnc"  v-if="projectInfo.status == 19" v-permission="['department_auditor']"  type="primary">初审</el-button>
+      <el-button   @click="auditFncEnd" v-if="projectInfo.status == 21" v-permission="['department_auditor']"  type="primary">终审</el-button>
     </div>
+    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 20 }, { label: '通过', value: 21 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 22 }, { label: '通过', value: 23 },]" />
     </div>
 </template>
 
@@ -75,8 +79,10 @@
 
 <script >
 import UploadCom from './uploadCom.vue'
+import checkDialog from "@/components/checkDialog.vue";
+
 export default {
-    components: { UploadCom },
+    components: { UploadCom,checkDialog },
     data() {
         return {
             list: [
@@ -119,8 +125,13 @@ export default {
             },
         }
     },
-    methods: {
-        addForm() {
+    computed:{
+    projectInfo() {
+      return this.$store.state.thirdProjects.formInfo;
+    },
+  },
+  methods:{
+    addForm() {
             this.list.push({
                 ref: `ref${this.list.length + 1}`,
                 form: { input1: "", fileList1: [] },
@@ -131,8 +142,36 @@ export default {
         },
         deleteItem(index){
             this.list.splice(index,1)
-        }
-    }
+        },
+    async auditFnc(){
+      this.$refs.checkDialog.openDialog(true)
+    },
+    async auditFncEnd(){
+      this.$refs.checkDialogEnd.openDialog(true)
+    },
+    async auditEmit(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+    async auditEmitEnd(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+  }
 }
 </script>
 

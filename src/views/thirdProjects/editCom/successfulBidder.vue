@@ -143,24 +143,25 @@
         </div>
       </el-col>
     </el-row>
-    <div
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-      "
-    >
-      <el-button type="normal">保存草稿</el-button>
-      <el-button type="primary">提交</el-button>
+    <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
+      <el-button  v-if="projectInfo.status == 23" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  v-if="projectInfo.status == 24" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
+      <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
+
     </div>
+    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 26 }, { label: '通过', value: 27 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 28 }, { label: '通过', value: 29 },]" />
+
+    
   </div>
 </template>
 
 <script>
 import UploadCom from "./uploadCom.vue";
+import checkDialog from "@/components/checkDialog.vue";
 export default {
-  components: { UploadCom },
+  components: { UploadCom ,checkDialog},
   data() {
     return {
       thirdForm: {
@@ -241,12 +242,41 @@ export default {
       },
     };
   },
-  methods: {
-    handleRemove(file) {
-      console.log(this.dialogImageUrl);
-      console.log(file);
+  computed:{
+    projectInfo() {
+      return this.$store.state.thirdProjects.formInfo;
     },
   },
+  methods:{
+    async auditFnc(){
+      this.$refs.checkDialog.openDialog(true)
+    },
+    async auditFncEnd(){
+      this.$refs.checkDialogEnd.openDialog(true)
+    },
+    async auditEmit(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+    async auditEmitEnd(e){
+      console.log(e)
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      console.log(res)
+      if(res.code==200){
+        this.$message.success(res.msg);
+        this.$router.go(-1)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+  }
 };
 </script>
 

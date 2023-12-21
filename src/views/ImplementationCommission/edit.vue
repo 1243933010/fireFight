@@ -13,63 +13,27 @@
           <BasicMsg :disabled="true" />
 
           <div>
-            <el-form
-              ref="formInfo"
-              :inline="true"
-              :rules="rules"
-              :model="formInfo"
-              class="demo-form-inline"
-              label-width="100px"
-            >
+            <el-form ref="formInfo" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
+              label-width="100px">
               <el-col :span="12">
-                <el-form-item
-                  label="采购代理名称"
-                  prop="agent_id"
-                  label-width="115px"
-                >
-                  <el-select
-                    v-model="formInfo.agent_id"
-                    placeholder="请选择采购代理名称"
-                  >
-                    <el-option
-                      v-for="(item, index) in agentArr"
-                      :key="index"
-                      :label="item.name"
-                      :value="item.id"
-                    />
+                <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
+                  <el-select v-model="formInfo.agent_id" placeholder="请选择采购代理名称">
+                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item
-                  label="抽取采购代理机构登记"
-                  prop="files"
-                  label-width="170px"
-                >
-                  <el-upload
-                    :action="uploadUrl"
-                    :headers="headers"
-                    list-type="picture-card"
-                    :limit="1"
-                    :file-list="formInfo.files"
-                    :before-upload="beforeAvatarUpload"
-                    :on-success="handleSuccess"
-                  >
+                <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
+                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
+                    :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess">
                     <i slot="default" class="el-icon-plus"></i>
                     <div class="el-upload__tip" slot="tip">
                       只能上传图片或视频
                     </div>
                     <div slot="file" slot-scope="{ file }">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url"
-                        alt=""
-                      />
+                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
                       <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
-                        >
+                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
                           <i class="el-icon-delete"></i>
                         </span>
                       </span>
@@ -81,46 +45,22 @@
           </div>
 
           <div class="btnn">
-            <div
-              class="btn1"
-              @click="
-                () => {
-                  this.$router.go(-1);
-                }
-              "
-            >
+            <div class="btn1" @click="() => {
+                this.$router.go(-1);
+              }
+              ">
               返回
             </div>
-            <div
-              class="btn2"
-              @click="submitForm"
-              v-if="projectInfo.status == 6"
-              v-permission="['project_registrar']"
-            >
+            <div class="btn2" @click="submitForm" v-if="projectInfo.status == 6" v-permission="['project_registrar']">
               提交
             </div>
-            <div
-              class="btn3"
-              @click="saveForm"
-              v-if="projectInfo.status == 5"
-              v-permission="['project_registrar']"
-            >
+            <div class="btn3" @click="saveForm" v-if="projectInfo.status == 5" v-permission="['project_registrar']">
               保存草稿
             </div>
-            <div
-              class="btn4"
-              @click="auditFnc"
-              v-if="projectInfo.status == 7"
-              v-permission="['department_auditor']"
-            >
+            <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 7" v-permission="['department_auditor']">
               初审
             </div>
-            <div
-              class="btn4"
-              @click="auditFncEnd"
-              v-if="projectInfo.status == 9"
-              v-permission="['department_auditor']"
-            >
+            <div class="btn4" @click="auditFncEnd" v-if="projectInfo.status == 9" v-permission="['department_auditor']">
               终审
             </div>
           </div>
@@ -129,24 +69,14 @@
       <AnnexCom />
     </div>
 
-    <checkDialog
-      ref="checkDialog"
-      title="初审"
-      @auditEmit="auditEmit"
-      :radioList="[
-        { label: '拒绝', value: 8 },
-        { label: '通过', value: 9 },
-      ]"
-    />
-    <checkDialog
-      ref="checkDialogEnd"
-      title="终审"
-      @auditEmit="auditEmitEnd"
-      :radioList="[
-        { label: '拒绝', value: 10 },
-        { label: '通过', value: 11 },
-      ]"
-    />
+    <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit" :radioList="[
+      { label: '拒绝', value: 8 },
+      { label: '通过', value: 9 },
+    ]" />
+    <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd" :radioList="[
+      { label: '拒绝', value: 10 },
+      { label: '通过', value: 11 },
+    ]" />
   </div>
 </template>
 
@@ -203,28 +133,28 @@ export default {
     },
   },
   methods: {
-    async auditFnc(){
+    async auditFnc() {
       this.$refs.checkDialog.openDialog(true)
     },
-    async auditFncEnd(){
+    async auditFncEnd() {
       this.$refs.checkDialogEnd.openDialog(true)
     },
-    async auditEmit(e){
+    async auditEmit(e) {
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, status: e.status });
       console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         this.$message.success(res.msg);
         this.$router.go(-1)
         return
       }
       this.$message.error(res.msg);
     },
-    async auditEmitEnd(e){
+    async auditEmitEnd(e) {
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, status: e.status });
       console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         this.$message.success(res.msg);
         this.$router.go(-1)
         return
@@ -510,11 +440,9 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(
-            90deg,
-            #1d70ff 0%,
-            rgba(29, 112, 255, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #1d70ff 0%,
+              rgba(29, 112, 255, 0) 100%);
         }
       }
 
@@ -522,11 +450,9 @@ export default {
         color: #a6a9bc;
 
         div {
-          background: linear-gradient(
-            90deg,
-            #a6a9bc 0%,
-            rgba(166, 169, 188, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #a6a9bc 0%,
+              rgba(166, 169, 188, 0) 100%);
         }
       }
     }

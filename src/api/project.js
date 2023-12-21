@@ -111,3 +111,19 @@ export function projectEdit(data) {
       params
     })
   }
+//保存招标信息
+  export function bidBaseSave(data) {
+    return request({
+      url: `/project/bid_base_save`,
+      method: 'post',
+      data
+    })
+  }
+  //提交招标信息
+  export function bidBaseSubmit(id) {
+    return request({
+      url: `/project/submit_bid_base`,
+      method: 'post',
+      data:{id}
+    })
+  }

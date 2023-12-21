@@ -92,11 +92,14 @@
         </el-form-item>
       </el-col>
     </el-form>
+    <implementCom />
+    <!-- -->
   </div>
 </template>
 
 
 <script>
+import implementCom from './implementCom.vue'
 export default {
   props: {
     disabled: {
@@ -104,6 +107,7 @@ export default {
       default: false
     }
   },
+  components:{implementCom},
   data() {
     return {
       rules: {

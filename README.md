@@ -5,6 +5,42 @@ procure_auditor   采购审核人员 ：终审
 agent  三方代理
 
 
+
+
+'agent_detection' => '抽取采样代理机构登记',
+        'purchase_intention' => '采购意向',
+        'purchase_demand' => '采购需求',
+        'budget_audit_report' => '纪保预算审核报告书',
+        'implementing_opinion' => '采购需求级采购实施计划意见书',
+        'main_party_committee' => '大队党委会',
+        'detachment_party_committee' => '支队党委会',
+        'act_plan' => '实施计划',
+        'check_opinion' => '审查意见书',
+        'purchase_meeting' => '大队/支队采购例会',
+        'purchase_authorization' => '采购委托函',
+        'purchase_file_confirm' => '采购文件确认函',
+        'bid_authorization' => '委托招标函',
+        'expert_option' => '参与评审专家意见',
+        'expert_info' => '参与评审专家信息',
+        'accusation_question' => '举报/质疑/投诉',
+        'agent_check_video' => '代理检查视频',
+        'bid_file_issue' => '采购代理机构招标文件（发售稿）',
+        'bid_publish_photo' => '公示图',
+        'bid_register_file' => '投标报名登记表',
+        'bid_user_login' => '投标人签到表',
+        'bid_open_log' => '开标记录表',
+        'buyer_auth_bid' => '采购人评标代表授权书',
+        'committee_login' => '评标委员会签到表',
+        'bid_rules' => '评标规则',
+        'quality_check' => '资格审查表、符合性审查表',
+        'bid_process_file' => '评标过程资料',
+        'bid_report' => '评标报告',
+        'bid_result_confirm' => '评标结果确认函',
+        'bid_success_photo' => '中标图片',
+        'bid_success_notice' => '中标告知书',
+        'contract' => '合同',
+
+
 0 => '草稿', //提交后，进入初审
         1 => '待初审',
         2 => '项目初审驳回', //录入人员可修改

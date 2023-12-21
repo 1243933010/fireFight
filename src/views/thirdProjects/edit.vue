@@ -99,6 +99,14 @@ export default {
           "thirdProjects/UPDATE_RADIOLABELLIST",
           JSON.parse(res.data.small_company)
         );
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm",{type:'file',
+          data:res.data.agent_check_videos}
+        );
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm",
+          {type:'form',
+          data:res.data.agent_id});
       }
     },
     async getAgentList() {

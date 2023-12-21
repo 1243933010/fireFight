@@ -41,6 +41,23 @@ const state = {
   ImplementationCommissionForm:{
     agent_id: '',
     files: []
+  },
+  thirdData:{
+    bidBaseProject:{
+      bid_file_date:'',
+      bid_publish_date:'',
+      publish_link:'',
+      bid_open_date:'',
+      doubt:"",
+      bid_publish_photo:[],
+      bid_register_file:[],
+      bid_file_issue:[],
+      project_attachments:[
+        {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[]},
+        {type:'bid_authorization',title:'委托招标函',description:'',files:[]},
+        {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[]},
+      ]
+    }
   }
 }
 
@@ -55,11 +72,12 @@ const mutations = {
   UPDATE_RADIOLABELLIST:(state,list)=>{
     state.radioLabelList = list;
   },
-  update_ImplementationCommissionForm:(state,type,data)=>{
-    if(type=='form'){
-      state.ImplementationCommissionForm.input1 = data;
+  update_ImplementationCommissionForm:(state,data)=>{
+    // console.log(type,data,'}}}')
+    if(data.type=='form'){
+      state.ImplementationCommissionForm.agent_id = data.data;
     }else{
-      state.ImplementationCommissionForm.fileList = data;
+      state.ImplementationCommissionForm.files = data.data;
     }
     
   }
