@@ -56,39 +56,72 @@
                 </div> -->
             </div>
             <div class="">
-                <div v-for="(item, index) in list" :key="index" class="item">
-                    <div class="item-top">
-                        <div class="title">{{ item.title }}</div>
-                        <div class="status1" v-if="item.status == 0"><span>公开招标</span></div>
-                        <div class="status1" v-if="item.status == 1"><span>不公开招标</span></div>
-
-                        <div class="status2" v-if="item.status == 0"><span>内审完成</span></div>
-                        <div class="status22" v-if="item.status == 1"><span>内审中</span></div>
-                        <div class="status222" v-if="item.status == 2"><span>初始化</span></div>
-
-                    </div>
-                    <div class="item-con">
-                        <div class="item-con-left">
-                            <div class="item-con-left-o">
-                                <div><span class="label">项目编号:</span><span class="text">{{ item.title }}</span></div>
-                                <div><span class="label">采购单位:</span><span class="text">{{ item.title }}</span></div>
-                                <div><span class="label">采购申请时间:</span><span class="text">{{ item.title }}</span></div>
-                            </div>
-                            <div class="item-con-left-t">
-                                <div><span class="label">项目类型:</span><span class="text">{{ item.title }}</span></div>
-                                <div><span class="label">预算金额:</span><span class="text">{{ item.title }}</span></div>
-                                <div><span class="label">代理机构名称:</span><span class="text">{{ item.title }}</span></div>
-                            </div>
-                        </div>
-                        <div class="item-con-right">
-                            <div class="item-con-right-btn1" @click="openDetail(item)">详情</div>
-                            <div class="item-con-right-btn2" @click="openDetail(item)">编辑</div>
-                            <div class="item-con-right-btn3">删除</div>
-                        </div>
-                    </div>
-                </div>
+        <div v-for="(item, index) in list" :key="index" class="item">
+          <div class="item-top">
+            <div class="title">{{ item.name }}</div>
+            <div class="status1">
+              <span>{{ item.register_status_text }}</span>
             </div>
+            <div class="status2" >
+              <span>{{ item.procurement_method_text }}</span>
+            </div>
+          </div>
+          <div class="item-con">
+            <div class="item-con-left">
+              <div class="item-con-left-o">
+                <div>
+                  <span class="label">项目编号:</span
+                  ><span class="text">{{ item.no }}</span>
+                </div>
+                <div>
+                  <span class="label">采购单位:</span
+                  ><span class="text">{{ item.demand_department }}</span>
+                </div>
+                <div>
+                  <span class="label">采购申请时间:</span
+                  ><span class="text">{{ item.apply_date }}</span>
+                </div>
+              </div>
+              <div class="item-con-left-t">
+                <div>
+                  <span class="label">项目类型:</span
+                  ><span class="text">{{ item.type_text }}</span>
+                </div>
+                <div>
+                  <span class="label">预算金额:</span
+                  ><span class="text">{{ item.budget }}</span>
+                </div>
+                <div>
+                  <span class="label">代理机构名称:</span
+                  ><span class="text">{{ item.agent_department }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-con-right">
+              <div class="item-con-right-btn1" @click="openDetail(item)">
+                详情
+              </div>
+              <!-- <div class="item-con-right-btn2" @click="openEdit(item)">
+                编辑
+              </div> -->
+              <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
+            </div>
+          </div>
         </div>
+      </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;flex-direction: row-reverse;">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="form.current_page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="form.per_page"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="form.total"
+      >
+      </el-pagination>
+    </div>
     </div>
 </template>
 
@@ -96,13 +129,17 @@
 
 <script>
 import router from '@/router/index'
+import { projectList,projectDelete } from "@/api/project";
 export default {
     data() {
         return {
             form: {
-                name: '',
-                region: ''
-            },
+        name: "",
+        region: "",
+        current_page: 1,
+        per_page: 10,
+        total:10
+      },
             list: [
                 { status: 0, title: 'test', },
                 { status: 1, title: 'test', },
@@ -114,25 +151,68 @@ export default {
         }
     },
     mounted() {
-        console.log(router.options, this.$router)
-    },
+    console.log(this.$store.state.user);
+    this.query();
+  },
     methods: {
-        onSubmit() {
-            this.$message('submit!')
-        },
-        onCancel() {
-            this.$message({
-                message: 'cancel!',
-                type: 'warning'
-            })
-        },
-        openDetail(item) {
-            console.log(item)
-            this.$router.push({ name: 'contractEdit', params: item })
-        },
+        
+        async query() {
+      let form = {current_page:this.form.current_page,per_page:this.form.per_page}
+      let res = await projectList(this.form);
+      console.log(res)
+      if(res.code==200){
+        this.form.total = res.data.total;
+        this.list = res.data.list;
+      }
+    },
+    handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.form.per_page = val;
+        this.form.property = 1;
+        this.query();
+      },
+      handleCurrentChange(val) {
+        this.form.property = val;
+        console.log(`当前页: ${val}`);
+        this.query();
+      },
+    openDetail(item) {
+    //   this.resetFields();
+      this.$router.push({ name: "contractEdit",params:{id:item.id} });
+     
+    },
         projectAdd() {
             // this.$router.push({ name: 'contractEdit', params: {} })
-        }
+        },
+        deleteItem(item){
+      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
+          let res = await projectDelete(item.id);
+          console.log(res)
+          if(res.code===200){
+            this.$message({
+            type: 'success',
+            message: res.msg
+          });
+          this.form.property = 1;
+          this.query()
+          }else{
+            this.$message({
+            type: 'error',
+            message: res.msg
+          });
+          }
+         
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    }
     }
 }
 </script>
@@ -198,7 +278,8 @@ export default {
 
             .status1,
             .status2,.status222,.status22 {
-                width: 66px;
+                box-sizing: border-box;
+                padding: 0 5px;
                 height: 24px;
                 background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
                 border-radius: 4px;

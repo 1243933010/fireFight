@@ -5,7 +5,7 @@
                 <img @click="dialogVisible=false" src="../../assets/close_icon.png" alt="" srcset="">
             </div>
            <div class="upload-class">
-            <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+            <el-upload class="upload-demo" :headers="headers" drag :action="uploadUrl" multiple :on-success="handleSuccess">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -13,7 +13,7 @@
            </div>
             <div class="btn">
                 <div class="btn1">取消</div>
-                <div class="btn2">上传</div>
+                <div class="btn2"  v-if="[29,30,32,34].includes(+formInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']">保存</div>
             </div>
         </el-dialog>
     </div>
@@ -21,13 +21,11 @@
 
 
 <script>
+import { getToken } from "@/utils/auth";
+import {  saveContract,projectAudit} from "@/api/project";
 export default {
     data() {
         return {
-            formInfo: {
-                name: '',
-                region: ''
-            },
             dialogVisible: false,
             rules: {
                 name: [
@@ -37,7 +35,19 @@ export default {
             fileList: []
         }
     },
-
+    computed:{
+        formInfo() {
+      return this.$store.state.projectManagementAdd.formInfo;
+    },
+        uploadUrl() {
+      return process.env.VUE_APP_UPLOAD_API + "/user/upload_file";
+    },
+    headers() {
+      return {
+        Authorization: `Bearer ${getToken()}`,
+      };
+    },
+    },
     beforeRouteLeave(to, from, next) {
         console.log('111111')
         next();
@@ -46,17 +56,70 @@ export default {
         console.log(this.$route)
     },
     methods: {
+        async getDetail(id){
+      let res = await projectDetail(id);
+      // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
+      if(res.code==200){
+        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
+          ...res.data,
+          input12: "true",
+        });
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.attachments_content
+        );
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_contractList",
+          res.data.contract
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",{type:'file',
+          data:res.data.agent_check_videos}
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",
+          {type:'form',
+          data:res.data.agent_id});
+      }
+    },
+        async saveFnc(){
+            if(!this.fileList.length){
+                this.$message.error('请上传文件');
+                return
+            }
+        let form =  {files:this.fileList};
+           form.id= this.formInfo.id;
+           let res = await saveContract(form);
+           console.log(res)
+           if(res.code==200){
+            this.dialogVisible = false;
+            this.$message.success(res.msg)
+            this.getDetail(this.formInfo.id);
+            return
+           }
+           this.$message.error(res.msg)
+    },
         open(id) {
             if (!id) {
                 // this.$refs.formInfo.res
             }
+            this.fileList = [];
             this.dialogVisible = true;
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
         },
-        handleProgress(e, file, fileList) {
-            console.log(e, file, fileList)
+       
+        handleSuccess(e, file, fileList){
+            console.log(e, file, fileList,'----')
+            if(e.code===200){
+                e.data.title = e.data.file_name;
+                this.fileList.push(e.data)
+            }
         }
     }
 }

@@ -93,7 +93,7 @@ export default {
         });
         this.$store.commit(
           "thirdProjects/UPDATE_PROJECT_ATTACHMENTS",
-          res.data.attachments_content
+          res.data.project_attachments0
         );
         this.$store.commit(
           "thirdProjects/UPDATE_RADIOLABELLIST",
@@ -109,12 +109,21 @@ export default {
           data:res.data.agent_id});
 
           //
+          let data = {...res.data.bid_info,project_attachments:res.data.project_attachments1}
           this.$store.commit(
-          "thirdProjects/update_bidBaseProject", res.data.bid_info);
+          "thirdProjects/update_bidBaseProject", data);
+
           this.$store.commit(
-          "thirdProjects/update_bid_units", res.data.bid_units);
+          "thirdProjects/update_startData_bid_files_list",  res.data.bid_files_list);
           this.$store.commit(
-          "thirdProjects/update_project_attachments", res.data.bid_info);
+          "thirdProjects/update_startData_bid_units", res.data.bid_units);
+          this.$store.commit(
+          "thirdProjects/update_startData_project_attachments", res.data.project_attachments2);
+
+          let data1 = {...res.data}
+          data1.project_attachments = res.data.project_attachments3
+          this.$store.commit(
+          "thirdProjects/update_resultData",data1);
       }
       
       

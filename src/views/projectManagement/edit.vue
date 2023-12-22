@@ -86,7 +86,8 @@ export default {
       if(res.code==200){
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
-        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.attachments_content);
+        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
+
         
 
       }

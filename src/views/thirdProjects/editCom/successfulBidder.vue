@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-row>
     <el-form
       ref="thirdForm"
       style=""
@@ -8,6 +9,7 @@
       :model="resultData"
       class="demo-form-inline"
     >
+    
       <el-col :span="12">
         <el-form-item label="中标金额" prop="bid_success_amount">
           <el-input v-model="resultData.bid_success_amount" placeholder="请输入中标金额">
@@ -74,6 +76,7 @@
         <el-form-item label="发布中标公告日期" prop="bid_success_publish_date">
           <el-date-picker
             v-model="resultData.bid_success_publish_date"
+            value-format="yyyy-MM-dd"
             type="date"
             placeholder="请选择发布中标公告日期"
           >
@@ -118,9 +121,11 @@
         <UploadCom
           title="中标通知书/成交结果通知书"
           :fileList="resultData.bid_success_notice"
+          @updateFile="(e)=>updateFile(e,resultData.bid_success_notice)"
         />
       </el-col>
     </el-form>
+  </el-row>
     <el-row>
       <el-col :span="24">
         <div class="box-right1">
@@ -143,7 +148,7 @@
                   </div>
                 </div>
                 <div class="right">
-                  <!-- <UploadCom title="附件" :fileList="fileForm.fileList4" /> -->
+                  <UploadCom title="附件" :fileList="resultData.project_attachments[0].files" @updateFile="(e)=>updateFile(e,resultData.project_attachments[0].files)" />
                 </div>
               </div>
             </div>
@@ -152,8 +157,8 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button  v-if="projectInfo.status == 23" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  v-if="projectInfo.status == 24" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button    @click="saveFnc" v-if="projectInfo.status == 23" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  @click="submitFnc"  v-if="projectInfo.status == 24" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
@@ -169,6 +174,7 @@
 import UploadCom from "./uploadCom.vue";
 import checkDialog from "@/components/checkDialog.vue";
 import { getToken } from '@/utils/auth'
+import { bidResultSave ,resultOpenSubmit,projectAudit} from "@/api/project";
 export default {
   components: { UploadCom ,checkDialog},
   data() {
@@ -206,6 +212,64 @@ export default {
         },
   },
   methods:{
+    updateFile(e,item,index){
+        console.log(e,item,index)
+        if(typeof e == 'number'){
+          itemm.splice(e,1)
+        }else{
+          item.push(e)
+        }
+        console.log(this.$store.state.projectManagementAdd.project_attachments)
+      },
+    async saveFnc(){
+      let resultData = this.$store.state.thirdProjects.thirdData.resultData;
+
+      this.$refs.thirdForm.validate(async(valid) => {
+          if (valid) {
+            if(!resultData.bid_success_photo.length){
+            this.$message.error('请上传图片');
+            return
+            }
+         if(!resultData.bid_success_notice.length){
+            this.$message.error('请上传中标通知书/成交结果通知书');
+            return
+            }
+            if(!resultData.project_attachments[0].files.length){
+            this.$message.error('请上传附件');
+            return
+            }
+         let form =  this.$store.state.thirdProjects.thirdData.resultData;
+           form.id= this.projectInfo.id;
+           console.log(form);
+          //  return
+           let res = await bidResultSave(form);
+           console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            setTimeout(()=>{this.$router.go(-1)},1000)
+            return
+           }
+           this.$message.error(res.msg)
+          } else {
+           
+            return false;
+          }
+
+        });
+
+      
+       
+    },
+   async submitFnc(){
+           let res = await resultOpenSubmit(this.projectInfo.id);
+           console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            setTimeout(()=>{this.$router.go(-1)},1000)
+            return
+           }
+           this.$message.error(res.msg)
+    },
     handleProgress(e, file, fileList) {
             // console.log(e, file, fileList)
         },
@@ -226,7 +290,7 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
@@ -237,7 +301,7 @@ export default {
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);

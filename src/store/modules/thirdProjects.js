@@ -91,6 +91,9 @@ const state = {
       bid_success_notice_date:'',
       bid_success_photo:[],
       bid_success_notice:[],
+      project_attachments:[
+        {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:''},
+      ]
     }
   }
 }
@@ -115,17 +118,22 @@ const mutations = {
     }
     
   },
+  
   update_bidBaseProject:(state,form)=>{
     state.thirdData.bidBaseProject = form;
   },
+
   update_startData_bid_files_list:(state,list)=>{
     state.thirdData.bid_files_list = list;
   },
   update_startData_bid_units:(state,list)=>{
-    state.thirdData.bid_units = list;
+    state.thirdData.startData.bid_units = list;
   },
   update_startData_project_attachments:(state,list)=>{
-    state.thirdData.project_attachments = list;
+    state.thirdData.startData.project_attachments = list;
+  },
+  update_resultData:(state,form)=>{
+    state.thirdData.resultData = form;
   },
 }
 

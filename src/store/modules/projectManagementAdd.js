@@ -41,7 +41,8 @@ const state = {
   ImplementationCommissionForm:{
     agent_id: '',
     files: []
-  }
+  },
+  contractList:[]
 }
 
 
@@ -55,14 +56,18 @@ const mutations = {
   UPDATE_RADIOLABELLIST:(state,list)=>{
     state.radioLabelList = list;
   },
-  update_ImplementationCommissionForm:(state,type,data)=>{
-    if(type=='form'){
-      state.ImplementationCommissionForm.input1 = data;
+  update_ImplementationCommissionForm:(state,data)=>{
+    // console.log(type,data,'}}}')
+    if(data.type=='form'){
+      state.ImplementationCommissionForm.agent_id = data.data;
     }else{
-      state.ImplementationCommissionForm.fileList = data;
+      state.ImplementationCommissionForm.files = data.data;
     }
     
-  }
+  },
+  update_contractList:(state,list)=>{
+    state.contractList = list;
+  },
 }
 
 export default {

@@ -165,10 +165,40 @@ export function projectEdit(data) {
 
 
     //-----
-     //提交中标信息
+     //弹窗
      export function needDo() {
       return request({
         url: `/user/need_do`,
         method: 'get'
       })
     }
+
+
+
+       //-----
+     //保存合同
+     export function saveContract(data) {
+      return request({
+        url: `/contract/save_contract`,
+        method: 'post',
+        data
+      })
+    }
+
+        //提交合同
+        export function submitContract(id) {
+          return request({
+            url: `/contract/submit_contract`,
+            method: 'post',
+            data:{id}
+          })
+        }
+    
+
+          //删除合同
+          export function deleteContract(id) {
+            return request({
+              url: `/contract/delete/${id}`,
+              method: 'post',
+            })
+          }
