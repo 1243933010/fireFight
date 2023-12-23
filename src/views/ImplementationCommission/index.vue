@@ -161,7 +161,7 @@
         let res = await implementList(this.form);
         console.log(res)
         if(res.code==200){
-        //   this.form.total = res.data.total;
+          this.form.total = res.data.total;
           this.list = res.data;
         }
       },

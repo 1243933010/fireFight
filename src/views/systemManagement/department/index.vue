@@ -6,7 +6,10 @@
         </div>
         <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
             <el-form-item label="部门名称">
-                <el-input v-model="form.name" placeholder="请输入部门名称" />
+                <!-- <el-input v-model="form.name" placeholder="请输入部门名称" /> -->
+                <el-select v-model="form.region">
+                    <el-option v-for="(item,index) in list" :label="item.name" :value="item.id" />
+                </el-select>
             </el-form-item>
             <el-form-item label="用户状态">
                 <el-select v-model="form.region">
@@ -23,17 +26,17 @@
             <el-button size='small' @click="addBtn" type="primary">新增</el-button>
         </div>
         <div class="list">
-            <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
+            <el-table row-key="id" :tree-props="{children: 'children'}"  default-expand-all :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
                 <el-table-column type="index" label="序号" width="100"></el-table-column>
-                <el-table-column prop="title" label="部门名称" width="180"></el-table-column>
-                <el-table-column prop="title1" label="排序" width="180"></el-table-column>
-                <el-table-column prop="title2" label="状态"></el-table-column>
-                <el-table-column prop="title2" label="创建时间"></el-table-column>
+                <el-table-column prop="name" label="部门名称" width="180"></el-table-column>
+                <el-table-column prop="sort" label="排序" width="180"></el-table-column>
+                <el-table-column prop="state" label="状态"></el-table-column>
+                <el-table-column prop="created_at" label="创建时间"></el-table-column>
                 <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
                         <div style="display: flex;flex-direction: row;align-items: center;">
-                            <div class="btn btn1" @click="handleType(2)">编辑</div>
-                            <div class="btn btn2" @click="handleType(2)">删除</div>
+                            <div class="btn btn1" @click="handleEdit(scope.row)">编辑</div>
+                            <div class="btn btn2" @click="deleteItem(scope.row)">删除</div>
                             <div class="btn btn3" @click="handleType(2)">重置密码</div>
                         </div>
                         <!-- <el-button style="background: #DCE3FD;color: #3E72FB;border: none;"  @click="handleType(2)" type="primary" size="small">编辑</el-button>
@@ -42,13 +45,13 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
+            <!-- <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
                 :page-size="paginationObj.pageSize" :total="paginationObj.total"
                 layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
-                @current-change="pageCurrentChangeHandle" />
+                @current-change="pageCurrentChangeHandle" /> -->
         </div>
 
-        <AddDialog ref="add" />
+        <AddDialog ref="add" @updateData="query" />
     </div>
 </template>
 
@@ -57,73 +60,72 @@
 <script>
 // import Pagination from '@/components/Pagination'
 import AddDialog from './add.vue'
+import {departmentList,departmentDelete} from '@/api/project'
 export default {
     components:{AddDialog},
     data() {
         return {
-            form: {
-                name: '',
-                region: ''
-            },
-            list: [
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-            ],
-            paginationObj: {
-                page: 1,
-                pageSize: 10,
-                total: 200
-            }
+            form:{},
+            list: [ ],
         }
     },
+    mounted() {
+      console.log(this.$store.state.user);
+      this.query();
+    },
     methods: {
+        handleEdit(row){
+            this.$refs.add.open(row);
+        },
         setTitle({ rowIndex, columnIndex }) {
             return "background:#D2DFF9;color:#404659;font-size:14px;";
         },
         async query() {
-
-        },
+        
+        let res = await departmentList();
+        console.log(res)
+        if(res.code==200){
+        //   this.list = res.data;
+        res.data.forEach(element => {
+            element.children = element.all_child_department
+        });
+        this.list = res.data
+        }
+      },
         addBtn(){
             this.$refs.add.open();
         },
-        onSubmit() {
-            this.$message('submit!')
-        },
-        onCancel() {
+        deleteItem(item){
+        this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(async() => {
+            let res = await departmentDelete(item.id);
+            console.log(res)
+            if(res.code===200){
+              this.$message({
+              type: 'success',
+              message: res.msg
+            });
+            this.form.property = 1;
+            this.query()
+            }else{
+              this.$message({
+              type: 'error',
+              message: res.msg
+            });
+            }
+           
+          }).catch(() => {
             this.$message({
-                message: 'cancel!',
-                type: 'warning'
-            })
-        },
+              type: 'info',
+              message: '已取消删除'
+            });          
+          });
+      },
         openDetail(item) {
             console.log(item)
-        },
-        // 分页, 每页条数
-        pageSizeChangeHandle(val) {
-            this.page = 1
-            this.pageSize = val
-            this.query()
-        },
-        // 分页, 当前页
-        pageCurrentChangeHandle(val) {
-            this.page = val
-            this.query()
         },
         handleType(type) {
             this.$router.push({ name: 'messageNotificationEdit', params: { id: 1 } })

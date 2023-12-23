@@ -308,6 +308,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/systemManagement/user',
     meta: { title: '系统管理', icon: 'svg_icon5' },
+    roles: ['admin', 'editor'],
     children: [{
       path: 'user',
       name: 'user',

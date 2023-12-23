@@ -6,8 +6,8 @@
                     <div class="item" v-for="(item, index) in treeList" :key="index">
                         <div class="title" @click="handleClick('parent', index)">
                             <span :class="index == parentInd ? 'active' : ''">{{ item.title }}</span>
-                            <i v-if="item.children.length>0&&index !== parentInd" class="el-icon-arrow-right"></i>
-                            <i v-if="item.children.length>0&&index == parentInd" class="el-icon-arrow-down"></i>
+                            <i v-if="item.children.length > 0 && index !== parentInd" class="el-icon-arrow-right"></i>
+                            <i v-if="item.children.length > 0 && index == parentInd" class="el-icon-arrow-down"></i>
 
                         </div>
                         <div class="child">
@@ -58,13 +58,13 @@
                         highlight-current-row>
                         <el-table-column type="selection" width="45"></el-table-column>
                         <el-table-column type="index" label="序号" width="50"></el-table-column>
-                        <el-table-column prop="title" label="姓名" width="100"></el-table-column>
-                        <el-table-column prop="title" label="用户角色" width="80"></el-table-column>
+                        <el-table-column prop="name" label="姓名" width="200"></el-table-column>
+                        <el-table-column prop="title" label="用户角色" width="120"></el-table-column>
                         <el-table-column prop="title" label="登录账号"></el-table-column>
                         <el-table-column prop="title" label="部门名称"></el-table-column>
                         <el-table-column prop="title" label="手机号"></el-table-column>
-                        <el-table-column prop="title" label="状态"></el-table-column>
-                        <el-table-column prop="title" label="创建时间"></el-table-column>
+                        <el-table-column prop="state" label="状态"></el-table-column>
+                        <el-table-column prop="created_at" label="创建时间"></el-table-column>
                         <el-table-column align="center" prop="created_at" label="操作" width="300">
                             <template slot-scope="scope">
                                 <div style="display: flex;flex-direction: row;align-items: center;">
@@ -80,15 +80,15 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    <el-pagination style="text-align: right;" :current-page="paginationObj.page"
-                        :page-sizes="[10, 20, 50, 100]" :page-size="paginationObj.pageSize" :total="paginationObj.total"
+                    <el-pagination style="text-align: right;" :current-page="form.current_page"
+                        :page-sizes="[10, 20, 50, 100]" :page-size="form.per_page" :total="form.total"
                         layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
                         @current-change="pageCurrentChangeHandle" />
                 </div>
 
             </div>
         </div>
-        <AddDialog  ref="add" />
+        <AddDialog ref="add" />
     </div>
 </template>
 
@@ -96,8 +96,9 @@
 
 <script>
 import AddDialog from './add.vue'
+import { roleList } from '@/api/project'
 export default {
-    components:{AddDialog},
+    components: { AddDialog },
     data() {
         return {
             treeList: [
@@ -131,62 +132,58 @@ export default {
                     ]
                 },
                 {
-                    title: '深圳市消防救援支队特勤大队', id: 1,children: []
+                    title: '深圳市消防救援支队特勤大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市消防救援支队大亚湾特勤大队', id: 1,children: []
+                    title: '深圳市消防救援支队大亚湾特勤大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市消防救援支队水上大队', id: 1,children: []
+                    title: '深圳市消防救援支队水上大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市福田区消防救援大队', id: 1,children: []
+                    title: '深圳市福田区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市罗湖区消防救援大队', id: 1,children: []
+                    title: '深圳市罗湖区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市南山区消防救援大队', id: 1,children: []
+                    title: '深圳市南山区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市盐田区消防救援大队', id: 1,children: []
+                    title: '深圳市盐田区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市宝安区消防救援大队', id: 1,children: []
+                    title: '深圳市宝安区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市龙岗区消防救援大队', id: 1,children: []
+                    title: '深圳市龙岗区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市龙华区消防救援大队', id: 1,children: []
+                    title: '深圳市龙华区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市光明区消防救援大队', id: 1,children: []
+                    title: '深圳市光明区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市坪山区消防救援大队', id: 1,children: []
+                    title: '深圳市坪山区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市大鹏新区消防救援大队', id: 1,children: []
+                    title: '深圳市大鹏新区消防救援大队', id: 1, children: []
                 },
                 {
-                    title: '深圳市深汕特别合作区消防救援大队', id: 1,children: []
+                    title: '深圳市深汕特别合作区消防救援大队', id: 1, children: []
                 },
             ],
             parentInd: 0,
             childInd: 0,
             form: {
-                name: '',
-                region: ''
+                name: "",
+                region: "",
+                current_page: 1,
+                per_page: 10,
+                total: 10
             },
-            list: [
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-            ],
+            list: [],
             paginationObj: {
                 page: 1,
                 pageSize: 10,
@@ -194,7 +191,20 @@ export default {
             }
         }
     },
+    mounted() {
+        console.log(this.$store.state.user);
+        this.query();
+    },
     methods: {
+        async query() {
+            let form = { current_page: this.form.current_page, per_page: this.form.per_page }
+            let res = await roleList(this.form);
+            console.log(res)
+            if (res.code == 200) {
+                this.list = res.data.list;
+                this.form.total = res.data.total;
+            }
+        },
         addBtn() {
             this.$refs.add.open();
         },
@@ -210,16 +220,16 @@ export default {
                 this.parentInd = parentInd
             }
         },
-        // 分页, 每页条数
-        pageSizeChangeHandle(val) {
-            this.page = 1
-            this.pageSize = val
-            this.query()
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+          this.form.per_page = val;
+          this.form.property = 1;
+          this.query();
         },
-        // 分页, 当前页
-        pageCurrentChangeHandle(val) {
-            this.page = val
-            this.query()
+        handleCurrentChange(val) {
+          this.form.property = val;
+          console.log(`当前页: ${val}`);
+          this.query();
         },
     }
 }
@@ -297,7 +307,7 @@ export default {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    
+
 
     .left {
         width: 310px;
@@ -313,6 +323,7 @@ export default {
         .box {
             .item {
                 margin-bottom: 10px;
+
                 // font-size: 14px;
                 .title {
                     cursor: pointer;
@@ -338,11 +349,13 @@ export default {
     .right {
         min-width: 500px;
         flex-grow: 1;
-        .form{
+
+        .form {
             padding-top: 20px;
             background-color: white;
             margin-bottom: 30px;
         }
+
         // background: green;
     }
 }</style>
