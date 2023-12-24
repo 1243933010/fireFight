@@ -60,19 +60,20 @@
             {{ scope.$index }}
           </template>
         </el-table-column>
-        <el-table-column label="Title">
+        <el-table-column label="项目名称">
           <template slot-scope="scope">
-            {{ scope.row.title }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="Author" align="center">
+        <el-table-column label="当前进度" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.content }}</span>
+            <span>{{ scope.row.status_text }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Pageviews" align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            {{ scope.row.time }}
+            <!-- {{ scope.row.time }} -->
+            <el-button type="primary">处理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -126,11 +127,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      list: [
-        { title: '标题', content: '内容', time: '199966' },
-        { title: '标题', content: '内容', time: '199966' },
-        { title: '标题', content: '内容', time: '199966' }
-      ],
+      list: [],
       listLoading: false
     }
   },
@@ -138,7 +135,7 @@ export default {
     let dialog = localStorage.getItem('dialog');
     console.log(dialog)
     // if(dialog=='true'){
-      this.dialogVisible = true;
+      
       this.getList();
       localStorage.setItem('dialog',false)
     // }
@@ -147,6 +144,12 @@ export default {
     async getList(){
       let res = await needDo();
       console.log(res)
+      if(res.code==200){
+        if(res.data.total>0){
+        this.dialogVisible = true;
+        this.list = res.data.projects;
+       }
+      }
     },
     async goMe(){
       this.$router.push({name:"meCenter"})

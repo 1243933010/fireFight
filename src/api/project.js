@@ -214,6 +214,15 @@ export function departmentList(params) {
   })
 }
 
+//部门列表
+export function departmentArr(params) {
+  return request({
+    url: `/department/index`,
+    method: 'get',
+    params
+  })
+}
+
 
 //部门新增
 export function departmentAdd(data) {
@@ -247,10 +256,159 @@ export function departmentDelete(id) {
 
 //----用户
 
-//用户列表
+//角色列表
 export function roleList(params) {
   return request({
     url: `/role/index`,
+    method: 'get',
+    params
+  })
+}
+
+//添加角色
+export function roleAdd(data) {
+  return request({
+    url: `/role/add`,
+    method: 'post',
+    data
+  })
+}
+
+//编辑角色
+export function roleEdit(data) {
+  return request({
+    url: `/role/edit/${data.id}`,
+    method: 'post',
+    data
+  })
+}
+
+
+//用户权限
+export function roluserPermissionseList() {
+  return request({
+    url: `/user/user_permissions`,
+    method: 'get',
+  })
+}
+
+
+
+
+//-----
+
+//消息列表
+export function noticeList(params) {
+  return request({
+    url: `/notice/index`,
+    method: 'get',
+    params
+  })
+}
+
+//消息删除
+export function noticeDelete(id) {
+  return request({
+    url: `/notice/delete/${id}`,
+    method: 'post',
+  })
+}
+
+//编辑消息
+export function noticeEdit(data) {
+  return request({
+    url: `/notice/edit/${data.id}`,
+    method: 'post',
+    data
+  })
+}
+
+//添加消息
+export function noticeAdd(data) {
+  return request({
+    url: `/notice/add`,
+    method: 'post',
+    data
+  })
+}
+
+//----
+
+//代理列表
+export function agentArr(params) {
+  return request({
+    url: `/agent/index`,
+    method: 'get',
+    params
+  })
+}
+
+
+//-----------
+
+//角色列表
+export function userList(params) {
+  return request({
+    url: `/user/index`,
+    method: 'get',
+    params
+  })
+}
+
+
+//编辑角色
+export function userEdit(data) {
+  return request({
+    url: `/user/edit/${data.id}`,
+    method: 'post',
+    data
+  })
+}
+
+//添加角色
+export function userAdd(data) {
+  return request({
+    url: `/user/add`,
+    method: 'post',
+    data
+  })
+}
+
+
+//角色删除
+export function userDelete(id) {
+  return request({
+    url: `/user/delete/${id}`,
+    method: 'post',
+  })
+}
+
+
+//角色删除
+export function resetPassword(data) {
+  return request({
+    url: `/user/reset_password`,
+    method: 'post',
+    data
+  })
+}
+
+//分配角色
+export function setUserRoles(data) {
+  return request({
+    url: `/user/set_user_roles/${data.id}`,
+    method: 'post',
+    data
+  })
+}
+
+
+//----
+
+//日志列表
+export function logList(params) {
+  return request({
+    url: `/operate/log_list`,
     method: 'get',
     params
   })

@@ -15,7 +15,7 @@
             </div>
           </div>
 
-          <BasicMsg :disabled="false" />
+          <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
             <div class="btn2" @click="submitForm"  v-if="formInfo.status==0" v-permission="['department_auditor']">提交</div>
@@ -86,6 +86,9 @@ export default {
       if(res.code==200){
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
+        res.data.project_attachments0.forEach((val)=>{
+          val.title = val.file_name
+        })
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
 
         

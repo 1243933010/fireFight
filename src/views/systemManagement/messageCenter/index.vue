@@ -34,6 +34,8 @@
 
 
 <script>
+
+import { noticeList } from '@/api/project'
 export default {
     data() {
         return {
@@ -41,20 +43,17 @@ export default {
                 name: '',
                 region: ''
             },
-            list: [
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-            ],
+            list: [ ],
             paginationObj: {
                 page: 1,
                 pageSize: 10,
                 total: 200
             }
         }
+    },
+    mounted() {
+      console.log(this.$store.state.user);
+      this.query();
     },
     methods: {
         goDetail(item){
@@ -64,11 +63,41 @@ export default {
             this.$refs.add.open();
         },
         async query() {
-
-        },
-        onSubmit() {
-            this.$message('submit!')
-        },
+      let res = await noticeList(this.form);
+      console.log(res);
+      if (res.code == 200) {
+        this.list = res.data;
+      }
+    },
+        deleteItem(item){
+        this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(async() => {
+            let res = await departmentDelete(item.id);
+            console.log(res)
+            if(res.code===200){
+              this.$message({
+              type: 'success',
+              message: res.msg
+            });
+            this.form.property = 1;
+            this.query()
+            }else{
+              this.$message({
+              type: 'error',
+              message: res.msg
+            });
+            }
+           
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });          
+          });
+      },
         onCancel() {
             this.$message({
                 message: 'cancel!',

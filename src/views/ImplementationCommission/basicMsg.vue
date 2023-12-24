@@ -4,7 +4,7 @@
       label-width="100px">
       <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">
-          <el-select v-model="formInfo.demand_department_id" placeholder="请选择需求单位">
+          <el-select v-model="formInfo.demand_department" placeholder="请选择需求单位">
             <el-option v-for="(item,index) in selectList" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
@@ -169,17 +169,23 @@ export default {
       procurementMethodList: [{ label: '谜选采购', value: '8' },
       { label: '竟价采购', value: '9' },
       { label: '直选采购', value: '10' },
-      { label: '自行直接采购“', value: '11' },]
+      { label: '自行直接采购“', value: '11' },],
     }
   },
   watch: {
     'formInfo.budget'(newValue, old) {
-
-      if (+old < 1000000 && +newValue > 1000000) {
+      console.log(newValue, old,(+''),'======',(+old==0),(newValue > 100))
+      // if(this.formInfo.id){
+      //   return this.formInfo.budget
+      // }
+      if (+old==0&& +newValue > 100) {  //表示带过来的参数
+        console.log('表示带过来的参数')
+      }else if (+old>0&&+old < 1000000 && +newValue > 1000000) {
         this.procurementMethodList = []
         this.formInfo.procurement_method = ''
         this.procurementMethodList = this.procurementMethodSelect[0]
         console.log('触发了1')
+        console.log(newValue, old,(+''),'======')
       } else if (+newValue < 1000000 && +old > 1000000) {
         this.procurementMethodList = []
         this.formInfo.procurement_method = ''
@@ -211,6 +217,7 @@ export default {
       deep: true
     }
   },
+
   computed: {
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
@@ -241,7 +248,7 @@ export default {
           }
 
         });
-  },
+  }
 
   }
 }

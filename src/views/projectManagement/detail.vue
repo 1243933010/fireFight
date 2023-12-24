@@ -16,12 +16,23 @@
           </div>
 
           <BasicMsg :disabled="true" />
+          <ImplementationCommissionInfo v-if="formInfo.status>=6" />
+            <div class="background-icon">
+            <span class="title">招标</span>
+          </div>
+          <thirdCom v-if="formInfo.status>=11" />
+            <div class="background-icon">
+            <span class="title">开标</span>
+          </div>
+          <startCom v-if="formInfo.status>=18" />
+            <div class="background-icon">
+            <span class="title">中标</span>
+          </div>
+          <successfulBidder v-if="formInfo.status>=24" />
+
+            
+            
           <div class="btnn">
-            <!-- <div class="btn1">取消</div> -->
-            <!-- <div class="btn2" @click="submitForm">提交</div> -->
-            <!-- <div class="btn3" @click="submitFnc">保存草稿</div> -->
-            <!-- <div class="btn4">通过</div>
-            <div class="btn5">驳回</div> -->
             <div class="btn2" @click="auditFnc" v-if="formInfo.status==1" v-permission="['department_auditor']">初审</div>
             <div class="btn2" @click="auditFncEnd" v-if="formInfo.status==3" v-permission="['procure_auditor']">终审</div>
           </div>
@@ -30,6 +41,11 @@
       <div class="box-right">
           <div class="file-form">
             <AnnexCom />
+
+            <div class="background-icon">
+            <span class="title">合同列表</span>
+          </div>
+            <contractCom  v-if="formInfo.status>=31" />
         </div>
       </div>
     </div>
@@ -50,9 +66,16 @@ import BasicMsg from './basicMsg.vue'
 import { mapState, mapGetters } from 'vuex'
 import { projectEdit,projectDetail,projectAudit } from "@/api/project";
 import checkDialog from '@/components/checkDialog.vue'
+import ImplementationCommissionInfo from './ImplementationCommissionInfo.vue'
+import thirdCom from './thirdCom.vue'
+import startCom from './start.vue'
+import successfulBidder from './successfulBidder.vue'
+import contractCom from './contractCom.vue'
+
+
 export default {
   mixins: [addMixins],
-  components: { Steps, AnnexCom, BasicMsg,checkDialog },
+  components: { Steps, AnnexCom, BasicMsg,checkDialog,ImplementationCommissionInfo,thirdCom,startCom,successfulBidder,contractCom },
   data() {
     return {
 
@@ -81,8 +104,48 @@ export default {
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
+        if(res.data.status>6){
+          this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",
+          {type:'form',
+          data:res.data.agent_id});
+        }
         
-
+        if(res.data.status>11){
+            //招标信息替换
+            let data = {
+            ...res.data.bid_info,
+            bid_file_issue:res.data.bid_file_issue,
+            bid_publish_photo:res.data.bid_publish_photo,
+            bid_register_file:res.data.bid_register_file,
+            project_attachments:res.data.project_attachments1}
+          this.$store.commit(
+          "projectManagementAdd/update_bidBaseProject", data);
+        }
+        if(res.data.status>=18){
+          this.$store.commit(
+          "projectManagementAdd/update_startData_bid_files_list",  res.data.bid_files_list);
+          this.$store.commit(
+          "projectManagementAdd/update_startData_bid_units", res.data.bid_units);
+          this.$store.commit(
+          "projectManagementAdd/update_startData_project_attachments", res.data.project_attachments2);
+        }
+        if(res.data.status>=24){
+          let data1 = {
+            ...res.data.bid_info,
+            bid_success_photo:res.data.bid_success_photo,
+            bid_success_notice:res.data.bid_success_notice,
+          }
+          data1.project_attachments = res.data.project_attachments3
+          this.$store.commit(
+          "projectManagementAdd/update_resultData",data1);
+        }
+        if(res.data.status>=31){
+        this.$store.commit(
+          "projectManagementAdd/update_contractList",
+          res.data.contract
+        );
+      }
       }
     },
     async auditFnc(){
@@ -157,6 +220,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.background-icon {
+  width: 300px;
+  height: 29px;
+  margin-left: 30px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background: url("../../assets/background_icon.png") no-repeat 100% 100%;
+  padding-top: 5px;
+
+  .title {
+    padding-left: 9px;
+    color: white;
+    font-size: 14px;
+  }
+}
+
 .radio-item-child {
   padding-left: 20px;
 }

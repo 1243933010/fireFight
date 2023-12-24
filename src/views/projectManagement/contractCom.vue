@@ -1,51 +1,10 @@
 <template>
   <div style="height: auto">
     <div class="box">
-      <div class="box-left">
-        <div class="steps">
-          <Steps :stepList="stepList" />
-        </div>
+      <!-- <div class="box-left">
 
-        <div>
-          <div class="tab-icon">
-            <img class="img" src="../../assets/liucheng.png" alt="">
-            <span class="span">项目新建</span>
-          </div>
-          <BasicMsg :disabled="true" />
-          <div>
-            <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="projectInfo" class="demo-form-inline"
-              label-width="100px">
-              <el-col :span="12">
-                <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
-                  <el-select v-model="projectInfo.agent_id" placeholder="请选择采购代理名称">
-                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
-                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
-                    :file-list="projectInfo.files" >
-                    <i slot="default" class="el-icon-plus"></i>
-                    <div class="el-upload__tip" slot="tip">
-                      只能上传图片或视频
-                    </div>
-                    <div slot="file" slot-scope="{ file }">
-                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                      <span class="el-upload-list__item-actions">
-                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-            </el-form>
-          </div>
-        </div>
 
-      </div>
+      </div> -->
       <div class="box-right">
         <div class="files">
           <div class="header">
@@ -53,9 +12,7 @@
               <img src="../../assets/liucheng.png" alt="">
               <span>附件</span>
             </div>
-            <div class="upload" @click="uploadFile" v-if="[29,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
-              <span>上传合同</span>
-            </div>
+            
           </div>
           <div>
 
@@ -69,38 +26,28 @@
               <el-table-column fixed="right" label="操作" width="300">
                 <template slot-scope="scope">
                   <div class="btnn">
-                    <div class="btn5"  v-if="[29,30,32,34].includes(+formInfo.status)" @click="deleteItem(scope.row)"   v-permission="['project_registrar']">删除</div>
-                    <div class="btn4" @click="downLoadFile(scope)">下载</div>
+                    <!-- <div class="btn5"  v-if="[29,30,32,34].includes(+formInfo.status)" @click="deleteItem(scope.row)"   v-permission="['project_registrar']">删除</div> -->
+                    <!-- <div class="btn4" @click="downLoadFile(scope)">下载</div> -->
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-           <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
-            <el-button type="primary"  v-if="formInfo.status == 30"  @click="submitFnc"  v-permission="['project_registrar']">提交合同</el-button>
-            <el-button  @click="auditFnc"  v-if="formInfo.status == 31" v-permission="['department_auditor']"  type="primary">初审</el-button>
-            <el-button   @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"  type="primary">终审</el-button>
-           </div>
           </div>
         </div>
       </div>
     </div>
-    <Dialog ref="dialog" />
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 32 }, { label: '通过', value: 33 },]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 34 }, { label: '通过', value: 35 },]" />
   </div>
 </template>
     
 <script>
 import Steps from "@/components/steps.vue";
-import BasicMsg from './basicMsg.vue'
-import Dialog from './dialog.vue'
 import { submitContract,projectDetail,projectAudit,agentList,deleteContract  } from "@/api/project";
 import { getToken } from "@/utils/auth";
 import { addMixins } from './mixins'
 import checkDialog from "@/components/checkDialog.vue";
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg,Dialog,checkDialog },
+  components: { Steps,checkDialog },
   data() {
     return {
       rules: {
@@ -109,16 +56,7 @@ export default {
         ],
         files: [{ required: true, message: "请上传图片或者视频", trigger: "blur" }],
       },
-      tableData:[],
-      agentArr: [],
     };
-  },
-
-  mounted() {
-    let route = this.$route;
-    console.log( this.$store.getters)
-    this.getDetail(route.params.id);
-    this.getAgentList();
   },
   computed: {
     contractList(){
@@ -142,116 +80,10 @@ export default {
     
   },
   methods: {
-    deleteItem(item){
-      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async() => {
-          let res = await deleteContract(item.id);
-          console.log(res)
-          if(res.code===200){
-            this.$message({
-            type: 'success',
-            message: res.msg
-          });
-          this.getDetail(this.formInfo.id);
-
-          }else{
-            this.$message({
-            type: 'error',
-            message: res.msg
-          });
-          }
-         
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
-    },
     downLoadFile(scope){
       window.open(scope.row.url)
     },
-    async getDetail(id){
-      let res = await projectDetail(id);
-      // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
-      if(res.code==200){
-        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
-          ...res.data,
-          input12: "true",
-        });
-        this.$store.commit(
-          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
-          res.data.attachments_content
-        );
-        this.$store.commit(
-          "projectManagementAdd/UPDATE_RADIOLABELLIST",
-          JSON.parse(res.data.small_company)
-        );
-        this.$store.commit(
-          "projectManagementAdd/update_contractList",
-          res.data.contract
-        );
-        this.$store.commit(
-          "projectManagementAdd/update_ImplementationCommissionForm",{type:'file',
-          data:res.data.agent_check_videos}
-        );
-        this.$store.commit(
-          "projectManagementAdd/update_ImplementationCommissionForm",
-          {type:'form',
-          data:res.data.agent_id});
-      }
-    },
-    async getAgentList() {
-      let res = await agentList();
-      // console.log(res)
-      if (res.code == 200) {
-        this.agentArr = res.data;
-      }
-    },
-    async submitFnc(){
-           let res = await submitContract(this.formInfo.id);
-           console.log(res)
-           if(res.code==200){
-            this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
-            return
-           }
-           this.$message.error(res.msg)
-    },
-    uploadFile(){
-      this.$refs.dialog.open()
-    },
-    async auditFnc(){
-            this.$refs.checkDialog.openDialog(true)
-          },
-          async auditFncEnd(){
-            this.$refs.checkDialogEnd.openDialog(true)
-          },
-          async auditEmit(e){
-            console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
-            console.log(res)
-            if(res.code==200){
-              this.$message.success(res.msg);
-              this.$router.go(-1)
-              return
-            }
-            this.$message.error(res.msg);
-          },
-          async auditEmitEnd(e){
-            console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
-            console.log(res)
-            if(res.code==200){
-              this.$message.success(res.msg);
-              this.$router.go(-1)
-              return
-            }
-            this.$message.error(res.msg);
-          },
+
   },
 };
 </script>

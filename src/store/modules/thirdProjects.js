@@ -124,7 +124,7 @@ const mutations = {
   },
 
   update_startData_bid_files_list:(state,list)=>{
-    state.thirdData.bid_files_list = list;
+    state.thirdData.startData.bid_files_list = list;
   },
   update_startData_bid_units:(state,list)=>{
     state.thirdData.startData.bid_units = list;

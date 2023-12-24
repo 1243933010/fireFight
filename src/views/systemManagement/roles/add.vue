@@ -11,34 +11,34 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                <el-form-item label="权限字符" prop="region">
-                    <el-select v-model="formInfo.region"  placeholder="请选择权限字符">
+                <el-form-item label="权限字符" prop="code">
+                    <el-select v-model="formInfo.code"  placeholder="请选择权限字符">
                         <el-option label="Zone one" value="shanghai" />
                         <el-option label="Zone two" value="beijing" />
                     </el-select>
                 </el-form-item>
             </el-col>
                 <el-col :span="12">
-            <el-form-item label="角色状态" prop="region">
-                    <el-radio-group v-model="formInfo.region">
-                        <el-radio :label="3">正常</el-radio>
-                        <el-radio :label="6">停用</el-radio>
+            <el-form-item label="角色状态" prop="state">
+                    <el-radio-group v-model="formInfo.state">
+                        <el-radio :label="1">正常</el-radio>
+                        <el-radio :label="0">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-col>
-            <el-form-item label="菜单权限" prop="region">
+            <!-- <el-form-item label="菜单权限" prop="region">
                     <el-select v-model="formInfo.region"  placeholder="请选择菜单权限">
                         <el-option label="Zone one" value="shanghai" />
                         <el-option label="Zone two" value="beijing" />
                     </el-select>
-                </el-form-item>
-            <el-form-item label="备注" prop="name" style="width: 100%;">
-                    <el-input v-model="formInfo.name" type="textarea" />
+                </el-form-item> -->
+            <el-form-item label="备注" prop="remake">
+                    <el-input v-model="formInfo.remake" type="textarea" />
                 </el-form-item>
             </el-form>
             <div class="btn">
-                <div class="btn2">确定</div>
-                <div class="btn1">取消</div>
+                <div class="btn2" @click="handleSubmit">确定</div>
+                <div class="btn1" @click="cancelFnc">取消</div>
             </div>
         </el-dialog>
     </div>
@@ -46,18 +46,26 @@
 
 
 <script>
+import { roleAdd } from '@/api/project'
+
 export default {
     data() {
         return {
             formInfo: {
                 name: '',
-                region: ''
+                remake: '',
+                sort:0,
+                code:[],
+                state:1
             },
             dialogVisible: false,
             rules: {
                 name: [
                     { required: true, message: '请输入名称', trigger: 'blur' },
-                ]
+                ],
+                code: [
+                    { required: true, message: '请选择权限', trigger: 'blur' },
+                ],
             },
             fileList: []
         }
@@ -71,6 +79,33 @@ export default {
         console.log(this.$route)
     },
     methods: {
+        cancelFnc(){
+            this. formInfo={
+                name: '',
+                remake: '',
+                sort:0,
+                code:[],
+                state:1
+            },
+            this.dialogVisible = false;
+        },
+        async handleSubmit() {
+            let res ;
+            if(this.formInfo.id){
+                res = await departmentEdit(this.formInfo);
+            }else{
+                res = await roleAdd(this.formInfo);
+            }
+             
+            console.log(res)
+            if (res.code == 200) {
+                this.$message.success(res.msg);
+                this.$emit('updateData')
+                this.dialogVisible = false;
+                return
+            }
+            this.$message.error(res.msg);
+        },
         open(id) {
             if (!id) {
                 // this.$refs.formInfo.res

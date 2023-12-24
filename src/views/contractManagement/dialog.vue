@@ -22,7 +22,7 @@
 
 <script>
 import { getToken } from "@/utils/auth";
-import {  saveContract,projectAudit} from "@/api/project";
+import {  saveContract,projectAudit,projectDetail} from "@/api/project";
 export default {
     data() {
         return {

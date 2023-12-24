@@ -7,6 +7,7 @@
         :inline="true"
         :rules="thirdFormRules"
         :model="bidBaseProject"
+        :disabled="true"
         class="demo-form-inline"
       >
         <el-col :span="12">
@@ -78,14 +79,6 @@
                   :src="file.url"
                   alt=""
                 />
-                <span class="el-upload-list__item-actions">
-                  <span
-                    class="el-upload-list__item-delete"
-                    @click="handleRemove(file)"
-                  >
-                    <i class="el-icon-delete"></i>
-                  </span>
-                </span>
               </div>
             </el-upload>
           </el-form-item>
@@ -120,7 +113,7 @@
         <div class="box-right1">
           <div class="files">
             <div class="title1">
-              <img src="../../../assets/liucheng.png" alt="" />
+              <img src="../../assets/liucheng.png" alt="" />
               <span>附件</span>
             </div>
             <div class="file-form">
@@ -142,28 +135,13 @@
         </div>
       </el-col>
     </el-row>
-    <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc"  v-if="projectInfo.status == 11" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="submitFnc"  v-if="projectInfo.status == 12" v-permission="['project_registrar']"  type="primary">提交</el-button>
-      <el-button  @click="auditFnc"  v-if="projectInfo.status == 13" v-permission="['department_auditor']"  type="primary">初审</el-button>
-      <el-button   @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"  type="primary">终审</el-button>
-
-    </div>
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" />
-
     
   </div>
 </template>
 
 <script>
-import UploadCom from "./uploadCom.vue";
+import UploadCom from '../thirdProjects/editCom/uploadCom.vue'
 import checkDialog from "@/components/checkDialog.vue";
-import {
-  bidBaseSave,
-  projectAudit,
-  bidBaseSubmit
-} from "@/api/project";
 import { getToken } from '@/utils/auth'
 export default {
   components: { UploadCom ,checkDialog},
@@ -215,10 +193,10 @@ export default {
             }
         },
     projectInfo() {
-      return this.$store.state.thirdProjects.formInfo;
+      return this.$store.state.projectManagementAdd.formInfo;
     },
     bidBaseProject(){
-      return this.$store.state.thirdProjects.thirdData.bidBaseProject;
+      return this.$store.state.projectManagementAdd.thirdData.bidBaseProject;
     }
   },
   methods:{
@@ -243,76 +221,6 @@ export default {
         }
         console.log(this.$store.state.projectManagementAdd.project_attachments)
       },
-    async auditFnc(){
-      this.$refs.checkDialog.openDialog(true)
-    },
-    async auditFncEnd(){
-      this.$refs.checkDialogEnd.openDialog(true)
-    },
-    async auditEmit(e){
-      console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
-      console.log(res)
-      if(res.code==200){
-        this.$message.success(res.msg);
-        this.$router.go(-1)
-        return
-      }
-      this.$message.error(res.msg);
-    },
-    async auditEmitEnd(e){
-      console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
-      console.log(res)
-      if(res.code==200){
-        this.$message.success(res.msg);
-        this.$router.go(-1)
-        return
-      }
-      this.$message.error(res.msg);
-    },
-    async saveFnc(){
-      this.$refs.thirdForm.validate(async(valid) => { 
-          if (valid) {
-           if(this.bidBaseProject.bid_register_file.length==0){
-            this.$message.error('投标报名登记表文件不能为空')
-            return
-           }
-           if(this.bidBaseProject.bid_file_issue.length==0){
-            this.$message.error('采购代理机构招标文件(发售稿)不能为空')
-            return
-           }
-           console.log(this.bidBaseProject.project_attachments)
-           if(!this.bidBaseProject.project_attachments[0].files.length||!this.bidBaseProject.project_attachments[1].files.length||!this.bidBaseProject.project_attachments[2].files.length){
-            this.$message.error('附件不能为空')
-            return
-           }
-           let form = this.bidBaseProject;
-           form.id= this.projectInfo.id;
-           let res = await bidBaseSave(form);
-           console.log(res)
-           if(res.code==200){
-            this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
-            return
-           }
-           this.$message.error(res.msg)
-          } else {
-            return false;
-          }
-
-        });
-    },
-   async submitFnc(){
-           let res = await bidBaseSubmit(this.projectInfo.id);
-           console.log(res)
-           if(res.code==200){
-            this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
-            return
-           }
-           this.$message.error(res.msg)
-    },
   }
 };
 </script>

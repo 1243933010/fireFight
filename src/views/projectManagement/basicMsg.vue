@@ -102,6 +102,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    pageStatus:{
+      type: String,
+      default: 'detail'
     }
   },
   data() {
@@ -151,35 +155,41 @@ export default {
       
       procurementMethodSelect: [
         [
-          { label: '公开招标', value: '1' },
-          { label: '邀请招标', value: '2' },
-          { label: '竞争性谈判', value: '3' },
-          { label: '竞争性磋商', value: '4' },
-          { label: '单一来源采购', value: '5' },
-          { label: '询价', value: '6' },
-          { label: '其他', value: '7' },
+          { label: '公开招标', value: 1 },
+          { label: '邀请招标', value: 2 },
+          { label: '竞争性谈判', value: 3 },
+          { label: '竞争性磋商', value: 4 },
+          { label: '单一来源采购', value: 5 },
+          { label: '询价', value: 6 },
+          { label: '其他', value: 7 },
 
         ], [
-          { label: '谜选采购', value: '8' },
-          { label: '竟价采购', value: '9' },
-          { label: '直选采购', value: '10' },
-          { label: '自行直接采购“', value: '11' },
+          { label: '谜选采购', value: 8 },
+          { label: '竟价采购', value: 9 },
+          { label: '直选采购', value: 10 },
+          { label: '自行直接采购“', value: 11 },
         ]
       ],
-      procurementMethodList: [{ label: '谜选采购', value: '8' },
-      { label: '竟价采购', value: '9' },
-      { label: '直选采购', value: '10' },
-      { label: '自行直接采购“', value: '11' },]
+      procurementMethodList: [{ label: '谜选采购', value: 8 },
+      { label: '竟价采购', value: 9 },
+      { label: '直选采购', value: 10 },
+      { label: '自行直接采购“', value: 11 },]
     }
   },
   watch: {
     'formInfo.budget'(newValue, old) {
-
-      if (+old < 1000000 && +newValue > 1000000) {
+      console.log(newValue, old,(+''),'======',(+old==0),(newValue > 100))
+      // if(this.formInfo.id){
+      //   return this.formInfo.budget
+      // }
+      if (+old==0&& +newValue > 100) {  //表示带过来的参数
+        console.log('表示带过来的参数')
+      }else if (+old>0&&+old < 1000000 && +newValue > 1000000) {
         this.procurementMethodList = []
         this.formInfo.procurement_method = ''
         this.procurementMethodList = this.procurementMethodSelect[0]
         console.log('触发了1')
+        console.log(newValue, old,(+''),'======')
       } else if (+newValue < 1000000 && +old > 1000000) {
         this.procurementMethodList = []
         this.formInfo.procurement_method = ''
@@ -213,10 +223,10 @@ export default {
   },
   computed: {
     formInfo() {
-      return this.$store.state.thirdProjects.formInfo
+      return this.$store.state.projectManagementAdd.formInfo
     },
     radioLabelList(){
-      return this.$store.state.thirdProjects.radioLabelList
+      return this.$store.state.projectManagementAdd.radioLabelList
     },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]

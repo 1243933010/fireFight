@@ -4,16 +4,16 @@
             <div class="left">
                 <div class="box">
                     <div class="item" v-for="(item, index) in treeList" :key="index">
-                        <div class="title" @click="handleClick('parent', index)">
-                            <span :class="index == parentInd ? 'active' : ''">{{ item.title }}</span>
-                            <i v-if="item.children.length > 0 && index !== parentInd" class="el-icon-arrow-right"></i>
-                            <i v-if="item.children.length > 0 && index == parentInd" class="el-icon-arrow-down"></i>
+                        <div class="title" @click="handleClick('parent',item, index)">
+                            <span :class="index == parentInd ? 'active' : ''">{{ item.name }}</span>
+                            <i v-if="item.all_child_department.length > 0 && index !== parentInd" class="el-icon-arrow-right"></i>
+                            <i v-if="item.all_child_department.length > 0 && index == parentInd" class="el-icon-arrow-down"></i>
 
                         </div>
                         <div class="child">
-                            <div class="item" v-for="(value, ind) in item.children" :key="ind">
-                                <div class="title" @click="handleClick('child', ind, index)">
-                                    <span :class="parentInd == index && childInd == ind ? 'active' : ''"> {{ value.title
+                            <div class="item" v-for="(value, ind) in item.all_child_department" :key="ind">
+                                <div class="title" @click="handleClick('child',value, ind, index)">
+                                    <span :class="parentInd == index && childInd == ind ? 'active' : ''"> {{ value.name
                                     }}</span>
                                 </div>
                             </div>
@@ -24,18 +24,18 @@
             <div class="right">
                 <el-form class="form" ref="form" size="small" inline :model="form" label-width="120px">
                     <el-form-item label="用户姓名" placeholder="请输入用户姓名">
-                        <el-input v-model="form.name" />
+                        <el-input v-model="form.nickname" />
                     </el-form-item>
-                    <el-form-item label="部门名称">
+                    <!-- <el-form-item label="部门名称">
                         <el-select v-model="form.region" placeholder="请输入用户姓名">
                             <el-option label="Zone one" value="shanghai" />
                             <el-option label="Zone two" value="beijing" />
                         </el-select>
-                    </el-form-item>
-                    <el-form-item label="用户状态">
-                        <el-select v-model="form.region" placeholder="请输入用户姓名">
-                            <el-option label="Zone one" value="shanghai" />
-                            <el-option label="Zone two" value="beijing" />
+                    </el-form-item> -->
+                    <el-form-item label="状态">
+                        <el-select v-model="form.state" placeholder="请选择状态">
+                            <el-option label="正常" :value="1" />
+                            <el-option label="异常" :value="0" />
                         </el-select>
                     </el-form-item>
                     <!-- <el-form-item label="时间">
@@ -50,28 +50,41 @@
                 </el-form>
                 <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
                     <div class="botton btn5" @click="addBtn">新增</div>
-                    <div class="botton btn6" @click="addBtn">删除</div>
-                    <div class="botton btn7" @click="addBtn">导出</div>
+                    <!-- <div class="botton btn6" @click="addBtn">删除</div> -->
+                    <!-- <div class="botton btn7" @click="addBtn">导出</div> -->
                 </div>
                 <div class="list">
                     <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit
                         highlight-current-row>
                         <el-table-column type="selection" width="45"></el-table-column>
                         <el-table-column type="index" label="序号" width="50"></el-table-column>
-                        <el-table-column prop="name" label="姓名" width="200"></el-table-column>
-                        <el-table-column prop="title" label="用户角色" width="120"></el-table-column>
-                        <el-table-column prop="title" label="登录账号"></el-table-column>
-                        <el-table-column prop="title" label="部门名称"></el-table-column>
-                        <el-table-column prop="title" label="手机号"></el-table-column>
-                        <el-table-column prop="state" label="状态"></el-table-column>
+                        <el-table-column prop="nickname" label="姓名" width="200"></el-table-column>
+                        <el-table-column prop="roles" label="用户角色" width="300">
+                            <template slot-scope="scope">
+                                <span>{{ JSON.stringify(scope.row.roles) }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="username" label="登录账号"></el-table-column>
+                        <el-table-column prop="department" label="部门名称">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.department.name }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="mobile" label="手机号"></el-table-column>
+                        <el-table-column prop="state" label="状态">
+                            <template slot-scope="scope">
+                                <span v-if="scope.row.state==1">正常</span>
+                                <span style="color: red;" v-if="scope.row.state==0">异常</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="created_at" label="创建时间"></el-table-column>
                         <el-table-column align="center" prop="created_at" label="操作" width="300">
                             <template slot-scope="scope">
                                 <div style="display: flex;flex-direction: row;align-items: center;">
-                                    <div class="btn btn1" @click="handleType(2)">编辑</div>
-                                    <div class="btn btn2" @click="handleType(2)">删除</div>
-                                    <div class="btn btn3" @click="handleType(2)">重置密码</div>
-                                    <div class="btn btn4" @click="handleType(2)">分配角色</div>
+                                    <div class="btn btn1" @click="handleEdit(scope.row)">编辑</div>
+                                    <div class="btn btn2" @click="deleteItem(scope.row)">删除</div>
+                                    <div class="btn btn3" @click="$refs.passwordRef.open(scope.row)">重置密码</div>
+                                    <div class="btn btn4" @click="$refs.roleRef.open(scope.row)">分配角色</div>
 
                                 </div>
                                 <!-- <el-button style="background: #DCE3FD;color: #3E72FB;border: none;"  @click="handleType(2)" type="primary" size="small">编辑</el-button>
@@ -88,7 +101,12 @@
 
             </div>
         </div>
-        <AddDialog ref="add" />
+        <AddDialog ref="add"  @updateData="updateData"  />
+        <passwordDialog ref="passwordRef"  @updateData="updateData"  />
+        <roleDialog ref="roleRef"  @updateData="updateData"  />
+
+
+        
     </div>
 </template>
 
@@ -96,109 +114,54 @@
 
 <script>
 import AddDialog from './add.vue'
-import { roleList } from '@/api/project'
+import PasswordDialog from './password.vue'
+import roleDialog from './role.vue'
+
+import { userList,userDelete,departmentList } from '@/api/project'
 export default {
-    components: { AddDialog },
+    components: { AddDialog,PasswordDialog,roleDialog },
     data() {
         return {
-            treeList: [
-                // {
-                //     title: '支队机关各处室', id: 1,
-                //     children: [
-                //         { title: '办公室', id: 1, children: [] },
-                //         { title: '指挥中心', id: 1, children: [] },
-                //         { title: '作战训练处', id: 1, children: [] }]
-                // },
-                {
-                    title: '深圳市消防救援支队', id: 1,
-                    children: [
-                        { title: '办公室', id: 1, children: [] },
-                        { title: '指挥中心', id: 1, children: [] },
-                        { title: '作战训练处', id: 1, children: [] },
-                        { title: '信息通信处', id: 1, children: [] },
-                        { title: '组织教育处', id: 1, children: [] },
-                        { title: '人事处', id: 1, children: [] },
-                        { title: '队务处', id: 1, children: [] },
-                        { title: '法制与社会消防工作处', id: 1, children: [] },
-                        { title: '重点保卫处', id: 1, children: [] },
-                        { title: '新闻宣传处', id: 1, children: [] },
-                        { title: '后勤装备处', id: 1, children: [] },
-                        { title: '财务处', id: 1, children: [] },
-                        { title: '战勤保障处', id: 1, children: [] },
-                        { title: '采购办', id: 1, children: [] },
-                        { title: '基建工作专班', id: 1, children: [] },
-                        { title: '督察队', id: 1, children: [] },
-                        { title: '应急通信与车辆勤务站', id: 1, children: [] },
-                    ]
-                },
-                {
-                    title: '深圳市消防救援支队特勤大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市消防救援支队大亚湾特勤大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市消防救援支队水上大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市福田区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市罗湖区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市南山区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市盐田区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市宝安区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市龙岗区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市龙华区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市光明区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市坪山区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市大鹏新区消防救援大队', id: 1, children: []
-                },
-                {
-                    title: '深圳市深汕特别合作区消防救援大队', id: 1, children: []
-                },
-            ],
+            treeList: [],
             parentInd: 0,
             childInd: 0,
             form: {
-                name: "",
-                region: "",
+                nickname: "",
+                state: 1,
+                department_id:'',
                 current_page: 1,
                 per_page: 10,
                 total: 10
             },
             list: [],
-            paginationObj: {
-                page: 1,
-                pageSize: 10,
-                total: 200
-            }
         }
     },
     mounted() {
         console.log(this.$store.state.user);
-        this.query();
+        // this.query();
+        this.getDepartment();
     },
     methods: {
+        updateData(){
+        this.form.current_page = 1;
+        this.query();
+    },
+        async getDepartment() {
+      let res = await departmentList();
+      console.log(res);
+      if (res.code == 200) {
+        this.treeList = res.data;
+        this.form.department_id = this.treeList[this.parentInd].id;
+        if(this.treeList[this.parentInd].all_child_department.length){
+            this.form.department_id = this.treeList[this.parentInd].all_child_department[this.childInd].id;
+        }
+        this.query();
+       
+      }
+    },
         async query() {
-            let form = { current_page: this.form.current_page, per_page: this.form.per_page }
-            let res = await roleList(this.form);
+            // let form = { current_page: this.form.current_page, per_page: this.form.per_page, }
+            let res = await userList(this.form);
             console.log(res)
             if (res.code == 200) {
                 this.list = res.data.list;
@@ -206,12 +169,17 @@ export default {
             }
         },
         addBtn() {
-            this.$refs.add.open();
-        },
+      this.$refs.add.open();
+    },
+    handleEdit(row) {
+      this.$refs.add.open(row);
+    },
         setTitle({ rowIndex, columnIndex }) {
             return "background:#D2DFF9;color:#404659;font-size:14px;";
         },
-        handleClick(type, index, parentInd) {
+        handleClick(type,item, index, parentInd) {
+            this.form.current_page = 1;
+            this.form.department_id = item.id;
             if (type == 'parent') {
                 this.parentInd = index;
                 this.childInd = 0;
@@ -219,18 +187,49 @@ export default {
                 this.childInd = index;
                 this.parentInd = parentInd
             }
+            this.query()
         },
-        handleSizeChange(val) {
-          console.log(`每页 ${val} 条`);
-          this.form.per_page = val;
-          this.form.property = 1;
-          this.query();
-        },
-        handleCurrentChange(val) {
-          this.form.property = val;
-          console.log(`当前页: ${val}`);
-          this.query();
-        },
+        // 分页, 每页条数
+    pageSizeChangeHandle(val) {
+      this.page = 1;
+      this.pageSize = val;
+      this.query();
+    },
+    // 分页, 当前页
+    pageCurrentChangeHandle(val) {
+      this.page = val;
+      this.query();
+    },
+        deleteItem(item) {
+      this.$confirm("此操作将删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          let res = await userDelete(item.id);
+          console.log(res);
+          if (res.code === 200) {
+            this.$message({
+              type: "success",
+              message: res.msg,
+            });
+            this.form.property = 1;
+            this.query();
+          } else {
+            this.$message({
+              type: "error",
+              message: res.msg,
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
     }
 }
 </script>

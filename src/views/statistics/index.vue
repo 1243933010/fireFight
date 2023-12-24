@@ -1,202 +1,395 @@
 <template>
-	<div class="statistics-pages">
-		<div class="filter-content">
-			<div class="module-tit">
-				<div class="icon" style="width: 14px">
-					<img src="../../assets/liucheng.png" class="img" />
-				</div>
-				<div class="text">筛选内容</div>
-			</div>
-			<!-- :rules="loginRules" -->
-			<el-form ref="loginForm" :model="projectInfo" class="form">
-				<el-form-item label="项目名称" class="label-input">
-					<el-input v-model="projectInfo.projectName" placeholder="请输入项目名称"></el-input>
-				</el-form-item>
-
-				<el-form-item label="项目类型" class="label-input">
-					<el-select v-model="projectInfo.projectType" placeholder="请选择项目类型">
-						<el-option label="类型一" value="types1"></el-option>
-						<el-option label="类型二" value="types2"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="部门名称" class="label-input">
-					<el-select v-model="projectInfo.department" placeholder="请选择部门名称">
-						<el-option label="部门一" value="types1"></el-option>
-						<el-option label="部门二" value="types2"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="审核状态" class="label-input">
-					<el-select v-model="projectInfo.reviewStatus" placeholder="请选择审核状态">
-						<el-option label="状态一" value="types1"></el-option>
-						<el-option label="状态二" value="types2"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="采购方式" class="label-input">
-					<el-select v-model="projectInfo.procurementMethod" placeholder="请选择采购方式">
-						<el-option label="方式一" value="types1"></el-option>
-						<el-option label="方式二" value="types2"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="申请时间" class="label-input">
-					<el-date-picker v-model="projectInfo.time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
-				</el-form-item>
-
-				<el-button type="primary" class="search-btn" @click="searchHandle">搜索</el-button>
-			</el-form>
-		</div>
-
-		<div class="module-tit" style="margin-top: 30px">
-			<div class="icon" style="width: 20px">
-				<img src="../../assets/count.png" class="img" />
-			</div>
-			<div class="text">统计分析表</div>
-		</div>
-
-		<div class="list">
-			<el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
-				<el-table-column type="selection" width="45"></el-table-column>
-				<el-table-column type="index" label="序号" width="50"></el-table-column>
-				<el-table-column prop="title" label="项目编号" width="100"></el-table-column>
-				<el-table-column prop="title1" label="项目名称" width="80"></el-table-column>
-				<el-table-column prop="title2" label="项目类型"></el-table-column>
-				<el-table-column prop="title3" label="采购方式"></el-table-column>
-				<el-table-column prop="title4" label="需求部门"></el-table-column>
-				<el-table-column prop="title5" label="预算金额"></el-table-column>
-				<el-table-column prop="title6" label="审计金额"></el-table-column>
-				<el-table-column prop="title7" label="中标金额"></el-table-column>
-				<el-table-column prop="title8" label="采购日期"></el-table-column>
-			</el-table>
-			<el-pagination
-				style="text-align: right"
-				:current-page="paginationObj.page"
-				:page-sizes="[10, 20, 50, 100]"
-				:page-size="paginationObj.pageSize"
-				:total="paginationObj.total"
-				layout="total, sizes, prev, pager, next, jumper"
-				@size-change="pageSizeChangeHandle"
-				@current-change="pageCurrentChangeHandle"
-			/>
-		</div>
-	</div>
+  <div>
+    <div class="tab-icon">
+      <img class="img" src="../../assets/liucheng.png" alt="" />
+      <span class="span">筛选</span>
+    </div>
+    <el-form
+      ref="form"
+      size="small"
+      inline
+      :model="form"
+      label-width="90px"
+      class="form-container"
+    >
+      <el-form-item label="项目名称">
+        <el-input v-model="form.name" placeholder="请输入项目名称" />
+      </el-form-item>
+      <el-form-item label="项目类型">
+        <el-select v-model="form.region" placeholder="请选择项目类型">
+          <el-option label="Zone one" value="shanghai" />
+          <el-option label="Zone two" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="所属部门">
+        <el-select v-model="form.region" placeholder="请选择所属部门">
+          <el-option label="Zone one" value="shanghai" />
+          <el-option label="Zone two" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="采购方式">
+        <el-select v-model="form.region" placeholder="请选择采购方式">
+          <el-option label="Zone one" value="shanghai" />
+          <el-option label="Zone two" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="审核状态">
+        <el-select v-model="form.region" placeholder="请选择审核状态">
+          <el-option label="Zone one" value="shanghai" />
+          <el-option label="Zone two" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="申请时间">
+        <el-date-picker
+          v-model="form.region"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-col :span="11">
+          <el-button type="primary"> 搜索</el-button>
+        </el-col>
+      </el-form-item>
+    </el-form>
+    <div class="list">
+      <div class="list-box">
+        <div class="title">
+          <i
+            class="el-icon-s-unfold"
+            style="color: #c4cad5; margin-right: 2px"
+          ></i>
+          <span style="color: #454d65; font-size: 16px">项目列表</span>
+        </div>
+        <!-- <div class="add" @click="projectAdd" v-permission="['project_registrar']">
+          <img style="width: 20px" src="../../assets/add_icon.png" alt="" />
+          <span>新增</span>
+        </div> -->
+      </div>
+      <div class="">
+        <div v-for="(item, index) in list" :key="index" class="item">
+          <div class="item-top">
+            <div class="title">{{ item.name }}</div>
+            <div class="status1">
+              <span>{{ item.register_status_text }}</span>
+            </div>
+            <div class="status2" >
+              <span>{{ item.procurement_method_text }}</span>
+            </div>
+          </div>
+          <div class="item-con">
+            <div class="item-con-left">
+              <div class="item-con-left-o">
+                <div>
+                  <span class="label">项目编号:</span
+                  ><span class="text">{{ item.no }}</span>
+                </div>
+                <div>
+                  <span class="label">采购单位:</span
+                  ><span class="text">{{ item.demand_department }}</span>
+                </div>
+                <div>
+                  <span class="label">采购申请时间:</span
+                  ><span class="text">{{ item.apply_date }}</span>
+                </div>
+              </div>
+              <div class="item-con-left-t">
+                <div>
+                  <span class="label">项目类型:</span
+                  ><span class="text">{{ item.type_text }}</span>
+                </div>
+                <div>
+                  <span class="label">预算金额:</span
+                  ><span class="text">{{ item.budget }}</span>
+                </div>
+                <div>
+                  <span class="label">代理机构名称:</span
+                  ><span class="text">{{ item.agent_department }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="item-con-right">
+              <div class="item-con-right-btn1" @click="openDetail(item)">
+                详情
+              </div>
+              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="item.status==0">
+                编辑
+              </div>
+              <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex;justify-content: space-between;flex-direction: row-reverse;">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="form.current_page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="form.per_page"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="form.total"
+      >
+      </el-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
+import router from "@/router/index";
+import { projectList,projectDelete } from "@/api/project";
+// import { addMixins } from './mixins'
 export default {
-	data() {
-		return {
-			projectInfo: {
-				projectName: '',
-				projectType: '',
-				department: '',
-				reviewStatus: '',
-				procurementMethod: '',
-				time: ''
-			},
-            list: [
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-                { title: '项目编号', title1: '项目名称', title2: '项目类型', title3: '采购方式', title4: '需求部门', title5: '预算金额', title6: '审计金额', title7: '中标金额', title8: '采购日期' },
-            ],
-            paginationObj: {
-                page: 1,
-                pageSize: 10,
-                total: 200
-            }
-		};
-	},
-	methods: {
-		searchHandle() {},
-		setTitle({ rowIndex, columnIndex }) {
-			return 'background:#D2DFF9;color:#404659;font-size:14px;';
-		},
-        // 分页, 每页条数
-        pageSizeChangeHandle(val) {
-            this.page = 1
-            this.pageSize = val
-            this.query()
-        },
-        // 分页, 当前页
-        pageCurrentChangeHandle(val) {
-            this.page = val
-            this.query()
-        },
-	}
+  data() {
+    return {
+      form: {
+        name: "",
+        region: "",
+        current_page: 1,
+        per_page: 10,
+        total:10
+      },
+      list: [],
+    };
+  },
+  // mixins: [addMixins],
+  mounted() {
+    console.log(this.$store.state.user);
+    this.query();
+  },
+  methods: {
+    async query() {
+      let form = {current_page:this.form.current_page,per_page:this.form.per_page}
+      let res = await projectList(this.form);
+      console.log(res)
+      if(res.code==200){
+        this.form.total = res.data.total;
+        this.list = res.data.list;
+      }
+    },
+    handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.form.per_page = val;
+        this.form.property = 1;
+        this.query();
+      },
+      handleCurrentChange(val) {
+        this.form.property = val;
+        console.log(`当前页: ${val}`);
+        this.query();
+      },
+    openDetail(item) {
+      this.resetFields();
+      this.$router.push({ name: "projectManagementDetail",params:{id:item.id} });
+     
+    },
+    openEdit(item){
+      this.resetFields();
+      this.$router.push({ name: "projectManagementEdit",params:{id:item.id} });
+    },
+    projectAdd() {
+        this.resetFields();
+      this.$router.push({ name: "projectManagementAdd", params: {} });
+    },
+    deleteItem(item){
+      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
+          let res = await projectDelete(item.id);
+          console.log(res)
+          if(res.code===200){
+            this.$message({
+            type: 'success',
+            message: res.msg
+          });
+          this.form.property = 1;
+          this.query()
+          }else{
+            this.$message({
+            type: 'error',
+            message: res.msg
+          });
+          }
+         
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-input {
-	margin: 0;
-	outline: 0;
-	border: 0;
-	padding: 0;
-	background-color: transparent;
-
-	&::placeholder {
-		color: #a6a9bc;
-	}
+@import "~@/styles/btn.scss";
+.form-container {
+  background-color: #fff;
+  // padding-top: 20px;
 }
+.list {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f5f9;
+  padding: 20px 0;
+  box-sizing: border-box;
 
-.icon {
-	font-size: 0;
+  .list-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 
-	.img {
-		width: 100%;
-	}
-}
+    .add {
+      width: 90px;
+      height: 33px;
+      background: linear-gradient(0deg, #2d6dff 0%, #6280f5 100%);
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: white;
 
-.module-tit {
-	margin-bottom: 20px;
-	display: flex;
-	align-items: center;
+      span {
+        margin-left: 5px;
+        padding-top: 5px;
+      }
+    }
+  }
 
-	.text {
-		margin-left: 8px;
-		font-size: 16px;
-		color: #454d65;
-		font-weight: bold;
-	}
-}
+  .item {
+    background-color: white;
+    border-radius: 6px;
+    width: 100%;
+    margin-bottom: 5px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 24px 0 18px 44px;
+    // font-size: 14px;
+    .item-top {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 27px;
 
-.statistics-pages {
-	.filter-content {
-		padding: 20px 38px 0 20px;
-		background-color: #fff;
+      .title {
+        color: #454d65;
+        font-size: 14px;
+        margin-right: 10px;
+      }
 
-		.form {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
+      .status1,
+      .status2,
+      .status222,
+      .status22 {
+        box-sizing: border-box;
+          padding: 0 5px;
+        height: 24px;
+        background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+        border-radius: 4px;
+        margin-right: 10px;
+        color: #fefeff;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-			.label-input {
-				margin-right: 60px;
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
+      .status2 {
+        background: linear-gradient(0deg, #fc6435 0%, #fc4835 100%);
+        color: white;
+      }
 
-				&.time {
-					::v-deep & > .el-form-item__content {
-						display: flex;
-						align-items: center;
-					}
-					.zhi {
-						margin-left: 10px;
-						margin-right: 10px;
-					}
-				}
-			}
+      .status22 {
+        background: linear-gradient(0deg, #394779 0%, #2a2e3e 100%);
+      }
 
-			.search-btn {
-				margin-bottom: 22px;
-			}
-		}
-	}
+      .status222 {
+        background: linear-gradient(0deg, #fcaa35 0%, #fca135 100%);
+      }
+    }
+
+    .item-con {
+      display: flex;
+      justify-content: space-between;
+
+      .item-con-left {
+        font-size: 20px;
+
+        .item-con-left-o,
+        .item-con-left-t {
+          // margin-right: 25px;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+
+          div {
+            min-width: 250px;
+            margin-right: 25px;
+          }
+        }
+
+        .item-con-left-o,
+        .item-con-left-t {
+          .label {
+            color: #b2b6cc;
+            font-size: 14px;
+            margin-right: 12px;
+          }
+
+          .text {
+            color: #60667a;
+            font-size: 14px;
+          }
+        }
+
+        // font-weight: 600;
+      }
+
+      .item-con-right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        box-sizing: border-box;
+        position: absolute;
+        top: 40%;
+        right: 0;
+        div {
+          // margin: 0 5px;
+          width: 70px;
+          height: 33px;
+          background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+          border-radius: 4px;
+          margin-right: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 12px;
+        }
+
+        .item-con-right-btn1 {
+          background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+        }
+
+        .item-con-right-btn2 {
+          background-color: #dce3fd;
+        }
+
+        .item-con-right-btn3 {
+          background: linear-gradient(0deg, #fc4835 0%, #fc6235 100%);
+        }
+      }
+    }
+  }
 }
 </style>

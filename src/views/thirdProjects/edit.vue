@@ -103,27 +103,60 @@ export default {
           "thirdProjects/update_ImplementationCommissionForm",{type:'file',
           data:res.data.agent_check_videos}
         );
+        if(res.data.status>6){
         this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm",
           {type:'form',
           data:res.data.agent_id});
-
-          //
-          let data = {...res.data.bid_info,project_attachments:res.data.project_attachments1}
+        }
+        if(res.data.status>11){
+            //招标信息替换
+            let data = {
+            ...res.data.bid_info,
+            bid_file_issue:res.data.bid_file_issue,
+            bid_publish_photo:res.data.bid_publish_photo,
+            bid_register_file:res.data.bid_register_file,
+            project_attachments:res.data.project_attachments1}
           this.$store.commit(
           "thirdProjects/update_bidBaseProject", data);
+        }
 
+        if(res.data.status>=18){
           this.$store.commit(
           "thirdProjects/update_startData_bid_files_list",  res.data.bid_files_list);
           this.$store.commit(
           "thirdProjects/update_startData_bid_units", res.data.bid_units);
           this.$store.commit(
           "thirdProjects/update_startData_project_attachments", res.data.project_attachments2);
-
-          let data1 = {...res.data}
-          data1.project_attachments = res.data.project_attachments3
+        }
+        // if(res.data.status>=24){
+        //   let data1 = {...res.data}
+        //   data1.project_attachments = res.data.project_attachments3
+        //   this.$store.commit(
+        //   "thirdProjects/update_resultData",data1);
+        // }
+        if(res.data.status>=24){
+          let data1 = {
+            ...res.data.bid_info,
+            bid_success_photo:res.data.bid_success_photo,
+            bid_success_notice:res.data.bid_success_notice,
+      //       bid_success_amount:res.data.bid_success_amount,
+      // bid_success_unit:res.data.bid_success_unit,
+      // bid_success_phone:res.data.bid_success_phone,
+      // bid_success_contact:res.data.bid_success_contact,
+      // bid_success_link:res.data.bid_success_link,
+      // bid_success_publish_date:res.data.bid_success_publish_date,
+      // bid_success_unit_type:res.data.bid_success_unit_type,
+      // bid_success_unit_per:res.data.bid_success_unit_per,
+      // bid_success_notice_date:res.data.bid_success_notice_date,
+      // bid_success_photo:res.data.bid_success_photo,
+      // bid_success_notice:res.data.bid_success_notice,
+      project_attachments: res.data.project_attachments3
+          }
+          // data1.project_attachments = res.data.project_attachments3
           this.$store.commit(
           "thirdProjects/update_resultData",data1);
+        }
       }
       
       

@@ -13,7 +13,7 @@ export const addMixins = {
     computed: {
         stepList() {
             console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
-            return [
+            let stepArr = [
                 {
                     title: "需求单位",
                     isInput: this.$store.state.projectManagementAdd.formInfo.demand_department_id,
@@ -110,41 +110,36 @@ export const addMixins = {
                     isActive: false
                 },
 
-
-
-
-                // {
-                //     title: "纪保预算审核报告书",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.project_leader || this.$store.state.projectManagementAdd.fileForm.fileList2.length > 0,
-                //     isActive: (!this.$store.state.projectManagementAdd.fileForm.project_leader && this.$store.state.projectManagementAdd.fileForm.fileList2.length == 0) && (this.$store.state.projectManagementAdd.fileForm.contact_phone || this.$store.state.projectManagementAdd.fileForm.fileList3.length > 0),
-                // },
-                // {
-                //     title: "采购需求",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.contact_phone || this.$store.state.projectManagementAdd.fileForm.fileList3.length > 0,
-                //     isActive: (!this.$store.state.projectManagementAdd.fileForm.contact_phone && this.$store.state.projectManagementAdd.fileForm.fileList3.length == 0) && (this.$store.state.projectManagementAdd.fileForm.name || this.$store.state.projectManagementAdd.fileForm.fileList4.length > 0),
-                // },
-
-                // {
-                //     title: "实施计划",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.name || this.$store.state.projectManagementAdd.fileForm.fileList4.length > 0,
-                //     isActive: (!this.$store.state.projectManagementAdd.fileForm.name && this.$store.state.projectManagementAdd.fileForm.fileList4.length == 0) && (this.$store.state.projectManagementAdd.fileForm.type || this.$store.state.projectManagementAdd.fileForm.fileList5.length > 0),
-                // },
-                // {
-                //     title: "审查意见书",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.type || this.$store.state.projectManagementAdd.fileForm.fileList5.length > 0,
-                //     isActive: (!this.$store.state.projectManagementAdd.fileForm.type && this.$store.state.projectManagementAdd.fileForm.fileList5.length == 0) && (this.$store.state.projectManagementAdd.fileForm.no || this.$store.state.projectManagementAdd.fileForm.fileList6.length > 0),
-                // },
-                // {
-                //     title: "大队党委会",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.no || this.$store.state.projectManagementAdd.fileForm.fileList6.length > 0,
-                //     isActive: (!this.$store.state.projectManagementAdd.fileForm.no && this.$store.state.projectManagementAdd.fileForm.fileList6.length == 0) && (this.$store.state.projectManagementAdd.fileForm.audit_amount || this.$store.state.projectManagementAdd.fileForm.fileList7.length > 0),
-                // },
-                // {
-                //     title: "支队党委会",
-                //     isInput: this.$store.state.projectManagementAdd.fileForm.audit_amount || this.$store.state.projectManagementAdd.fileForm.fileList7.length > 0,
-                //     isActive: false,
-                // }
             ]
+            if(this.$store.state.projectManagementAdd.formInfo.status>=5){
+                stepArr.push({
+                    title: "实施委托",
+                    isInput: true,
+                    isActive: false,
+                },)
+            }
+            if(this.$store.state.projectManagementAdd.formInfo.status>11){
+                stepArr.push({
+                    title: "招标",
+                    isInput: true,
+                    isActive: false,
+                },)
+            }
+            if(this.$store.state.projectManagementAdd.formInfo.status>=18){
+                stepArr.push({
+                    title: "开标",
+                    isInput: true,
+                    isActive: false,
+                },)
+            }
+            if(this.$store.state.projectManagementAdd.formInfo.status>=24){
+                stepArr.push({
+                    title: "中标",
+                    isInput: true,
+                    isActive: false,
+                },)
+            }
+            return stepArr;
         }
     },
     methods: {

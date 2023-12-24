@@ -2,7 +2,7 @@
   <div>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
             <div style=" width: 50%;"   v-for="(item, index) in startData.bid_files_list"  :key="index">
-        <UploadCom :title="item.title" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item)" />
+        <UploadCom :title="item.title" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item.files)" />
       </div>
         </div>
       <!-- <el-col :span="12">
@@ -51,6 +51,7 @@ export default {
       return this.$store.state.thirdProjects.formInfo;
     },
     startData() {
+      console.log(this.$store.state.thirdProjects.thirdData.startData,'==========')
       return this.$store.state.thirdProjects.thirdData.startData;
     },
   },

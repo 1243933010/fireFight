@@ -4,7 +4,7 @@
             <img src="../../../assets/liucheng.png" alt="">
             <span>筛选</span>
         </div>
-        <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
+        <!-- <el-form class="form" ref="form" size="small" inline :model="form" label-width="90px">
             <el-form-item label="部门名称">
                 <el-input v-model="form.name" placeholder="请输入部门名称" />
             </el-form-item>
@@ -16,32 +16,31 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary">搜索</el-button>
-                <!-- <el-button type="primary">重置</el-button> -->
             </el-form-item>
         </el-form>
         <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
                     <div class="botton btn5" @click="addBtn">新增</div>
                     <div class="botton btn6" @click="addBtn">删除</div>
-                </div>
+                </div> -->
         <div class="list">
             <el-table :data="list" style="width: 100%" border fit highlight-current-row>
                 <el-table-column type="index" label="序号"  width="100"></el-table-column>
-                <el-table-column prop="title" label="角色编号" width="180"></el-table-column>
-                <el-table-column prop="title1" label="角色名称" width="180"></el-table-column>
-                <el-table-column prop="title2" label="状态"></el-table-column>
-                <el-table-column prop="title2" label="创建时间"></el-table-column>
-                <el-table-column align="center" prop="created_at" label="操作" width="300">
+                <el-table-column prop="id" label="编号" width="180"></el-table-column>
+                <el-table-column prop="name" label="角色名称" width="180"></el-table-column>
+                <el-table-column prop="code" label="编码"></el-table-column>
+                <el-table-column prop="remark" label="备注"></el-table-column>
+                <!-- <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button @click="handleType(1)" type="primary" size="small">修改</el-button>
-                        <el-button  @click="handleType(2)" type="primary" size="small">删除</el-button>
+                        <el-button @click="deleteItem(scope.row)" type="primary" size="small">修改</el-button>
+                        <el-button  @click="deleteItem(scope.row)" type="primary" size="small">删除</el-button>
                         <el-button @click="handleType(3)"  type="primary" size="small">菜单分配</el-button>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
-            <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
+            <!-- <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
                 :page-size="paginationObj.pageSize" :total="paginationObj.total"
                 layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
-                @current-change="pageCurrentChangeHandle" />
+                @current-change="pageCurrentChangeHandle" /> -->
         </div>
 
         <AddDialog ref="add" />
@@ -52,22 +51,19 @@
 
 <script>
 import AddDialog from './add.vue'
+import { roleList,roluserPermissionseList } from '@/api/project'
 export default {
     components:{AddDialog},
     data() {
         return {
             form: {
-                name: '',
-                region: ''
+                name: "",
+                region: "",
+                current_page: 1,
+                per_page: 10,
+                total: 10
             },
-            list: [
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-                { title: 'title', title1: '454545454', title2: 'dfdfdf', title3: 'dfdfdf', title4: 'dfdfdf', title5: 'fdfdf', title6: 'fdfdf' },
-            ],
+            list: [ ],
             paginationObj: {
                 page: 1,
                 pageSize: 10,
@@ -75,12 +71,56 @@ export default {
             }
         }
     },
+    mounted() {
+        console.log(this.$store.state.user);
+        this.query();
+        this.getRoluserPermissionseList();
+    },
     methods: {
+        async getRoluserPermissionseList(){
+            let res = await roluserPermissionseList();
+            console.log(res)
+        },
+        deleteItem(item){
+        this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(async() => {
+            let res = await departmentDelete(item.id);
+            console.log(res)
+            if(res.code===200){
+              this.$message({
+              type: 'success',
+              message: res.msg
+            });
+            this.form.property = 1;
+            this.query()
+            }else{
+              this.$message({
+              type: 'error',
+              message: res.msg
+            });
+            }
+           
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });          
+          });
+      },
         addBtn(){
             this.$refs.add.open();
         },
         async query() {
-
+            let form = { current_page: this.form.current_page, per_page: this.form.per_page }
+            let res = await roleList(this.form);
+            console.log(res)
+            if (res.code == 200) {
+                this.list = res.data.list;
+                this.form.total = res.data.total;
+            }
         },
         onSubmit() {
             this.$message('submit!')
