@@ -118,7 +118,7 @@
               <div class="item-con-right-btn1" @click="openDetail(item)">
                 详情
               </div>
-              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="item.status==0">
+              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="[0,1].includes(item.status)">
                 编辑
               </div>
               <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
@@ -169,7 +169,7 @@ export default {
           { label: '单一来源采购', value: 5 },
           { label: '询价', value: 6 },
           { label: '其他', value: 7 },
-          { label: '谜选采购', value: 8 },
+          { label: '遴选采购', value: 8 },
           { label: '竟价采购', value: 9 },
           { label: '直选采购', value: 10 },
           { label: '自行直接采购“', value: 11 },

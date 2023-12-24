@@ -70,89 +70,70 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-col :span="11">
+        <el-col :span="24">
           <el-button
             type="primary"
-            @click="
-              () => {
-                form.current_page = 1;
-                query();
-              }
-            "
+            @click="() => { form.current_page = 1;query();}"
           >
-            搜索</el-button
+            搜索</el-button>
+
+            <el-button
+            type="success"
+            @click="() => { form.current_page = 1;exportFnc();}"
           >
+            导出</el-button>
         </el-col>
       </el-form-item>
     </el-form>
-    <div class="list">
-      <div class="list-box">
-        <div class="title">
-          <i
-            class="el-icon-s-unfold"
-            style="color: #c4cad5; margin-right: 2px"
-          ></i>
-          <span style="color: #454d65; font-size: 16px">项目列表</span>
-        </div>
-        <!-- <div class="add" @click="projectAdd" v-permission="['project_registrar']">
-          <img style="width: 20px" src="../../assets/add_icon.png" alt="" />
-          <span>新增</span>
-        </div> -->
-      </div>
-      <div class="">
-        <div v-for="(item, index) in list" :key="index" class="item">
-          <div class="item-top">
-            <div class="title">{{ item.name }}</div>
-            <div class="status1">
-              <span>{{ item.register_status_text }}</span>
-            </div>
-            <div class="status2">
-              <span>{{ item.procurement_method_text }}</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="item-con-left">
-              <div class="item-con-left-o">
-                <div>
-                  <span class="label">项目编号:</span
-                  ><span class="text">{{ item.no }}</span>
-                </div>
-                <div>
-                  <span class="label">采购单位:</span
-                  ><span class="text">{{ item.demand_department }}</span>
-                </div>
-                <div>
-                  <span class="label">采购申请时间:</span
-                  ><span class="text">{{ item.apply_date }}</span>
-                </div>
-              </div>
-              <div class="item-con-left-t">
-                <div>
-                  <span class="label">项目类型:</span
-                  ><span class="text">{{ item.type_text }}</span>
-                </div>
-                <div>
-                  <span class="label">预算金额:</span
-                  ><span class="text">{{ item.budget }}</span>
-                </div>
-                <div>
-                  <span class="label">代理机构名称:</span
-                  ><span class="text">{{ item.agent_department }}</span>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="item-con-right">
-              <div class="item-con-right-btn1" @click="openDetail(item)">
-                详情
-              </div>
-              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="item.status==0">
-                编辑
-              </div>
-              <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
-            </div> -->
-          </div>
-        </div>
-      </div>
+    <div style="overflow: hidden"></div>
+    <div>
+      <el-card class="box-card">
+        <div style="font-size: 16px;margin-bottom: 10px;">总预算金额:{{ allData.total_budget }}</div>
+        <div style="font-size: 16px;margin-bottom: 10px;">总审计金额:{{ allData.total_audit_amount }}</div>
+        <div style="font-size: 16px;margin-bottom: 10px;">总中标金额:{{ allData.total_bid_success_amount }}</div>
+      </el-card>
+    </div>
+    <div>
+      <el-table
+        :data="list"
+        :header-cell-style="setTitle"
+        style="width: 100%"
+        border
+        fit
+        highlight-current-row
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="id"
+          label="项目编号"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          label="项目名称"
+          width="180"
+        ></el-table-column>
+        <el-table-column prop="type_text" label="项目类型"></el-table-column>
+        <el-table-column
+          prop="procurement_method_text"
+          label="采购方式"
+        ></el-table-column>
+        <el-table-column
+          prop="demand_department"
+          label="需求部门"
+        ></el-table-column>
+        <el-table-column prop="budget" label="预算金额"></el-table-column>
+        <el-table-column prop="audit_amount" label="审计金额"></el-table-column>
+        <el-table-column
+          prop="bid_success_amount"
+          label="中标金额"
+        ></el-table-column>
+        <!-- <el-table-column prop="remark" label="采购日期"></el-table-column> -->
+      </el-table>
     </div>
     <div
       style="
@@ -176,12 +157,12 @@
 </template>
 
 <script>
-import router from "@/router/index";
 import {
   projectList,
   projectDelete,
   departmentArr,
   projectStateList,
+  projectExport
 } from "@/api/project";
 // import { addMixins } from './mixins'
 export default {
@@ -207,13 +188,14 @@ export default {
         { label: "单一来源采购", value: 5 },
         { label: "询价", value: 6 },
         { label: "其他", value: 7 },
-        { label: "谜选采购", value: 8 },
+        { label: "遴选采购", value: 8 },
         { label: "竟价采购", value: 9 },
         { label: "直选采购", value: 10 },
         { label: "自行直接采购“", value: 11 },
       ],
       stateList: [],
       departmentList: [],
+      allData: {},
     };
   },
   watch: {
@@ -234,6 +216,16 @@ export default {
     this.query();
   },
   methods: {
+    async exportFnc(){
+      let res = await projectExport(this.form);
+      console.log(res)
+      if(res.code==200){
+        window.location.href = res.data.url;
+      }
+    },
+    setTitle({ rowIndex, columnIndex }) {
+      return "background:#D2DFF9;color:#404659;font-size:14px;";
+    },
     async getState() {
       let res = await projectStateList();
 
@@ -262,6 +254,7 @@ export default {
       if (res.code == 200) {
         this.form.total = res.data.total;
         this.list = res.data.list;
+        this.allData = res.data;
       }
     },
     handleSizeChange(val) {

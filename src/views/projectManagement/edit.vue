@@ -18,8 +18,8 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <div class="btn2" @click="submitForm"  v-if="formInfo.status==0" v-permission="['department_auditor']">提交</div>
-            <div class="btn3" @click="submitFnc"   v-if="formInfo.status==0" v-permission="['department_auditor']">保存草稿</div>
+            <div class="btn2" @click="submitForm"  v-if="[1].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>
+            <div class="btn3" @click="submitFnc"   v-if="[0,1].includes(formInfo.status)" v-permission="['department_auditor']">保存草稿</div>
             <!-- <div class="btn4">通过</div> -->
             <!-- <div class="btn5">驳回</div> -->
           </div>

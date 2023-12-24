@@ -251,7 +251,7 @@ export const asyncRoutes = [
     path: '/thirdProjects',
     component: Layout,
     redirect: '/thirdProjects',
-    meta: { title: '三方项目列表', icon: 'svg_icon2' },
+    meta: { title: '三方项目列表', icon: 'nested' },
     children: [{
       path: 'thirdProjects',
       name: 'thirdProjects',
@@ -292,7 +292,7 @@ export const asyncRoutes = [
     redirect: '/statistics',
     meta: {
       title: '统计分析',
-      icon: 'svg_icon4',
+      icon: 'lock',
       // icon:'lock',
       roles: [ 'admin','editor'] // you can set roles in root nav
     },
@@ -307,7 +307,7 @@ export const asyncRoutes = [
     path: '/systemManagement',
     component: Layout,
     redirect: '/systemManagement/user',
-    meta: { title: '系统管理', icon: 'svg_icon5' },
+    meta: { title: '系统管理', icon: 'table' },
     roles: ['admin', 'editor'],
     children: [{
       path: 'user',

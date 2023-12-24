@@ -178,7 +178,7 @@ export default {
         { label: "单一来源采购", value: 5 },
         { label: "询价", value: 6 },
         { label: "其他", value: 7 },
-        { label: "谜选采购", value: 8 },
+        { label: "遴选采购", value: 8 },
         { label: "竟价采购", value: 9 },
         { label: "直选采购", value: 10 },
         { label: "自行直接采购“", value: 11 },

@@ -65,25 +65,25 @@ export default {
       form.small_company = JSON.stringify(state.radioLabelList)
       console.log(form)
      
-      let bool = false;
-       this.$refs.basicMsg.verifyForm((bools)=>{
-        bool = bools
-      })
-      console.log(bool,'===')
-      let fileBool = true;
-      this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
-        if(val.files.length==0){
-          fileBool = false;
-        }
-      })
-      if(!bool){
-        this.$message.error('表单必须填写')
-        return
-      }
-      if(!fileBool){
-        this.$message.error('附件必须上传')
-        return
-      }
+      // let bool = false;
+      //  this.$refs.basicMsg.verifyForm((bools)=>{
+      //   bool = bools
+      // })
+      // console.log(bool,'===')
+      // let fileBool = true;
+      // this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
+      //   if(val.files.length==0){
+      //     fileBool = false;
+      //   }
+      // })
+      // if(!bool){
+      //   this.$message.error('表单必须填写')
+      //   return
+      // }
+      // if(!fileBool){
+      //   this.$message.error('附件必须上传')
+      //   return
+      // }
       console.log(form);
       let res = await projectAdd(form);
       console.log(res)
