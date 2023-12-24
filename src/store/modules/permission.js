@@ -55,14 +55,16 @@ const actions = {
         path: '/icon',
         component: Layout,
         children: [
-          {
-            path: 'index',
-            component: () => import('@/views/icons/index'),
-            name: 'Icons',
-            meta: { title: 'testtest', icon: 'icon', noCache: true }
-          }
+          // {
+          //   path: 'index',
+          //   component: () => import('@/views/icons/index'),
+          //   name: 'Icons',
+          //   meta: { title: 'testtest', icon: 'icon', noCache: true }
+          // }
         ]
       }], roles))
+
+      
       // if (roles.includes('admin')) {
       //   accessedRoutes = asyncRoutes || []
       // } else {

@@ -16,19 +16,29 @@
           </div>
 
           <BasicMsg :disabled="true" />
+          
           <ImplementationCommissionInfo v-if="formInfo.status>=6" />
-            <div class="background-icon">
+
+            <div  v-if="formInfo.status>=11">
+              <div class="background-icon">
             <span class="title">招标</span>
           </div>
-          <thirdCom v-if="formInfo.status>=11" />
+          <thirdCom />
+            </div>
+
+
+           <div  v-if="formInfo.status>=18">
             <div class="background-icon">
             <span class="title">开标</span>
           </div>
-          <startCom v-if="formInfo.status>=18" />
+          <startCom />
+           </div>
+          <div v-if="formInfo.status>=24">
             <div class="background-icon">
             <span class="title">中标</span>
           </div>
-          <successfulBidder v-if="formInfo.status>=24" />
+          <successfulBidder />
+          </div>
 
             
             

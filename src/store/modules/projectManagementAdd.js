@@ -3,7 +3,7 @@
 const state = {
   formInfo: {
     demand_department:'',
-    demand_department_id: "",
+    // demand_department_id: "",
     project_leader: "",
     contact_phone: "",
     name: "",

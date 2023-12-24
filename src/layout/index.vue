@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <!-- <div class="header">
+    <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -37,7 +37,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -155,7 +155,9 @@ export default {
       this.$router.push({name:"meCenter"})
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      localStorage.clear();
+      this.clearCookies();
+      // await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     async openMessage() {
@@ -165,7 +167,20 @@ export default {
     },
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    },
+     clearCookies() {
+    // 获取当前所有的 cookie
+    var cookies = document.cookie.split(";");
+
+    // 遍历所有 cookie，并将其过期时间设置为过去的时间
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
+}
+
   }
 }
 </script>

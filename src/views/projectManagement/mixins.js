@@ -14,11 +14,11 @@ export const addMixins = {
         stepList() {
             console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
             let stepArr = [
-                {
-                    title: "需求单位",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.demand_department_id,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.demand_department_id && this.$store.state.projectManagementAdd.formInfo.project_leader,
-                },
+                // {
+                //     title: "需求单位",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.demand_department_id,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.demand_department_id && this.$store.state.projectManagementAdd.formInfo.project_leader,
+                // },
                 {
                     title: "项目负责人",
                     isInput: this.$store.state.projectManagementAdd.formInfo.project_leader,
@@ -145,7 +145,7 @@ export const addMixins = {
     methods: {
         resetFields(){
             
-            this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{demand_department_id: "",
+            this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{
             project_leader: "",
             contact_phone: "",
             name: "",

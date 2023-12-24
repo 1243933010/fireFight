@@ -413,3 +413,15 @@ export function logList(params) {
     params
   })
 }
+
+
+
+//状态列表
+export function projectStateList() {
+  return request({
+    url: `/project/project_status`,
+    method: 'get',
+  })
+}
+
+

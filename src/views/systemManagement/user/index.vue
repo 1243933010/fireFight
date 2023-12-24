@@ -44,7 +44,7 @@
                         </el-date-picker>
                     </el-form-item> -->
                     <el-form-item>
-                        <el-button type="primary">搜索</el-button>
+                        <el-button type="primary"  @click="()=>{form.current_page=1;query()}">搜索</el-button>
                         <!-- <el-button type="primary">重置</el-button> -->
                     </el-form-item>
                 </el-form>

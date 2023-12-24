@@ -16,27 +16,46 @@
         <el-input v-model="form.name" placeholder="请输入项目名称" />
       </el-form-item>
       <el-form-item label="项目类型">
-        <el-select v-model="form.region" placeholder="请选择项目类型">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+        <el-select v-model="form.type" placeholder="请选择项目类型">
+          <el-option label="服务" value="service" />
+          <el-option label="货物" value="goods" />
+          <el-option label="工程" value="engineering" />
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门">
-        <el-select v-model="form.region" placeholder="请选择所属部门">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+        <el-select
+          v-model="form.demand_department_id"
+          placeholder="请选择所属部门"
+        >
+          <el-option
+            v-for="(item, index) in departmentList"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="采购方式">
-        <el-select v-model="form.region" placeholder="请选择采购方式">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+        <el-select
+          v-model="form.procurement_method"
+          placeholder="请选择采购方式"
+        >
+          <el-option
+            v-for="(item, index) in procurementMethodSelect"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="form.region" placeholder="请选择审核状态">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+        <el-select v-model="form.state" placeholder="请选择审核状态">
+          <el-option
+            v-for="(item, index) in stateList"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="申请时间">
@@ -46,12 +65,23 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
         >
         </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-col :span="11">
-          <el-button type="primary"> 搜索</el-button>
+          <el-button
+            type="primary"
+            @click="
+              () => {
+                form.current_page = 1;
+                query();
+              }
+            "
+          >
+            搜索</el-button
+          >
         </el-col>
       </el-form-item>
     </el-form>
@@ -76,7 +106,7 @@
             <div class="status1">
               <span>{{ item.register_status_text }}</span>
             </div>
-            <div class="status2" >
+            <div class="status2">
               <span>{{ item.procurement_method_text }}</span>
             </div>
           </div>
@@ -124,7 +154,13 @@
         </div>
       </div>
     </div>
-    <div style="display: flex;justify-content: space-between;flex-direction: row-reverse;">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+      "
+    >
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -141,89 +177,152 @@
 
 <script>
 import router from "@/router/index";
-import { projectList,projectDelete } from "@/api/project";
+import {
+  projectList,
+  projectDelete,
+  departmentArr,
+  projectStateList,
+} from "@/api/project";
 // import { addMixins } from './mixins'
 export default {
   data() {
     return {
       form: {
         name: "",
-        region: "",
+        region: [],
         current_page: 1,
         per_page: 10,
-        total:10
+        total: 10,
+        apply_start_date: "",
+        apply_end_date: "",
+        demand_department_id: "",
+        procurement_method: "",
       },
       list: [],
+      procurementMethodSelect: [
+        { label: "公开招标", value: 1 },
+        { label: "邀请招标", value: 2 },
+        { label: "竞争性谈判", value: 3 },
+        { label: "竞争性磋商", value: 4 },
+        { label: "单一来源采购", value: 5 },
+        { label: "询价", value: 6 },
+        { label: "其他", value: 7 },
+        { label: "谜选采购", value: 8 },
+        { label: "竟价采购", value: 9 },
+        { label: "直选采购", value: 10 },
+        { label: "自行直接采购“", value: 11 },
+      ],
+      stateList: [],
+      departmentList: [],
     };
+  },
+  watch: {
+    "form.region"(a, b) {
+      if (a.length > 0) {
+        this.form.apply_start_date = a[0];
+        this.form.apply_end_date = a[1];
+      } else {
+        this.form.apply_start_date = "";
+        this.form.apply_end_date = "";
+      }
+    },
   },
   // mixins: [addMixins],
   mounted() {
-    console.log(this.$store.state.user);
+    this.departmentFnc();
+    this.getState();
     this.query();
   },
   methods: {
+    async getState() {
+      let res = await projectStateList();
+
+      if (res.code == 200) {
+        let arr = [];
+        res.data.forEach((element, index) => {
+          arr.push({ label: element, value: index });
+        });
+        this.stateList = arr;
+      }
+    },
+    async departmentFnc() {
+      let res = await departmentArr({ per_page: 1000 });
+      console.log(res);
+      if (res.code == 200) {
+        this.departmentList = res.data.list;
+      }
+    },
     async query() {
-      let form = {current_page:this.form.current_page,per_page:this.form.per_page}
+      let form = {
+        current_page: this.form.current_page,
+        per_page: this.form.per_page,
+      };
       let res = await projectList(this.form);
-      console.log(res)
-      if(res.code==200){
+      console.log(res);
+      if (res.code == 200) {
         this.form.total = res.data.total;
         this.list = res.data.list;
       }
     },
     handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.form.per_page = val;
-        this.form.property = 1;
-        this.query();
-      },
-      handleCurrentChange(val) {
-        this.form.property = val;
-        console.log(`当前页: ${val}`);
-        this.query();
-      },
+      console.log(`每页 ${val} 条`);
+      this.form.per_page = val;
+      this.form.property = 1;
+      this.query();
+    },
+    handleCurrentChange(val) {
+      this.form.property = val;
+      console.log(`当前页: ${val}`);
+      this.query();
+    },
     openDetail(item) {
       this.resetFields();
-      this.$router.push({ name: "projectManagementDetail",params:{id:item.id} });
-     
+      this.$router.push({
+        name: "projectManagementDetail",
+        params: { id: item.id },
+      });
     },
-    openEdit(item){
+    openEdit(item) {
       this.resetFields();
-      this.$router.push({ name: "projectManagementEdit",params:{id:item.id} });
+      this.$router.push({
+        name: "projectManagementEdit",
+        params: { id: item.id },
+      });
     },
     projectAdd() {
-        this.resetFields();
+      this.resetFields();
       this.$router.push({ name: "projectManagementAdd", params: {} });
     },
-    deleteItem(item){
-      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async() => {
+    deleteItem(item) {
+      this.$confirm("此操作将删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
           let res = await projectDelete(item.id);
-          console.log(res)
-          if(res.code===200){
+          console.log(res);
+          if (res.code === 200) {
             this.$message({
-            type: 'success',
-            message: res.msg
-          });
-          this.form.property = 1;
-          this.query()
-          }else{
+              type: "success",
+              message: res.msg,
+            });
+            this.form.property = 1;
+            this.query();
+          } else {
             this.$message({
-            type: 'error',
-            message: res.msg
-          });
+              type: "error",
+              message: res.msg,
+            });
           }
-         
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除",
+          });
         });
-    }
+    },
   },
 };
 </script>
@@ -291,7 +390,7 @@ export default {
       .status222,
       .status22 {
         box-sizing: border-box;
-          padding: 0 5px;
+        padding: 0 5px;
         height: 24px;
         background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
         border-radius: 4px;

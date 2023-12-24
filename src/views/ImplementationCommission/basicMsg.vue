@@ -2,13 +2,13 @@
   <div>
     <el-form ref="formInfo" :disabled="disabled" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
       label-width="100px">
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">
           <el-select v-model="formInfo.demand_department" placeholder="请选择需求单位">
             <el-option v-for="(item,index) in selectList" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <el-form-item label="项目负责人" prop="project_leader" placeholder="请输入项目负责人">
           <el-input v-model="formInfo.project_leader" />

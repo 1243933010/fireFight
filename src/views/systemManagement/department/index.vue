@@ -4,7 +4,7 @@
       <img src="../../../assets/liucheng.png" alt="" />
       <span>筛选</span>
     </div>
-    <el-form
+    <!-- <el-form
       class="form"
       ref="form"
       size="small"
@@ -12,27 +12,21 @@
       :model="form"
       label-width="90px"
     >
-      <el-form-item label="部门名称">
-        <!-- <el-input v-model="form.name" placeholder="请输入部门名称" /> -->
-        <el-select v-model="form.region" placeholder="请选择">
-          <el-option
-            v-for="(item, index) in list"
-            :label="item.name"
-            :value="item.id"
-          />
+    <el-form-item label="部门名称">
+        <el-select v-model="form.demand_department_id" placeholder="请选择部门名称">
+          <el-option v-for="(item, index) in departmentList" :key="index" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
       <el-form-item label="用户状态">
-        <el-select v-model="form.region">
+        <el-select v-model="form.state">
           <el-option label="Zone one" value="shanghai" />
           <el-option label="Zone two" value="beijing" />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">搜索</el-button>
-        <!-- <el-button type="primary">重置</el-button> -->
+        <el-button type="primary" @click="()=>{form.current_page=1;query()}">搜索</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> -->
     <div style="margin-bottom: 10px; padding-left: 40px">
       <el-button size="small" @click="addBtn" type="primary">新增</el-button>
     </div>
@@ -94,20 +88,31 @@
 <script>
 // import Pagination from '@/components/Pagination'
 import AddDialog from "./add.vue";
-import { departmentList, departmentDelete } from "@/api/project";
+import { departmentList, departmentDelete,departmentArr } from "@/api/project";
 export default {
   components: { AddDialog },
   data() {
     return {
-      form: {},
+      form: {
+
+      },
       list: [],
+      departmentList:[]
     };
   },
   mounted() {
     console.log(this.$store.state.user);
     this.query();
+    this.departmentFnc();
   },
   methods: {
+    async departmentFnc(){
+      let res = await departmentArr({per_page:1000});
+            console.log(res)
+            if (res.code == 200) {
+                this.departmentList = res.data.list;
+            }
+    },
     handleEdit(row) {
       this.$refs.add.open(row);
     },
