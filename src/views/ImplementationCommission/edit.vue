@@ -54,7 +54,7 @@
             <div class="btn2" @click="submitForm" v-if="projectInfo.status == 6" v-permission="['project_registrar']">
               提交
             </div>
-            <div class="btn3" @click="saveForm" v-if="projectInfo.status == 5" v-permission="['project_registrar']">
+            <div class="btn3" @click="saveForm" v-if="[5,6].includes(projectInfo.status)" v-permission="['project_registrar']">
               保存草稿
             </div>
             <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 7" v-permission="['department_auditor']">

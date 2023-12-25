@@ -51,7 +51,7 @@
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
       <!-- v-if="projectInfo.status == 17" -->
-      <el-button v-if="projectInfo.status == 17"  @click="saveFnc"  v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button   v-if="[17,18].includes(projectInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
       <el-button   @click="submitFnc"  v-if="projectInfo.status == 18" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 19" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 21" v-permission="['department_auditor']"  type="primary">终审</el-button>

@@ -143,7 +143,7 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc"  v-if="projectInfo.status == 11" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button @click="saveFnc"  v-if="[11,12].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
       <el-button  @click="submitFnc"  v-if="projectInfo.status == 12" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 13" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"  type="primary">终审</el-button>
