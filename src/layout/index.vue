@@ -144,22 +144,24 @@ export default {
     handleData(item){
       console.log(item)
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
-      let route = {
-        1:'/projectManagementDetail',
-        3:'/projectManagementDetail',
-        7:'ImplementationCommission/edit',
-        9:'ImplementationCommission/edit',
-        13:'thirdProjects/edit',
-        15:'thirdProjects/edit',
-        19:'thirdProjects/edit', 
-        21:'thirdProjects/edit', 
-        25:'thirdProjects/edit', 
-        27:'thirdProjects/edit', 
-        31:'contractManagement/edit', 
-        33:'contractManagement/edit', 
+      let url = '';
+      if([0].includes(item.status)){
+         url = 'projectManagementEdit'
+      }
+      if([1,2,3,4].includes(item.status)){
+         url = 'projectManagementDetail'
+      }
+      if([5,6,7,8,9,10].includes(item.status)){
+        url = 'ImplementationCommission/edit'
+      }
+      if([11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(item.status)){
+         url = 'thirdProjects/edit'
+      }
+      if([29,30,31,32,33,34,35].includes(item.status)){
+         url = 'contractManagement/edit'
       }
       this.dialogVisible = false;
-      this.$router.push({ path: route[item.status],query:{id:item.id} });
+      this.$router.push({ path: url,query:{id:item.id} });
     },
     async getList(){
       let res = await needDo();

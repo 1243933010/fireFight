@@ -2,8 +2,9 @@
   <div>
     <el-row>
     <el-form
+     
       ref="thirdForm"
-      style=""
+      style="padding-left: 30px"
       :inline="true"
       :rules="thirdFormRules"
       :model="resultData"

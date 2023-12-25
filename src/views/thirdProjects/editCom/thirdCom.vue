@@ -98,9 +98,9 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc" v-if="[11].includes(projectInfo.status)" v-permission="['project_registrar']"
+      <el-button @click="saveFnc(true)" v-if="[11].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="normal">保存草稿</el-button>
-      <el-button @click="submitFnc" v-if="[11, 12].includes(projectInfo.status)" v-permission="['project_registrar']"
+      <el-button @click="saveFnc(true)" v-if="[11, 12].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="primary">提交</el-button>
       <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
         type="primary">初审</el-button>
@@ -235,8 +235,9 @@ export default {
       }
       this.$message.error(res.msg);
     },
-    async saveFnc() {
-      this.$refs.thirdForm.validate(async (valid) => {
+    async saveFnc(reqBool) {
+      if(reqBool){
+        this.$refs.thirdForm.validate(async (valid) => {
         if (valid) {
           if (this.bidBaseProject.bid_register_file.length == 0) {
             this.$message.error('投标报名登记表文件不能为空')
@@ -269,18 +270,23 @@ export default {
         }
 
       });
+      }else{
+        this.submitFnc();
+      }
+      
     },
     async submitFnc() {
-      let res = await bidBaseSubmit(this.projectInfo.id);
-      console.log(res)
-      if (res.code == 200) {
-        this.$message.success(res.msg)
-        // setTimeout(()=>{this.$router.go(-1)},1000)
-        this.$emit('updateDetail')
-
-        return
-      }
-      this.$message.error(res.msg)
+      let form = this.bidBaseProject;
+          form.id = this.projectInfo.id;
+          let res = await bidBaseSave(form);
+          console.log(res)
+          if (res.code == 200) {
+            this.$message.success(res.msg)
+            // setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+            return
+          }
+          this.$message.error(res.msg)
     },
   }
 };

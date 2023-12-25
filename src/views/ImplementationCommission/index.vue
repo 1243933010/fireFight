@@ -112,7 +112,7 @@
                 <div class="item-con-right-btn1" @click="openDetail(item)">
                   详情
                 </div>
-                <div class="item-con-right-btn2" @click="openDetail(item)"  v-if="[5,6].includes(item.status)">
+                <div class="item-con-right-btn2" @click="openDetail(item)"  v-if="[5,6,8,10].includes(item.status)">
                 编辑
               </div>
                 <!-- v-if="[5,6].includes(projectInfo.status)" -->
@@ -259,12 +259,7 @@ async departmentFnc(){
             });
             }
            
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除'
-            });          
-          });
+          })
       }
     },
   };

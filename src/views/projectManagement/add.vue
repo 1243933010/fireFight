@@ -18,8 +18,8 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <!-- <div class="btn2" @click="submitForm" >提交</div> -->
-            <div class="btn3" @click="submitFnc">保存草稿</div>
+            <div class="btn2" @click="submitFnc(true)" >提交</div>
+            <div class="btn3" @click="submitFnc(false)">保存草稿</div>
             <!-- <div class="btn4">通过</div> -->
             <!-- <div class="btn5">驳回</div> -->
           </div>
@@ -56,8 +56,8 @@ export default {
   mounted() {
   },
   methods: {
-   async submitFnc() {
-    console.log(this.$store.state.user)
+
+   async submitFnc(reqBool) {
       let state = this.$store.state.projectManagementAdd;
       let form = {...state.formInfo};
       form.project_attachments = state.project_attachments
@@ -65,26 +65,27 @@ export default {
       form.small_company = JSON.stringify(state.radioLabelList)
       console.log(form)
      
-      // let bool = false;
-      //  this.$refs.basicMsg.verifyForm((bools)=>{
-      //   bool = bools
-      // })
-      // console.log(bool,'===')
-      // let fileBool = true;
-      // this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
-      //   if(val.files.length==0){
-      //     fileBool = false;
-      //   }
-      // })
-      // if(!bool){
-      //   this.$message.error('表单必须填写')
-      //   return
-      // }
-      // if(!fileBool){
-      //   this.$message.error('附件必须上传')
-      //   return
-      // }
-      console.log(form);
+      if(reqBool){
+        let bool = false;
+       this.$refs.basicMsg.verifyForm((bools)=>{
+        bool = bools
+      })
+      let fileBool = true;
+      this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
+        if(val.files.length==0){
+          fileBool = false;
+        }
+      })
+      if(!bool){
+        this.$message.error('表单必须填写')
+        return
+      }
+      if(!fileBool){
+        this.$message.error('附件必须上传')
+        return
+      }
+      form.is_submit = 1;
+      }
       let res = await projectAdd(form);
       console.log(res)
       if(res.code==200){

@@ -111,9 +111,9 @@
               <div class="item-con-right-btn1" @click="openDetail(item)">
                 详情
               </div>
-              <!-- <div class="item-con-right-btn2" @click="openEdit(item)">
+              <div class="item-con-right-btn2"  v-if="[11,12,14,16,17,18,20,22,23,24,26,28].includes(item.status)" @click="openDetail(item)">
                   编辑
-                </div> -->
+                </div>
               <div
                 v-permission="['admin', 'project_registrar']"
                 class="item-con-right-btn3"
@@ -275,12 +275,6 @@ export default {
             });
           }
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
     },
   },
 };

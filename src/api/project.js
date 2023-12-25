@@ -56,9 +56,8 @@ export function projectAudit(data) {
 //项目管理删除
 export function projectDelete(data) {
   return request({
-    url: `/project/destroy/5`,
-    method: 'post',
-    data
+    url: `/project/destroy/${data}`,
+    method: 'post'
   })
 }
 

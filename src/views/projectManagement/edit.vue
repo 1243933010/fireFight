@@ -18,10 +18,10 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <div class="btn2" @click="submitForm"  v-if="formInfo.id&&[0,1].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>
-            <div class="btn3" @click="submitFnc"   v-if="[0].includes(formInfo.status)" v-permission="['department_auditor']">保存草稿</div>
+            <div class="btn2" @click="submitFnc(true)"  v-if="formInfo.id&&[0,2,4].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>
+            <div class="btn3" @click="submitFnc(false)"   v-if="[0,2,4].includes(formInfo.status)" v-permission="['department_auditor']">保存草稿</div>
             <!-- <div class="btn4">通过</div> -->
-            <!-- <div class="btn5">驳回</div> -->
+            <!-- <div class="btn5" @click="$router.go(-1)">驳回</div> -->
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
 import BasicMsg from './basicMsg.vue'
 import { mapState, mapGetters } from 'vuex'
-import { projectEdit,projectDetail,projectSubmit } from "@/api/project";
+import { projectEdit,projectAdd,projectDetail,projectSubmit } from "@/api/project";
 export default {
   mixins: [addMixins],
   components: { Steps, AnnexCom, BasicMsg },
@@ -75,7 +75,8 @@ export default {
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        // this.$router.go(-1)
+        this.getDetail(this.$route.query.id)
         return
       }
       this.$message.error(res.msg);
@@ -90,8 +91,25 @@ export default {
         //   val.title = val.file_name
         // })
         // this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
+        let arr = JSON.parse(res.data.small_company);
+        let input12 = ''
+        arr.forEach((element,index)=>{
+          if(element.checked&&index!==1){
+              input12 = 'true'
+          }else if(element.checked&&index==1){
+            element.child.forEach((val,ind)=>{
+              if(val.checked&&val.num==undefined){
+                input12 = 'true'
+              }else if(val.checked&&val.num!==undefined&&!val.num){
+                input12 = ''
+              }else if(val.checked&&val.num!==undefined&&val.num){
+               input12 = 'true'
+              }
+            })
+          }
+        })
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
-        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
+        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:input12});
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
         
 
@@ -100,20 +118,20 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    async submitFnc() {
-    console.log(this.$store.state.user)
+    async submitFnc(reqBool) {
       let state = this.$store.state.projectManagementAdd;
       let form = {...state.formInfo};
       form.project_attachments = state.project_attachments
       form.radioLabelList = state.radioLabelList;
       form.small_company = JSON.stringify(state.radioLabelList)
-      console.log(form)
-     
-      let bool = false;
+      console.log(reqBool)
+    
+      if(reqBool){
+        console.log('------')
+        let bool = false;
        this.$refs.basicMsg.verifyForm((bools)=>{
         bool = bools
       })
-      console.log(bool,'===')
       let fileBool = true;
       this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
         if(val.files.length==0){
@@ -128,13 +146,14 @@ export default {
         this.$message.error('附件必须上传')
         return
       }
-      console.log(form);
+      form.is_submit = 1;
+      }
       let res = await projectEdit(form);
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
+        this.getDetail(this.$route.query.id);
         // this.$router.go(-1)
-        this.getDetail(this.$route.query.id)
         return
       }
       this.$message.success(res.msg);
@@ -265,8 +284,8 @@ export default {
     display: flex;
     height: auto;
     background-color: white;
-    max-width: 1000px;
-
+    // max-width: 1000px;
+    width: 50%;
     .form {
       min-width: 500px;
       display: flex;
@@ -354,7 +373,8 @@ export default {
 
   .box-right {
     display: flex;
-    flex-grow: 1;
+    width: 100%;
+    // flex-grow: 1;
     background-color: white;
     box-sizing: border-box;
     border-left: 1px solid #EAEDEC;
@@ -364,7 +384,7 @@ export default {
       padding-top: 20px;
       padding-left: 20px;
       width: 100%;
-
+      .file-form{width: 100%;}
       .title1 {
         display: flex;
         flex-direction: row;

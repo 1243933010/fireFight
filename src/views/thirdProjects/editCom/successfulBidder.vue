@@ -157,8 +157,8 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button    @click="saveFnc"   v-if="[23].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="submitFnc"  v-if="[23,24].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button    @click="saveFnc(false)"   v-if="[23].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  @click="saveFnc(true)"  v-if="[23,24].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
@@ -221,7 +221,11 @@ export default {
         }
         console.log(this.$store.state.projectManagementAdd.project_attachments)
       },
-    async saveFnc(){
+    async saveFnc(reqBool){
+      if(!reqBool){
+        this.submitFnc();
+        return
+      }
       let resultData = this.$store.state.thirdProjects.thirdData.resultData;
 
       this.$refs.thirdForm.validate(async(valid) => {
@@ -262,7 +266,11 @@ export default {
        
     },
    async submitFnc(){
-           let res = await resultOpenSubmit(this.projectInfo.id);
+    let form =  this.$store.state.thirdProjects.thirdData.resultData;
+           form.id= this.projectInfo.id;
+           console.log(form);
+          //  return
+           let res = await bidResultSave(form);
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)

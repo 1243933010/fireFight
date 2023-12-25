@@ -46,6 +46,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd"
+          
         >
         </el-date-picker>
       </el-form-item>
@@ -80,7 +81,7 @@
             <div class="status1">
               <span>{{ item.register_status_text }}</span>
             </div>
-            <div class="status2" >
+            <div class="status2"  v-if="item.procurement_method_text">
               <span>{{ item.procurement_method_text }}</span>
             </div>
           </div>
@@ -119,7 +120,7 @@
               <div class="item-con-right-btn1" @click="openDetail(item)">
                 详情
               </div>
-              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="[0,1].includes(item.status)">
+              <div class="item-con-right-btn2" @click="openEdit(item)" v-if="[0,2,4].includes(item.status)">
                 编辑
               </div>
               <div v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
@@ -276,10 +277,10 @@ export default {
           }
          
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // });          
         });
     }
   },

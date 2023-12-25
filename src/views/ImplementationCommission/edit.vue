@@ -24,7 +24,7 @@
               </el-col>
               <el-col :span="24">
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
-                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
+                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
                     :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess">
                     <i slot="default" class="el-icon-plus"></i>
                     <div class="el-upload__tip" slot="tip">
@@ -51,10 +51,10 @@
               ">
               返回
             </div>
-            <div class="btn2" @click="submitForm" v-if="[5,6].includes(projectInfo.status)" v-permission="['project_registrar']">
+            <div class="btn2" @click="saveFnc(true)" v-if="[5,6,8,10].includes(projectInfo.status)" v-permission="['project_registrar']">
               提交
             </div>
-            <div class="btn3" @click="saveForm" v-if="[5].includes(projectInfo.status)" v-permission="['project_registrar']">
+            <div class="btn3" @click="saveFnc(false)" v-if="[5,6,8,10].includes(projectInfo.status)" v-permission="['project_registrar']">
               保存草稿
             </div>
             <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 7" v-permission="['department_auditor']">
@@ -222,29 +222,31 @@ export default {
       }
     },
     //提交
-    async submitForm() {
-      this.$refs.formInfo.validate(async (valid) => {
-        if (valid) {
-          let res = await submitImplement(this.projectInfo.id);
-          console.log(res);
-          if (res.code == 200) {
-            this.$message.success(res.msg);
-            // this.$router.go(-1);
-        this.getDetail(this.$route.query.id)
+    // async submitForm() {
+    //   this.$refs.formInfo.validate(async (valid) => {
+    //     if (valid) {
+    //       let res = await submitImplement(this.projectInfo.id);
+    //       console.log(res);
+    //       if (res.code == 200) {
+    //         this.$message.success(res.msg);
+    //         // this.$router.go(-1);
+    //     this.getDetail(this.$route.query.id)
 
-            return;
-          }
-          this.$message.error(res.msg);
-        } else {
-          return false;
-        }
-      });
-    },
-    async saveForm() {
-      this.$refs.formInfo.validate(async (valid) => {
-        if (valid) {
+    //         return;
+    //       }
+    //       this.$message.error(res.msg);
+    //     } else {
+    //       return false;
+    //     }
+    //   });
+    // },
+    async saveFnc(reqBool) {
           let form = this.formInfo;
           form.id = this.projectInfo.id;
+      if(reqBool){
+        form.is_submit = 1;
+        this.$refs.formInfo.validate(async (valid) => {
+        if (valid) {
           let res = await saveImplement(form);
           console.log(res);
           if (res.code == 200) {
@@ -258,6 +260,18 @@ export default {
           return false;
         }
       });
+      }else{
+        let res = await saveImplement(form);
+          console.log(res);
+          if (res.code == 200) {
+            this.$message.success(res.msg);
+            // this.$router.go(-1);
+           this.getDetail(this.$route.query.id)
+            return;
+          }
+          this.$message.error(res.msg);
+      }
+      
     },
     setIndex(ind) {
       this.activeIndex = ind;

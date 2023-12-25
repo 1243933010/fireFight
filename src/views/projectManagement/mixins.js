@@ -42,17 +42,17 @@ export const addMixins = {
                 {
                     title: "项目编号",
                     isInput: this.$store.state.projectManagementAdd.formInfo.no,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.no && this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                    isActive: !this.$store.state.projectManagementAdd.formInfo.no && (+this.$store.state.projectManagementAdd.formInfo.audit_amount),
                 },
                 {
                     title: "审计金额",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.audit_amount,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.audit_amount && this.$store.state.projectManagementAdd.formInfo.budget,
+                    isInput: +this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.audit_amount) && (+this.$store.state.projectManagementAdd.formInfo.budget),
                 },
                 {
                     title: "预算金额",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.budget,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.budget && this.$store.state.projectManagementAdd.formInfo.procurement_method,
+                    isInput: +this.$store.state.projectManagementAdd.formInfo.budget,
+                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.budget) && this.$store.state.projectManagementAdd.formInfo.procurement_method,
                 },
                 {
                     title: "采购方式",
