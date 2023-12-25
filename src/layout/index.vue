@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <div class="header">
+    <!-- <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -37,7 +37,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -73,7 +73,7 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <!-- {{ scope.row.time }} -->
-            <el-button type="primary">处理</el-button>
+            <el-button type="primary" @click="handleData(scope.row)">处理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -141,6 +141,26 @@ export default {
     // }
   },
   methods: {
+    handleData(item){
+      console.log(item)
+      //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
+      let route = {
+        1:'/projectManagementDetail',
+        3:'/projectManagementDetail',
+        7:'ImplementationCommission/edit',
+        9:'ImplementationCommission/edit',
+        13:'thirdProjects/edit',
+        15:'thirdProjects/edit',
+        19:'thirdProjects/edit', 
+        21:'thirdProjects/edit', 
+        25:'thirdProjects/edit', 
+        27:'thirdProjects/edit', 
+        31:'contractManagement/edit', 
+        33:'contractManagement/edit', 
+      }
+      this.dialogVisible = false;
+      this.$router.push({ path: route[item.status],query:{id:item.id} });
+    },
     async getList(){
       let res = await needDo();
       console.log(res)

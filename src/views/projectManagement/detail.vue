@@ -50,7 +50,7 @@
       </div>
       <div class="box-right">
           <div class="file-form">
-            <AnnexCom />
+            <AnnexCom type="detail" />
 
             <div class="background-icon">
             <span class="title">合同列表</span>
@@ -166,22 +166,27 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        // this.$router.go(-1)
+        this.$refs.checkDialog.openDialog(false)
+        this.getDetail(this.$route.query.id)
+
         return
       }
       this.$message.error(res.msg);
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$refs.checkDialogEnd.openDialog(false)
+        this.getDetail(this.$route.query.id)
+
         return
       }
       this.$message.error(res.msg);

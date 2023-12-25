@@ -91,6 +91,7 @@
           </div>
         </el-form-item>
       </el-col>
+      
     </el-form>
   </div>
 </template>
@@ -225,12 +226,34 @@ export default {
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
     },
-    radioLabelList(){
-      return this.$store.state.projectManagementAdd.radioLabelList
-    },
+    // radioLabelList(){
+    //   return this.$store.state.projectManagementAdd.radioLabelList
+    // },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]
-    }
+    },
+    radioLabelList(){
+      // let arr = [];
+      //   this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
+      //   if(val.checked){
+      //     arr.push(val)
+      //   }
+      // })
+      // return arr
+      if(this.disabled!==true){
+        return this.$store.state.projectManagementAdd.radioLabelList
+      }else{
+        let arr = [];
+        this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
+        if(val.checked){
+          arr.push(val)
+        }
+      })
+      return arr
+      }
+      
+      // return this.$store.state.projectManagementAdd.radioLabelList
+    },
   },
   methods: {
   verifyForm(callback){

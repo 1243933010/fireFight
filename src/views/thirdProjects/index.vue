@@ -16,29 +16,30 @@
         <el-input v-model="form.name" placeholder="请输入项目名称" />
       </el-form-item>
       <el-form-item label="项目类型">
-        <el-select v-model="form.type" placeholder="请选择项目类型">
+        <el-select clearable v-model="form.type" placeholder="请选择项目类型">
           <el-option label="服务" value="service" />
             <el-option label="货物" value="goods" />
             <el-option label="工程" value="engineering" />
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门">
-        <el-select v-model="form.demand_department_id" placeholder="请选择所属部门">
+        <el-select  clearable v-model="form.demand_department_id" placeholder="请选择所属部门">
           <el-option v-for="(item, index) in departmentList" :key="index" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
       <el-form-item label="采购方式">
-        <el-select v-model="form.procurement_method" placeholder="请选择采购方式">
+        <el-select  clearable v-model="form.procurement_method" placeholder="请选择采购方式">
           <el-option v-for="(item, index) in procurementMethodSelect" :key="index" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="form.state" placeholder="请选择审核状态">
+        <el-select clearable v-model="form.state" placeholder="请选择审核状态">
           <el-option v-for="(item, index) in stateList" :key="index" :label="item.label" :value="item.value"  />
         </el-select>
       </el-form-item>
       <el-form-item label="申请时间">
         <el-date-picker
+         clearable
           v-model="form.region"
           type="daterange"
           range-separator="至"
@@ -102,7 +103,7 @@
                 </div>
                 <div>
                   <span class="label">代理机构名称:</span
-                  ><span class="text">{{ item.agent_department }}</span>
+                  ><span class="text">{{ item.agent }}</span>
                 </div>
               </div>
             </div>

@@ -13,7 +13,7 @@
           <BasicMsg :disabled="true" />
 
           <div>
-            <el-form ref="formInfo" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
+            <el-form ref="formInfo" :disabled="![5,6].includes(projectInfo.status)" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
               label-width="100px">
               <el-col :span="12">
                 <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
@@ -51,10 +51,10 @@
               ">
               返回
             </div>
-            <div class="btn2" @click="submitForm" v-if="projectInfo.status == 6" v-permission="['project_registrar']">
+            <div class="btn2" @click="submitForm" v-if="[5,6].includes(projectInfo.status)" v-permission="['project_registrar']">
               提交
             </div>
-            <div class="btn3" @click="saveForm" v-if="[5,6].includes(projectInfo.status)" v-permission="['project_registrar']">
+            <div class="btn3" @click="saveForm" v-if="[5].includes(projectInfo.status)" v-permission="['project_registrar']">
               保存草稿
             </div>
             <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 7" v-permission="['department_auditor']">
@@ -66,7 +66,7 @@
           </div>
         </div>
       </div>
-      <AnnexCom />
+      <AnnexCom  />
     </div>
 
     <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit" :radioList="[
@@ -145,7 +145,9 @@ export default {
       console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$refs.checkDialog.openDialog(false)
+        this.getDetail(this.$route.query.id)
+
         return
       }
       this.$message.error(res.msg);
@@ -156,7 +158,9 @@ export default {
       console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$refs.checkDialogEnd.openDialog(false)
+        this.getDetail(this.$route.query.id)
+
         return
       }
       this.$message.error(res.msg);
@@ -176,6 +180,14 @@ export default {
         //   "projectManagementAdd/UPDATE_RADIOLABELLIST",
         //   JSON.parse(res.data.small_company)
         // );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",{type:'file',
+          data:res.data.agent_check_videos}
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",
+          {type:'form',
+          data:res.data.agent_id});
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
         res.data.project_attachments0.forEach((val)=>{
@@ -217,7 +229,9 @@ export default {
           console.log(res);
           if (res.code == 200) {
             this.$message.success(res.msg);
-            this.$router.go(-1);
+            // this.$router.go(-1);
+        this.getDetail(this.$route.query.id)
+
             return;
           }
           this.$message.error(res.msg);
@@ -235,7 +249,8 @@ export default {
           console.log(res);
           if (res.code == 200) {
             this.$message.success(res.msg);
-            this.$router.go(-1);
+            // this.$router.go(-1);
+           this.getDetail(this.$route.query.id)
             return;
           }
           this.$message.error(res.msg);
@@ -294,7 +309,6 @@ export default {
   flex-direction: row;
   // align-items: center;
   cursor: pointer;
-
   span {
     max-width: 80%;
     display: flex;

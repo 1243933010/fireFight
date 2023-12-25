@@ -16,25 +16,26 @@
         <el-input v-model="form.name" placeholder="请输入系统模块" />
       </el-form-item>
       <el-form-item label="操作人员">
-        <el-select v-model="form.region" placeholder="请输入操作人员">
+        <el-select clearable v-model="form.region" placeholder="请输入操作人员">
           <el-option label="Zone one" value="shanghai" />
           <el-option label="Zone two" value="beijing" />
         </el-select>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select v-model="form.region" placeholder="请输入类型">
+        <el-select clearable v-model="form.region" placeholder="请输入类型">
           <el-option label="Zone one" value="shanghai" />
           <el-option label="Zone two" value="beijing" />
         </el-select>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select v-model="form.region" placeholder="请输入状态">
+        <el-select clearable v-model="form.region" placeholder="请输入状态">
           <el-option label="Zone one" value="shanghai" />
           <el-option label="Zone two" value="beijing" />
         </el-select>
       </el-form-item>
       <el-form-item label="操作时间" placeholder="请输入操作时间">
         <el-date-picker
+        clearable
           v-model="form.region"
           type="daterange"
           range-separator="至"

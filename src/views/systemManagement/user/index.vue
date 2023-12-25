@@ -33,7 +33,7 @@
                         </el-select>
                     </el-form-item> -->
                     <el-form-item label="状态">
-                        <el-select v-model="form.state" placeholder="请选择状态">
+                        <el-select  clearable v-model="form.state" placeholder="请选择状态">
                             <el-option label="正常" :value="1" />
                             <el-option label="异常" :value="0" />
                         </el-select>

@@ -176,6 +176,16 @@ export function needDo() {
 
 
 //-----
+
+//合同列表
+export function contractList(params) {
+  return request({
+    url: `/project/contract_project_list`,
+    method: 'get',
+    params
+  })
+}
+
 //保存合同
 export function saveContract(data) {
   return request({

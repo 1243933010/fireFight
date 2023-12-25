@@ -12,24 +12,23 @@
                                 <div class="item" v-for="(item, index) in fileList" :key="index">
                                     <div class="file-icon"><img src="../../../assets/file_icon.png" alt="" srcset=""></div>
                                     <span class="span">{{ item.title }}.{{ item.type }}</span>
-                                    <div class="delete" @click="deleteFile(item,index)"><img src="../../../assets/delete_icon.png" alt="" srcset=""></div>
+                                    <div class="delete" style="width: 20px;margin-right: 10px;" @click="deleteFile(item,index)"><img style="width: 100%;" src="../../../assets/delete_icon.png" alt="" srcset=""></div>
+                                    <div style="font-size: 22px;" @click="seeDetail(item,index)"><i class="el-icon-zoom-in"></i></div>
                                 </div>
                             </div>
                             <div class="upload-btn">
-                                <div class="btn">
+                                <div class="btn" v-if="type=='add'">
                                     <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="">
                                     <el-upload class="upload-demo" :action="uploadUrl"
                                         :headers="headers"
                                         :show-file-list="false" :limit="3" :on-exceed="handleExceed" :file-list="fileList"
                                         :on-progress="handleProgress"
+                                        
                                         :on-success="handleSuccess">
-                                        <div style="display: flex;flex-direction: row;align-items: center;">
+                                        <div style="display: flex;flex-direction: row;align-items: center;" >
                                             <div class="upload">
-                                                <!-- <img src="../../../assets/upload_icon.png" alt="" srcset=""> -->
                                                 <span class="span">上传文件</span>
                                             </div>
-                                            <!-- <div slot="tip" class="el-upload__tip">支持扩展名: .rar .zip .doc 、docx .pdf.jpg..
-                                            </div> -->
                                         </div>
                                     </el-upload>
                                 </div>
@@ -48,6 +47,10 @@
 import { getToken } from '@/utils/auth'
 export default {
     props: {
+        type:{
+            type:String,
+            default:'add'
+        },
         title: {
             type:String,
             default:'test'
@@ -74,6 +77,11 @@ export default {
         }
     },
     methods:{
+        seeDetail(item,index){
+            if(item.url){
+                window.open(item.url)
+            }
+        },
         deleteFile(item,index){
             // this.fileList.splice(index,1)
             this.$emit('updateFile',index)
@@ -97,5 +105,108 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('./../mixins.scss');
+// @import url('../mixins.scss');
+.left-form{
+.file-form {
+    .file-form-item {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 40px;
+
+      .left {
+        width: 1px;
+        .title {
+          color: #404659;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+      }
+
+      .right {
+        width: 100%;
+        box-sizing: border-box;
+
+        .title {
+          color: #404659;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+
+        .upload {
+          display: flex;
+          flex-direction: column;
+
+          .file-list {
+            display: flex;
+            flex-direction: column;
+
+            .item {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              flex-wrap: nowrap;
+              margin-bottom: 13px;
+
+              .file-icon {
+                width: 18px;
+                height: 15px;
+                margin-right: 10px;
+                img{
+                  width: 100%;
+                }
+              }
+
+              .span {
+                color: #404659;
+                font-size: 16px;
+                margin-right: 12px;
+              }
+
+              .delete {
+               
+              }
+            }
+          }
+
+          .upload-btn {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #A6A9BC;
+            flex-direction: row;
+
+            .btn {
+              width: 100px;
+              height: 36px;
+              border: 1px solid #2D6CFF;
+              border-radius: 4px;
+              margin-right: 19px;
+              font-size: 12px;
+              color: #404659;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .upload-demo{
+                display: flex;
+                justify-content: row;
+                align-items: center;
+              }
+              .img{
+                margin-right: 6px;
+              }
+            }
+            .span{
+              font-size: 12px;
+              color: #A6A9BC;
+              padding-top: 2px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
 </style>

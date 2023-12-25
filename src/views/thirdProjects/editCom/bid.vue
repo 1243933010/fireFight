@@ -51,8 +51,8 @@
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
       <!-- v-if="projectInfo.status == 17" -->
-      <el-button   v-if="[17,18].includes(projectInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button   @click="submitFnc"  v-if="projectInfo.status == 18" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button   v-if="[17].includes(projectInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button   @click="submitFnc"  v-if="[17,18].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 19" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 21" v-permission="['department_auditor']"  type="primary">终审</el-button>
     </div>
@@ -108,22 +108,26 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+        this.$refs.checkDialog.openDialog(false)
+
         return
       }
       this.$message.error(res.msg);
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+
+        this.$refs.checkDialogEnd.openDialog(false)
         return
       }
       this.$message.error(res.msg);
@@ -166,7 +170,8 @@ export default {
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+
             return
            }
            this.$message.error(res.msg)
@@ -176,7 +181,8 @@ export default {
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+
             return
            }
            this.$message.error(res.msg)

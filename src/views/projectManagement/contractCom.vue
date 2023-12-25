@@ -17,17 +17,17 @@
           <div>
 
             <el-table :data="contractList" style="width: 100%">
-              <el-table-column type="index" label="序号" width="100">
+              <el-table-column type="index" label="序号">
               </el-table-column>
-              <el-table-column prop="name" label="合同名称" width="350">
+              <el-table-column prop="name" label="合同名称">
               </el-table-column>
-              <el-table-column prop="created_at" label="上传时间" width="350">
+              <el-table-column prop="created_at" label="上传时间" >
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="300">
+              <el-table-column  label="操作" width="100">
                 <template slot-scope="scope">
                   <div class="btnn">
                     <!-- <div class="btn5"  v-if="[29,30,32,34].includes(+formInfo.status)" @click="deleteItem(scope.row)"   v-permission="['project_registrar']">删除</div> -->
-                    <!-- <div class="btn4" @click="downLoadFile(scope)">下载</div> -->
+                    <div class="" @click="downLoadFile(scope)">下载</div>
                   </div>
                 </template>
               </el-table-column>

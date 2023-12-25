@@ -205,7 +205,7 @@ export const addMixins = {
           },
           async auditEmit(e){
             console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
             console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
@@ -216,7 +216,7 @@ export const addMixins = {
           },
           async auditEmitEnd(e){
             console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
             console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);

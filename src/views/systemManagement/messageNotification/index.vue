@@ -16,13 +16,14 @@
         <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="接收部门">
-        <el-select v-model="form.region">
+        <el-select clearable v-model="form.region">
           <el-option label="Zone one" value="shanghai" />
           <el-option label="Zone two" value="beijing" />
         </el-select>
       </el-form-item>
       <el-form-item label="时间">
         <el-date-picker
+        clearable
           v-model="form.region"
           type="daterange"
           range-separator="至"

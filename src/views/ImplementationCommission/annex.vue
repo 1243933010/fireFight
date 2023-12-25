@@ -29,6 +29,12 @@
 import { number } from 'echarts/lib/export'
 import UploadCom from '../thirdProjects/editCom/uploadCom.vue'
 export default{
+  props: {
+        type:{
+            type:String,
+            default:'add'
+        },
+    },
   components:{UploadCom},
   data(){
       return{

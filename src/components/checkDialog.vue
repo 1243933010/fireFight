@@ -17,15 +17,15 @@
             >
           </el-radio-group>
         </div>
-        <!-- <div>
+        <div>
           <el-input
             type="textarea"
-            :rows="2"
-            placeholder="请输入内容"
-            v-model="textarea"
+            :rows="4"
+            placeholder="驳回意见"
+            v-model="description"
           >
           </el-input>
-        </div> -->
+        </div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
@@ -52,7 +52,8 @@ export default {
   data() {
     return {
       centerDialogVisible: false,
-      status:undefined
+      status:undefined,
+      description:''
     };
   },
   methods: {
@@ -63,7 +64,7 @@ export default {
       if(!this.status){
         return
       }
-      this.$emit('auditEmit',{status:this.status})
+      this.$emit('auditEmit',{status:this.status,description:this.description})
     }
   },
 };

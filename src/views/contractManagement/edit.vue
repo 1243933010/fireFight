@@ -216,7 +216,7 @@ export default {
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            this.getDetail(this.$route.query.id)
             return
            }
            this.$message.error(res.msg)
@@ -232,22 +232,24 @@ export default {
           },
           async auditEmit(e){
             console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
             console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
-              this.$router.go(-1)
+              this.$refs.checkDialog.openDialog(false)
+              this.getDetail(this.$route.query.id)
               return
             }
             this.$message.error(res.msg);
           },
           async auditEmitEnd(e){
             console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,status:e.status});
+            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
             console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
-              this.$router.go(-1)
+              this.$refs.checkDialogEnd.openDialog(false)
+              this.getDetail(this.$route.query.id)
               return
             }
             this.$message.error(res.msg);

@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="right">
-                <UploadCom title="附件" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+                <UploadCom title="附件" :type="type" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
               </div>
             </div>
             <!-- <div class="file-form-item">
@@ -101,6 +101,12 @@
 import { number } from 'echarts/lib/export'
 import UploadCom from '../thirdProjects/editCom/uploadCom.vue'
 export default{
+  props: {
+        type:{
+            type:String,
+            default:'add'
+        },
+      },
     components:{UploadCom},
     data(){
         return{

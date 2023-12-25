@@ -17,7 +17,7 @@
             <span class="title">招标</span>
           </div>
 
-          <ThirdCom />
+          <ThirdCom @updateDetail="getDetail($route.query.id);" />
           <!-- 开标 -->
           <div class="background-icon">
             <span class="title">开评标</span>
@@ -25,7 +25,7 @@
           <!-- <div></div> -->
           <div style="padding-left: 30px;">
 
-            <StartCom />
+            <StartCom  @updateDetail="getDetail($route.query.id);"/>
           </div>
 
             <!-- <BidCom /> -->
@@ -36,7 +36,7 @@
           </div>
           <div style="padding-left: 30px;">
 
-            <SuccessfulBidder />
+            <SuccessfulBidder  @updateDetail="getDetail($route.query.id);"/>
           </div>
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->

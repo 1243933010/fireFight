@@ -1,25 +1,12 @@
 <template>
   <div>
     <el-row>
-      <el-form
-        ref="thirdForm"
-        style="padding-left: 30px"
-        :inline="true"
-        :rules="thirdFormRules"
-        :model="bidBaseProject"
-        class="demo-form-inline"
-      >
+      <el-form ref="thirdForm" style="padding-left: 30px" :inline="true" :rules="thirdFormRules" :model="bidBaseProject"
+        class="demo-form-inline">
         <el-col :span="12">
-          <el-form-item
-            label="采购代理机构制作招标文件具体日期填写"
-            prop="bid_file_date"
-          >
-            <el-date-picker
-              v-model="bidBaseProject.bid_file_date"
-              value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="请选择采购意向公开日期"
-            >
+          <el-form-item label="采购代理机构制作招标文件具体日期填写" prop="bid_file_date">
+            <el-date-picker v-model="bidBaseProject.bid_file_date" value-format="yyyy-MM-dd" type="date"
+              placeholder="请选择采购意向公开日期">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -28,16 +15,9 @@
             <div class="file-form">
               <div class="file-form-item">
                 <div class="left"></div>
-                <div
-                  class="right"
-                  style="display: flex; flex-direction: column"
-                >
-                  <UploadCom
-                    title="采购代理机构招标文件(发售稿)"
-                    flex="row"
-                    :fileList="bidBaseProject.bid_file_issue"
-                    @updateFile="(e)=>updateFile(e,bidBaseProject.bid_file_issue)"
-                  />
+                <div class="right" style="display: flex; flex-direction: column">
+                  <UploadCom title="采购代理机构招标文件(发售稿)" flex="row" :fileList="bidBaseProject.bid_file_issue"
+                    @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)" />
                 </div>
               </div>
             </div>
@@ -46,12 +26,8 @@
         <el-col :span="12">
           <el-form-item label="发布招标公告日期" prop="bid_publish_date">
             <!-- <el-input v-model="thirdForm.input2"  /> -->
-            <el-date-picker
-              v-model="bidBaseProject.bid_publish_date"
-              value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="请选择发布招标公告日期"
-            >
+            <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
+              placeholder="请选择发布招标公告日期">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -62,27 +38,13 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="公示图（1/4）" prop="bid_publish_photo">
-            <el-upload
-             :action="uploadUrl"
-             :headers="headers"
-              list-type="picture-card"
-              :limit="4"
-              :file-list="bidBaseProject.bid_publish_photo"
-              :on-progress="handleProgress"
-              :on-success="handleSuccess"
-            >
+            <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
+              :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess">
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{ file }">
-                <img
-                  class="el-upload-list__item-thumbnail"
-                  :src="file.url"
-                  alt=""
-                />
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
                 <span class="el-upload-list__item-actions">
-                  <span
-                    class="el-upload-list__item-delete"
-                    @click="handleRemove(file)"
-                  >
+                  <span class="el-upload-list__item-delete" @click="handleRemove(file)">
                     <i class="el-icon-delete"></i>
                   </span>
                 </span>
@@ -91,26 +53,19 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <UploadCom title="投标报名登记表" :fileList="bidBaseProject.bid_register_file" @updateFile="(e)=>updateFile(e,bidBaseProject.bid_register_file)" />
+          <UploadCom title="投标报名登记表" :fileList="bidBaseProject.bid_register_file"
+            @updateFile="(e) => updateFile(e, bidBaseProject.bid_register_file)" />
         </el-col>
         <el-col :span="12">
           <el-form-item label="开评标日期" prop="bid_open_date">
-            <el-date-picker
-            value-format="yyyy-MM-dd"
-              v-model="bidBaseProject.bid_open_date"
-              type="date"
-              placeholder="请选择开评标日期"
-            >
+            <el-date-picker value-format="yyyy-MM-dd" v-model="bidBaseProject.bid_open_date" type="date"
+              placeholder="请选择开评标日期">
             </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="是否有质疑/澄清" prop="doubt">
-            <el-input
-              v-model="bidBaseProject.doubt"
-              type="textarea"
-              placeholder="是否有质疑/澄清"
-            />
+            <el-input v-model="bidBaseProject.doubt" type="textarea" placeholder="是否有质疑/澄清" />
           </el-form-item>
         </el-col>
       </el-form>
@@ -124,35 +79,41 @@
               <span>附件</span>
             </div>
             <div class="file-form">
-              <div class="file-form-item" v-for="(item,index) in bidBaseProject.project_attachments" :key="index">
+              <div class="file-form-item" v-for="(item, index) in bidBaseProject.project_attachments" :key="index">
                 <div class="right">
-                <UploadCom title="附件" :fileList="item.files" @updateFile="(e)=>updateFile(e,item.files,index)" />
-              </div>
-              <div class="left">
-                <div class="title"><span>{{ item.title }}</span></div>
-                <div class="input">
-                  <el-input type="textarea" :rows="4" v-model="item.description" placeholder="我部已申请采购一批消防器材望上级批准。">
-                  </el-input>
+                  <UploadCom title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
                 </div>
+                <div class="left">
+                  <div class="title"><span>{{ item.title }}</span></div>
+                  <div class="input">
+                    <el-input type="textarea" :rows="4" v-model="item.description" placeholder="我部已申请采购一批消防器材望上级批准。">
+                    </el-input>
+                  </div>
+                </div>
+
               </div>
-              
-            </div>
             </div>
           </div>
         </div>
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc"  v-if="[11,12].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="submitFnc"  v-if="projectInfo.status == 12" v-permission="['project_registrar']"  type="primary">提交</el-button>
-      <el-button  @click="auditFnc"  v-if="projectInfo.status == 13" v-permission="['department_auditor']"  type="primary">初审</el-button>
-      <el-button   @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"  type="primary">终审</el-button>
+      <el-button @click="saveFnc" v-if="[11].includes(projectInfo.status)" v-permission="['project_registrar']"
+        type="normal">保存草稿</el-button>
+      <el-button @click="submitFnc" v-if="[11, 12].includes(projectInfo.status)" v-permission="['project_registrar']"
+        type="primary">提交</el-button>
+      <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
+        type="primary">初审</el-button>
+      <el-button @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"
+        type="primary">终审</el-button>
 
     </div>
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" />
+    <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit"
+      :radioList="[{ label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
+      :radioList="[{ label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" />
 
-    
+
   </div>
 </template>
 
@@ -166,7 +127,7 @@ import {
 } from "@/api/project";
 import { getToken } from '@/utils/auth'
 export default {
-  components: { UploadCom ,checkDialog},
+  components: { UploadCom, checkDialog },
   data() {
     return {
 
@@ -204,114 +165,122 @@ export default {
       },
     };
   },
-  computed:{
+  computed: {
 
-    uploadUrl(){
-            return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'
-        },
-        headers(){
-            return {
-                "Authorization":`Bearer ${getToken()}`
-            }
-        },
+    uploadUrl() {
+      return process.env.VUE_APP_UPLOAD_API + '/user/upload_file'
+    },
+    headers() {
+      return {
+        "Authorization": `Bearer ${getToken()}`
+      }
+    },
     projectInfo() {
       return this.$store.state.thirdProjects.formInfo;
     },
-    bidBaseProject(){
+    bidBaseProject() {
       return this.$store.state.thirdProjects.thirdData.bidBaseProject;
     }
   },
-  methods:{
+  methods: {
     handleProgress(e, file, fileList) {
-            // console.log(e, file, fileList)
-        },
-        handleSuccess(e, file, fileList){
-            console.log(e, file, fileList,'----',this.bidBaseProject)
-            if(e.code===200){
-                e.data.title = e.data.file_name;
-                this.bidBaseProject.bid_publish_photo.push(e.data)
-                // this.$emit('updateFile',e.data)
-                // this.fileList.push(e.data);
-            }
-        },
-    updateFile(e,item,index){
-        console.log(e,item,index)
-        if(typeof e == 'number'){
-          itemm.splice(e,1)
-        }else{
-          item.push(e)
-        }
-        console.log(this.$store.state.projectManagementAdd.project_attachments)
-      },
-    async auditFnc(){
+      // console.log(e, file, fileList)
+    },
+    handleSuccess(e, file, fileList) {
+      console.log(e, file, fileList, '----', this.bidBaseProject)
+      if (e.code === 200) {
+        e.data.title = e.data.file_name;
+        this.bidBaseProject.bid_publish_photo.push(e.data)
+        // this.$emit('updateFile',e.data)
+        // this.fileList.push(e.data);
+      }
+    },
+    updateFile(e, item, index) {
+      console.log(e, item, index)
+      if (typeof e == 'number') {
+        itemm.splice(e, 1)
+      } else {
+        item.push(e)
+      }
+      console.log(this.$store.state.projectManagementAdd.project_attachments)
+    },
+    async auditFnc() {
       this.$refs.checkDialog.openDialog(true)
     },
-    async auditFncEnd(){
+    async auditFncEnd() {
       this.$refs.checkDialogEnd.openDialog(true)
     },
-    async auditEmit(e){
+    async auditEmit(e) {
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({ id: this.projectInfo.id, status: e.status });
       console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+        this.$refs.checkDialog.openDialog(false)
+
         return
       }
       this.$message.error(res.msg);
     },
-    async auditEmitEnd(e){
+    async auditEmitEnd(e) {
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({ id: this.projectInfo.id, status: e.status });
       console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+        this.$refs.checkDialogEnd.openDialog(false)
         return
       }
       this.$message.error(res.msg);
     },
-    async saveFnc(){
-      this.$refs.thirdForm.validate(async(valid) => { 
-          if (valid) {
-           if(this.bidBaseProject.bid_register_file.length==0){
+    async saveFnc() {
+      this.$refs.thirdForm.validate(async (valid) => {
+        if (valid) {
+          if (this.bidBaseProject.bid_register_file.length == 0) {
             this.$message.error('投标报名登记表文件不能为空')
             return
-           }
-           if(this.bidBaseProject.bid_file_issue.length==0){
+          }
+          if (this.bidBaseProject.bid_file_issue.length == 0) {
             this.$message.error('采购代理机构招标文件(发售稿)不能为空')
             return
-           }
-           console.log(this.bidBaseProject.project_attachments)
-           if(!this.bidBaseProject.project_attachments[0].files.length||!this.bidBaseProject.project_attachments[1].files.length||!this.bidBaseProject.project_attachments[2].files.length){
+          }
+          console.log(this.bidBaseProject.project_attachments)
+          if (!this.bidBaseProject.project_attachments[0].files.length || !this.bidBaseProject.project_attachments[1].files.length || !this.bidBaseProject.project_attachments[2].files.length) {
             this.$message.error('附件不能为空')
             return
-           }
-           let form = this.bidBaseProject;
-           form.id= this.projectInfo.id;
-           let res = await bidBaseSave(form);
-           console.log(res)
-           if(res.code==200){
-            this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
-            return
-           }
-           this.$message.error(res.msg)
-          } else {
-            return false;
           }
-
-        });
-    },
-   async submitFnc(){
-           let res = await bidBaseSubmit(this.projectInfo.id);
-           console.log(res)
-           if(res.code==200){
+          let form = this.bidBaseProject;
+          form.id = this.projectInfo.id;
+          let res = await bidBaseSave(form);
+          console.log(res)
+          if (res.code == 200) {
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            // setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+
+
             return
-           }
-           this.$message.error(res.msg)
+          }
+          this.$message.error(res.msg)
+        } else {
+          return false;
+        }
+
+      });
+    },
+    async submitFnc() {
+      let res = await bidBaseSubmit(this.projectInfo.id);
+      console.log(res)
+      if (res.code == 200) {
+        this.$message.success(res.msg)
+        // setTimeout(()=>{this.$router.go(-1)},1000)
+        this.$emit('updateDetail')
+
+        return
+      }
+      this.$message.error(res.msg)
     },
   }
 };
@@ -425,11 +394,9 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(
-            90deg,
-            #1d70ff 0%,
-            rgba(29, 112, 255, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #1d70ff 0%,
+              rgba(29, 112, 255, 0) 100%);
         }
       }
 
@@ -437,16 +404,15 @@ export default {
         color: #a6a9bc;
 
         div {
-          background: linear-gradient(
-            90deg,
-            #a6a9bc 0%,
-            rgba(166, 169, 188, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #a6a9bc 0%,
+              rgba(166, 169, 188, 0) 100%);
         }
       }
     }
   }
 }
+
 .box-right1 {
   display: flex;
   flex-grow: 1;

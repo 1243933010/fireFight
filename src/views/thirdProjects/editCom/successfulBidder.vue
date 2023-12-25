@@ -157,8 +157,8 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button    @click="saveFnc"   v-if="[23,24].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="submitFnc"  v-if="projectInfo.status == 24" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button    @click="saveFnc"   v-if="[23].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  @click="submitFnc"  v-if="[23,24].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
@@ -246,7 +246,8 @@ export default {
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+
             return
            }
            this.$message.error(res.msg)
@@ -265,7 +266,8 @@ export default {
            console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
-            setTimeout(()=>{this.$router.go(-1)},1000)
+            this.$emit('updateDetail')
+
             return
            }
            this.$message.error(res.msg)
@@ -290,22 +292,24 @@ export default {
     },
     async auditEmit(e){
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+        this.$refs.checkDialog.openDialog(false)
         return
       }
       this.$message.error(res.msg);
     },
     async auditEmitEnd(e){
       console.log(e)
-      let res = await projectAudit({id:this.projectInfo.id,status:e.status});
+      let res = await projectAudit({id:this.projectInfo.id,...e});
       console.log(res)
       if(res.code==200){
         this.$message.success(res.msg);
-        this.$router.go(-1)
+        this.$emit('updateDetail')
+        this.$refs.checkDialogEnd.openDialog(false)
         return
       }
       this.$message.error(res.msg);
