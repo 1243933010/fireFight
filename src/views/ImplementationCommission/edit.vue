@@ -25,15 +25,15 @@
               <el-col :span="24">
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
-                    :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess">
+                    :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess" >
                     <i slot="default" class="el-icon-plus"></i>
                     <div class="el-upload__tip" slot="tip">
                       只能上传图片或视频
                     </div>
-                    <div slot="file" slot-scope="{ file }">
+                    <div slot="file" slot-scope="{file,index,list}">
                       <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
                       <span class="el-upload-list__item-actions">
-                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                        <span class="el-upload-list__item-delete" @click="handleRemove(file,index,list)">
                           <i class="el-icon-delete"></i>
                         </span>
                       </span>
@@ -286,10 +286,10 @@ export default {
       this.childInput2 = 0;
       this.childRadioIndex = ind;
     },
-    handleRemove(file, fileList) {
+    handleRemove(file, fileList,a) {
       // this.formInfo.fileList.splice()
       // console.log(this.dialogImageUrl)
-      console.log(file, fileList);
+      console.log(file, fileList,a);
     },
   },
 };

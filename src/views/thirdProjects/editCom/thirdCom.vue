@@ -37,7 +37,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="公示图（1/4）" prop="bid_publish_photo">
+          <el-form-item :label="`公示图（${bidBaseProject.bid_publish_photo.length}/4）`" prop="bid_publish_photo">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
               :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess">
               <i slot="default" class="el-icon-plus"></i>
@@ -98,7 +98,7 @@
       </el-col>
     </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc(true)" v-if="[11].includes(projectInfo.status)" v-permission="['project_registrar']"
+      <el-button @click="saveFnc(false)" v-if="[11].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="normal">保存草稿</el-button>
       <el-button @click="saveFnc(true)" v-if="[11, 12].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="primary">提交</el-button>

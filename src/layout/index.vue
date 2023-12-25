@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <!-- <div class="header">
+    <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -37,7 +37,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -146,7 +146,7 @@ export default {
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
       let url = '';
       if([0,2,4].includes(item.status)){
-         url = 'projectManagementEdit'
+         url = '/projectManagementEdit'
       }
       if([1,3].includes(item.status)){
          url = 'projectManagementDetail'
