@@ -73,7 +73,7 @@
               <div class="status1">
                 <span>{{ item.register_status_text }}</span>
               </div>
-              <div class="status2" >
+              <div class="status2" v-if="item.procurement_method_text">
                 <span>{{ item.procurement_method_text }}</span>
               </div>
             </div>
