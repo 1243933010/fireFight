@@ -229,22 +229,24 @@ export default {
     handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.form.per_page = val;
-        this.form.property = 1;
+        this.form.current_page = 1;
         this.query();
       },
       handleCurrentChange(val) {
-        this.form.property = val;
+        this.form.current_page = val;
         console.log(`当前页: ${val}`);
         this.query();
       },
     openDetail(item) {
       this.resetFields();
-      this.$router.push({ name: "projectManagementDetail",params:{id:item.id} });
+      // this.$router.push({ name: "projectManagementDetail",params:{id:item.id} });
+      this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} });
      
     },
     openEdit(item){
       this.resetFields();
-      this.$router.push({ name: "projectManagementEdit",params:{id:item.id} });
+      // this.$router.push({ name: "projectManagementEdit",params:{id:item.id} });
+      this.$router.push({ path: "/projectManagementEdit",query:{id:item.id} });
     },
     projectAdd() {
         this.resetFields();

@@ -80,7 +80,7 @@ export default {
 
   mounted() { 
     let route = this.$route;
-    this.getDetail(route.params.id);
+    this.getDetail(route.query.id);
     this.getAgentList();
   },
   methods: {

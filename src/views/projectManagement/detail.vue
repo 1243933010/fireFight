@@ -95,7 +95,7 @@ export default {
   mounted() {
     let route = this.$route;
     console.log( this.$store.getters)
-    this.getDetail(route.params.id);
+    this.getDetail(route.query.id);
   },
   computed: {
     // ...mapGetters([

@@ -18,7 +18,7 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <div class="btn2" @click="submitForm"  v-if="[1].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>
+            <div class="btn2" @click="submitForm"  v-if="formInfo.id&&[0,1].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>
             <div class="btn3" @click="submitFnc"   v-if="[0,1].includes(formInfo.status)" v-permission="['department_auditor']">保存草稿</div>
             <!-- <div class="btn4">通过</div> -->
             <!-- <div class="btn5">驳回</div> -->
@@ -57,7 +57,7 @@ export default {
   mounted() {
     let route = this.$route;
     console.log( route)
-    this.getDetail(route.params.id);
+    this.getDetail(route.query.id);
   },
   computed: {
     // ...mapGetters([
@@ -84,13 +84,15 @@ export default {
       let res = await projectDetail(id);
       console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
       if(res.code==200){
+        // this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
+        // this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
+        // res.data.project_attachments0.forEach((val)=>{
+        //   val.title = val.file_name
+        // })
+        // this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
-        res.data.project_attachments0.forEach((val)=>{
-          val.title = val.file_name
-        })
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
-
         
 
       }

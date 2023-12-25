@@ -238,17 +238,18 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.form.per_page = val;
-      this.form.property = 1;
+      this.form.current_page = 1;
       this.query();
     },
     handleCurrentChange(val) {
-      this.form.property = val;
+      this.form.current_page = val;
       console.log(`当前页: ${val}`);
       this.query();
     },
     openDetail(item) {
       // this.resetFields();
-      this.$router.push({ name: "thirdProjectsEdit", params: { id: item.id } });
+      // this.$router.push({ name: "thirdProjectsEdit", params: { id: item.id } });
+      this.$router.push({ path: "thirdProjects/edit",query:{id:item.id} });
     },
     deleteItem(item) {
       this.$confirm("此操作将删除该数据, 是否继续?", "提示", {

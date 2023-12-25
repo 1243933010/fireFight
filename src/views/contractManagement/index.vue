@@ -266,17 +266,18 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.form.per_page = val;
-      this.form.property = 1;
+      this.form.current_page = 1;
       this.query();
     },
     handleCurrentChange(val) {
-      this.form.property = val;
+      this.form.current_page = val;
       console.log(`当前页: ${val}`);
       this.query();
     },
     openDetail(item) {
       //   this.resetFields();
-      this.$router.push({ name: "contractEdit", params: { id: item.id } });
+      // this.$router.push({ name: "contractEdit", params: { id: item.id } });
+      this.$router.push({ path: "contractManagement/edit",query:{id:item.id} });
     },
     projectAdd() {
       // this.$router.push({ name: 'contractEdit', params: {} })
