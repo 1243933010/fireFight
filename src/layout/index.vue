@@ -145,10 +145,10 @@ export default {
       console.log(item)
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
       let url = '';
-      if([0].includes(item.status)){
+      if([0,2,4].includes(item.status)){
          url = 'projectManagementEdit'
       }
-      if([1,2,3,4].includes(item.status)){
+      if([1,3].includes(item.status)){
          url = 'projectManagementDetail'
       }
       if([5,6,7,8,9,10].includes(item.status)){
