@@ -87,7 +87,9 @@ export default {
   },
   methods: {
     async getDetail(id) {
+      this.$loading()
       let res = await projectDetail(id);
+      this.$loading().close()
       if (res.code == 200) {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
           ...res.data,

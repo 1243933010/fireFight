@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-row>
     <el-form
       ref="thirdForm"
       style=""
@@ -9,43 +8,34 @@
       :model="resultData"
       class="demo-form-inline"
       :disabled="![23,24,26,28].includes(projectInfo.status)"
+      label-width="180px"
     >
     
-      <el-col :span="8">
-        <el-form-item label="中标金额" prop="bid_success_amount">
+        <div style="display: flex;flex-direction: row;margin-bottom: 20px;">
+          <el-form-item label="中标金额" prop="bid_success_amount"  style="width: 33%;">
           <el-input v-model="resultData.bid_success_amount" placeholder="请输入中标金额">
             <span slot="suffix">元</span>
           </el-input>
         </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="中标单位" prop="bid_success_unit">
+        <el-form-item label="中标单位" prop="bid_success_unit" style="width: 33%;">
           <el-input v-model="resultData.bid_success_unit" placeholder="请输入中标单位">
           </el-input>
         </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="联系姓名" prop="bid_success_contact">
+        <el-form-item label="联系姓名" prop="bid_success_contact" style="width: 33%;">
           <el-input v-model="resultData.bid_success_contact" placeholder="请输入联系人">
           </el-input>
         </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="联系电话" prop="bid_success_phone">
+        </div>
+        <div style="display: flex;flex-direction: row;margin-bottom: 20px;">
+        <el-form-item label="联系电话" prop="bid_success_phone" style="width: 33%;">
           <el-input v-model="resultData.bid_success_phone" placeholder="请输入联系电话">
           </el-input>
         </el-form-item>
-      </el-col>
-
-      
-      <el-col :span="8">
-        <el-form-item label="公示链接" prop="bid_success_link">
+        <el-form-item label="公示链接" prop="bid_success_link" style="width: 33%;">
           <el-input v-model="resultData.bid_success_link" placeholder="请输入公示链接">
           </el-input>
         </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="发布中标公告日期" prop="bid_success_publish_date">
+        <el-form-item label="发布中标公告日期" prop="bid_success_publish_date" style="width: 33%;">
           <el-date-picker
             v-model="resultData.bid_success_publish_date"
             value-format="yyyy-MM-dd"
@@ -54,50 +44,10 @@
           >
           </el-date-picker>
         </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="中标供应商企业类型" prop="bid_success_unit_type">
-          <el-select
-            v-model="resultData.bid_success_unit_type"
-            placeholder="请选择中标供应商企业类型"
-          >
-            <el-option label="大型" value="大型" />
-            <el-option label="中型" value="中型" />
-            <el-option label="小微" value="小微" />
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per">
-          <el-input
-            v-model="resultData.bid_success_unit_per"
-            placeholder="请输入中标供应商企份额"
-          >
-            <span slot="suffix">%</span>
-          </el-input>
-        </el-form-item>
-      </el-col>
-
-      <el-col :span="8">
-        <el-form-item label="中标通知书日期" prop="bid_success_notice_date">
-          <el-date-picker
-            v-model="resultData.bid_success_notice_date"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择开评标日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <UploadCom
-          title="中标通知书/成交结果通知书"
-          :fileList="resultData.bid_success_notice"
-          @updateFile="(e)=>updateFile(e,resultData.bid_success_notice)"
-        />
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="上传图片" prop="input3">
+        
+      </div>
+      <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <el-form-item :label="`公示图(${resultData.bid_success_photo.length}/4)`" prop="input3" style="width: 33%;">
           <el-upload
              :action="uploadUrl"
              :headers="headers"
@@ -125,11 +75,47 @@
               </div>
             </el-upload>
         </el-form-item>
-      </el-col>
+        <el-form-item label="中标供应商企业类型" prop="bid_success_unit_type" style="width: 33%;">
+          <el-select
+            v-model="resultData.bid_success_unit_type"
+            placeholder="请选择中标供应商企业类型"
+          >
+            <el-option label="大型" value="大型" />
+            <el-option label="中型" value="中型" />
+            <el-option label="小微" value="小微" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 33%;">
+          <el-input
+            v-model="resultData.bid_success_unit_per"
+            placeholder="请输入中标供应商企份额"
+          >
+            <span slot="suffix">%</span>
+          </el-input>
+        </el-form-item>
+        
+      </div>
+      <div style="display: flex;flex-direction: row;">
+        <el-form-item label="中标通知书日期" prop="bid_success_notice_date" style="width: 33%;">
+          <el-date-picker
+            v-model="resultData.bid_success_notice_date"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择开评标日期"
+          >
+          </el-date-picker>
+        </el-form-item>
+       <div style="padding-left: 40px;width: 33%;">
+        <UploadCom
+          title="中标通知书/成交结果通知书"
+          :fileList="resultData.bid_success_notice"
+          @updateFile="(e)=>updateFile(e,resultData.bid_success_notice)"
+        />
+       </div>
+        
+      </div>
     </el-form>
-  </el-row>
-    <el-row>
-      <el-col :span="24">
+    
         <div class="box-right1">
           <div class="files">
             <div class="title1">
@@ -154,7 +140,7 @@
                   <UploadCom title="附件" :fileList="resultData.project_attachments[0].files" @updateFile="(e)=>updateFile(e,resultData.project_attachments[0].files)" />
                 </div>
               </div> -->
-              <div class="file-form-item" style="width: 50%;"  v-for="(item,index) in resultData.project_attachments" :key="index">
+              <div class="file-form-item" style="width: 60%;"   v-for="(item,index) in resultData.project_attachments" :key="index">
               <div class="left">
                 <div class="title"><span>{{ item.title }}</span></div>
                 <div class="input">
@@ -163,14 +149,12 @@
                 </div>
               </div>
               <div class="right">
-                <UploadCom title="附件"  :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+                <UploadCom title="附件"  :fileList="item.files" @updateFile="(e)=>updateFile(e,item.files,index)" />
               </div>
             </div>
             </div>
           </div>
         </div>
-      </el-col>
-    </el-row>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
       <el-button    @click="saveFnc(false)"   v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
       <el-button  @click="saveFnc(true)"  v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
@@ -253,10 +237,10 @@ export default {
             this.$message.error('请上传中标通知书/成交结果通知书');
             return
             }
-            if(!resultData.project_attachments[0].files.length){
-            this.$message.error('请上传附件');
-            return
-            }
+            // if(!resultData.project_attachments[0].files.length){
+            // this.$message.error('请上传附件');
+            // return
+            // }
          let form =  this.$store.state.thirdProjects.thirdData.resultData;
            form.id= this.projectInfo.id;
            form.is_submit = 1;

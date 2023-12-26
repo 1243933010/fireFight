@@ -17,8 +17,8 @@
         :key="index"
       >
         <!-- <el-input type="text" :rows="4" v-model="item.name" placeholder="我部已申请采购一批消防器材望上级批准。" v-show="true">  </el-input> -->
-        <div class="input">
-          <span class="color">*</span>参与投标单位:
+        <div class="input1">
+          <span class="color" >*</span>参与投标单位:
           <el-input
             style="width: 200px"
             v-model="item.name"
@@ -26,9 +26,17 @@
             placeholder="请输入参与投标单位"
           >
           </el-input>
-          <div class="float" v-if="index > 2" @click="deleteItem(index)">
-            <div>删除</div>
-          </div>
+          
+        </div>
+        
+        <div class="input1">
+          <span class="color">*</span>参与投标联系人:
+          <el-input
+            style="width: 200px"
+            v-model="item.contact"
+            type="text"
+            placeholder="请输入参与投标联系人"
+          ></el-input>
         </div>
         <div class="input1">
           <span class="color">*</span>参与投标报价金额:
@@ -39,24 +47,18 @@
             placeholder="请输入参与投标报价金额"
           ></el-input>
         </div>
-        <div class="input1">
-          <span class="color">*</span>参与投标联系人:
-          <el-input
-            style="width: 200px"
-            v-model="item.contact"
-            type="text"
-            placeholder="请输入参与投标联系人"
-          ></el-input>
-        </div>
         <UploadCom
           title="投标文件"
           :fileList="item.files"
           @updateFile="(e) => updateFile(e, item.files, index)"
         />
+        <div class="float" v-if="index > 2" @click="deleteItem(index)">
+            <div>删除</div>
+          </div>
       </div>
     </div>
     <el-row>
-      <el-col :span="24">
+      <el-col :span="14">
         <div class="box-right">
           <div class="files">
             <div class="title1">
@@ -66,7 +68,7 @@
             <div class="file-form">
               <div
                 class="file-form-item"
-                style="width: 50%;"
+                style="width: 100%;"
                 v-for="(item, index) in startData.project_attachments"
                 :key="index"
               >
@@ -95,6 +97,12 @@
             </div>
           </div>
         </div>
+      </el-col>
+      <el-col :span="6">
+        <div style="display: flex;flex-direction: row;padding-top: 60px;"   v-if="[20,22].includes(projectInfo.status)">
+            <span style="color: red;font-size: 14px;">开标审核意见:</span>
+            <el-input  :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="projectInfo.description" ></el-input>
+          </div>
       </el-col>
     </el-row>
     <div
@@ -306,6 +314,7 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    position: relative;
     .input,
     .input1 {
       width: 100%;
@@ -321,9 +330,11 @@ export default {
   }
 }
 .float {
-  padding-right: 30px;
-  padding-top: 0px;
-  float: right;
+  // padding-right: 30px;
+  // padding-bottom: 20px;
+  // float: right;
+  position: absolute;
+  right: 50px;
 
   div {
     width: 100px;

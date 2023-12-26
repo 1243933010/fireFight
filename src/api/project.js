@@ -501,3 +501,13 @@ export function agentDelete(id) {
     method: 'post',
   })
 }
+
+
+//代理删除
+export function uploadSlice(data) {
+  return request({
+    url: `/user/upload_slice`,
+    method: 'post',
+    data
+  })
+}

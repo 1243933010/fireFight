@@ -16,6 +16,10 @@
           </div>
 
           <BasicMsg ref="basicMsg" :disabled="false" />
+          <div style="display: flex;flex-direction: row;" v-if="[2,4].includes(projectInfo.status)" >
+            <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="formInfo.description" ></el-input>
+          </div>
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
             <div class="btn2" @click="submitFnc(true)"  v-if="formInfo.id&&[0,2,4].includes(formInfo.status)" v-permission="['department_auditor']">提交</div>

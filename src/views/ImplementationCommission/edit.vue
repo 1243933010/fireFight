@@ -41,7 +41,13 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
+              <!-- v-if="[14,16].includes(projectInfo.status)" -->
+              
             </el-form>
+          </div>
+          <div style="display: flex;flex-direction: row;" v-if="[14,16].includes(projectInfo.status)">
+            <span style="color: red;font-size: 14px;">实施委托审核意见:</span>
+            <el-input  :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="projectInfo.description" ></el-input>
           </div>
 
           <div class="btnn">
