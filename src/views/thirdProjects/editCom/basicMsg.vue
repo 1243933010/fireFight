@@ -1,30 +1,30 @@
 <template>
   <div>
     <el-form ref="formInfo" :disabled="disabled" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
-      label-width="100px">
-      <!-- <el-col :span="12">
+      label-width="140px">
+      <!-- <el-col :span="5">
         <el-form-item label="需求单位" prop="demand_department_id">
           <el-select v-model="formInfo.demand_department_id" placeholder="请选择需求单位">
             <el-option v-for="(item,index) in selectList" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
       </el-col> -->
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="项目负责人" prop="project_leader" placeholder="请输入项目负责人">
           <el-input v-model="formInfo.project_leader" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="联系电话" prop="contact_phone" placeholder="请输入联系电话">
           <el-input v-model="formInfo.contact_phone" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="项目名称" prop="name" placeholder="请输入项目名称">
           <el-input v-model="formInfo.name" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="项目类型" prop="type">
           <el-select v-model="formInfo.type" placeholder="请选择项目类型">
             <el-option label="服务" value="service" />
@@ -33,22 +33,22 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
           <el-input v-model="formInfo.no" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
           <el-input v-model="formInfo.audit_amount" type="number" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="预算金额" prop="budget" placeholder="请输入预算金额">
           <el-input v-model="formInfo.budget" type="number" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="采购方式" prop="procurement_method">
           <el-select v-model="formInfo.procurement_method" placeholder="请选择采购方式">
             <el-option :label="item.label" :value="item.value" v-for="(item, index) in procurementMethodList"
@@ -56,18 +56,18 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="采购意向公开日期" prop="public_date">
           <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.public_date" type="date" placeholder="请选择采购意向公开日期">
           </el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="采购意向公告链接" prop="notice_link" placeholder="请输入采购意向公告链接" label-width="150px">
           <el-input v-model="formInfo.notice_link" type="text" />
         </el-form-item>
       </el-col>
-      <el-col :span="24">
+      <el-col :span="14">
         <el-form-item label="" prop="input12">
           <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>

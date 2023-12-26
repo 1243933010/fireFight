@@ -9,15 +9,17 @@
           <div class="background-icon">
             <span class="title">基本信息</span>
           </div>
-
+          <div style="width: 80%;">
           <BasicMsg :disabled="true" />
-
+        </div>
           <!-- 三方基本信息录入 -->
           <div class="background-icon">
             <span class="title">招标</span>
           </div>
 
+         <div style="width: 80%;">
           <ThirdCom @updateDetail="getDetail($route.query.id);" />
+         </div>
           <!-- 开标 -->
           <div class="background-icon">
             <span class="title">开评标</span>
@@ -34,7 +36,7 @@
           <div class="background-icon">
             <span class="title">中标</span>
           </div>
-          <div style="padding-left: 30px;">
+          <div style="padding-left: 30px;width: 80%;">
 
             <SuccessfulBidder  @updateDetail="getDetail($route.query.id);"/>
           </div>
@@ -314,10 +316,10 @@ export default {
     display: flex;
     height: auto;
     background-color: white;
-    max-width: 1000px;
+    // max-width: 1000px;
 
     .form {
-      min-width: 500px;
+      // min-width: 500px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;

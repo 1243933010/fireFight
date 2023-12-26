@@ -66,6 +66,7 @@
             <div class="file-form">
               <div
                 class="file-form-item"
+                style="width: 50%;"
                 v-for="(item, index) in startData.project_attachments"
                 :key="index"
               >
@@ -106,7 +107,7 @@
     >
       <!-- v-if="projectInfo.status == 17" -->
       <el-button
-        v-if="[17,18,20,22].includes(projectInfo.status)"
+        v-if="[17, 18, 20, 22].includes(projectInfo.status)"
         @click="saveFnc(false)"
         v-permission="['project_registrar']"
         type="normal"
@@ -114,7 +115,7 @@
       >
       <el-button
         @click="saveFnc(true)"
-        v-if="[17,18,20,22].includes(projectInfo.status)"
+        v-if="[17, 18, 20, 22].includes(projectInfo.status)"
         v-permission="['project_registrar']"
         type="primary"
         >提交</el-button
@@ -176,7 +177,7 @@ export default {
   },
   methods: {
     updateFile(e, item, index) {
-      console.log(e, item, index);      
+      console.log(e, item, index);
       if (typeof e == "number") {
         item.splice(e, 1);
       } else {
@@ -228,9 +229,9 @@ export default {
       this.$message.error(res.msg);
     },
     async saveFnc(reqBool) {
-      if(!reqBool){
+      if (!reqBool) {
         this.submitFnc();
-        return
+        return;
       }
       let bid_units =
         this.$store.state.thirdProjects.thirdData.startData.bid_units;
