@@ -443,3 +443,61 @@ export function projectExport(params) {
     params
   })
 }
+
+
+//--登录用户消息列表
+export function userNoticeList(params) {
+  return request({
+    url: `/notice/user_notice_list`,
+    method: 'get',
+    params
+  })
+}
+
+//--登录用户消息标记已读
+export function userRead(data) {
+  return request({
+    url: `/notice/set_read`,
+    method: 'post',
+    data
+  })
+}
+
+
+//--代理列表
+export function agentsList(params) {
+  return request({
+    url: `/agent/index`,
+    method: 'get',
+    params
+  })
+}
+
+
+
+//添加代理
+export function agentAdd(data) {
+  return request({
+    url: `/agent/add`,
+    method: 'post',
+    data
+  })
+}
+
+//编辑代理
+export function agentEdit(data) {
+  return request({
+    url: `/agent/edit/${data.id}`,
+    method: 'post',
+    data
+  })
+}
+
+
+//代理删除
+export function agentDelete(id) {
+  return request({
+    url: `/agent/delete/${id}`,
+    method: 'post',
+  })
+}

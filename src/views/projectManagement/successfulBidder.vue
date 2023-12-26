@@ -127,22 +127,18 @@
               <span>附件</span>
             </div>
             <div class="file-form">
-              <div class="file-form-item">
-                <div class="left">
-                  <div class="title"><span>举报/质疑/投诉</span></div>
-                  <div class="input">
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      placeholder="我部已申请采购一批消防器材望上级批准。"
-                    >
-                    </el-input>
-                  </div>
-                </div>
-                <div class="right">
-                  <UploadCom title="附件" :fileList="resultData.project_attachments[0].files" @updateFile="(e)=>updateFile(e,resultData.project_attachments[0].files)" />
+              <div class="file-form-item" v-for="(item,index) in resultData.project_attachments" :key="index">
+              <div class="left">
+                <div class="title"><span>{{ item.title }}</span></div>
+                <div class="input">
+                  <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
+                  </el-input>
                 </div>
               </div>
+              <div class="right">
+                <UploadCom title="附件" type="detail"  :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -180,10 +176,10 @@ export default {
   },
   computed:{
     projectInfo() {
-      return this.$store.state.thirdProjects.formInfo;
+      return this.$store.state.projectManagementAdd.formInfo;
     },
     resultData(){
-      return this.$store.state.thirdProjects.thirdData.resultData;
+      return this.$store.state.projectManagementAdd.thirdData.resultData;
     },
     uploadUrl(){
             return  process.env.VUE_APP_UPLOAD_API+'/user/upload_file'

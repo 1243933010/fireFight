@@ -22,7 +22,7 @@
                                     <el-upload class="upload-demo" :action="uploadUrl"
                                         :headers="headers"
                                         :show-file-list="false" :limit="3" :on-exceed="handleExceed" :file-list="fileList"
-                                        :on-progress="handleProgress"
+                                        :on-progress="uploadVideoProcess"
                                         
                                         :on-success="handleSuccess">
                                         <div style="display: flex;flex-direction: row;align-items: center;" >
@@ -31,10 +31,13 @@
                                             </div>
                                         </div>
                                     </el-upload>
+                                   
                                 </div>
                                 <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
+                               
                             </div>
                         </div>
+                        <el-progress v-if="progressFlag" :percentage="loadProgress"></el-progress>
                     </div>
                 </div>
             </div>
@@ -63,7 +66,8 @@ export default {
     
     data() {
         return {
-
+          loadProgress: 0, // 动态显示进度条
+   progressFlag: false, // 关闭进度条
         }
     },
     computed:{
@@ -77,6 +81,14 @@ export default {
         }
     },
     methods:{
+      uploadVideoProcess(event, file, fileList) {
+          this.progressFlag = true; // 显示进度条
+          this.loadProgress = parseInt(event.percent); // 动态获取文件上传进度
+          if (this.loadProgress >= 100) {
+              this.loadProgress = 100
+              setTimeout( () => {this.progressFlag = false}, 1000) // 一秒后关闭进度条
+          }
+      },
         seeDetail(item,index){
             if(item.url){
                 window.open(item.url)
@@ -84,13 +96,13 @@ export default {
         },
         deleteFile(item,index){
             // this.fileList.splice(index,1)
-            this.$emit('updateFile',index)
+            this.$emit('updateFile',index,item)
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
         },
         handleProgress(e, file, fileList) {
-            // console.log(e, file, fileList)
+            console.log(e, file, fileList)
         },
         handleSuccess(e, file, fileList){
             console.log(e, file, fileList,'----')

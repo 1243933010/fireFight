@@ -1,11 +1,11 @@
 <template>
     <div>
-        <el-dialog title="合同上传" center :visible.sync="dialogVisible" width="50%" :show-close="false">
+        <el-dialog  title="合同上传" center :visible.sync="dialogVisible" width="50%" :show-close="false">
             <div class="close">
                 <img @click="dialogVisible=false" src="../../assets/close_icon.png" alt="" srcset="">
             </div>
            <div class="upload-class">
-            <el-upload class="upload-demo" :headers="headers" drag :action="uploadUrl" multiple :on-success="handleSuccess">
+            <el-upload class="upload-demo" ref="uploads" :headers="headers"  drag :action="uploadUrl" multiple :on-success="handleSuccess">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -107,8 +107,13 @@ export default {
             if (!id) {
                 // this.$refs.formInfo.res
             }
-            this.fileList = [];
+           
             this.dialogVisible = true;
+            
+            this.fileList = [];
+            this.$nextTick(()=>{
+                this.$refs.uploads.clearFiles()
+            })
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);

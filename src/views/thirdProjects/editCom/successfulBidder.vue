@@ -8,6 +8,7 @@
       :rules="thirdFormRules"
       :model="resultData"
       class="demo-form-inline"
+      :disabled="![23,24,26,28].includes(projectInfo.status)"
     >
     
       <el-col :span="12">
@@ -126,8 +127,8 @@
       </el-col>
     </el-form>
   </el-row>
-    <el-row>
-      <el-col :span="24">
+    <!-- <el-row> -->
+      <!-- <el-col :span="24"> -->
         <div class="box-right1">
           <div class="files">
             <div class="title1">
@@ -135,14 +136,15 @@
               <span>附件</span>
             </div>
             <div class="file-form">
-              <div class="file-form-item">
+              <!-- <div class="file-form-item">
                 <div class="left">
                   <div class="title"><span>举报/质疑/投诉</span></div>
                   <div class="input">
                     <el-input
+                    v-model="resultData."
                       type="textarea"
                       :rows="4"
-                      placeholder="我部已申请采购一批消防器材望上级批准。"
+                      placeholder="举报/质疑/投诉。"
                     >
                     </el-input>
                   </div>
@@ -150,15 +152,27 @@
                 <div class="right">
                   <UploadCom title="附件" :fileList="resultData.project_attachments[0].files" @updateFile="(e)=>updateFile(e,resultData.project_attachments[0].files)" />
                 </div>
+              </div> -->
+              <div class="file-form-item" v-for="(item,index) in resultData.project_attachments" :key="index">
+              <div class="left">
+                <div class="title"><span>{{ item.title }}</span></div>
+                <div class="input">
+                  <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
+                  </el-input>
+                </div>
               </div>
+              <div class="right">
+                <UploadCom title="附件"  :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+              </div>
+            </div>
             </div>
           </div>
         </div>
-      </el-col>
-    </el-row>
+      <!-- </el-col> -->
+    <!-- </el-row> -->
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button    @click="saveFnc(false)"   v-if="[23].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="saveFnc(true)"  v-if="[23,24].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button    @click="saveFnc(false)"   v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  @click="saveFnc(true)"  v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
       <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
       <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
@@ -215,7 +229,7 @@ export default {
     updateFile(e,item,index){
         console.log(e,item,index)
         if(typeof e == 'number'){
-          itemm.splice(e,1)
+          item.splice(e,1)
         }else{
           item.push(e)
         }
@@ -244,6 +258,7 @@ export default {
             }
          let form =  this.$store.state.thirdProjects.thirdData.resultData;
            form.id= this.projectInfo.id;
+           form.is_submit = 1;
            console.log(form);
           //  return
            let res = await bidResultSave(form);

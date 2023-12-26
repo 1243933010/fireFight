@@ -1,31 +1,47 @@
 <template>
     <div>
         <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 30px;padding-top: 20px;">
-                    <div class="botton btn5" @click="addBtn">标记已读</div>
-                </div>
+            <div class="botton btn5" @click="addBtnFnc">标记已读</div>
+        </div>
         <div class="list">
-            <el-table :data="list" style="width: 100%" border fit highlight-current-row>
+            <el-table :data="list" style="width: 100%" border fit highlight-current-row  @selection-change="handleSelectionChange">
                 <el-table-column type="selection" label="勾选" width="45"></el-table-column>
-                <el-table-column type="index" label="序号"  width="100"></el-table-column>
-                <el-table-column prop="title" label="消息标题" width="180"></el-table-column>
-                <el-table-column prop="title1" label="消息内容" width="180"></el-table-column>
-                <el-table-column prop="title2" label="消息时间"></el-table-column>
-                <el-table-column prop="title2" label="创建时间"></el-table-column>
+                <el-table-column type="index" label="序号" width="100"></el-table-column>
+                <el-table-column prop="notice" label="消息标题" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.notice.title }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="notice" label="消息内容" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.notice.content }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="notice" label="创建时间" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.notice.created_at }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="notice" label="更新时间" >
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.notice.updated_at }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
                         <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
-                    <div class="botton btn5" @click="goDetail(item)">详情</div>
-                    <div class="botton btn7" @click="addBtn">标记已读</div>
-                    <div class="botton btn6" @click="addBtn">删除</div>
-                </div>
-                        
+                            <!-- <div class="botton btn5" @click="goDetail(item)">详情</div> -->
+                            <div class="botton btn7" @click="addBtn(scope.row)">标记已读</div>
+                            <!-- <div class="botton btn6" @click="addBtn">删除</div> -->
+                        </div>
+
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
+            <!-- <el-pagination style="text-align: right;" :current-page="paginationObj.page" :page-sizes="[10, 20, 50, 100]"
                 :page-size="paginationObj.pageSize" :total="paginationObj.total"
                 layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChangeHandle"
-                @current-change="pageCurrentChangeHandle" />
+                @current-change="pageCurrentChangeHandle" /> -->
         </div>
 
     </div>
@@ -35,69 +51,121 @@
 
 <script>
 
-import { noticeList } from '@/api/project'
+import { noticeList, userNoticeList,userRead } from '@/api/project'
 export default {
     data() {
         return {
             form: {
-                name: '',
-                region: ''
+                // name: '',
+                // region: ''
             },
-            list: [ ],
-            paginationObj: {
-                page: 1,
-                pageSize: 10,
-                total: 200
-            }
+            list: [],
+            selectList:[]
         }
     },
     mounted() {
-      console.log(this.$store.state.user);
-      this.query();
+        console.log(this.$store.state.user);
+        this.query();
     },
     methods: {
-        goDetail(item){
-            this.$router.push({path:'/messageCenter/detail'})
+        handleSelectionChange(e){
+            console.log(e)
+            this.selectList = e;
         },
-        addBtn(){
-            this.$refs.add.open();
+        goDetail(item) {
+            this.$router.push({ path: '/messageCenter/detail' })
+        },
+        async addBtnFnc(){
+            if(this.selectList.length==0){
+                this.$message({
+                        type: 'error',
+                        message: '请先勾选数据'
+                    });
+                    return
+            }
+            let ids = this.selectList.map((val)=>val.id)
+            console.log(ids)
+            let res = await userRead({ids});
+                console.log(res)
+                if (res.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: res.msg
+                    });
+                    this.form.property = 1;
+                    this.query()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.msg
+                    });
+                }
+
+        },
+        addBtn(item) {
+            // this.$refs.add.open();
+            this.$confirm('标记该消息已读, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(async () => {
+                let res = await userRead({ids:[item.id]});
+                console.log(res)
+                if (res.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: res.msg
+                    });
+                    this.form.property = 1;
+                    this.query()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.msg
+                    });
+                }
+
+            })
         },
         async query() {
-      let res = await noticeList(this.form);
-      console.log(res);
-      if (res.code == 200) {
-        this.list = res.data;
-      }
-    },
-        deleteItem(item){
-        this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(async() => {
-            let res = await departmentDelete(item.id);
-            console.log(res)
-            if(res.code===200){
-              this.$message({
-              type: 'success',
-              message: res.msg
-            });
-            this.form.property = 1;
-            this.query()
-            }else{
-              this.$message({
-              type: 'error',
-              message: res.msg
-            });
+            let res = await userNoticeList(this.form);
+            console.log(res);
+            if (res.code == 200) {
+                this.list = res.data;
+            //     this.list = [
+            // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
+            // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]
             }
-           
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除'
-            });          
-          });
-      },
+        },
+        deleteItem(item) {
+            this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(async () => {
+                let res = await departmentDelete(item.id);
+                console.log(res)
+                if (res.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: res.msg
+                    });
+                    this.form.property = 1;
+                    this.query()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.msg
+                    });
+                }
+
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
         onCancel() {
             this.$message({
                 message: 'cancel!',
@@ -118,8 +186,8 @@ export default {
             this.page = val
             this.query()
         },
-        handleType(type){
-            this.$router.push({name:'messageNotificationEdit',params:{id:1}})
+        handleType(type) {
+            this.$router.push({ name: 'messageNotificationEdit', params: { id: 1 } })
         }
     }
 }
@@ -127,6 +195,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
+
 .botton {
     width: 59px;
     height: 28px;
@@ -139,6 +208,7 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
 .btn5 {
     background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
     color: #FEFEFF;
@@ -153,11 +223,13 @@ export default {
     background: #DCE3FD;
     color: #3E72FB;
 }
-.form{
-            // padding-top: 20px;
-            background-color: white;
-            margin-bottom: 30px;
-        }
+
+.form {
+    // padding-top: 20px;
+    background-color: white;
+    margin-bottom: 30px;
+}
+
 .list {
     width: 100%;
     height: 100%;
@@ -219,5 +291,4 @@ export default {
             }
         }
     }
-}
-</style>
+}</style>

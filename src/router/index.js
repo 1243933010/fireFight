@@ -346,6 +346,12 @@ export const asyncRoutes = [
       component: () => import('@/views/systemManagement/log/index'),
       meta: { title: '日志管理',  }
     },
+    {
+      path: 'agent',
+      name: 'agent',
+      component: () => import('@/views/systemManagement/agent/index'),
+      meta: { title: '三方代理管理',  }
+    },
   ]
   },
   // {

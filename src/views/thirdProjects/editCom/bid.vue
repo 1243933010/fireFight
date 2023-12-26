@@ -78,7 +78,7 @@
                       type="textarea"
                       :rows="4"
                       v-model="item.description"
-                      placeholder="我部已申请采购一批消防器材望上级批准。"
+                      :placeholder="item.title"
                     >
                     </el-input>
                   </div>
@@ -106,7 +106,7 @@
     >
       <!-- v-if="projectInfo.status == 17" -->
       <el-button
-        v-if="[17].includes(projectInfo.status)"
+        v-if="[17,18,20,22].includes(projectInfo.status)"
         @click="saveFnc(false)"
         v-permission="['project_registrar']"
         type="normal"
@@ -114,7 +114,7 @@
       >
       <el-button
         @click="saveFnc(true)"
-        v-if="[17, 18].includes(projectInfo.status)"
+        v-if="[17,18,20,22].includes(projectInfo.status)"
         v-permission="['project_registrar']"
         type="primary"
         >提交</el-button
@@ -176,9 +176,9 @@ export default {
   },
   methods: {
     updateFile(e, item, index) {
-      console.log(e, item, index);
+      console.log(e, item, index);      
       if (typeof e == "number") {
-        itemm.splice(e, 1);
+        item.splice(e, 1);
       } else {
         item.push(e);
       }
@@ -270,6 +270,7 @@ export default {
 
       let form = this.$store.state.thirdProjects.thirdData.startData;
       form.id = this.projectInfo.id;
+      form.is_submit = 1;
       let res = await bidOpenSave(form);
       console.log(res);
       if (res.code == 200) {
