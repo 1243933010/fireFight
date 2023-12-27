@@ -16,9 +16,11 @@
           </div>
 
           <BasicMsg ref="basicMsg" :disabled="false" />
-          <div style="display: flex;flex-direction: row;" v-if="[2,4].includes(projectInfo.status)" >
+           <div  v-for="(item,index) in formInfo.audit_log" :key="'index'">
+            <div style="display: flex;flex-direction: row;" v-if="[2,4].includes(item.status)" >
             <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="formInfo.description" ></el-input>
+            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="item.description" ></el-input>
+          </div>
           </div>
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->

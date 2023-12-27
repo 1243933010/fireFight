@@ -55,9 +55,10 @@
                     :on-exceed="handleExceed"
                     :file-list="fileList"
                     :on-progress="uploadVideoProcess"
-                    :http-request="httpRequest"
+                   
                     :on-success="handleSuccess"
                   >
+                  <!-- :http-request="httpRequest" -->
                     <div
                       style="
                         display: flex;
@@ -193,10 +194,10 @@ export default {
       // 发送切片上传请求
       return uploadSlice(formData);
     },
-    handleSuccess(response, file, fileList) {
-      // 整体上传成功后的处理
-      console.log("上传成功", response);
-    },
+    // handleSuccess(response, file, fileList) {
+    //   // 整体上传成功后的处理
+    //   console.log("上传成功", response);
+    // },
     handleError(error, file, fileList) {
       // 上传失败的处理
       console.error("上传失败", error);

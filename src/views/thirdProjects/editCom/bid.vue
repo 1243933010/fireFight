@@ -99,9 +99,15 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div style="display: flex;flex-direction: row;padding-top: 60px;"   v-if="[20,22].includes(projectInfo.status)">
+        <!-- <div style="display: flex;flex-direction: row;padding-top: 60px;"   v-if="[20,22].includes(projectInfo.status)">
             <span style="color: red;font-size: 14px;">开标审核意见:</span>
             <el-input  :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="projectInfo.description" ></el-input>
+          </div> -->
+          <div  v-for="(item,index) in projectInfo.audit_log" :key="'index'">
+            <div style="display: flex;flex-direction: row;" v-if="[20,22].includes(item.status)" >
+            <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="item.description" ></el-input>
+          </div>
           </div>
       </el-col>
     </el-row>
