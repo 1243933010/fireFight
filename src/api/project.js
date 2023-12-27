@@ -511,3 +511,13 @@ export function uploadSlice(data) {
     data
   })
 }
+
+//上传小文件
+export function uploadFile(data) {
+  return request({
+    url: `/user/upload_file`,
+    method: 'post',
+    data
+  })
+}
+

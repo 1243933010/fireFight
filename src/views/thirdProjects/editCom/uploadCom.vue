@@ -55,7 +55,7 @@
                     :on-exceed="handleExceed"
                     :file-list="fileList"
                     :on-progress="uploadVideoProcess"
-                   
+                    :http-request="httpRequest"
                     :on-success="handleSuccess"
                   >
                   <!-- :http-request="httpRequest" -->
@@ -88,7 +88,7 @@
 
 <script>
 import { getToken } from "@/utils/auth";
-import {uploadSlice} from '@/api/project.js'
+import {uploadSlice,uploadFile} from '@/api/project.js'
 export default {
   props: {
     type: {
@@ -122,9 +122,17 @@ export default {
     },
   },
   methods: {
-    httpRequest(e, a, b) {
-      console.log(e, a, b);
-      this.beforeUpload(e.file)
+    async httpRequest(e, a, b) {
+      // console.log(e, a, b);
+      this.progressFlag = true; // 显示进度条
+      let data = await this.beforeUpload(e.file)
+      // console.log(data)
+      
+      if(data.length>0){
+        let e = data[0];
+        e.data.title = e.data.file_name;
+        this.$emit("updateFile", e.data);
+      }
     },
     uploadVideoProcess(event, file, fileList) {
       this.progressFlag = true; // 显示进度条
@@ -136,6 +144,7 @@ export default {
         }, 1000); // 一秒后关闭进度条
       }
     },
+   
     seeDetail(item, index) {
       if (item.url) {
         window.open(item.url);
@@ -153,51 +162,70 @@ export default {
       );
     },
     handleProgress(e, file, fileList) {
-      console.log(e, file, fileList);
+      // console.log(e, file, fileList);
     },
     handleSuccess(e, file, fileList) {
-      console.log(e, file, fileList, "----");
+      // console.log(e, file, fileList, "----");
       if (e.code === 200) {
         e.data.title = e.data.file_name;
         this.$emit("updateFile", e.data);
         // this.fileList.push(e.data);
       }
     },
+    async uploadSmallFile(file){
+      let res = await uploadFile()
+    },
     async beforeUpload(file) {
       // 在这里进行切片处理
       const chunkSize = 2 * 1024 * 1024; // 2MB
       const chunks = Math.ceil(file.size / chunkSize);
       const promises = [];
-
+      
+      console.log(chunks,'---')
+      if(file.size==0){
+        this.$message.error('不能上传空文件')
+        this.progressFlag = false;
+      this.loadProgress = 0;
+        return
+      }
       for (let i = 0; i < chunks; i++) {
         const start = i * chunkSize;
         const end = start + chunkSize;
         const chunk = file.slice(start, end);
+        this.loadProgress = +(i*((100/chunks))).toString().split('.')[0];
         // console.log(file)
         const formData = new FormData();
         formData.append("filename", file.name);  //文件名
         formData.append("file", chunk);
         formData.append("chunk", i+1);   //第几片
         formData.append("chunkLength", chunks);  //总片数
-        formData.append("uuid", file.uid);  //总片数
+        formData.append("uuid", file.uid);  //uuid
 
 
         // 发送切片请求
-        const promise = this.uploadChunk(formData);
-        promises.push(promise);
+        const promise = await this.uploadChunk(formData);
+        if(promise.code==200&&promise.data.url){
+          promises.push(promise);
+        }
+       
       }
+      
 
       // 返回一个 Promise.all，确保所有切片上传完成后再继续整体上传
+      this.progressFlag = false;
+      this.loadProgress = 0;
       return Promise.all(promises);
     },
-    uploadChunk(formData) {
+    async uploadChunk(formData) {
+      
       // 发送切片上传请求
-      return uploadSlice(formData);
+      return await uploadSlice(formData);
     },
-    // handleSuccess(response, file, fileList) {
-    //   // 整体上传成功后的处理
-    //   console.log("上传成功", response);
-    // },
+    handleSuccess(response, file, fileList) {
+      
+      // 整体上传成功后的处理
+      // console.log("上传成功", response,file,fileList);
+    },
     handleError(error, file, fileList) {
       // 上传失败的处理
       console.error("上传失败", error);
