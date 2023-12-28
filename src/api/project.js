@@ -521,3 +521,13 @@ export function uploadFile(data) {
   })
 }
 
+
+//招标失败
+export function bidFail(data) {
+  return request({
+    url: `/project/bid_fail`,
+    method: 'post',
+    data
+  })
+}
+
