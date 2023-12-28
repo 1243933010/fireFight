@@ -44,6 +44,7 @@ export default{
   },
   computed:{
     project_attachments(){
+      console.log(this.$store.state.projectManagementAdd.project_attachments,'11111111111111')
       return this.$store.state.projectManagementAdd.project_attachments
     }
   },

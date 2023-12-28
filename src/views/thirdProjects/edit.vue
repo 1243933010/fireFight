@@ -1,106 +1,168 @@
 <template>
   <div style="height: auto">
-    <div class="box">
-      <div class="box-left">
-        <div class="steps">
-          <Steps :stepList="stepList" />
-        </div>
-        <div class="form">
-          <div class="background-icon">
-            <span class="title">基本信息</span>
-          </div>
-          <div style="width: 80%;">
-          <BasicMsg :disabled="true" />
-        </div>
-          <!-- 三方基本信息录入 -->
-          <div class="background-icon">
-            <span class="title">招标</span>
-          </div>
+    <div
+      style="
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+      "
+    >
+      <div
+        v-if="projectInfo.bid_fail_times > 0"
+        v-for="(item, index) in projectInfo.bid_fail_times"
+        :key="index"
+      >
+        <el-button @click="checkTab(index)" type="primary"
+          >新招标失败信息</el-button
+        >
+        <el-button @click="checkTab(item)" type="info"
+          >第{{ index + 1 }}次招标失败信息</el-button
+        >
+      </div>
+    </div>
 
-         <div style="width: 80%;">
-          <ThirdCom @updateDetail="getDetail($route.query.id);" />
-         </div>
-          <!-- 开标 -->
-          <div class="background-icon">
-            <span class="title">开评标</span>
+    <!-- 默认空数据 -->
+    <template>
+      <div class="box">
+        <div class="box-left">
+          <div class="steps">
+            <Steps :stepList="stepList" />
           </div>
-          <!-- <div></div> -->
-          <div style="padding-left: 30px;">
+          <div class="form">
+            <div class="background-icon">
+              <span class="title">基本信息{{projectInfo.bid_fail_times}}</span>
+            </div>
+            <div style="width: 80%">
+              <BasicMsg :disabled="true" />
+            </div>
+            <!-- 三方基本信息录入 -->
+            <div class="background-icon">
+              <span class="title">招标</span>
+            </div>
 
-            <StartCom  @updateDetail="getDetail($route.query.id);"/>
-          </div>
+            <div style="width: 80%">
+              <ThirdCom @updateDetail="getDetail($route.query.id)" />
+            </div>
+            <!-- 开标 -->
+            <div class="background-icon">
+              <span class="title">开评标</span>
+            </div>
+            <!-- <div></div> -->
+            <div style="padding-left: 30px">
+              <StartCom @updateDetail="getDetail($route.query.id)" />
+            </div>
 
             <!-- <BidCom /> -->
 
-             <!-- 中标单位 -->
-          <div class="background-icon">
-            <span class="title">中标</span>
-          </div>
-          <div style="padding-left: 30px;width: 80%;">
-
-            <SuccessfulBidder  @updateDetail="getDetail($route.query.id);"/>
-          </div>
-          <div class="btnn">
-            <!-- <div class="btn1">取消</div> -->
-            <!-- <div class="btn2">提交</div> -->
-            <!-- <div class="btn3">保存草稿</div> -->
-            <!-- <div class="btn4">通过</div> -->
-            <!-- <div class="btn5">驳回</div> -->
+            <!-- 中标单位 -->
+            <div class="background-icon">
+              <span class="title">中标</span>
+            </div>
+            <div style="padding-left: 30px; width: 80%">
+              <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
+            </div>
+            <div class="btnn">
+              <!-- <div class="btn1">取消</div> -->
+              <!-- <div class="btn2">提交</div> -->
+              <!-- <div class="btn3">保存草稿</div> -->
+              <!-- <div class="btn4">通过</div> -->
+              <!-- <div class="btn5">驳回</div> -->
+            </div>
           </div>
         </div>
+        <!-- <AnnexCom /> -->
+        <div></div>
       </div>
-      <!-- <AnnexCom /> -->
-      <div></div>
-    </div>
-    <div><el-button @click="bidFailFnc" type="primary">招标失败</el-button></div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          background-color: white;
+          padding-bottom: 40px;
+        "
+      >
+        <div>
+          <el-button
+            @click="bidFailFnc"
+            v-if="
+              [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                27, 28, 29,
+              ].includes(projectInfo.status)
+            "
+            type="primary"
+            >招标失败</el-button
+          >
+        </div>
+      </div>
+    </template>
   </div>
 </template>
-  
+
 <script>
 import Steps from "@/components/steps.vue";
-import { addMixins } from './mixins'
-import BasicMsg from './editCom/basicMsg.vue'
-import ThirdCom from './editCom/thirdCom.vue'
-import StartCom from './editCom/start.vue'
-import AnnexCom from './editCom/annex.vue'
+import { addMixins } from "./mixins";
+import BasicMsg from "./editCom/basicMsg.vue";
+import ThirdCom from "./editCom/thirdCom.vue";
+import StartCom from "./editCom/start.vue";
+import AnnexCom from "./editCom/annex.vue";
 // import BidCom from './editCom/bid.vue'
-import SuccessfulBidder from './editCom/successfulBidder.vue'
+import SuccessfulBidder from "./editCom/successfulBidder.vue";
 import {
   projectDetail,
   agentList,
-  bidFail
+  bidFail,
+  bidFailDetail,
 } from "@/api/project";
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg, ThirdCom, StartCom, AnnexCom,SuccessfulBidder},
+  components: {
+    Steps,
+    BasicMsg,
+    ThirdCom,
+    StartCom,
+    AnnexCom,
+    SuccessfulBidder,
+  },
   data() {
     return {
-
+      // failDataBool:false
     };
   },
-
-  mounted() { 
+  computed: {
+    projectInfo() {
+      return this.$store.state.thirdProjects.formInfo;
+    },
+  },
+  mounted() {
     let route = this.$route;
     this.getDetail(route.query.id);
     this.getAgentList();
   },
   methods: {
-    async bidFailFnc(){
-      let res = await bidFail(this.$route.query.id);
-      console.log(res)
-      if(res.code==200){
-        this.$message.success('当前第三方填写招标失败')
-        return
+    checkTab(index) {
+      if (index == 0) {
+        // this.failDataBool = false;
+        this.getDetail(this.$route.query.id);
+      } else {
+        // this.failDataBool = true;
+        this.getBidFailDetail(this.$route.query.id, index);
       }
-      this.$message.error(res.msg)
     },
-    async getDetail(id) {
-      this.$loading()
-      let res = await projectDetail(id);
-      this.$loading().close()
+    async getBidFailDetail(id, bid_times) {
+      this.$loading();
+      let res = await bidFailDetail({ id, bid_times });
+
+      this.$loading().close();
       if (res.code == 200) {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
           ...res.data,
+          failDataBool: false,
+          bid_fail_times: res.data.bid_times,
           input12: "true",
         });
         this.$store.commit(
@@ -112,66 +174,136 @@ export default {
           JSON.parse(res.data.small_company)
         );
         this.$store.commit(
-          "thirdProjects/update_ImplementationCommissionForm",{type:'file',
-          data:res.data.agent_check_videos}
+          "thirdProjects/update_ImplementationCommissionForm",
+          { type: "file", data: res.data.agent_check_videos }
         );
-        if(res.data.status>6){
+        if (res.data.status > 6) {
+          this.$store.commit(
+            "thirdProjects/update_ImplementationCommissionForm",
+            { type: "form", data: res.data.agent_id }
+          );
+        }
+        // if(res.data.status>=11){
+        //招标信息替换
+        let data = {
+          ...res.data.bid_info,
+          bid_file_issue: res.data.bid_file_issue,
+          bid_publish_photo: res.data.bid_publish_photo,
+          bid_register_file: res.data.bid_register_file,
+          project_attachments: res.data.project_attachments1,
+        };
+        console.log()
+        this.$store.commit("thirdProjects/update_bidBaseProject", data);
+        // }
+
+        // if(res.data.status>=18){
+        this.$store.commit(
+          "thirdProjects/update_startData_bid_files_list",
+          res.data.bid_files_list
+        );
+        this.$store.commit(
+          "thirdProjects/update_startData_bid_units",
+          res.data.bid_units
+        );
+        this.$store.commit(
+          "thirdProjects/update_startData_project_attachments",
+          res.data.project_attachments2
+        );
+        // }
+        // if(res.data.status>=24){
+        let data1 = {
+          ...res.data.bid_info,
+          bid_success_photo: res.data.bid_success_photo,
+          bid_success_notice: res.data.bid_success_notice,
+          project_attachments: res.data.project_attachments3,
+        };
+        this.$store.commit("thirdProjects/update_resultData", data1);
+        // }
+      }
+    },
+    async bidFailFnc() {
+      let res = await bidFail({ id: this.$route.query.id });
+      console.log(res);
+      if (res.code == 200) {
+        this.$message.success("当前招标失败");
+        this.getDetail(this.$route.query.id);
+        return;
+      }
+      this.$message.error(res.msg);
+    },
+    async getDetail(id) {
+      this.$loading();
+      let res = await projectDetail(id);
+      this.$loading().close();
+      if (res.code == 200) {
+        this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
+          ...res.data,
+          failDataBool: true,
+          bid_fail_times: res.data.bid_fail_times,
+          input12: "true",
+        });
+        this.$store.commit(
+          "thirdProjects/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.project_attachments0
+        );
+        this.$store.commit(
+          "thirdProjects/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
         this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm",
-          {type:'form',
-          data:res.data.agent_id});
-        }
-        if(res.data.status>11){
-            //招标信息替换
-            let data = {
-            ...res.data.bid_info,
-            bid_file_issue:res.data.bid_file_issue,
-            bid_publish_photo:res.data.bid_publish_photo,
-            bid_register_file:res.data.bid_register_file,
-            project_attachments:res.data.project_attachments1}
+          { type: "file", data: res.data.agent_check_videos }
+        );
+        if (res.data.status > 6) {
           this.$store.commit(
-          "thirdProjects/update_bidBaseProject", data);
+            "thirdProjects/update_ImplementationCommissionForm",
+            { type: "form", data: res.data.agent_id }
+          );
         }
+          //招标信息替换
+          let data = {
+            ...(res.data.bid_info
+              ? res.data.bid_info
+              : {
+                  bid_file_date: "",
+                  bid_publish_date: "",
+                  publish_link: "",
+                  bid_open_date: "",
+                  doubt: "",
+                }),
+            bid_file_issue: res.data.bid_file_issue,
+            bid_publish_photo: res.data.bid_publish_photo,
+            bid_register_file: res.data.bid_register_file,
+           
 
-        if(res.data.status>=18){
-          this.$store.commit(
-          "thirdProjects/update_startData_bid_files_list",  res.data.bid_files_list);
-          this.$store.commit(
-          "thirdProjects/update_startData_bid_units", res.data.bid_units);
-          this.$store.commit(
-          "thirdProjects/update_startData_project_attachments", res.data.project_attachments2);
-        }
-        // if(res.data.status>=24){
-        //   let data1 = {...res.data}
-        //   data1.project_attachments = res.data.project_attachments3
-        //   this.$store.commit(
-        //   "thirdProjects/update_resultData",data1);
+            project_attachments: res.data.project_attachments1,
+          };
+          this.$store.commit("thirdProjects/update_bidBaseProject", data);
+
+        // if(res.data.status>=18){
+        this.$store.commit(
+          "thirdProjects/update_startData_bid_files_list",
+          res.data.bid_files_list
+        );
+        this.$store.commit(
+          "thirdProjects/update_startData_bid_units",
+          res.data.bid_units
+        );
+        this.$store.commit(
+          "thirdProjects/update_startData_project_attachments",
+          res.data.project_attachments2
+        );
         // }
-        if(res.data.status>=24){
-          let data1 = {
-            ...res.data.bid_info,
-            bid_success_photo:res.data.bid_success_photo,
-            bid_success_notice:res.data.bid_success_notice,
-      //       bid_success_amount:res.data.bid_success_amount,
-      // bid_success_unit:res.data.bid_success_unit,
-      // bid_success_phone:res.data.bid_success_phone,
-      // bid_success_contact:res.data.bid_success_contact,
-      // bid_success_link:res.data.bid_success_link,
-      // bid_success_publish_date:res.data.bid_success_publish_date,
-      // bid_success_unit_type:res.data.bid_success_unit_type,
-      // bid_success_unit_per:res.data.bid_success_unit_per,
-      // bid_success_notice_date:res.data.bid_success_notice_date,
-      // bid_success_photo:res.data.bid_success_photo,
-      // bid_success_notice:res.data.bid_success_notice,
-      project_attachments: res.data.project_attachments3
-          }
-          // data1.project_attachments = res.data.project_attachments3
-          this.$store.commit(
-          "thirdProjects/update_resultData",data1);
-        }
+        // if(res.data.status>=24){
+        let data1 = {
+          ...res.data.bid_info,
+          bid_success_photo: res.data.bid_success_photo,
+          bid_success_notice: res.data.bid_success_notice,
+          project_attachments: res.data.project_attachments3,
+        };
+        this.$store.commit("thirdProjects/update_resultData", data1);
+        // }
       }
-      
-      
     },
     async getAgentList() {
       let res = await agentList();
@@ -180,15 +312,12 @@ export default {
         this.agentArr = res.data;
       }
     },
-
-
   },
 };
 </script>
-  
-<style lang="scss" scoped>
-@import url('./mixins.scss');
 
+<style lang="scss" scoped>
+@import url("./mixins.scss");
 
 .background-icon {
   width: 300px;
@@ -236,12 +365,12 @@ export default {
     margin-right: 10px;
 
     &::after {
-      content: '';
+      content: "";
       width: 0;
       height: 0;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
-      transition: transform .15s ease-in;
+      transition: transform 0.15s ease-in;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -279,7 +408,7 @@ export default {
   div {
     width: 86px;
     height: 36px;
-    background: #DCE3FD;
+    background: #dce3fd;
     border-radius: 4px;
     font-size: 12px;
     display: flex;
@@ -289,29 +418,29 @@ export default {
   }
 
   .btn1 {
-    background: #DCE3FD;
-    color: #3E72FB;
+    background: #dce3fd;
+    color: #3e72fb;
   }
 
   .btn2 {
-    background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn3 {
     background: white;
-    border: 1px solid #A7AABD;
+    border: 1px solid #a7aabd;
     color: #404659;
   }
 
   .btn4 {
-    background: linear-gradient(0deg, #6080F6 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6080f6 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn5 {
-    background: linear-gradient(0deg, #FC6235 0%, #FC4935 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #fc6235 0%, #fc4935 100%);
+    color: #fefeff;
   }
 }
 
@@ -335,7 +464,6 @@ export default {
       flex-grow: 1;
       background-color: white;
       padding-bottom: 35px;
-
     }
 
     // max-width: 1100px;
@@ -350,7 +478,7 @@ export default {
 
       .item {
         font-size: 14px;
-        color: #1D70FF;
+        color: #1d70ff;
         margin-right: 46px;
         display: flex;
         flex-direction: row;
@@ -368,15 +496,23 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(90deg, #1D70FF 0%, rgba(29, 112, 255, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #1d70ff 0%,
+            rgba(29, 112, 255, 0) 100%
+          );
         }
       }
 
       .active {
-        color: #A6A9BC;
+        color: #a6a9bc;
 
         div {
-          background: linear-gradient(90deg, #A6A9BC 0%, rgba(166, 169, 188, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #a6a9bc 0%,
+            rgba(166, 169, 188, 0) 100%
+          );
         }
       }
     }
@@ -413,8 +549,5 @@ export default {
       }
     }
   }
-
-
 }
 </style>
-  

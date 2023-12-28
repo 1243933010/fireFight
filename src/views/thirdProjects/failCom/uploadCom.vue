@@ -123,12 +123,7 @@ export default {
   },
   methods: {
     async httpRequest(e, a, b) {
-      console.log(e, a, b);
-      // if(!e.file.name.includes('项目')){
-      //   this.$message.error('文件名称请使用对应项目格式,例如xxxx项目-委托招标函')
-      //   return
-      // }
-       
+      // console.log(e, a, b);
       this.progressFlag = true; // 显示进度条
       let data = await this.beforeUpload(e.file)
       // console.log(data)

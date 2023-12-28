@@ -156,14 +156,14 @@
           </div>
         </div>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button    @click="saveFnc(false)"   v-if="[21,24,26].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
-      <el-button  @click="saveFnc(true)"  v-if="[21,24,26].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
-      <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">审核</el-button>
-      <!-- <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button> -->
+      <el-button    @click="saveFnc(false)"   v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="normal">保存草稿</el-button>
+      <el-button  @click="saveFnc(true)"  v-if="[23,24,26,28].includes(projectInfo.status)" v-permission="['project_registrar']"  type="primary">提交</el-button>
+      <el-button  @click="auditFnc"  v-if="projectInfo.status == 25" v-permission="['department_auditor']"  type="primary">初审</el-button>
+      <el-button   @click="auditFncEnd" v-if="projectInfo.status == 27" v-permission="['department_auditor']"  type="primary">终审</el-button>
 
     </div>
-    <checkDialog ref="checkDialog" title="审核"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 26 }, { label: '通过', value: 27 },]" />
-    <!-- <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 28 }, { label: '通过', value: 29 },]" /> -->
+    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 26 }, { label: '通过', value: 27 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 28 }, { label: '通过', value: 29 },]" />
 
     
   </div>

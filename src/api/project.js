@@ -531,3 +531,12 @@ export function bidFail(data) {
   })
 }
 
+//招标失败详情
+export function bidFailDetail(params) {
+  return request({
+    url: `/project/bid_fail_detail`,
+    method: 'get',
+    params
+  })
+}
+

@@ -121,7 +121,7 @@
     >
       <!-- v-if="projectInfo.status == 17" -->
       <el-button
-        v-if="[15, 18, 20].includes(projectInfo.status)"
+        v-if="[17, 18, 20, 22].includes(projectInfo.status)"
         @click="saveFnc(false)"
         v-permission="['project_registrar']"
         type="normal"
@@ -129,7 +129,7 @@
       >
       <el-button
         @click="saveFnc(true)"
-        v-if="[15, 18, 20].includes(projectInfo.status)"
+        v-if="[17, 18, 20, 22].includes(projectInfo.status)"
         v-permission="['project_registrar']"
         type="primary"
         >提交</el-button
@@ -139,26 +139,26 @@
         v-if="projectInfo.status == 19"
         v-permission="['department_auditor']"
         type="primary"
-        >审核</el-button
+        >初审</el-button
       >
-      <!-- <el-button
+      <el-button
         @click="auditFncEnd"
         v-if="projectInfo.status == 21"
         v-permission="['department_auditor']"
         type="primary"
         >终审</el-button
-      > -->
+      >
     </div>
     <checkDialog
       ref="checkDialog"
-      title="审核"
+      title="初审"
       @auditEmit="auditEmit"
       :radioList="[
         { label: '拒绝', value: 20 },
         { label: '通过', value: 21 },
       ]"
     />
-    <!-- <checkDialog
+    <checkDialog
       ref="checkDialogEnd"
       title="终审"
       @auditEmit="auditEmitEnd"
@@ -166,7 +166,7 @@
         { label: '拒绝', value: 22 },
         { label: '通过', value: 23 },
       ]"
-    /> -->
+    />
   </div>
 </template>
 

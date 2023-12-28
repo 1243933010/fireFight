@@ -66,10 +66,6 @@
           <span style="color: #454d65; font-size: 16px">项目列表</span>
         </div>
         <div class="add" @click="projectAdd" v-permission="['project_registrar']">
-          <!-- <div @click="projectAdd">
-                        <img style="width: 20px;" src="../../assets/add_icon.png" alt="">
-                        <span>新增</span>
-                    </div> -->
           <img style="width: 20px" src="../../assets/add_icon.png" alt="" />
           <span>新增</span>
         </div>
@@ -88,10 +84,10 @@
           <div class="item-con">
             <div class="item-con-left">
               <div class="item-con-left-o">
-                <div>
+                <!-- <div>
                   <span class="label">项目编号:</span
                   ><span class="text">{{ item.no }}</span>
-                </div>
+                </div> -->
                 <div>
                   <span class="label">采购单位:</span
                   ><span class="text">{{ item.demand_department }}</span>
@@ -302,10 +298,13 @@ export default {
 
   .list-box {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 16px;
-
+    .title{
+      margin-right: 20px;
+    }
     .add {
       width: 90px;
       height: 33px;

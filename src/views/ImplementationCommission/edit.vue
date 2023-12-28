@@ -179,18 +179,7 @@ export default {
     async getDetail(id) {
       let res = await projectDetail(id);
       if (res.code == 200) {
-        // this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
-        //   ...res.data,
-        //   input12: "true",
-        // });
-        // this.$store.commit(
-        //   "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
-        //   res.data.attachments_content
-        // );
-        // this.$store.commit(
-        //   "projectManagementAdd/UPDATE_RADIOLABELLIST",
-        //   JSON.parse(res.data.small_company)
-        // );
+        console.log(res.data,'22222222222222')
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm",{type:'file',
           data:res.data.agent_check_videos}
@@ -201,9 +190,9 @@ export default {
           data:res.data.agent_id});
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
-        res.data.project_attachments0.forEach((val)=>{
-          val.title = val.file_name
-        })
+        // res.data.project_attachments0.forEach((val)=>{
+        //   val.title = val.file_name
+        // })
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
       }
     },

@@ -71,8 +71,8 @@ export default {
         bool = bools
       })
       let fileBool = true;
-      this.$store.state.projectManagementAdd.project_attachments.forEach((val)=>{
-        if(val.files.length==0){
+      this.$store.state.projectManagementAdd.project_attachments.forEach((val,ind)=>{
+        if(val.files.length==0&&ind!==5){
           fileBool = false;
         }
       })

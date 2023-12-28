@@ -82,21 +82,21 @@
         </div>
       </el-col>
     </el-row>
-    <div v-if="projectInfo.failDataBool" style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc(false)" v-if="[11,12,14].includes(projectInfo.status)" v-permission="['project_registrar']"
+    <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
+      <el-button @click="saveFnc(false)" v-if="[11,12,14,16].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="normal">保存草稿</el-button>
-      <el-button @click="saveFnc(true)" v-if="[11, 12,14].includes(projectInfo.status)" v-permission="['project_registrar']"
+      <el-button @click="saveFnc(true)" v-if="[11, 12,14,16].includes(projectInfo.status)" v-permission="['project_registrar']"
         type="primary">提交</el-button>
       <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
-        type="primary">审核</el-button>
-      <!-- <el-button @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"
-        type="primary">终审</el-button> -->
+        type="primary">初审</el-button>
+      <el-button @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"
+        type="primary">终审</el-button>
 
     </div>
-    <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
+    <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit"
       :radioList="[{ label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
-    <!-- <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
-      :radioList="[{ label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" /> -->
+    <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
+      :radioList="[{ label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" />
 
 
   </div>
@@ -161,7 +161,6 @@ export default {
       }
     },
     projectInfo() {
-      console.log(this.$store.state.thirdProjects.formInfo,'33333333333333333333333')
       return this.$store.state.thirdProjects.formInfo;
     },
     bidBaseProject() {

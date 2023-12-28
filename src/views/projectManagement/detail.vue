@@ -7,187 +7,268 @@
         </div>
         <div class="form">
           <div class="step1">
-            <div class="item" :class="index !== 0 ? 'active' : ''" v-for="(item, index) in stepsList" :key="index">
-              <img v-if="index == 0" src="../../assets/step_icon_check.png" alt="" srcset="">
-              <img v-if="index !== 0" src="../../assets/step_icon.png" alt="" srcset="">
+            <div
+              class="item"
+              :class="index !== 0 ? 'active' : ''"
+              v-for="(item, index) in stepsList"
+              :key="index"
+            >
+              <img
+                v-if="index == 0"
+                src="../../assets/step_icon_check.png"
+                alt=""
+                srcset=""
+              />
+              <img
+                v-if="index !== 0"
+                src="../../assets/step_icon.png"
+                alt=""
+                srcset=""
+              />
               <span>{{ item.title }}</span>
               <div></div>
             </div>
           </div>
 
           <BasicMsg :disabled="true" />
-          
-          <ImplementationCommissionInfo v-if="formInfo.status>=6" />
 
-            <div  v-if="formInfo.status>=11">
-              <div class="background-icon">
-            <span class="title">招标</span>
-          </div>
-          <thirdCom />
+          <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
+
+          <div v-if="formInfo.status >= 11">
+            <div class="background-icon">
+              <span class="title">招标</span>
             </div>
+            <thirdCom />
+          </div>
 
-
-           <div  v-if="formInfo.status>=18">
+          <div v-if="formInfo.status >= 18">
             <div class="background-icon">
-            <span class="title">开标</span>
+              <span class="title">开标</span>
+            </div>
+            <startCom />
           </div>
-          <startCom />
-           </div>
-          <div v-if="formInfo.status>=24">
+          <div v-if="formInfo.status >= 24">
             <div class="background-icon">
-            <span class="title">中标</span>
-          </div>
-          <successfulBidder />
+              <span class="title">中标</span>
+            </div>
+            <successfulBidder />
           </div>
 
-            
-            
           <div class="btnn">
-            <div class="btn2" @click="auditFnc" v-if="formInfo.status==1" v-permission="['department_auditor']">初审</div>
-            <div class="btn2" @click="auditFncEnd" v-if="formInfo.status==3" v-permission="['procure_auditor']">终审</div>
+            <div
+              class="btn2"
+              @click="auditFnc"
+              v-if="formInfo.status == 1"
+              v-permission="['department_auditor']"
+            >
+              初审
+            </div>
+            <div
+              class="btn2"
+              @click="auditFncEnd"
+              v-if="formInfo.status == 3"
+              v-permission="['procure_auditor']"
+            >
+              终审
+            </div>
           </div>
         </div>
       </div>
       <div class="box-right">
-          <div class="file-form">
-            <AnnexCom type="detail" />
+        <div class="file-form">
+          <AnnexCom type="detail" />
 
-            <div class="background-icon">
+          <div class="background-icon">
             <span class="title">合同列表</span>
           </div>
-            <contractCom  v-if="formInfo.status>=31" />
+          <contractCom v-if="formInfo.status >= 31" />
         </div>
       </div>
     </div>
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[{label:'通过',value:3},{label:'拒绝',value:2}]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[{label:'通过',value:5},{label:'拒绝',value:4}]" />
+    <checkDialog
+      ref="checkDialog"
+      title="初审"
+      @auditEmit="auditEmit"
+      :radioList="[
+        { label: '通过', value: 3 },
+        { label: '拒绝', value: 2 },
+      ]"
+    />
+    <checkDialog
+      ref="checkDialogEnd"
+      title="终审"
+      @auditEmit="auditEmitEnd"
+      :radioList="[
+        { label: '通过', value: 5 },
+        { label: '拒绝', value: 4 },
+      ]"
+    />
   </div>
 </template>
 
-
 <script>
-
-
-
 import Steps from "@/components/steps.vue";
-import { addMixins } from './mixins'
-import AnnexCom from './annex.vue'
-import BasicMsg from './basicMsg.vue'
-import { mapState, mapGetters } from 'vuex'
-import { projectEdit,projectDetail,projectAudit } from "@/api/project";
-import checkDialog from '@/components/checkDialog.vue'
-import ImplementationCommissionInfo from './ImplementationCommissionInfo.vue'
-import thirdCom from './thirdCom.vue'
-import startCom from './start.vue'
-import successfulBidder from './successfulBidder.vue'
-import contractCom from './contractCom.vue'
-
+import { addMixins } from "./mixins";
+import AnnexCom from "./annex.vue";
+import BasicMsg from "./basicMsg.vue";
+import { mapState, mapGetters } from "vuex";
+import { projectEdit, projectDetail, projectAudit } from "@/api/project";
+import checkDialog from "@/components/checkDialog.vue";
+import ImplementationCommissionInfo from "./ImplementationCommissionInfo.vue";
+import thirdCom from "./thirdCom.vue";
+import startCom from "./start.vue";
+import successfulBidder from "./successfulBidder.vue";
+import contractCom from "./contractCom.vue";
 
 export default {
   mixins: [addMixins],
-  components: { Steps, AnnexCom, BasicMsg,checkDialog,ImplementationCommissionInfo,thirdCom,startCom,successfulBidder,contractCom },
+  components: {
+    Steps,
+    AnnexCom,
+    BasicMsg,
+    checkDialog,
+    ImplementationCommissionInfo,
+    thirdCom,
+    startCom,
+    successfulBidder,
+    contractCom,
+  },
   data() {
-    return {
-
-    };
+    return {};
   },
 
   mounted() {
     let route = this.$route;
-    console.log( this.$store.getters)
+    console.log(this.$store.getters);
     this.getDetail(route.query.id);
   },
   computed: {
     // ...mapGetters([
     //   'stepList'
     // ]),
-    formInfo(){
-      console.log( this.$store.state.projectManagementAdd.formInfo)
-      return this.$store.state.projectManagementAdd.formInfo
-    }
+    formInfo() {
+      console.log(this.$store.state.projectManagementAdd.formInfo);
+      return this.$store.state.projectManagementAdd.formInfo;
+    },
   },
   methods: {
-    async getDetail(id){
+    async getDetail(id) {
       let res = await projectDetail(id);
       // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
-      if(res.code==200){
-        this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
-        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:'true'});
-        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
-        if(res.data.status>6){
+      if (res.code == 200) {
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
+        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
+          ...res.data,
+          input12: "true",
+        });
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.project_attachments0
+        );
+        if (res.data.status > 6) {
           this.$store.commit(
-          "projectManagementAdd/update_ImplementationCommissionForm",
-          {type:'form',
-          data:res.data.agent_id});
+            "projectManagementAdd/update_ImplementationCommissionForm",
+            { type: "form", data: res.data.agent_id }
+          );
         }
-        
-        if(res.data.status>11){
-            //招标信息替换
-            let data = {
-            ...res.data.bid_info,
-            bid_file_issue:res.data.bid_file_issue,
-            bid_publish_photo:res.data.bid_publish_photo,
-            bid_register_file:res.data.bid_register_file,
-            project_attachments:res.data.project_attachments1}
-          this.$store.commit(
-          "projectManagementAdd/update_bidBaseProject", data);
-        }
-        if(res.data.status>=18){
-          this.$store.commit(
-          "projectManagementAdd/update_startData_bid_files_list",  res.data.bid_files_list);
-          this.$store.commit(
-          "projectManagementAdd/update_startData_bid_units", res.data.bid_units);
-          this.$store.commit(
-          "projectManagementAdd/update_startData_project_attachments", res.data.project_attachments2);
-        }
-        if(res.data.status>=24){
-          let data1 = {
-            ...res.data.bid_info,
-            bid_success_photo:res.data.bid_success_photo,
-            bid_success_notice:res.data.bid_success_notice,
-          }
-          data1.project_attachments = res.data.project_attachments3
-          this.$store.commit(
-          "projectManagementAdd/update_resultData",data1);
-        }
-        if(res.data.status>=31){
+
+        let data = {
+          ...(res.data.bid_info
+            ? res.data.bid_info
+            : {
+                bid_file_date: "",
+                bid_publish_date: "",
+                publish_link: "",
+                bid_open_date: "",
+                doubt: "",
+              }),
+          bid_file_issue: res.data.bid_file_issue,
+          bid_publish_photo: res.data.bid_publish_photo,
+          bid_register_file: res.data.bid_register_file,
+          bid_fail_times: res.data.bid_fail_times,
+
+          project_attachments: res.data.project_attachments1,
+        };
+        this.$store.commit("projectManagementAdd/update_bidBaseProject", data);
+
+        // if(res.data.status>=18){
+        this.$store.commit(
+          "projectManagementAdd/update_startData_bid_files_list",
+          res.data.bid_files_list
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_startData_bid_units",
+          res.data.bid_units
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_startData_project_attachments",
+          res.data.project_attachments2
+        );
+        // }
+        // if(res.data.status>=24){
+        let data1 = {
+          ...(res.data.bid_info
+            ? res.data.bid_info
+            : {
+                bid_file_date: "",
+                bid_publish_date: "",
+                publish_link: "",
+                bid_open_date: "",
+                doubt: "",
+              }),
+          bid_success_photo: res.data.bid_success_photo,
+          bid_success_notice: res.data.bid_success_notice,
+        };
+        data1.project_attachments = res.data.project_attachments3;
+        this.$store.commit("projectManagementAdd/update_resultData", data1);
+        // }
+        // if(res.data.status>=31){
         this.$store.commit(
           "projectManagementAdd/update_contractList",
           res.data.contract
         );
+        // }
       }
-      }
     },
-    async auditFnc(){
-      this.$refs.checkDialog.openDialog(true)
+    async auditFnc() {
+      this.$refs.checkDialog.openDialog(true);
     },
-    async auditFncEnd(){
-      this.$refs.checkDialogEnd.openDialog(true)
+    async auditFncEnd() {
+      this.$refs.checkDialogEnd.openDialog(true);
     },
-    async auditEmit(e){
-      console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-      console.log(res)
-      if(res.code==200){
+    async auditEmit(e) {
+      console.log(e);
+      let res = await projectAudit({
+        id: this.$store.state.projectManagementAdd.formInfo.id,
+        ...e,
+      });
+      console.log(res);
+      if (res.code == 200) {
         this.$message.success(res.msg);
         // this.$router.go(-1)
-        this.$refs.checkDialog.openDialog(false)
-        this.getDetail(this.$route.query.id)
+        this.$refs.checkDialog.openDialog(false);
+        this.getDetail(this.$route.query.id);
 
-        return
+        return;
       }
       this.$message.error(res.msg);
     },
-    async auditEmitEnd(e){
-      console.log(e)
-      let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-      console.log(res)
-      if(res.code==200){
+    async auditEmitEnd(e) {
+      console.log(e);
+      let res = await projectAudit({
+        id: this.$store.state.projectManagementAdd.formInfo.id,
+        ...e,
+      });
+      console.log(res);
+      if (res.code == 200) {
         this.$message.success(res.msg);
-        this.$refs.checkDialogEnd.openDialog(false)
-        this.getDetail(this.$route.query.id)
+        this.$refs.checkDialogEnd.openDialog(false);
+        this.getDetail(this.$route.query.id);
 
-        return
+        return;
       }
       this.$message.error(res.msg);
     },
@@ -199,7 +280,7 @@ export default {
     //   form.radioLabelList = state.radioLabelList;
     //   form.small_company = JSON.stringify(state.radioLabelList)
     //   console.log(form)
-     
+
     //   let bool = false;
     //    this.$refs.basicMsg.verifyForm((bools)=>{
     //     bool = bools
@@ -220,16 +301,15 @@ export default {
     //     return
     //   }
     //   console.log(form);
-      // let res = await projectEdit(form);
-      // console.log(res)
-      // if(res.code==200){
-      //   this.$message.success(res.msg);
-      //   this.$router.go(-1)
-      //   return
-      // }
-      // this.$message.error(res.msg);
+    // let res = await projectEdit(form);
+    // console.log(res)
+    // if(res.code==200){
+    //   this.$message.success(res.msg);
+    //   this.$router.go(-1)
+    //   return
+    // }
+    // this.$message.error(res.msg);
     // },
-
   },
 };
 </script>
@@ -281,12 +361,12 @@ export default {
     margin-right: 10px;
 
     &::after {
-      content: '';
+      content: "";
       width: 0;
       height: 0;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
-      transition: transform .15s ease-in;
+      transition: transform 0.15s ease-in;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -324,7 +404,7 @@ export default {
   div {
     width: 86px;
     height: 36px;
-    background: #DCE3FD;
+    background: #dce3fd;
     border-radius: 4px;
     font-size: 12px;
     display: flex;
@@ -334,29 +414,29 @@ export default {
   }
 
   .btn1 {
-    background: #DCE3FD;
-    color: #3E72FB;
+    background: #dce3fd;
+    color: #3e72fb;
   }
 
   .btn2 {
-    background: linear-gradient(0deg, #6280F5 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6280f5 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn3 {
     background: white;
-    border: 1px solid #A7AABD;
+    border: 1px solid #a7aabd;
     color: #404659;
   }
 
   .btn4 {
-    background: linear-gradient(0deg, #6080F6 0%, #2D6CFF 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #6080f6 0%, #2d6cff 100%);
+    color: #fefeff;
   }
 
   .btn5 {
-    background: linear-gradient(0deg, #FC6235 0%, #FC4935 100%);
-    color: #FEFEFF;
+    background: linear-gradient(0deg, #fc6235 0%, #fc4935 100%);
+    color: #fefeff;
   }
 }
 
@@ -394,7 +474,7 @@ export default {
 
       .item {
         font-size: 14px;
-        color: #1D70FF;
+        color: #1d70ff;
         margin-right: 46px;
         display: flex;
         flex-direction: row;
@@ -412,15 +492,23 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(90deg, #1D70FF 0%, rgba(29, 112, 255, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #1d70ff 0%,
+            rgba(29, 112, 255, 0) 100%
+          );
         }
       }
 
       .active {
-        color: #A6A9BC;
+        color: #a6a9bc;
 
         div {
-          background: linear-gradient(90deg, #A6A9BC 0%, rgba(166, 169, 188, 0) 100%);
+          background: linear-gradient(
+            90deg,
+            #a6a9bc 0%,
+            rgba(166, 169, 188, 0) 100%
+          );
         }
       }
     }
@@ -463,7 +551,7 @@ export default {
     flex-grow: 1;
     background-color: white;
     box-sizing: border-box;
-    border-left: 1px solid #EAEDEC;
+    border-left: 1px solid #eaedec;
 
     .files {
       box-sizing: border-box;
@@ -476,7 +564,7 @@ export default {
         flex-direction: row;
         align-items: center;
         font-size: 16px;
-        color: #454D65;
+        color: #454d65;
         font-weight: 600;
         margin-bottom: 20px;
 
@@ -556,7 +644,7 @@ export default {
                 .btn {
                   width: 100px;
                   height: 36px;
-                  border: 1px solid #2D6CFF;
+                  border: 1px solid #2d6cff;
                   // background: #FFFFFF;
                   border-radius: 4px;
                   margin-right: 19px;
@@ -564,7 +652,7 @@ export default {
 
                 span {
                   font-size: 12px;
-                  color: #A6A9BC;
+                  color: #a6a9bc;
                 }
               }
             }
@@ -575,4 +663,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

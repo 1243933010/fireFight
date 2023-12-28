@@ -217,13 +217,13 @@ export const asyncRoutes = [
         path: 'ImplementationCommission',
         component: () => import('@/views/ImplementationCommission/index'),
         name: 'ImplementationCommission',
-        meta: { title: '实施委托列表', affix: true }
+        meta: { title: '实施委托代理机构', affix: true }
       },
       {
         path: 'ImplementationCommission/edit',
         component: () => import('@/views/ImplementationCommission/edit'),
         name: 'ImplementationCommissionEdit',
-        meta: { title: '实施委托编辑', affix: true },
+        meta: { title: '实施委托代理机构编辑', affix: true },
         hidden:true
       },
       // {
@@ -251,19 +251,19 @@ export const asyncRoutes = [
     path: '/thirdProjects',
     component: Layout,
     redirect: '/thirdProjects',
-    meta: { title: '三方项目列表', icon: 'nested' },
+    meta: { title: '第三方代理机构管理', icon: 'nested' },
     children: [{
       path: 'thirdProjects',
       name: 'thirdProjects',
       component: () => import('@/views/thirdProjects/index'),
-      meta: { title: '三方项目列表',}
+      meta: { title: '第三方代理机构管理',}
     },
     {
       path: 'thirdProjects/edit',
       name: 'thirdProjectsEdit',
       hidden:true,
       component: () => import('@/views/thirdProjects/edit'),
-      meta: { title: '三方项目编辑',}
+      meta: { title: '第三方代理机构编辑',}
     },
   ]
   },
