@@ -52,6 +52,7 @@
       <!-- <AnnexCom /> -->
       <div></div>
     </div>
+    <div><el-button @click="bidFailFnc" type="primary">招标失败</el-button></div>
   </div>
 </template>
   
@@ -67,9 +68,7 @@ import SuccessfulBidder from './editCom/successfulBidder.vue'
 import {
   projectDetail,
   agentList,
-  saveImplement,
-  submitImplement,
-  projectAudit
+  bidFail
 } from "@/api/project";
 export default {
   mixins: [addMixins],
@@ -86,6 +85,15 @@ export default {
     this.getAgentList();
   },
   methods: {
+    async bidFailFnc(){
+      let res = await bidFail(this.$route.query.id);
+      console.log(res)
+      if(res.code==200){
+        this.$message.success('当前第三方填写招标失败')
+        return
+      }
+      this.$message.error(res.msg)
+    },
     async getDetail(id) {
       this.$loading()
       let res = await projectDetail(id);
