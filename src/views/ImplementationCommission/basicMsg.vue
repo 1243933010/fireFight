@@ -33,11 +33,11 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
           <el-input v-model="formInfo.no" />
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
           <el-input v-model="formInfo.audit_amount" type="number" />
@@ -67,18 +67,18 @@
           <el-input v-model="formInfo.notice_link" type="text" />
         </el-form-item>
       </el-col>
-      <el-col :span="24">
-        <el-form-item label="" prop="input12">
+      <el-col :span="24" style="margin: 10px 0;">
+        <!-- <el-form-item label="" prop="input12" > -->
           <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
-          <div v-for="(item, index) in radioLabelList" :key="index">
+          <div v-for="(item, index) in radioLabelList" :key="index" style="width: 100%;">
             <div class="radio-item"  v-if="item.child.length == 0">
               <div  v-if="item.child.length == 0" class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
 
             </div>
             <div class="radio-item-child" v-if="item.child.length > 0 && item.checked">
-              <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind" >
+              <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind"  >
                 <div class="radio-class " v-if="ite.checked" :class="ite.checked ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
                   <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
@@ -89,7 +89,7 @@
             </div>
 
           </div>
-        </el-form-item>
+        <!-- </el-form-item> -->
       </el-col>
     </el-form>
   </div>
@@ -165,35 +165,10 @@ export default {
           { label: '直选采购', value: '10' },
           { label: '自行直接采购“', value: '11' },
         ]
-      ],
-      procurementMethodList: [{ label: '遴选采购', value: '8' },
-      { label: '竟价采购', value: '9' },
-      { label: '直选采购', value: '10' },
-      { label: '自行直接采购“', value: '11' },],
+      ]
     }
   },
   watch: {
-    'formInfo.budget'(newValue, old) {
-      console.log(newValue, old,(+''),'======',(+old==0),(newValue > 100))
-      // if(this.formInfo.id){
-      //   return this.formInfo.budget
-      // }
-      if (+old==0&& +newValue > 100) {  //表示带过来的参数
-        console.log('表示带过来的参数')
-      }else if (+old>0&&+old < 1000000 && +newValue > 1000000) {
-        this.procurementMethodList = []
-        this.formInfo.procurement_method = ''
-        this.procurementMethodList = this.procurementMethodSelect[0]
-        console.log('触发了1')
-        console.log(newValue, old,(+''),'======')
-      } else if (+newValue < 1000000 && +old > 1000000) {
-        this.procurementMethodList = []
-        this.formInfo.procurement_method = ''
-        this.procurementMethodList = this.procurementMethodSelect[1]
-        console.log('触发了2')
-      }
-
-    },
     radioLabelList: {
       handler(newValue, oldValue) {
        
@@ -219,6 +194,20 @@ export default {
   },
 
   computed: {
+    procurementMethodList(){
+         let price = 1000000;
+      if(this.formInfo.type=='engineering'){
+        price = 1200000;
+      }else{
+        price = 1000000;
+      }
+      if((+this.formInfo.audit_amount)>price){
+        this.formInfo.procurement_method = ''
+        return this.procurementMethodSelect[0]
+      }else{
+        return this.procurementMethodSelect[1]
+      }
+    },
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
     },

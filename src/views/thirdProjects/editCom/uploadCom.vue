@@ -72,7 +72,9 @@
                     </div>
                   </el-upload>
                 </div>
-                <span>支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
+                <span>文件名格式：xxxxx项目-文件名称(例委托招标函) 支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
+                
+
               </div>
             </div>
             <el-progress

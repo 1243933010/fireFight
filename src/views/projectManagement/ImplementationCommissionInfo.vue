@@ -7,13 +7,41 @@
           <div>
             <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="formInfo" class="demo-form-inline"
               label-width="100px">
-              <el-col :span="12">
-                <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
-                  <el-select v-model="formInfo.agent_id" placeholder="请选择采购代理名称">
-                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
-                  </el-select>
+              <el-col :span="14">
+                <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
+                  <el-input v-model="formInfo.no" type="number" />
                 </el-form-item>
               </el-col>
+              <el-col :span="12">
+                <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
+                  <el-input v-model="formInfo.choose_no" type="number" />
+                </el-form-item>
+              </el-col>
+              
+              <el-col :span="14">
+                <el-form-item label="抽取时间" prop="choose_time">
+                  <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.choose_time" type="date"
+                    placeholder="请选择抽取时间">
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+              <div class="file-form" style="padding-left: 30px;">
+                <div class="file-form-item" v-for="(item, index) in formInfo.agent_receipt" :key="index">
+                  <div class="left">
+                    <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
+                    <div class="input">
+                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      </el-input>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <UploadCom title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                  </div>
+                </div>
+
+              </div>
+            </el-col>
               <el-col :span="24">
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
@@ -26,6 +54,15 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
+              
+              <el-col :span="12">
+                <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
+                  <el-select v-model="formInfo.agent_id" placeholder="请选择采购代理名称">
+                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              
             </el-form>
           </div>
 
@@ -78,6 +115,15 @@ export default {
     },
   },
   methods: {
+    updateFile(e,item,index){
+      console.log(e,item,index)
+      if(typeof e =='number'){
+        itemm.files.splice(e,1)
+      }else{
+        item.files.push(e)
+      }
+      console.log( this.$store.state.projectManagementAdd.ImplementationCommissionForm)
+    },
     async getAgentList() {
       let res = await agentList();
       // console.log(res)

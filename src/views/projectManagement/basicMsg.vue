@@ -48,11 +48,11 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
           <el-input v-model="formInfo.no" />
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <el-form-item
           label="审计金额"
@@ -230,38 +230,9 @@ export default {
           { label: "自行直接采购", value: 11 },
         ],
       ],
-      procurementMethodList: [
-        { label: "遴选采购", value: 8 },
-        { label: "竟价采购", value: 9 },
-        { label: "直选采购", value: 10 },
-        { label: "自行直接采购“", value: 11 },
-      ],
     };
   },
   watch: {
-    "formInfo.budget"(newValue, old) {
-      // console.log(newValue, old,(+''),'======',(+old==0),(newValue > 100))
-      // if(this.formInfo.id){
-      //   return this.formInfo.budget
-      // }
-      if (+old == 0 && +newValue > 100) {
-        //表示带过来的参数
-        console.log("表示带过来的参数");
-      } else if (+old > 0 && +old < 1000000 && +newValue >= 1000000) {
-        this.procurementMethodList = [];
-        this.formInfo.procurement_method = "";
-        this.procurementMethodList = this.procurementMethodSelect[0];
-        // console.log('触发了1')
-        // console.log(newValue, old,(+''),'======')
-      } else if (+newValue < 1000000 && +old >= 1000000) {
-        this.procurementMethodList = [];
-        this.formInfo.procurement_method = "";
-        this.procurementMethodList = this.procurementMethodSelect[1];
-        // console.log('触发了2')
-      } else {
-        console.log("触发了3");
-      }
-    },
     radioLabelList: {
       handler(newValue, oldValue) {
         newValue.forEach((element, index) => {
@@ -289,6 +260,20 @@ export default {
     },
   },
   computed: {
+    procurementMethodList(){
+         let price = 1000000;
+      if(this.formInfo.type=='engineering'){
+        price = 1200000;
+      }else{
+        price = 1000000;
+      }
+      if((+this.formInfo.audit_amount)>price){
+        this.formInfo.procurement_method = ''
+        return this.procurementMethodSelect[0]
+      }else{
+        return this.procurementMethodSelect[1]
+      }
+    },
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo;
     },
@@ -304,13 +289,6 @@ export default {
       ];
     },
     radioLabelList() {
-      // let arr = [];
-      //   this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
-      //   if(val.checked){
-      //     arr.push(val)
-      //   }
-      // })
-      // return arr
       if (this.disabled !== true) {
         return this.$store.state.projectManagementAdd.radioLabelList;
       } else {
@@ -322,11 +300,10 @@ export default {
         });
         return arr;
       }
-
-      // return this.$store.state.projectManagementAdd.radioLabelList
     },
   },
   methods: {
+
     verifyForm(callback) {
       this.$refs.formInfo.validate((valid) => {
         callback(valid);

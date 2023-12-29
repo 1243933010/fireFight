@@ -77,6 +77,27 @@ export const addMixins = {
                    
                 },
                 {
+                    title: "项目编号",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.no,
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no ),
+                },
+                {
+                    title: "抽取编号",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no,
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time),
+                },
+                {
+                    title: "抽取时间",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time,
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
+                },
+                {
+                    title: "抽取代理机构回执",
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length>0,
+                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length==0 && this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
+                },
+
+                {
                     title: "采购代理名称",
                     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
                     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),

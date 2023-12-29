@@ -166,28 +166,9 @@ export default {
           { label: '自行直接采购“', value: '11' },
         ]
       ],
-      procurementMethodList: [{ label: '遴选采购', value: '8' },
-      { label: '竟价采购', value: '9' },
-      { label: '直选采购', value: '10' },
-      { label: '自行直接采购“', value: '11' },]
     }
   },
   watch: {
-    'formInfo.budget'(newValue, old) {
-
-      if (+old < 1000000 && +newValue > 1000000) {
-        this.procurementMethodList = []
-        this.formInfo.procurement_method = ''
-        this.procurementMethodList = this.procurementMethodSelect[0]
-        console.log('触发了1')
-      } else if (+newValue < 1000000 && +old > 1000000) {
-        this.procurementMethodList = []
-        this.formInfo.procurement_method = ''
-        this.procurementMethodList = this.procurementMethodSelect[1]
-        console.log('触发了2')
-      }
-
-    },
     radioLabelList: {
       handler(newValue, oldValue) {
        
@@ -212,6 +193,20 @@ export default {
     }
   },
   computed: {
+    procurementMethodList(){
+         let price = 1000000;
+      if(this.formInfo.type=='engineering'){
+        price = 1200000;
+      }else{
+        price = 1000000;
+      }
+      if((+this.formInfo.audit_amount)>price){
+        this.formInfo.procurement_method = ''
+        return this.procurementMethodSelect[0]
+      }else{
+        return this.procurementMethodSelect[1]
+      }
+    },
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
     },

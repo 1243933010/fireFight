@@ -21,9 +21,12 @@ const state = {
     {type:'budget_audit_report',title:'纪保预算审核报告书',description:'',files:[]},
     {type:'purchase_demand',title:'采购需求',description:'',files:[]},
     {type:'act_plan',title:'实施计划',description:'',files:[]},
-    {type:'check_opinion',title:'审查意见书',description:'',files:[]},
+    {type:'check_opinion',title:'一般性审查意见书',description:'',files:[]},
     {type:'main_party_committee',title:'大队党委会',description:'',files:[]},
     {type:'detachment_party_committee',title:'支队党委会',description:'',files:[]},
+    {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[]},
+    {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[]},
+    {type:'other_opinions',title:'其他意见书',description:'',files:[]},
   ],
   radioLabelList: [
     { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },

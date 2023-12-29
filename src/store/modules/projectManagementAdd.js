@@ -22,9 +22,13 @@ const state = {
     {type:'budget_audit_report',title:'纪保预算审核报告书',description:'',files:[]},
     {type:'purchase_demand',title:'采购需求',description:'',files:[]},
     {type:'act_plan',title:'实施计划',description:'',files:[]},
-    {type:'check_opinion',title:'审查意见书',description:'',files:[]},
+    {type:'check_opinion',title:'一般性审查意见书',description:'',files:[]},
     {type:'main_party_committee',title:'大队党委会',description:'',files:[]},
     {type:'detachment_party_committee',title:'支队党委会',description:'',files:[]},
+    {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[]},
+    {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[]},
+    {type:'other_opinions',title:'其他意见书',description:'',files:[]},
+
   ],
   radioLabelList: [
     { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },
@@ -40,7 +44,12 @@ const state = {
   ],
   //实施委托
   ImplementationCommissionForm:{
+    choose_no:'',
+    choose_time:'',
+    no:'',
     agent_id: '',
+    agent_receipt:[{type:'agent_receipt',title:'抽取代理机构回执',description:'',files:[]}],
+    
     files: []
   },
   contractList:[],
@@ -114,9 +123,14 @@ const mutations = {
   update_ImplementationCommissionForm:(state,data)=>{
     // console.log(type,data,'}}}')
     if(data.type=='form'){
-      state.ImplementationCommissionForm.agent_id = data.data;
-    }else{
+      state.ImplementationCommissionForm.choose_no = data.data.choose_no;
+      state.ImplementationCommissionForm.choose_time = data.data.choose_time;
+      state.ImplementationCommissionForm.no = data.data.no;
+      state.ImplementationCommissionForm.agent_id = data.data.agent_id;
+    }else if(data.type=='file'){
       state.ImplementationCommissionForm.files = data.data;
+    }else if(data.type=='chooseFile'){
+      state.ImplementationCommissionForm.agent_receipt = data.data;
     }
     
   },

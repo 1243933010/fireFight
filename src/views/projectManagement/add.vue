@@ -56,7 +56,6 @@ export default {
   mounted() {
   },
   methods: {
-
    async submitFnc(reqBool) {
       let state = this.$store.state.projectManagementAdd;
       let form = {...state.formInfo};
@@ -72,7 +71,7 @@ export default {
       })
       let fileBool = true;
       this.$store.state.projectManagementAdd.project_attachments.forEach((val,ind)=>{
-        if(val.files.length==0&&ind!==5){
+        if(val.files.length==0&&ind!==5&&ind!==7&&ind!==8&&ind!==9){
           fileBool = false;
         }
       })

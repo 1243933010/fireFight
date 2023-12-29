@@ -168,12 +168,22 @@ export default {
           "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
           res.data.project_attachments0
         );
-        if (res.data.status > 6) {
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'chooseFile',
+          data: res.data.agent_receipt
+        });
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'file',
+          data: res.data.agent_check_videos
+        });
+        // if (res.data.status > 6) {
           this.$store.commit(
             "projectManagementAdd/update_ImplementationCommissionForm",
-            { type: "form", data: res.data.agent_id }
+            { type: "form", data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,} }
           );
-        }
+        // }
 
         let data = {
           ...(res.data.bid_info

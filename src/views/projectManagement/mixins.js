@@ -37,13 +37,13 @@ export const addMixins = {
                 {
                     title: "项目类型",
                     isInput: this.$store.state.projectManagementAdd.formInfo.type,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.no,
+                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.audit_amount,
                 },
-                {
-                    title: "项目编号",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.no,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.no && (+this.$store.state.projectManagementAdd.formInfo.audit_amount),
-                },
+                // {
+                //     title: "项目编号",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.no,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.no && (+this.$store.state.projectManagementAdd.formInfo.audit_amount),
+                // },
                 {
                     title: "审计金额",
                     isInput: +this.$store.state.projectManagementAdd.formInfo.audit_amount,
@@ -95,7 +95,7 @@ export const addMixins = {
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[3].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0),
                 },
                 {
-                    title: "审查意见书",
+                    title: "一般性审查意见书",
                     isInput:  this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0,
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[4].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0),
                 },
