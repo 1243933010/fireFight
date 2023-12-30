@@ -245,6 +245,7 @@ export default {
           type: 'file',
           data: res.data.agent_check_videos
         });
+        console.log(res.data.project_attachments4,'|||||')
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'chooseFile',

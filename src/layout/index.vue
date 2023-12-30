@@ -13,8 +13,8 @@
       </div>
 
       <div class="avatar-team-name">
-        <div class="message-icon" @click="openMessage">
-          <el-badge :value="12" class="item">
+        <div class="message-icon" @click="openMessage" v-if="noticeNum>0">
+          <el-badge :value="noticeNum" class="item">
             <img src="../assets/message_yellow.png" class="img" />
           </el-badge>
         </div>
@@ -86,7 +86,7 @@ import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState, mapGetters } from 'vuex'
-import {needDo} from '@/api/project'
+import {needDo,userNoticeList} from '@/api/project'
 export default {
   name: 'Layout',
   components: {
@@ -128,7 +128,8 @@ export default {
     return {
       dialogVisible: false,
       list: [],
-      listLoading: false
+      listLoading: false,
+      noticeNum:0
     }
   },
   mounted(){
@@ -139,8 +140,19 @@ export default {
       this.getList();
       localStorage.setItem('dialog',false)
     // }
+    this.query();
   },
   methods: {
+    async query() {
+            let res = await userNoticeList(this.form);
+            console.log(res);
+            if (res.code == 200) {
+                this.noticeNum = res.data.length;
+            //     this.list = [
+            // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
+            // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]
+            }
+        },
     handleData(item){
       console.log(item)
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
@@ -149,7 +161,7 @@ export default {
          url = '/projectManagementEdit'
       }
       if([1,3].includes(item.status)){
-         url = 'projectManagementDetail'
+         url = '/projectManagementDetail'
       }
       if([5,6,7,8,9,10].includes(item.status)){
         url = 'ImplementationCommission/edit'

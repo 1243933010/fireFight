@@ -32,7 +32,7 @@
           </div>
           <div class="form">
             <div class="background-icon">
-              <span class="title">基本信息{{projectInfo.bid_fail_times}}</span>
+              <span class="title">基本信息</span>
             </div>
             <div style="width: 80%">
               <BasicMsg :disabled="true" />
@@ -109,7 +109,7 @@ import { addMixins } from "./mixins";
 import BasicMsg from "./editCom/basicMsg.vue";
 import ThirdCom from "./editCom/thirdCom.vue";
 import StartCom from "./editCom/start.vue";
-import AnnexCom from "./editCom/annex.vue";
+// import AnnexCom from "./editCom/annex.vue";
 // import BidCom from './editCom/bid.vue'
 import SuccessfulBidder from "./editCom/successfulBidder.vue";
 import {
@@ -125,7 +125,7 @@ export default {
     BasicMsg,
     ThirdCom,
     StartCom,
-    AnnexCom,
+    // AnnexCom,
     SuccessfulBidder,
   },
   data() {

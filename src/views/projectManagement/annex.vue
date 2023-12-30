@@ -7,7 +7,7 @@
           </div>
           <div class="file-form">
             <div class="file-form-item" v-for="(item,index) in project_attachments" :key="index">
-              <div class="left">
+              <div class="left" >
                 <div class="title"><span>{{ item.title }}</span></div>
                 <div class="input">
                   <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="right">
-                <UploadCom title="附件" :type="type" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+                <UploadCom title="附件" :is_required="item.is_required" :type="type" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default{
           margin-bottom: 40px;
 
           .left {
-            width: 50%;
+            width: 35%;
 
             .title {
               color: #404659;
@@ -108,7 +108,7 @@ export default{
           }
 
           .right {
-            width: 50%;
+            width: 65%;
             box-sizing: border-box;
             padding-left: 16px;
 

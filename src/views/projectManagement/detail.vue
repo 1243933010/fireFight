@@ -78,7 +78,7 @@
         <div class="file-form">
           <AnnexCom type="detail" />
 
-          <div class="background-icon">
+          <div class="background-icon" v-if="formInfo.status >= 31">
             <span class="title">合同列表</span>
           </div>
           <contractCom v-if="formInfo.status >= 31" />

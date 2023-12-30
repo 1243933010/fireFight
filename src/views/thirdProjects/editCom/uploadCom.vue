@@ -6,7 +6,7 @@
           <div class="left"></div>
           <div class="right">
             <div class="title">
-              <span><span style="color: red">*</span> {{ title }}</span>
+              <span><span v-if="is_required==1" style="color: red">*</span> {{ title }}</span>
             </div>
             <div class="upload">
               <div class="file-list">
@@ -93,6 +93,10 @@ import { getToken } from "@/utils/auth";
 import {uploadSlice,uploadFile} from '@/api/project.js'
 export default {
   props: {
+    is_required:{
+      type:Number|undefined,
+      default:1
+    },
     type: {
       type: String,
       default: "add",

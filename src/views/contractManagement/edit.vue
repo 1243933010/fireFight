@@ -419,7 +419,7 @@ export default {
     display: flex;
     height: auto;
     background-color: white;
-    max-width: 1000px;
+    width: 50%;
 
     .form {
       min-width: 500px;
@@ -508,7 +508,8 @@ export default {
 
   .box-right {
     display: flex;
-    flex-grow: 1;
+    // flex-grow: 1;
+    width: 50%;
     background-color: white;
     box-sizing: border-box;
     border-left: 1px solid #EAEDEC;
