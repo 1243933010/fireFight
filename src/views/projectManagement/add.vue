@@ -71,7 +71,7 @@ export default {
       })
       let fileBool = true;
       this.$store.state.projectManagementAdd.project_attachments.forEach((val,ind)=>{
-        if(val.files.length==0&&ind!==5&&ind!==7&&ind!==8&&ind!==9){
+        if(val.files.length==0&&val.is_required==1){
           fileBool = false;
         }
       })

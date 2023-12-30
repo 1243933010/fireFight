@@ -18,16 +18,16 @@ const state = {
     small_company:'',//是否面向小微企业，不展示
   },
   project_attachments:[
-    {type:'purchase_intention',title:'采购意向',description:'',files:[]},
-    {type:'budget_audit_report',title:'纪保预算审核报告书',description:'',files:[]},
-    {type:'purchase_demand',title:'采购需求',description:'',files:[]},
-    {type:'act_plan',title:'实施计划',description:'',files:[]},
-    {type:'check_opinion',title:'一般性审查意见书',description:'',files:[]},
-    {type:'main_party_committee',title:'大队党委会',description:'',files:[]},
-    {type:'detachment_party_committee',title:'支队党委会',description:'',files:[]},
-    {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[]},
-    {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[]},
-    {type:'other_opinions',title:'其他意见书',description:'',files:[]},
+    {type:'purchase_intention',title:'采购意向',description:'',files:[],is_required:1},
+    {type:'budget_audit_report',title:'纪保预算审核报告书',description:'',files:[],is_required:1},
+    {type:'purchase_demand',title:'采购需求',description:'',files:[],is_required:1},
+    {type:'act_plan',title:'实施计划',description:'',files:[],is_required:1},
+    {type:'check_opinion',title:'一般性审查意见书',description:'',files:[],is_required:1},
+    {type:'main_party_committee',title:'大队党委会',description:'',files:[],is_required:0},
+    {type:'detachment_party_committee',title:'支队党委会',description:'',files:[],is_required:1},
+    {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[],is_required:0},
+    {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[],is_required:0},
+    {type:'other_opinions',title:'其他意见书',description:'',files:[],is_required:0},
 
   ],
   radioLabelList: [
@@ -48,7 +48,7 @@ const state = {
     choose_time:'',
     no:'',
     agent_id: '',
-    agent_receipt:[{type:'agent_receipt',title:'抽取代理机构回执',description:'',files:[]}],
+    agent_receipt:[{type:'agent_receipt',title:'抽取代理机构回执',description:'',files:[],is_required:1}],
     
     files: []
   },
@@ -64,22 +64,22 @@ const state = {
       bid_register_file:[],
       bid_file_issue:[],
       project_attachments:[
-        {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[]},
-        {type:'bid_authorization',title:'委托招标函',description:'',files:[]},
-        {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[]},
+        {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[],is_required:1},
+        {type:'bid_authorization',title:'委托招标函',description:'',files:[],is_required:1},
+        {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[],is_required:1},
       ]
     },
     startData:{
       bid_files_list:[
-        {type:'bid_user_login',title:'投标人签到表',files:[]},
-        {type:'bid_open_log',title:'开标记录表',files:[]},
-        {type:'buyer_auth_bid',title:'采购人评标代表授权书',files:[]},
-        {type:'committee_login',title:'评标委员会签到表',files:[]},
-        {type:'bid_rules',title:'评标规则',files:[]},
-        {type:'quality_check',title:'资格审查表、符合性审查表',files:[]},
-        {type:'bid_process_file',title:'评标过程资料',files:[]},
-        {type:'bid_report',title:'评标报告',files:[]},
-        {type:'bid_result_confirm',title:'评标结果确认函',files:[]},
+        {type:'bid_user_login',title:'投标人签到表',files:[],is_required:1},
+        {type:'bid_open_log',title:'开标记录表',files:[],is_required:1},
+        {type:'buyer_auth_bid',title:'采购人评标代表授权书',files:[],is_required:1},
+        {type:'committee_login',title:'评标委员会签到表',files:[],is_required:1},
+        {type:'bid_rules',title:'评标规则',files:[],is_required:1},
+        {type:'quality_check',title:'资格审查表、符合性审查表',files:[],is_required:1},
+        {type:'bid_process_file',title:'评标过程资料',files:[],is_required:1},
+        {type:'bid_report',title:'评标报告',files:[],is_required:1},
+        {type:'bid_result_confirm',title:'评标结果确认函',files:[],is_required:1},
       ],
       bid_units:[
         {amount:'',name:"",contact:'',files:[]},
@@ -87,7 +87,7 @@ const state = {
         {amount:'',name:"",contact:'',files:[]},
       ],
       project_attachments:[
-        {type:'expert_info',title:'参与评审专家信息',files:[],description:''},
+        {type:'expert_info',title:'参与评审专家信息',files:[],description:'',is_required:1},
       ]
     },
     resultData:{
@@ -103,7 +103,7 @@ const state = {
       bid_success_photo:[],
       bid_success_notice:[],
       project_attachments:[
-        {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:''},
+        {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:'',is_required:1},
       ]
     }
   }
