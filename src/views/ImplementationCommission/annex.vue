@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="right">
-              <UploadCom title="附件"  :is_required="item.is_required" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+              <UploadCom title="附件" type="see" :is_required="item.is_required" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
             </div>
           </div>
 

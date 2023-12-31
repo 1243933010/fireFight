@@ -43,7 +43,8 @@ export default{
     },
     computed:{
       project_attachments(){
-        return this.$store.state.projectManagementAdd.project_attachments
+        console.log(this.$store.state.projectManagementAdd.project_attachments,'=====================')
+        return this.$store.state.projectManagementAdd.project_attachments;
       }
     },
     methods:{

@@ -12,7 +12,7 @@ export const addMixins = {
     },
     computed: {
         stepList() {
-            console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
+            console.log(this.$store.state.projectManagementAdd.formInfo.input12, '----||')
             let stepArr = [
                 // {
                 //     title: "需求单位",
@@ -77,32 +77,32 @@ export const addMixins = {
                 {
                     title: "采购意向",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[0].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[1].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[0].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[1].files.length > 0),
                 },
                 {
                     title: "纪保预算审核报告书",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[1].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[1].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[2].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[1].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[2].files.length > 0),
                 },
                 {
                     title: "采购需求",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[2].files.length > 0,
-                    isActive: ( this.$store.state.projectManagementAdd.project_attachments[2].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[3].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[2].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[3].files.length > 0),
                 },
                 {
                     title: "实施计划",
-                    isInput:  this.$store.state.projectManagementAdd.project_attachments[3].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[3].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0),
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[3].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[3].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0),
                 },
                 {
                     title: "一般性审查意见书",
-                    isInput:  this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[4].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0),
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[4].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[4].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0),
                 },
                 {
                     title: "大队党委会",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0,
-                    isActive: ( this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && ( this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0),
                 },
                 {
                     title: "支队党委会",
@@ -111,28 +111,28 @@ export const addMixins = {
                 },
 
             ]
-            if(this.$store.state.projectManagementAdd.formInfo.status>=5){
+            if (this.$store.state.projectManagementAdd.formInfo.status >= 5) {
                 stepArr.push({
                     title: "实施委托",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if(this.$store.state.projectManagementAdd.formInfo.status>11){
+            if (this.$store.state.projectManagementAdd.formInfo.status > 11) {
                 stepArr.push({
                     title: "招标",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if(this.$store.state.projectManagementAdd.formInfo.status>=18){
+            if (this.$store.state.projectManagementAdd.formInfo.status >= 18) {
                 stepArr.push({
                     title: "开标",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if(this.$store.state.projectManagementAdd.formInfo.status>=24){
+            if (this.$store.state.projectManagementAdd.formInfo.status >= 24) {
                 stepArr.push({
                     title: "中标",
                     isInput: true,
@@ -143,44 +143,50 @@ export const addMixins = {
         }
     },
     methods: {
-        resetFields(){
-            
-            this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{
-            project_leader: "",
-            contact_phone: "",
-            name: "",
-            type: "",
-            no: "",
-            audit_amount: "",
-            budget: "",
-            procurement_method: "",
-            public_date: "",
-            notice_link: "",
-            input12: "true",
-            small_company:''})
-            this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',[
-                {type:'purchase_intention',title:'采购意向',description:'',files:[]},
-                {type:'budget_audit_report',title:'纪保预算审核报告书',description:'',files:[]},
-                {type:'purchase_demand',title:'采购需求',description:'',files:[]},
-                {type:'act_plan',title:'实施计划',description:'',files:[]},
-                {type:'check_opinion',title:'审查意见书',description:'',files:[]},
-                {type:'main_party_committee',title:'大队党委会',description:'',files:[]},
-                {type:'detachment_party_committee',title:'支队党委会',description:'',files:[]},
-              ])
-              this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',[
+        resetFields() {
+
+            this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', {
+                demand_department: '',
+                // demand_department_id: "",
+                project_leader: "",
+                contact_phone: "",
+                name: "",
+                type: "",
+                no: "",
+                audit_amount: "",
+                budget: "",
+                procurement_method: "",
+                public_date: "",
+                notice_link: "",
+                input12: "",
+                small_company: '',
+            })
+            this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS', [
+                { type: 'purchase_intention', title: '采购意向', description: '', files: [], is_required: 1 },
+                { type: 'budget_audit_report', title: '纪保预算审核报告书', description: '', files: [], is_required: 1 },
+                { type: 'purchase_demand', title: '采购需求', description: '', files: [], is_required: 1 },
+                { type: 'act_plan', title: '实施计划', description: '', files: [], is_required: 1 },
+                { type: 'check_opinion', title: '一般性审查意见书', description: '', files: [], is_required: 1 },
+                { type: 'main_party_committee', title: '大队党委会', description: '', files: [], is_required: 0 },
+                { type: 'detachment_party_committee', title: '支队党委会', description: '', files: [], is_required: 1 },
+                { type: 'master_check_opinion', title: '重点审查意见书', description: '', files: [], is_required: 0 },
+                { type: 'force_check_opinion', title: '驻点审查意见书（支队级）', description: '', files: [], is_required: 0 },
+                { type: 'other_opinions', title: '其他意见书', description: '', files: [], is_required: 0 },
+            ])
+            this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', [
                 { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },
                 {
-                  label: '否: 预留预算总额的货物类、服务类项目不低于30%，工程类项目不低于40%，由需求单位根据实际情况填写专门面向中小企业采购。', child: [
-                    { label1: '采购项目整体或者设置采购包专门面向中小企业采购', checked: false, },
-                    { label1: '供应商以联合体形式参加采购活动，联合体中中小企业承担预算总额的', checked: false, label2: '%部分', num: '' },
-                    { label1: '获得采购合同的供应商将采购项目中的', checked: false, label2: '%分包给一家或者多家中小企业', num: '' },
-            
-                  ], checked: false,
+                    label: '否: 预留预算总额的货物类、服务类项目不低于30%，工程类项目不低于40%，由需求单位根据实际情况填写专门面向中小企业采购。', child: [
+                        { label1: '采购项目整体或者设置采购包专门面向中小企业采购', checked: false, },
+                        { label1: '供应商以联合体形式参加采购活动，联合体中中小企业承担预算总额的', checked: false, label2: '%部分', num: '' },
+                        { label1: '获得采购合同的供应商将采购项目中的', checked: false, label2: '%分包给一家或者多家中小企业', num: '' },
+
+                    ], checked: false,
                 },
                 { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
-              ])
+            ])
         },
-      
+
     },
 
 }
