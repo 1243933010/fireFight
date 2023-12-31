@@ -177,10 +177,10 @@ export default {
         ],
         contact_phone: [
           { required: true, message: "请输入联系电话", trigger: "blur" },
-          {
-            pattern:/^1[3456789]\d{9}$/,
-            message: "请输入正确的手机号码或者座机号",
-          },
+          // {
+          //   pattern:/^1[3456789]\d{9}$/,
+          //   message: "请输入正确的手机号码或者座机号",
+          // },
         ],
         name: [{ required: true, message: "请输入项目名称", trigger: "blur" }],
         type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
@@ -267,7 +267,7 @@ export default {
       }else{
         price = 1000000;
       }
-      if((+this.formInfo.audit_amount)>price){
+      if((+this.formInfo.audit_amount)>=price){
         this.formInfo.procurement_method = ''
         return this.procurementMethodSelect[0]
       }else{

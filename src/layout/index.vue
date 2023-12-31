@@ -50,7 +50,7 @@
         <app-main />
       </div>
     </div>
-    <el-dialog title="代办项目提示"  center :visible.sync="dialogVisible" width="50%" :show-close="false">
+    <el-dialog title="代办事项"  center :visible.sync="dialogVisible" width="50%" :show-close="false">
       <div class="close">
         <img @click="dialogVisible=false" src="../assets/close_icon.png" alt="" srcset="">
       </div>
@@ -65,9 +65,24 @@
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="当前进度" align="center">
+        <el-table-column label="部门" align="center">
+          <template slot-scope="scope">
+            <span>占位</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="经办人" align="center">
+          <template slot-scope="scope">
+            <span>占位</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="项目状态" align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.status_text }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="审核时间" align="center">
+          <template slot-scope="scope">
+            <span>占位</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">

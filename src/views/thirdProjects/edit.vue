@@ -3,28 +3,14 @@
     <div
       style="
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding-left: 20px;
         margin: 20px 0;
       "
     >
-      <div
-        v-if="projectInfo.bid_fail_times > 0"
-        v-for="(item, index) in projectInfo.bid_fail_times"
-        :key="index"
-      >
-        <el-button @click="checkTab(index)" type="primary"
-          >新招标失败信息</el-button
-        >
-        <el-button @click="checkTab(item)" type="info"
-          >第{{ index + 1 }}次招标失败信息</el-button
-        >
-      </div>
-    </div>
-
-    <!-- 默认空数据 -->
-    <template>
+    <el-tabs type="border-card" v-if="projectInfo.bid_fail_times > 0" v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="新招标信息" :value="0">
+     <!-- 默认空数据 -->
+     <template>
       <div class="box">
         <div class="box-left">
           <div class="steps">
@@ -100,6 +86,90 @@
         </div>
       </div>
     </template>
+    </el-tab-pane>
+    <el-tab-pane v-for="(item, index) in projectInfo.bid_fail_times" :key="index" :label="`第${index + 1}次招标失败信息`" :value="index+1">
+     <!-- 默认空数据 -->
+     <template>
+      <div class="box">
+        <div class="box-left">
+          <div class="steps">
+            <Steps :stepList="stepList" />
+          </div>
+          <div class="form">
+            <div class="background-icon">
+              <span class="title">基本信息</span>
+            </div>
+            <div style="width: 80%">
+              <BasicMsg :disabled="true" />
+            </div>
+            <!-- 三方基本信息录入 -->
+            <div class="background-icon">
+              <span class="title">招标</span>
+            </div>
+
+            <div style="width: 80%">
+              <ThirdCom @updateDetail="getDetail($route.query.id)" />
+            </div>
+            <!-- 开标 -->
+            <div class="background-icon">
+              <span class="title">开评标</span>
+            </div>
+            <!-- <div></div> -->
+            <div style="padding-left: 30px">
+              <StartCom @updateDetail="getDetail($route.query.id)" />
+            </div>
+
+            <!-- <BidCom /> -->
+
+            <!-- 中标单位 -->
+            <div class="background-icon">
+              <span class="title">中标</span>
+            </div>
+            <div style="padding-left: 30px; width: 80%">
+              <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
+            </div>
+            <div class="btnn">
+              <!-- <div class="btn1">取消</div> -->
+              <!-- <div class="btn2">提交</div> -->
+              <!-- <div class="btn3">保存草稿</div> -->
+              <!-- <div class="btn4">通过</div> -->
+              <!-- <div class="btn5">驳回</div> -->
+            </div>
+          </div>
+        </div>
+        <!-- <AnnexCom /> -->
+        <div></div>
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          background-color: white;
+          padding-bottom: 40px;
+        "
+      >
+        <div>
+          <el-button
+            @click="bidFailFnc"
+            v-if="
+              [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                27, 28, 29,
+              ].includes(projectInfo.status)
+            "
+            type="primary"
+            >招标失败</el-button
+          >
+        </div>
+      </div>
+    </template>
+    </el-tab-pane>
+  </el-tabs>
+  </div>
+
+   
   </div>
 </template>
 
@@ -130,6 +200,7 @@ export default {
   },
   data() {
     return {
+      activeName:0
       // failDataBool:false
     };
   },
@@ -144,6 +215,16 @@ export default {
     this.getAgentList();
   },
   methods: {
+    handleClick(e){
+      console.log(e.index)
+      if ((+e.index) == 0) {
+        // this.failDataBool = false;
+        this.getDetail(this.$route.query.id);
+      } else {
+        // this.failDataBool = true;
+        this.getBidFailDetail(this.$route.query.id, e.index);
+      }
+    },
     checkTab(index) {
       if (index == 0) {
         // this.failDataBool = false;
