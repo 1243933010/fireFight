@@ -7,7 +7,7 @@
         margin: 20px 0;
       "
     >
-    <el-tabs type="border-card" v-if="projectInfo.bid_fail_times > 0" v-model="activeName" @tab-click="handleClick">
+    <el-tabs type="border-card"  v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="新招标信息" :value="0">
      <!-- 默认空数据 -->
      <template>
@@ -255,15 +255,20 @@ export default {
           JSON.parse(res.data.small_company)
         );
         this.$store.commit(
-          "thirdProjects/update_ImplementationCommissionForm",
-          { type: "file", data: res.data.agent_check_videos }
-        );
-        if (res.data.status > 6) {
+          "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'chooseFile',
+          data: res.data.agent_receipt
+        });
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'file',
+          data: res.data.agent_check_videos
+        });
+        // if (res.data.status > 6) {
           this.$store.commit(
             "thirdProjects/update_ImplementationCommissionForm",
-            { type: "form", data: res.data.agent_id }
+            { type: "form", data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,} }
           );
-        }
         // if(res.data.status>=11){
         //招标信息替换
         let data = {
@@ -315,6 +320,7 @@ export default {
     async getDetail(id) {
       this.$loading();
       let res = await projectDetail(id);
+      console.log(res)
       this.$loading().close();
       if (res.code == 200) {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {

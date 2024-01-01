@@ -107,6 +107,11 @@ export const addMixins = {
                 {
                     title: "支队党委会",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length-1].files.length > 0),
+                },
+                {
+                    title: "采购计划备案附件",
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length-1].files.length > 0,
                     isActive: false
                 },
 
@@ -172,6 +177,7 @@ export const addMixins = {
                 { type: 'master_check_opinion', title: '重点审查意见书', description: '', files: [], is_required: 0 },
                 { type: 'force_check_opinion', title: '驻点审查意见书（支队级）', description: '', files: [], is_required: 0 },
                 { type: 'other_opinions', title: '其他意见书', description: '', files: [], is_required: 0 },
+                {title: "采购计划备案附件", type: "purchase_record",description:'',files:[],is_required:1},
             ])
             this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', [
                 { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },

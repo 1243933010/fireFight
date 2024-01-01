@@ -28,6 +28,8 @@ const state = {
     {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[],is_required:0},
     {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[],is_required:0},
     {type:'other_opinions',title:'其他意见书',description:'',files:[],is_required:0},
+    {title: "采购计划备案附件", type: "purchase_record",description:'',files:[],is_required:1},
+
 
   ],
   radioLabelList: [

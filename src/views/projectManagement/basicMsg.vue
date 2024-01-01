@@ -7,7 +7,7 @@
       :rules="rules"
       :model="formInfo"
       class="demo-form-inline"
-      label-width="100px"
+      label-width="140px"
     >
       <!-- <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">

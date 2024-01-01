@@ -42,7 +42,11 @@ const state = {
   ],
   //实施委托
   ImplementationCommissionForm:{
+    choose_no:'',
+    choose_time:'',
+    no:'',
     agent_id: '',
+    agent_receipt:[{type:'agent_receipt',title:'抽取代理机构回执',description:'',files:[],is_required:1}],
     files: []
   },
   thirdData:{
@@ -169,11 +173,15 @@ const mutations = {
   update_ImplementationCommissionForm:(state,data)=>{
     // console.log(type,data,'}}}')
     if(data.type=='form'){
-      state.ImplementationCommissionForm.agent_id = data.data;
-    }else{
+      state.ImplementationCommissionForm.choose_no = data.data.choose_no;
+      state.ImplementationCommissionForm.choose_time = data.data.choose_time;
+      state.ImplementationCommissionForm.no = data.data.no;
+      state.ImplementationCommissionForm.agent_id = data.data.agent_id;
+    }else if(data.type=='file'){
       state.ImplementationCommissionForm.files = data.data;
+    }else if(data.type=='chooseFile'){
+      state.ImplementationCommissionForm.agent_receipt = data.data;
     }
-    
   },
   
   update_bidBaseProject:(state,form)=>{
