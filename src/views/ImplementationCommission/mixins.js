@@ -37,13 +37,13 @@ export const addMixins = {
                 {
                     title: "项目类型",
                     isInput: this.$store.state.projectManagementAdd.formInfo.type,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.no,
+                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.audit_amount,
                 },
-                {
-                    title: "项目编号",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.no,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.no && this.$store.state.projectManagementAdd.formInfo.audit_amount,
-                },
+                // {
+                //     title: "项目编号",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.no,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.no && this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                // },
                 {
                     title: "审计金额",
                     isInput: this.$store.state.projectManagementAdd.formInfo.audit_amount,
@@ -217,6 +217,18 @@ export const addMixins = {
                 },
                 { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
               ])
+
+              this.$store.commit(
+                "projectManagementAdd/update_ImplementationCommissionForm", {
+                type: 'file',
+                data: []
+            });
+            this.$store.commit(
+                "projectManagementAdd/update_ImplementationCommissionForm", {
+                type: 'chooseFile',
+                data: [{ type: 'agent_receipt', title: '抽取代理机构回执', description: '', files: [], is_required: 1 }]
+            });
+            this.$store.commit("projectManagementAdd/update_ImplementationCommissionForm",{type: 'form', data: { choose_no: '',choose_time: '', no: '', agent_id: '',}});
         },
         async auditFnc(){
             this.$refs.checkDialog.openDialog(true)

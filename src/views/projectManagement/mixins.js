@@ -107,11 +107,11 @@ export const addMixins = {
                 {
                     title: "支队党委会",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length-1].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length - 1].files.length > 0),
                 },
                 {
                     title: "采购计划备案附件",
-                    isInput: this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length-1].files.length > 0,
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length - 1].files.length > 0,
                     isActive: false
                 },
 
@@ -177,7 +177,7 @@ export const addMixins = {
                 { type: 'master_check_opinion', title: '重点审查意见书', description: '', files: [], is_required: 0 },
                 { type: 'force_check_opinion', title: '驻点审查意见书（支队级）', description: '', files: [], is_required: 0 },
                 { type: 'other_opinions', title: '其他意见书', description: '', files: [], is_required: 0 },
-                {title: "采购计划备案附件", type: "purchase_record",description:'',files:[],is_required:1},
+                { title: "采购计划备案附件", type: "purchase_record", description: '', files: [], is_required: 1 },
             ])
             this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', [
                 { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },
@@ -191,6 +191,17 @@ export const addMixins = {
                 },
                 { label: '否:项目不适用专门面向中小企业，根据《政府采购促进中小企业发展管理办法》财库[2020] 46 号的规定，符合下列情形之一的，可不专门面向中小企业预留采购份额。', child: [], checked: false, },
             ])
+            this.$store.commit(
+                "projectManagementAdd/update_ImplementationCommissionForm", {
+                type: 'file',
+                data: []
+            });
+            this.$store.commit(
+                "projectManagementAdd/update_ImplementationCommissionForm", {
+                type: 'chooseFile',
+                data: [{ type: 'agent_receipt', title: '抽取代理机构回执', description: '', files: [], is_required: 1 }]
+            });
+            this.$store.commit("projectManagementAdd/update_ImplementationCommissionForm",{type: 'form', data: { choose_no: '',choose_time: '', no: '', agent_id: '',}});
         },
 
     },

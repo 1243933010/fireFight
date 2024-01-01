@@ -18,12 +18,12 @@
               :model="formInfo" class="demo-form-inline" label-width="100px">
               <el-col :span="14">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
-                  <el-input v-model="formInfo.no" type="number" />
+                  <el-input v-model="formInfo.no" type="text" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
-                  <el-input v-model="formInfo.choose_no" type="number" />
+                  <el-input v-model="formInfo.choose_no" type="text" />
                 </el-form-item>
               </el-col>
               
@@ -77,7 +77,23 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              
+              <el-col :span="24">
+              <div class="file-form" style="padding-left: 10px;">
+                <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
+                  <div class="left">
+                    <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
+                    <div class="input">
+                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      </el-input>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <UploadCom title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                  </div>
+                </div>
+
+              </div>
+            </el-col>
               <!-- v-if="[14,16].includes(projectInfo.status)" -->
 
             </el-form>
@@ -252,11 +268,17 @@ export default {
           data: res.data.project_attachments4
         });
         this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
+        });
+        this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm",
           {
             type: 'form',
             data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,}
           });
+          
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', { ...res.data, input12: 'true' });
         // res.data.project_attachments0.forEach((val)=>{

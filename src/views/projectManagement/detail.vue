@@ -171,7 +171,12 @@ export default {
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'chooseFile',
-          data: res.data.agent_receipt
+          data: res.data.project_attachments4
+        });
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
         });
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {

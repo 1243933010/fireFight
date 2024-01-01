@@ -31,11 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="box-right">
-          <div class="file-form">
-            <AnnexCom />
-        </div>
-      </div>
+      <AnnexCom />
     </div>
   </div>
 </template>
@@ -48,7 +44,7 @@
 import Steps from "@/components/steps.vue";
 import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
-import BasicMsg from './basicMsg.vue'
+import BasicMsg from './basicMsg1.vue'
 import { mapState, mapGetters } from 'vuex'
 import { projectEdit,projectAdd,projectDetail,projectSubmit } from "@/api/project";
 export default {
@@ -291,12 +287,13 @@ export default {
     height: auto;
     background-color: white;
     // max-width: 1000px;
-    width: 50%;
+    width: 55%;
     .form {
-      min-width: 500px;
+      width: 75%;
+      // min-width: 500px;
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
+      // flex-grow: 1;
       background-color: white;
       padding-bottom: 35px;
     }
@@ -314,7 +311,7 @@ export default {
       .item {
         font-size: 14px;
         color: #1D70FF;
-        margin-right: 46px;
+        margin-right: 26px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -325,7 +322,7 @@ export default {
         }
 
         span {
-          margin-right: 18px;
+          margin-right: 8px;
         }
 
         div {
@@ -379,7 +376,7 @@ export default {
 
   .box-right {
     display: flex;
-    width: 100%;
+    width: 40%;
     // flex-grow: 1;
     background-color: white;
     box-sizing: border-box;

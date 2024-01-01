@@ -261,6 +261,11 @@ export default {
         });
         this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
+        });
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm", {
           type: 'file',
           data: res.data.agent_check_videos
         });

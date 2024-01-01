@@ -318,7 +318,7 @@ export default {
             flex-direction: row;
 
             .btn {
-              width: 100px;
+              min-width: 100px;
               height: 36px;
               border: 1px solid #2d6cff;
               border-radius: 4px;

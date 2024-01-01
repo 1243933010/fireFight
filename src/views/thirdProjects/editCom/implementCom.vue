@@ -27,7 +27,7 @@
                   <div class="left">
                     <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
                     <div class="input">
-                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      <el-input type="textarea" :rows="4" v-model="item.description" placeholder="">
                       </el-input>
                     </div>
                   </div>
@@ -41,7 +41,7 @@
               <el-col :span="24">
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
-                    :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess">
+                    :file-list="formInfo.files"  >
                     <i slot="default" class="el-icon-plus" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
                     <div class="el-upload__tip" slot="tip">
                       只能上传图片或视频
@@ -64,6 +64,23 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :span="24">
+              <div class="file-form" style="padding-left: 10px;">
+                <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
+                  <div class="left">
+                    <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
+                    <div class="input">
+                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      </el-input>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <UploadCom type="see" title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                  </div>
+                </div>
+
+              </div>
+            </el-col>
             </el-form>
           </div> 
     </div>
@@ -122,3 +139,94 @@ export default{
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.file-form {
+      .file-form-item {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 40px;
+
+        .left {
+          width: 35%;
+
+          .title {
+            color: #404659;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+          }
+        }
+
+        .right {
+          width: 65%;
+          box-sizing: border-box;
+          padding-left: 16px;
+
+          // .title {
+          //   color: #404659;
+          //   font-size: 14px;
+          //   font-weight: 600;
+          //   margin-bottom: 14px;
+          // }
+
+          // .upload {
+          //   display: flex;
+          //   flex-direction: column;
+          //   background-color: red;
+          //   .file-list {
+          //     display: flex;
+          //     flex-direction: column;
+
+          //     .item {
+          //       display: flex;
+          //       flex-direction: row;
+          //       align-items: center;
+          //       margin-bottom: 13px;
+
+          //       .file-icon {
+          //         width: 16px;
+          //         height: 13px;
+          //         margin-right: 6px;
+          //       }
+
+          //       span {
+          //         color: #404659;
+          //         font-size: 14px;
+          //         margin-right: 12px;
+          //       }
+
+          //       .delete {
+          //         width: 14px;
+          //         height: 15px;
+          //       }
+          //     }
+          //   }
+
+          //   .upload-btn {
+          //     display: flex;
+          //     justify-content: center;
+          //     align-items: center;
+             
+          //     .btn {
+          //       width: 100px;
+          //       height: 36px;
+          //       border: 1px solid #2D6CFF;
+          //       // background: #FFFFFF;
+          //       border-radius: 4px;
+          //       margin-right: 19px;
+          //     }
+
+          //     span {
+          //       font-size: 12px;
+          //       color: #A6A9BC;
+          //     }
+          //   }
+          // }
+        }
+
+        // align-items: center;
+      }
+    }
+</style>

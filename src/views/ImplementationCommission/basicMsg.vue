@@ -253,9 +253,9 @@ export default {
   display: flex;
   flex-direction: row;
   padding-left: 20px;
-  // align-items: center;
+  align-items: center;
   cursor: pointer;
-
+  margin-top: 10px;
   span {
     max-width: 80%;
     display: flex;
@@ -272,7 +272,7 @@ export default {
     cursor: pointer;
     display: inline-block;
     box-sizing: border-box;
-    margin-top: 10px;
+    
     margin-right: 10px;
 
     &::after {

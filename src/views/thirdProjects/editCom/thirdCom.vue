@@ -448,7 +448,7 @@ export default {
         margin-bottom: 40px;
 
         .left {
-          width: 50%;
+          width: 35%;
 
           .title {
             color: #404659;
@@ -459,7 +459,7 @@ export default {
         }
 
         .right {
-          width: 50%;
+          width: 65%;
           box-sizing: border-box;
           padding-left: 16px;
 
@@ -509,7 +509,7 @@ export default {
               align-items: center;
 
               .btn {
-                width: 100px;
+                width: 120px;
                 height: 36px;
                 border: 1px solid #2d6cff;
                 // background: #FFFFFF;

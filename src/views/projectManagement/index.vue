@@ -84,10 +84,10 @@
           <div class="item-con">
             <div class="item-con-left">
               <div class="item-con-left-o">
-                <!-- <div>
+                <div v-if="item.no">
                   <span class="label">项目编号:</span
                   ><span class="text">{{ item.no }}</span>
-                </div> -->
+                </div>
                 <div>
                   <span class="label">采购单位:</span
                   ><span class="text">{{ item.demand_department }}</span>
