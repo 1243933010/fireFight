@@ -253,7 +253,7 @@ export default {
     },
     async auditEmit(e) {
       // console.log(e)
-      let res = await projectAudit({ id: this.projectInfo.id, status: e.status });
+      let res = await projectAudit({ id: this.projectInfo.id,...e });
       // console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);

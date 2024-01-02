@@ -112,7 +112,7 @@
       </el-col>
     </el-row>
     <div>
-      <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14][20].includes(projectInfo.reject_log.status)">
+      <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[20].includes(projectInfo.reject_log.status)">
         <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.reject_log.description"></el-input>

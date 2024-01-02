@@ -80,9 +80,10 @@ const state = {
         {type:'bid_result_confirm',title:'评标结果确认函',files:[],is_required:1},
       ],
       bid_units:[
-        {amount:'',name:"",contact:'',files:[]},
-        {amount:'',name:"",contact:'',files:[]},
-        {amount:'',name:"",contact:'',files:[]},
+        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+
       ],
       project_attachments:[
         {type:'expert_info',title:'参与评审专家信息',files:[],description:'',is_required:1},

@@ -260,10 +260,13 @@ export default {
           "thirdProjects/update_startData_bid_files_list",
           res.data.bid_files_list
         );
-        this.$store.commit(
+        if(res.data.bid_units.length>0){
+          this.$store.commit(
           "thirdProjects/update_startData_bid_units",
           res.data.bid_units
         );
+        }
+       
         this.$store.commit(
           "thirdProjects/update_startData_project_attachments",
           res.data.project_attachments2
