@@ -1,22 +1,23 @@
 <template>
     <div>
         <div>
-            <el-form ref="formInfo" :inline="true" :disabled="true" :rules="rules" :model="formInfo" class="demo-form-inline"
+          <div style="clear: both;"></div>
+            <el-form ref="formInfo" :inline="true" :disabled="true" :rules="rules" :model="projectInfo" class="demo-form-inline"
               label-width="100px">
-              <el-col :span="14">
+              <el-col :span="8">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
-                  <el-input v-model="formInfo.no" type="number" />
+                  <el-input v-model="projectInfo.no" type="text" />
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="8">
                 <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
-                  <el-input v-model="formInfo.choose_no" type="number" />
+                  <el-input v-model="projectInfo.choose_no" type="text" />
                 </el-form-item>
               </el-col>
               
-              <el-col :span="14">
+              <el-col :span="8">
                 <el-form-item label="抽取时间" prop="choose_time">
-                  <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.choose_time" type="date"
+                  <el-date-picker value-format="yyyy-MM-dd" v-model="projectInfo.choose_time" type="date"
                     placeholder="请选择抽取时间">
                   </el-date-picker>
                 </el-form-item>
@@ -32,7 +33,7 @@
                     </div>
                   </div>
                   <div class="right">
-                    <UploadCom title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                    <UploadCom title="附件" type="see" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
                   </div>
                 </div>
 
@@ -59,7 +60,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
-                  <el-select v-model="formInfo.agent_id" placeholder="请选择采购代理名称">
+                  <el-select v-model="projectInfo.agent_id" placeholder="请选择采购代理名称">
                     <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
                   </el-select>
                 </el-form-item>
@@ -125,7 +126,7 @@ export default{
       return this.$store.state.thirdProjects.ImplementationCommissionForm;
     },
     projectInfo() {
-      return this.$store.state.projectManagementAdd.formInfo;
+      return this.$store.state.thirdProjects.formInfo;
     },
   },
   methods:{

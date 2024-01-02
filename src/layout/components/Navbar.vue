@@ -60,7 +60,6 @@ export default {
       this.$router.go(-1);
     },
     async openMessage() {
-      console.log('1111')
       this.dialogVisible = true
     },
     toggleSideBar() {

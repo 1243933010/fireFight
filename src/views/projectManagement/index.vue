@@ -84,7 +84,7 @@
           <div class="item-con">
             <div class="item-con-left">
               <div class="item-con-left-o">
-                <div v-if="item.no">
+                <div >
                   <span class="label">项目编号:</span
                   ><span class="text">{{ item.no }}</span>
                 </div>

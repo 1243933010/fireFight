@@ -59,7 +59,7 @@
           prop="audit_amount"
           placeholder="请输入审计金额"
         >
-          <el-input v-model="formInfo.audit_amount" type="number" />
+          <el-input v-model="formInfo.audit_amount" type="number"  />
         </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -215,21 +215,22 @@ export default {
 
       procurementMethodSelect: [
         [
-          { label: "公开招标", value: 1 },
-          { label: "邀请招标", value: 2 },
-          { label: "竞争性谈判", value: 3 },
-          { label: "竞争性磋商", value: 4 },
-          { label: "单一来源采购", value: 5 },
-          { label: "询价", value: 6 },
-          { label: "其他", value: 7 },
-        ],
-        [
-          { label: "遴选采购", value: 8 },
-          { label: "竟价采购", value: 9 },
-          { label: "直选采购", value: 10 },
-          { label: "自行直接采购", value: 11 },
-        ],
+          { label: '公开招标', value: 1 },
+          { label: '邀请招标', value: 2 },
+          { label: '竞争性谈判', value: 3 },
+          { label: '竞争性磋商', value: 4 },
+          { label: '单一来源采购', value: 5},
+          { label: '询价', value: 6},
+          { label: '其他', value: 7 },
+
+        ], [
+          { label: '遴选采购', value: 8 },
+          { label: '竟价采购', value: 9 },
+          { label: '直选采购', value: 10 },
+          { label: '自行直接采购', value: 11 },
+        ]
       ],
+      isFirstTime: true
     };
   },
   watch: {
@@ -250,14 +251,33 @@ export default {
             });
           }
         });
-        console.log(
-          this.formInfo.input12,
-          this.$store.state.projectManagementAdd.formInfo.input12,
-          "6666666"
-        );
+        // console.log(
+        //   this.formInfo.input12,
+        //   this.$store.state.projectManagementAdd.formInfo.input12,
+        //   "6666666"
+        // );
       },
       deep: true,
     },
+    'formInfo.audit_amount'(newValue,oldValue){
+      let price = 1000000;
+      if(this.formInfo.type=='engineering'){
+        price = 1200000;
+      }else{
+        price = 1000000;
+      }
+      // console.log(oldValue,'oldvalue')
+      if((+oldValue)>=price&&newValue<price){
+        this.formInfo.procurement_method = ''
+      }else if((+newValue)>=price&&oldValue<price){
+        
+        if(oldValue==''){
+          
+        }else{
+          this.formInfo.procurement_method = ''
+        }
+      }
+    }
   },
   computed: {
     procurementMethodList(){
@@ -267,8 +287,8 @@ export default {
       }else{
         price = 1000000;
       }
+      console.log('this.formInfo.audit_amount',this.isFirstTime)
       if((+this.formInfo.audit_amount)>=price){
-        this.formInfo.procurement_method = ''
         return this.procurementMethodSelect[0]
       }else{
         return this.procurementMethodSelect[1]
@@ -277,9 +297,6 @@ export default {
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo;
     },
-    // radioLabelList(){
-    //   return this.$store.state.projectManagementAdd.radioLabelList
-    // },
     selectList() {
       return [
         {

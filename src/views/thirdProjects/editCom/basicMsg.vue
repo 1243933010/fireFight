@@ -68,10 +68,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="14">
-        <el-form-item label="" prop="input12">
-          <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
+        <!-- <el-form-item label="" prop="input12"> -->
+          <div class="form-title" style="padding-left:20px;margin-bottom: 10px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
-          <div v-for="(item, index) in radioLabelList" :key="index">
+          <div v-for="(item, index) in radioLabelList" :key="index" style="margin-bottom: 20px;">
             <div class="radio-item"  v-if="item.child.length == 0">
               <div  v-if="item.child.length == 0" class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
@@ -89,7 +89,7 @@
             </div>
 
           </div>
-        </el-form-item>
+        <!-- </el-form-item> -->
       </el-col>
     </el-form>
     <implementCom />
@@ -155,21 +155,21 @@ export default {
       
       procurementMethodSelect: [
         [
-          { label: '公开招标', value: '1' },
-          { label: '邀请招标', value: '2' },
-          { label: '竞争性谈判', value: '3' },
-          { label: '竞争性磋商', value: '4' },
-          { label: '单一来源采购', value: '5' },
-          { label: '询价', value: '6' },
-          { label: '其他', value: '7' },
+          { label: '公开招标', value: 1 },
+          { label: '邀请招标', value: 2 },
+          { label: '竞争性谈判', value: 3 },
+          { label: '竞争性磋商', value: 4 },
+          { label: '单一来源采购', value: 5},
+          { label: '询价', value: 6},
+          { label: '其他', value: 7 },
 
         ], [
-          { label: '遴选采购', value: '8' },
-          { label: '竟价采购', value: '9' },
-          { label: '直选采购', value: '10' },
-          { label: '自行直接采购“', value: '11' },
+          { label: '遴选采购', value: 8 },
+          { label: '竟价采购', value: 9 },
+          { label: '直选采购', value: 10 },
+          { label: '自行直接采购“', value: 11 },
         ]
-      ],
+      ]
     }
   },
   watch: {
@@ -191,25 +191,14 @@ export default {
             })
           }
         })
-        console.log(this.formInfo.input12, this.$store.state.thirdProjects.formInfo.input12,'6666666')
+        // console.log(this.formInfo.input12, this.$store.state.thirdProjects.formInfo.input12,'6666666')
       },
       deep: true
     }
   },
   computed: {
     procurementMethodList(){
-         let price = 1000000;
-      if(this.formInfo.type=='engineering'){
-        price = 1200000;
-      }else{
-        price = 1000000;
-      }
-      if((+this.formInfo.audit_amount)>price){
-        this.formInfo.procurement_method = ''
-        return this.procurementMethodSelect[0]
-      }else{
-        return this.procurementMethodSelect[1]
-      }
+      return this.procurementMethodSelect[0].concat(this.procurementMethodSelect[1])
     },
     formInfo() {
       return this.$store.state.thirdProjects.formInfo
@@ -276,7 +265,7 @@ export default {
     cursor: pointer;
     display: inline-block;
     box-sizing: border-box;
-    margin-top: 10px;
+    // margin-top: 10px;
     margin-right: 10px;
 
     &::after {

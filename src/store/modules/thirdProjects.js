@@ -58,16 +58,17 @@ const state = {
       bid_open_date:'',
       doubt:"",
       bid_publish_photo:[],
-      bid_register_file:[],
+      // bid_register_file:[],
       bid_file_issue:[],
       project_attachments:[
-        {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[],is_required:1},
+        // {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[],is_required:1},
         {type:'bid_authorization',title:'委托招标函',description:'',files:[],is_required:1},
         {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[],is_required:1},
       ]
     },
     startData:{
       bid_files_list:[
+        {type:'bid_register_file',title:'投标报名登记表',files:[],is_required:1},
         {type:'bid_user_login',title:'投标人签到表',files:[],is_required:1},
         {type:'bid_open_log',title:'开标记录表',files:[],is_required:1},
         {type:'buyer_auth_bid',title:'采购人评标代表授权书',files:[],is_required:1},
@@ -118,7 +119,7 @@ const mutations = {
     state.radioLabelList = list;
   },
   update_ImplementationCommissionForm:(state,data)=>{
-    // console.log(type,data,'}}}')
+    console.log(data,'}}}11')
     if(data.type=='form'){
       state.ImplementationCommissionForm.choose_no = data.data.choose_no;
       state.ImplementationCommissionForm.choose_time = data.data.choose_time;
@@ -129,6 +130,7 @@ const mutations = {
     }else if(data.type=='chooseFile'){
       state.ImplementationCommissionForm.agent_receipt = data.data;
     }else if(data.type=='purchase'){
+      console.log('||||||||||||||=====',data.data)
       state.ImplementationCommissionForm.purchase_meeting = data.data;
     }
   },

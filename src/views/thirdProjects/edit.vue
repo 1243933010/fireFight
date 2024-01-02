@@ -1,175 +1,141 @@
 <template>
   <div style="height: auto">
-    <div
-      style="
+    <div style="
         width: 100%;
         padding-left: 20px;
         margin: 20px 0;
-      "
-    >
-    <el-tabs type="border-card"  v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="新招标信息" :value="0">
-     <!-- 默认空数据 -->
-     <template>
-      <div class="box">
-        <div class="box-left">
-          <div class="steps">
-            <Steps :stepList="stepList" />
-          </div>
-          <div class="form">
-            <div class="background-icon">
-              <span class="title">基本信息</span>
-            </div>
-            <div style="width: 80%">
-              <BasicMsg :disabled="true" />
-            </div>
-            <!-- 三方基本信息录入 -->
-            <div class="background-icon">
-              <span class="title">招标</span>
-            </div>
+      ">
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="新招标信息" :value="0">
+          <!-- 默认空数据 -->
+          <template>
+            <div class="box">
+              <div class="box-left">
+                <div class="steps">
+                  <Steps :stepList="stepList" />
+                </div>
+                <div class="form">
+                  <div class="background-icon">
+                    <span class="title">基本信息</span>
+                  </div>
+                  <div style="width: 80%">
+                    <BasicMsg :disabled="true" />
+                  </div>
+                  <!-- 三方基本信息录入 -->
+                  <div class="background-icon">
+                    <span class="title">招标</span>
+                  </div>
 
-            <div style="width: 80%">
-              <ThirdCom @updateDetail="getDetail($route.query.id)" />
-            </div>
-            <!-- 开标 -->
-            <div class="background-icon">
-              <span class="title">开评标</span>
-            </div>
-            <!-- <div></div> -->
-            <div style="padding-left: 30px">
-              <StartCom @updateDetail="getDetail($route.query.id)" />
-            </div>
+                  <div style="width: 80%">
+                    <ThirdCom @updateDetail="getDetail($route.query.id)" />
+                  </div>
+                  <!-- 开标 -->
+                  <div class="background-icon">
+                    <span class="title">开评标</span>
+                  </div>
+                  <!-- <div></div> -->
+                  <div style="padding-left: 30px">
+                    <StartCom @updateDetail="getDetail($route.query.id)" />
+                  </div>
 
-            <!-- <BidCom /> -->
+                  <!-- <BidCom /> -->
 
-            <!-- 中标单位 -->
-            <div class="background-icon">
-              <span class="title">中标</span>
+                  <!-- 中标单位 -->
+                  <div class="background-icon">
+                    <span class="title">中标</span>
+                  </div>
+                  <div style="padding-left: 30px; width: 80%">
+                    <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
+                  </div>
+                  <div class="btnn">
+                    <!-- <div class="btn1">取消</div> -->
+                    <!-- <div class="btn2">提交</div> -->
+                    <!-- <div class="btn3">保存草稿</div> -->
+                    <!-- <div class="btn4">通过</div> -->
+                    <!-- <div class="btn5">驳回</div> -->
+                  </div>
+                </div>
+              </div>
+              <!-- <AnnexCom /> -->
+              <div></div>
             </div>
-            <div style="padding-left: 30px; width: 80%">
-              <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
-            </div>
-            <div class="btnn">
-              <!-- <div class="btn1">取消</div> -->
-              <!-- <div class="btn2">提交</div> -->
-              <!-- <div class="btn3">保存草稿</div> -->
-              <!-- <div class="btn4">通过</div> -->
-              <!-- <div class="btn5">驳回</div> -->
-            </div>
-          </div>
-        </div>
-        <!-- <AnnexCom /> -->
-        <div></div>
-      </div>
-      <div
-        style="
+            <div style="
           display: flex;
           justify-content: center;
           align-items: center;
           width: 100%;
           background-color: white;
           padding-bottom: 40px;
-        "
-      >
-        <div>
-          <el-button
-            @click="bidFailFnc"
-            v-if="
-              [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
-                27, 28, 29,
-              ].includes(projectInfo.status)
-            "
-            type="primary"
-            >招标失败</el-button
-          >
-        </div>
-      </div>
-    </template>
-    </el-tab-pane>
-    <el-tab-pane v-for="(item, index) in projectInfo.bid_fail_times" :key="index" :label="`第${index + 1}次招标失败信息`" :value="index+1">
-     <!-- 默认空数据 -->
-     <template>
-      <div class="box">
-        <div class="box-left">
-          <div class="steps">
-            <Steps :stepList="stepList" />
-          </div>
-          <div class="form">
-            <div class="background-icon">
-              <span class="title">基本信息</span>
+        ">
+              <div>
+                <el-button @click="bidFailFnc" v-if="[
+                  11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                  27, 28, 29,
+                ].includes(projectInfo.status)
+                  " type="primary">招标失败</el-button>
+              </div>
             </div>
-            <div style="width: 80%">
-              <BasicMsg :disabled="true" />
-            </div>
-            <!-- 三方基本信息录入 -->
-            <div class="background-icon">
-              <span class="title">招标</span>
-            </div>
+          </template>
+        </el-tab-pane>
+        <el-tab-pane v-for="(item, index) in projectInfo.bid_fail_times" :key="index" :label="`第${index + 1}次招标失败信息`"
+          :value="index + 1">
+          <!-- 默认空数据 -->
+          <template>
+            <div class="box">
+              <div class="box-left">
+                <div class="steps">
+                  <Steps :stepList="stepList" />
+                </div>
+                <div class="form">
+                  <div class="background-icon">
+                    <span class="title">基本信息</span>
+                  </div>
+                  <div style="width: 80%">
+                    <BasicMsg :disabled="true" />
+                  </div>
+                  <!-- 三方基本信息录入 -->
+                  <div class="background-icon">
+                    <span class="title">招标</span>
+                  </div>
 
-            <div style="width: 80%">
-              <ThirdCom @updateDetail="getDetail($route.query.id)" />
-            </div>
-            <!-- 开标 -->
-            <div class="background-icon">
-              <span class="title">开评标</span>
-            </div>
-            <!-- <div></div> -->
-            <div style="padding-left: 30px">
-              <StartCom @updateDetail="getDetail($route.query.id)" />
-            </div>
+                  <div style="width: 80%">
+                    <ThirdCom @updateDetail="getDetail($route.query.id)" />
+                  </div>
+                  <!-- 开标 -->
+                  <div class="background-icon">
+                    <span class="title">开评标</span>
+                  </div>
+                  <!-- <div></div> -->
+                  <div style="padding-left: 30px">
+                    <StartCom @updateDetail="getDetail($route.query.id)" />
+                  </div>
 
-            <!-- <BidCom /> -->
+                  <!-- <BidCom /> -->
 
-            <!-- 中标单位 -->
-            <div class="background-icon">
-              <span class="title">中标</span>
+                  <!-- 中标单位 -->
+                  <div class="background-icon">
+                    <span class="title">中标</span>
+                  </div>
+                  <div style="padding-left: 30px; width: 80%">
+                    <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
+                  </div>
+                </div>
+              </div>
+              <!-- <AnnexCom /> -->
+              <div></div>
             </div>
-            <div style="padding-left: 30px; width: 80%">
-              <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
+            <div style="display: flex;justify-content: center; align-items: center;width: 100%;background-color: white;padding-bottom: 40px;">
+              <div>
+                <el-button @click="bidFailFnc" v-if="[ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,27, 28, 29,].includes(projectInfo.status)"
+                type="primary">招标失败</el-button>
+              </div>
             </div>
-            <div class="btnn">
-              <!-- <div class="btn1">取消</div> -->
-              <!-- <div class="btn2">提交</div> -->
-              <!-- <div class="btn3">保存草稿</div> -->
-              <!-- <div class="btn4">通过</div> -->
-              <!-- <div class="btn5">驳回</div> -->
-            </div>
-          </div>
-        </div>
-        <!-- <AnnexCom /> -->
-        <div></div>
-      </div>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          background-color: white;
-          padding-bottom: 40px;
-        "
-      >
-        <div>
-          <el-button
-            @click="bidFailFnc"
-            v-if="
-              [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
-                27, 28, 29,
-              ].includes(projectInfo.status)
-            "
-            type="primary"
-            >招标失败</el-button
-          >
-        </div>
-      </div>
-    </template>
-    </el-tab-pane>
-  </el-tabs>
-  </div>
+          </template>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
 
-   
+
   </div>
 </template>
 
@@ -200,7 +166,7 @@ export default {
   },
   data() {
     return {
-      activeName:0
+      activeName: 0
       // failDataBool:false
     };
   },
@@ -215,7 +181,7 @@ export default {
     this.getAgentList();
   },
   methods: {
-    handleClick(e){
+    handleClick(e) {
       console.log(e.index)
       if ((+e.index) == 0) {
         // this.failDataBool = false;
@@ -240,6 +206,7 @@ export default {
 
       this.$loading().close();
       if (res.code == 200) {
+        console.log(res.data.project_attachments4, '{{{}}}')
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
           ...res.data,
           failDataBool: false,
@@ -254,10 +221,11 @@ export default {
           "thirdProjects/UPDATE_RADIOLABELLIST",
           JSON.parse(res.data.small_company)
         );
+
         this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm", {
           type: 'chooseFile',
-          data: res.data.agent_receipt
+          data: res.data.project_attachments4
         });
         this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm", {
@@ -270,10 +238,10 @@ export default {
           data: res.data.agent_check_videos
         });
         // if (res.data.status > 6) {
-          this.$store.commit(
-            "thirdProjects/update_ImplementationCommissionForm",
-            { type: "form", data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,} }
-          );
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm",
+          { type: "form", data: { agent_id: res.data.agent_id, choose_no: res.data.choose_no, choose_time: res.data.choose_time, no: res.data.no, } }
+        );
         // if(res.data.status>=11){
         //招标信息替换
         let data = {
@@ -325,7 +293,7 @@ export default {
     async getDetail(id) {
       this.$loading();
       let res = await projectDetail(id);
-      console.log(res)
+      // console.log(res)
       this.$loading().close();
       if (res.code == 200) {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
@@ -343,34 +311,44 @@ export default {
           JSON.parse(res.data.small_company)
         );
         this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'chooseFile',
+          data: res.data.project_attachments4
+        });
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
+        });
+        this.$store.commit(
+          "thirdProjects/update_ImplementationCommissionForm", {
+          type: 'file',
+          data: res.data.agent_check_videos
+        });
+        // if (res.data.status > 6) {
+        this.$store.commit(
           "thirdProjects/update_ImplementationCommissionForm",
-          { type: "file", data: res.data.agent_check_videos }
+          { type: "form", data: { agent_id: res.data.agent_id, choose_no: res.data.choose_no, choose_time: res.data.choose_time, no: res.data.no, } }
         );
-        if (res.data.status > 6) {
-          this.$store.commit(
-            "thirdProjects/update_ImplementationCommissionForm",
-            { type: "form", data: res.data.agent_id }
-          );
-        }
-          //招标信息替换
-          let data = {
-            ...(res.data.bid_info
-              ? res.data.bid_info
-              : {
-                  bid_file_date: "",
-                  bid_publish_date: "",
-                  publish_link: "",
-                  bid_open_date: "",
-                  doubt: "",
-                }),
-            bid_file_issue: res.data.bid_file_issue,
-            bid_publish_photo: res.data.bid_publish_photo,
-            bid_register_file: res.data.bid_register_file,
-           
+        //招标信息替换
+        let data = {
+          ...(res.data.bid_info
+            ? res.data.bid_info
+            : {
+              bid_file_date: "",
+              bid_publish_date: "",
+              publish_link: "",
+              bid_open_date: "",
+              doubt: "",
+            }),
+          bid_file_issue: res.data.bid_file_issue,
+          bid_publish_photo: res.data.bid_publish_photo,
+          bid_register_file: res.data.bid_register_file,
 
-            project_attachments: res.data.project_attachments1,
-          };
-          this.$store.commit("thirdProjects/update_bidBaseProject", data);
+
+          project_attachments: res.data.project_attachments1,
+        };
+        this.$store.commit("thirdProjects/update_bidBaseProject", data);
 
         // if(res.data.status>=18){
         this.$store.commit(
@@ -588,11 +566,9 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(
-            90deg,
-            #1d70ff 0%,
-            rgba(29, 112, 255, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #1d70ff 0%,
+              rgba(29, 112, 255, 0) 100%);
         }
       }
 
@@ -600,11 +576,9 @@ export default {
         color: #a6a9bc;
 
         div {
-          background: linear-gradient(
-            90deg,
-            #a6a9bc 0%,
-            rgba(166, 169, 188, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #a6a9bc 0%,
+              rgba(166, 169, 188, 0) 100%);
         }
       }
     }

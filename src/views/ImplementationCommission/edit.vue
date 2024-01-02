@@ -102,11 +102,11 @@
             <span style="color: red;font-size: 14px;">实施委托审核意见:</span>
             <el-input  :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="projectInfo.description" ></el-input>
           </div> -->
-          <div v-for="(item, index) in projectInfo.audit_log" :key="index">
-            <div style="display: flex;flex-direction: row;" v-if="[14, 16].includes(item.status)">
+          <div >
+            <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14][8,10].includes(projectInfo.reject_log.status)">
               <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
               <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="item.description"></el-input>
+                v-model="projectInfo.reject_log.description"></el-input>
             </div>
           </div>
           <div class="btnn">
@@ -188,7 +188,7 @@ export default {
 
   mounted() {
     let route = this.$route;
-    console.log(route);
+    // console.log(route);
     this.getDetail(route.query.id);
     this.getAgentList()
 
@@ -203,7 +203,6 @@ export default {
       };
     },
     formInfo() {
-      console.log(this.$store.state.projectManagementAdd.ImplementationCommissionForm,'==============')
       return this.$store.state.projectManagementAdd.ImplementationCommissionForm;
     },
     projectInfo() {
@@ -212,13 +211,13 @@ export default {
   },
   methods: {
     updateFile(e,item,index){
-      console.log(e,item,index)
+      // console.log(e,item,index)
       if(typeof e =='number'){
         itemm.files.splice(e,1)
       }else{
         item.files.push(e)
       }
-      console.log( this.$store.state.projectManagementAdd.ImplementationCommissionForm)
+      // console.log( this.$store.state.projectManagementAdd.ImplementationCommissionForm)
     },
     async auditFnc() {
       this.$refs.checkDialog.openDialog(true)
@@ -227,9 +226,9 @@ export default {
       this.$refs.checkDialogEnd.openDialog(true)
     },
     async auditEmit(e) {
-      console.log(e)
-      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, status: e.status });
-      console.log(res)
+      // console.log(e)
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, ...e });
+      // console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
         this.$refs.checkDialog.openDialog(false)
@@ -240,9 +239,9 @@ export default {
       this.$message.error(res.msg);
     },
     async auditEmitEnd(e) {
-      console.log(e)
-      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, status: e.status });
-      console.log(res)
+      // console.log(e)
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, ...e });
+      // console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
         this.$refs.checkDialogEnd.openDialog(false)
@@ -255,13 +254,13 @@ export default {
     async getDetail(id) {
       let res = await projectDetail(id);
       if (res.code == 200) {
-        console.log(res.data, '22222222222222')
+        res.data.input12 = 'true';
+        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', res.data);
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'file',
           data: res.data.agent_check_videos
         });
-        console.log(res.data.project_attachments4,'|||||')
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'chooseFile',
@@ -278,12 +277,8 @@ export default {
             type: 'form',
             data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,}
           });
-          
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', JSON.parse(res.data.small_company));
-        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', { ...res.data, input12: 'true' });
-        // res.data.project_attachments0.forEach((val)=>{
-        //   val.title = val.file_name
-        // })
+       
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS', res.data.project_attachments0);
       }
     },
@@ -295,7 +290,7 @@ export default {
       }
     },
     beforeAvatarUpload(file) {
-      console.log(this.uploadUrl);
+      // console.log(this.uploadUrl);
       const isJPG = file.type.includes("image");
       const isVideo = file.type.includes("mp4");
 
@@ -305,7 +300,7 @@ export default {
       return isJPG || isVideo;
     },
     handleSuccess(e, file, fileList) {
-      console.log(e, file, fileList, "----");
+      // console.log(e, file, fileList, "----");
       if (e.code === 200) {
         // e.data.title = e.data.file_name;
         // this.$emit('updateFile',e.data)
@@ -343,7 +338,7 @@ export default {
               return
             }
             let res = await saveImplement(form);
-            console.log(res);
+            // console.log(res);
             if (res.code == 200) {
               this.$message.success(res.msg);
               // this.$router.go(-1);
@@ -357,7 +352,7 @@ export default {
         });
       } else {
         let res = await saveImplement(form);
-        console.log(res);
+        // console.log(res);
         if (res.code == 200) {
           this.$message.success(res.msg);
           // this.$router.go(-1);

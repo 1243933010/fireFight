@@ -55,10 +55,10 @@ export default {
   },
   methods:{
     handleSelect(e){
-      console.log(e,this.item)
+      // console.log(e,this.item)
     },
     open(e){
-      console.log(e,'---')
+      // console.log(e,'---')
     }
   }
 }

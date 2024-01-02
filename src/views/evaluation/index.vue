@@ -102,7 +102,7 @@ export default {
         }
     },
     mounted() {
-        console.log(router.options, this.$router)
+        // console.log(router.options, this.$router)
     },
     methods: {
         onSubmit() {
@@ -115,7 +115,7 @@ export default {
             })
         },
         openDetail(item) {
-            console.log(item)
+            // console.log(item)
             this.$router.push({name:'ImplementationCommissionEdit',params:{}})
         },
         projectAdd() {

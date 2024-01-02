@@ -116,7 +116,7 @@ export default {
 
   mounted() {
     let route = this.$route;
-    console.log( this.$store.getters)
+    // console.log( this.$store.getters)
     this.getDetail(route.query.id);
     this.getAgentList();
   },
@@ -133,7 +133,7 @@ export default {
       };
     },
     projectInfo() {
-      console.log(this.$store.state.projectManagementAdd.ImplementationCommissionForm,'---')
+      // console.log(this.$store.state.projectManagementAdd.ImplementationCommissionForm,'---')
       return this.$store.state.projectManagementAdd.ImplementationCommissionForm;
     },
     formInfo() {
@@ -149,7 +149,7 @@ export default {
           type: 'warning'
         }).then(async() => {
           let res = await deleteContract(item.id);
-          console.log(res)
+          // console.log(res)
           if(res.code===200){
             this.$message({
             type: 'success',
@@ -213,7 +213,7 @@ export default {
     },
     async submitFnc(){
            let res = await submitContract(this.formInfo.id);
-           console.log(res)
+          //  console.log(res)
            if(res.code==200){
             this.$message.success(res.msg)
             this.getDetail(this.$route.query.id)
@@ -231,9 +231,9 @@ export default {
             this.$refs.checkDialogEnd.openDialog(true)
           },
           async auditEmit(e){
-            console.log(e)
+            // console.log(e)
             let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            console.log(res)
+            // console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
               this.$refs.checkDialog.openDialog(false)
@@ -243,9 +243,9 @@ export default {
             this.$message.error(res.msg);
           },
           async auditEmitEnd(e){
-            console.log(e)
+            // console.log(e)
             let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            console.log(res)
+            // console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
               this.$refs.checkDialogEnd.openDialog(false)

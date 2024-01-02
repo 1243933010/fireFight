@@ -63,12 +63,12 @@ export const addMixins = {
             return this.$store.state.thirdProjects.thirdData.bidBaseProject;
           },
           bidBaseActive(){
-            return this.bidBaseProject.bid_file_date&&this.bidBaseProject.bid_publish_date&&this.bidBaseProject.publish_link&&this.bidBaseProject.bid_open_date&&this.bidBaseProject.doubt&&this.bidBaseProject.bid_publish_photo&&this.bidBaseProject.bid_register_file&&this.bidBaseProject.bid_file_issue&&this.bidBaseProject.project_attachments[0].files&&this.bidBaseProject.project_attachments[1].files&&this.bidBaseProject.project_attachments[2].files
+            return this.bidBaseProject.bid_file_date&&this.bidBaseProject.bid_publish_date&&this.bidBaseProject.publish_link&&this.bidBaseProject.bid_open_date&&this.bidBaseProject.doubt&&this.bidBaseProject.bid_publish_photo&&this.bidBaseProject.bid_register_file&&this.bidBaseProject.bid_file_issue&&this.bidBaseProject.project_attachments[0].files&&this.bidBaseProject.project_attachments[1].files
           },
           resultDataActive(){
             let bool = true;
             let resultData = this.$store.state.thirdProjects.thirdData.resultData;
-            console.log(this.$store.state.thirdProjects.thirdData.resultData,'===================')
+            // console.log(this.$store.state.thirdProjects.thirdData.resultData,'===================')
             if(!resultData.bid_success_amount||!resultData.bid_success_unit||!resultData.bid_success_phone||!resultData.bid_success_contact||!resultData.bid_success_link||!resultData.bid_success_publish_date||!resultData.bid_success_unit_type||!resultData.bid_success_unit_per||!resultData.bid_success_notice_date||!resultData.bid_success_photo.length||!resultData.bid_success_notice.length){
                 bool = false
             }

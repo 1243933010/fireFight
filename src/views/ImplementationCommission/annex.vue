@@ -44,19 +44,19 @@ export default{
   },
   computed:{
     project_attachments(){
-      console.log(this.$store.state.projectManagementAdd.project_attachments,'11111111111111')
+      // console.log(this.$store.state.projectManagementAdd.project_attachments,'11111111111111')
       return this.$store.state.projectManagementAdd.project_attachments
     }
   },
   methods:{
     updateFile(e,item,index){
-      console.log(e,item,index)
+      // console.log(e,item,index)
       if(typeof e ==number){
         itemm.files.splice(e,1)
       }else{
         item.files.push(e)
       }
-      console.log(this.$store.state.projectManagementAdd.project_attachments)
+      // console.log(this.$store.state.projectManagementAdd.project_attachments)
     }
   }
 }

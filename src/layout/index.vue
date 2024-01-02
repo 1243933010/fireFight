@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <div class="header">
+    <!-- <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -37,7 +37,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -149,7 +149,7 @@ export default {
   },
   mounted(){
     let dialog = localStorage.getItem('dialog');
-    console.log(dialog)
+    // console.log(dialog)
     // if(dialog=='true'){
       
       this.getList();
@@ -160,7 +160,7 @@ export default {
   methods: {
     async query() {
             let res = await userNoticeList(this.form);
-            console.log(res);
+            // console.log(res);
             if (res.code == 200) {
                 this.noticeNum = res.data.length;
             //     this.list = [
@@ -169,7 +169,7 @@ export default {
             }
         },
     handleData(item){
-      console.log(item)
+      // console.log(item)
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
       let url = '';
       if([0,2,4].includes(item.status)){
@@ -192,7 +192,7 @@ export default {
     },
     async getList(){
       let res = await needDo();
-      console.log(res)
+      // console.log(res)
       if(res.code==200){
         if(res.data.total>0){
         this.dialogVisible = true;

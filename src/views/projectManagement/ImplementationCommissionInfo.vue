@@ -9,12 +9,12 @@
               label-width="100px">
               <el-col :span="14">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
-                  <el-input v-model="formInfo.no" type="number" />
+                  <el-input v-model="formInfo.no" type="text" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
-                  <el-input v-model="formInfo.choose_no" type="number" />
+                  <el-input v-model="formInfo.choose_no" type="text" />
                 </el-form-item>
               </el-col>
               

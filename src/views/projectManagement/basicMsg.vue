@@ -215,21 +215,21 @@ export default {
 
       procurementMethodSelect: [
         [
-          { label: "公开招标", value: 1 },
-          { label: "邀请招标", value: 2 },
-          { label: "竞争性谈判", value: 3 },
-          { label: "竞争性磋商", value: 4 },
-          { label: "单一来源采购", value: 5 },
-          { label: "询价", value: 6 },
-          { label: "其他", value: 7 },
-        ],
-        [
-          { label: "遴选采购", value: 8 },
-          { label: "竟价采购", value: 9 },
-          { label: "直选采购", value: 10 },
-          { label: "自行直接采购", value: 11 },
-        ],
-      ],
+          { label: '公开招标', value: 1 },
+          { label: '邀请招标', value: 2 },
+          { label: '竞争性谈判', value: 3 },
+          { label: '竞争性磋商', value: 4 },
+          { label: '单一来源采购', value: 5},
+          { label: '询价', value: 6},
+          { label: '其他', value: 7 },
+
+        ], [
+          { label: '遴选采购', value: 8 },
+          { label: '竟价采购', value: 9 },
+          { label: '直选采购', value: 10 },
+          { label: '自行直接采购“', value: 11 },
+        ]
+      ]
     };
   },
   watch: {
@@ -260,6 +260,10 @@ export default {
     },
   },
   computed: {
+    
+    formInfo() {
+      return this.$store.state.projectManagementAdd.formInfo;
+    },
     procurementMethodList(){
          let price = 1000000;
       if(this.formInfo.type=='engineering'){
@@ -267,15 +271,13 @@ export default {
       }else{
         price = 1000000;
       }
+      
       if((+this.formInfo.audit_amount)>=price){
         this.formInfo.procurement_method = ''
         return this.procurementMethodSelect[0]
       }else{
         return this.procurementMethodSelect[1]
       }
-    },
-    formInfo() {
-      return this.$store.state.projectManagementAdd.formInfo;
     },
     // radioLabelList(){
     //   return this.$store.state.projectManagementAdd.radioLabelList

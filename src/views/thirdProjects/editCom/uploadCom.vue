@@ -25,6 +25,7 @@
                     @click="deleteFile(item, index)"
                   >
                     <img
+                      v-if="type == 'add'"
                       style="width: 100%"
                       src="../../../assets/delete_icon.png"
                       alt=""

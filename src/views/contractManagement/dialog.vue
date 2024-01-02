@@ -49,11 +49,8 @@ export default {
     },
     },
     beforeRouteLeave(to, from, next) {
-        console.log('111111')
+        // console.log('111111')
         next();
-    },
-    mounted() {
-        console.log(this.$route)
     },
     methods: {
         async getDetail(id){
@@ -94,7 +91,7 @@ export default {
         let form =  {files:this.fileList};
            form.id= this.formInfo.id;
            let res = await saveContract(form);
-           console.log(res)
+        //    console.log(res)
            if(res.code==200){
             this.dialogVisible = false;
             this.$message.success(res.msg)
@@ -120,7 +117,7 @@ export default {
         },
        
         handleSuccess(e, file, fileList){
-            console.log(e, file, fileList,'----')
+            // console.log(e, file, fileList,'----')
             if(e.code===200){
                 e.data.title = e.data.file_name;
                 this.fileList.push(e.data)

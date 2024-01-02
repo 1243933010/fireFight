@@ -16,11 +16,12 @@
           </div>
 
           <BasicMsg ref="basicMsg" :disabled="false" />
-           <div  v-for="(item,index) in formInfo.audit_log" :key="'index'">
-            <div style="display: flex;flex-direction: row;" v-if="[2,4].includes(item.status)" >
-            <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="item.description" ></el-input>
-          </div>
+          <div >
+            <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14][2,4].includes(projectInfo.reject_log.status)">
+              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                v-model="projectInfo.reject_log.description"></el-input>
+            </div>
           </div>
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
@@ -110,10 +111,12 @@ export default {
             })
           }
         })
+       this.$nextTick(()=>{
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST',JSON.parse(res.data.small_company));
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO',{...res.data,input12:input12});
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS',res.data.project_attachments0);
         
+       })
 
       }
     },
@@ -129,7 +132,6 @@ export default {
       console.log(reqBool)
     
       if(reqBool){
-        console.log('------')
         let bool = false;
        this.$refs.basicMsg.verifyForm((bools)=>{
         bool = bools

@@ -168,9 +168,9 @@ export const addMixins = {
             this.$refs.checkDialogEnd.openDialog(true)
           },
           async auditEmit(e){
-            console.log(e)
+            // console.log(e)
             let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            console.log(res)
+            // console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
               this.$router.go(-1)
@@ -179,9 +179,9 @@ export const addMixins = {
             this.$message.error(res.msg);
           },
           async auditEmitEnd(e){
-            console.log(e)
+            // console.log(e)
             let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            console.log(res)
+            // console.log(res)
             if(res.code==200){
               this.$message.success(res.msg);
               this.$router.go(-1)

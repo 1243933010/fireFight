@@ -33,11 +33,11 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
           <el-input v-model="formInfo.no" />
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
           <el-input v-model="formInfo.audit_amount" type="number" />
@@ -187,7 +187,7 @@ export default {
             })
           }
         })
-        console.log(this.formInfo.input12, this.$store.state.projectManagementAdd.formInfo.input12,'6666666')
+        // console.log(this.formInfo.input12, this.$store.state.projectManagementAdd.formInfo.input12,'6666666')
       },
       deep: true
     }

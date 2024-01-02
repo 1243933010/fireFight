@@ -251,7 +251,7 @@ export default {
     },
     async departmentFnc(){
       let res = await departmentArr({per_page:1000});
-            console.log(res)
+            // console.log(res)
             if (res.code == 200) {
                 this.departmentList = res.data.list;
             }
@@ -262,21 +262,21 @@ export default {
         per_page: this.form.per_page,
       };
       let res = await contractList(this.form);
-      console.log(res);
+      // console.log(res);
       if (res.code == 200) {
         this.form.total = res.data.total;
         this.list = res.data.list;
       }
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.form.per_page = val;
       this.form.current_page = 1;
       this.query();
     },
     handleCurrentChange(val) {
       this.form.current_page = val;
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.query();
     },
     openDetail(item) {
@@ -295,7 +295,7 @@ export default {
       })
         .then(async () => {
           let res = await projectDelete(item.id);
-          console.log(res);
+          // console.log(res);
           if (res.code === 200) {
             this.$message({
               type: "success",

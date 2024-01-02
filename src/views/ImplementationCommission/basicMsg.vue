@@ -151,19 +151,19 @@ export default {
       
       procurementMethodSelect: [
         [
-          { label: '公开招标', value: '1' },
-          { label: '邀请招标', value: '2' },
-          { label: '竞争性谈判', value: '3' },
-          { label: '竞争性磋商', value: '4' },
-          { label: '单一来源采购', value: '5' },
-          { label: '询价', value: '6' },
-          { label: '其他', value: '7' },
+          { label: '公开招标', value: 1 },
+          { label: '邀请招标', value: 2 },
+          { label: '竞争性谈判', value: 3 },
+          { label: '竞争性磋商', value: 4 },
+          { label: '单一来源采购', value: 5},
+          { label: '询价', value: 6},
+          { label: '其他', value: 7 },
 
         ], [
-          { label: '遴选采购', value: '8' },
-          { label: '竟价采购', value: '9' },
-          { label: '直选采购', value: '10' },
-          { label: '自行直接采购“', value: '11' },
+          { label: '遴选采购', value: 8 },
+          { label: '竟价采购', value: 9 },
+          { label: '直选采购', value: 10 },
+          { label: '自行直接采购“', value: 11 },
         ]
       ]
     }
@@ -187,7 +187,7 @@ export default {
             })
           }
         })
-        console.log(this.formInfo.input12, this.$store.state.projectManagementAdd.formInfo.input12,'6666666')
+        // console.log(this.formInfo.input12, this.$store.state.projectManagementAdd.formInfo.input12,'6666666')
       },
       deep: true
     }
@@ -196,17 +196,8 @@ export default {
   computed: {
     procurementMethodList(){
          let price = 1000000;
-      if(this.formInfo.type=='engineering'){
-        price = 1200000;
-      }else{
-        price = 1000000;
-      }
-      if((+this.formInfo.audit_amount)>price){
-        this.formInfo.procurement_method = ''
-        return this.procurementMethodSelect[0]
-      }else{
-        return this.procurementMethodSelect[1]
-      }
+    
+      return this.procurementMethodSelect[0].concat(this.procurementMethodSelect[1])
     },
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo
