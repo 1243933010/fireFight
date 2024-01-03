@@ -53,7 +53,7 @@
               <img src="../../assets/liucheng.png" alt="">
               <span>附件</span>
             </div>
-            <div class="upload" @click="uploadFile" v-if="[29,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
+            <div class="upload" @click="uploadFile" v-if="[27,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
               <span>上传合同</span>
             </div>
           </div>

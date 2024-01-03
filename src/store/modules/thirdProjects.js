@@ -85,9 +85,9 @@ const state = {
         {amount:'',name:"",contact:'',unit_file_compilation:[],files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
 
       ],
-      project_attachments:[
-        {type:'expert_info',title:'参与评审专家信息',files:[],description:'',is_required:1},
-      ]
+      // project_attachments:[
+      //   {type:'expert_info',title:'参与评审专家信息',files:[],description:'',is_required:1},
+      // ]
     },
     resultData:{
       bid_success_amount:'',
@@ -96,14 +96,18 @@ const state = {
       bid_success_contact:'',
       bid_success_link:'',
       bid_success_publish_date:'',
-      bid_success_unit_type:'',
+      // bid_success_unit_type:'',
       bid_success_unit_per:'',
       bid_success_notice_date:'',
       bid_success_photo:[],
       bid_success_notice:[],
       project_attachments:[
         {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:'',is_required:1},
-      ]
+      ],
+      //------
+      bid_file:[],
+      bid_unit_type:[],
+      file_compilation:[]
     }
   },
 }
@@ -150,7 +154,15 @@ const mutations = {
   update_resultData:(state,form)=>{
     state.thirdData.resultData = form;
   },
-
+  // update_resultData_bid_unit_type:(state,list)=>{
+  //   state.thirdData.resultData.bid_unit_type = list;
+  // },
+  // update_resultData_bid_file:(state,list)=>{
+  //   state.thirdData.resultData.bid_file = list;
+  // },
+  // update_resultData_file_compilation:(state,list)=>{
+  //   state.thirdData.resultData.file_compilation = list;
+  // },
   //---
 
   // update_bidBaseProject_fail:(state,form)=>{

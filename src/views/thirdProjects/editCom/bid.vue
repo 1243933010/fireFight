@@ -239,12 +239,12 @@ export default {
           return;
         }
       }
-      for (let i = 0; i < project_attachments.length; i++) {
-        if (project_attachments[i].files.length == 0) {
-          this.$message.error("请上传附件");
-          return;
-        }
-      }
+      // for (let i = 0; i < project_attachments.length; i++) {
+      //   if (project_attachments[i].files.length == 0) {
+      //     this.$message.error("请上传附件");
+      //     return;
+      //   }
+      // }
 
       let form = this.$store.state.thirdProjects.thirdData.startData;
       form.id = this.projectInfo.id;

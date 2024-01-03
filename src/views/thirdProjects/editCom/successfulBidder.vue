@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form ref="thirdForm" style="" :inline="true" :rules="thirdFormRules" :model="resultData" class="demo-form-inline"
-      :disabled="![23, 24, 26, 28].includes(projectInfo.status)" label-width="180px">
+      :disabled="![21, 24,26].includes(projectInfo.status)" label-width="180px">
 
       <div style="display: flex;flex-direction: row;margin-bottom: 20px;">
         <el-form-item label="中标金额" prop="bid_success_amount" style="width: 50%;">
@@ -53,14 +53,36 @@
             </div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="中标供应商企业类型" prop="bid_success_unit_type" style="width: 50%;">
+        <el-form-item label="中标通知书日期" prop="bid_success_notice_date" style="width: 50%;">
+          <el-date-picker v-model="resultData.bid_success_notice_date" type="date" value-format="yyyy-MM-dd"
+            placeholder="请选择开评标日期">
+          </el-date-picker>
+        </el-form-item>
+        
+
+      </div>
+      <div style="display: flex;flex-direction: row;">
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice"
+            @updateFile="(e) => updateFile(e, resultData.bid_success_notice)" />
+        <!-- </div> -->
+      </div>
+      
+      <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom title="中标供应商企业类型" :fileList="resultData.bid_unit_type"
+            @updateFile="(e) => updateFile(e, resultData.bid_unit_type)" />
+        <!-- </div> -->
+      </div>
+      <!-- <el-form-item label="中标供应商企业类型" prop="bid_success_unit_type" style="width: 50%;">
           <el-select v-model="resultData.bid_success_unit_type" placeholder="请选择中标供应商企业类型">
             <el-option label="大型" value="大型" />
             <el-option label="中型" value="中型" />
             <el-option label="小微" value="小微" />
           </el-select>
-        </el-form-item>
-
+        </el-form-item> -->
+       
       </div>
       <div style="display: flex;flex-direction: row;">
         <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 50%;">
@@ -68,17 +90,27 @@
             <span slot="suffix">%</span>
           </el-input>
         </el-form-item>
-        <el-form-item label="中标通知书日期" prop="bid_success_notice_date" style="width: 50%;">
-          <el-date-picker v-model="resultData.bid_success_notice_date" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择开评标日期">
-          </el-date-picker>
-        </el-form-item>
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom title="档案汇编" :fileList="resultData.file_compilation"
+            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
+        <!-- </div> -->
       </div>
-      <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <div style="padding-left: 40px;width: 50%;">
-          <UploadCom title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice"
-            @updateFile="(e) => updateFile(e, resultData.bid_success_notice)" />
-        </div>
+      </div>
+      <div style="display: flex;flex-direction: row;">
+        
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom title="bid_file" :fileList="resultData.bid_file"
+            @updateFile="(e) => updateFile(e, resultData.bid_file)" />
+        <!-- </div> -->
+      </div>
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.file_compilation"
+            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
+        <!-- </div> -->
+      </div>
       </div>
     </el-form>
 

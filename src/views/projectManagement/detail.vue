@@ -162,6 +162,8 @@ export default {
         );
         this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
           ...res.data,
+           failDataBool: false,
+          bid_fail_times: res.data.bid_times,
           input12: "true",
         });
         this.$store.commit(
@@ -219,9 +221,21 @@ export default {
           res.data.bid_units
         );
         this.$store.commit(
-          "projectManagementAdd/update_startData_project_attachments",
-          res.data.project_attachments2
+          "thirdProjects/update_startData_bid_unit_type",
+          res.data.bid_unit_type
         );
+        this.$store.commit(
+          "thirdProjects/update_startData_bid_file",
+          res.data.bid_file
+        );
+        this.$store.commit(
+          "thirdProjects/update_startData_file_compilation",
+          res.data.file_compilation
+        );
+        // this.$store.commit(
+        //   "projectManagementAdd/update_startData_project_attachments",
+        //   res.data.project_attachments2
+        // );
         // }
         // if(res.data.status>=24){
         let data1 = {

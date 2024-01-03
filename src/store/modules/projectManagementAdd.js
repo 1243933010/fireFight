@@ -99,14 +99,17 @@ const state = {
       bid_success_contact:'',
       bid_success_link:'',
       bid_success_publish_date:'',
-      bid_success_unit_type:'',
+      // bid_success_unit_type:'',
       bid_success_unit_per:'',
       bid_success_notice_date:'',
       bid_success_photo:[],
       bid_success_notice:[],
       project_attachments:[
-        {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:'',is_required:1},
-      ]
+        {type:'accusation_question',title:'相关资料（如质疑答复、投书处理决定等）',files:[],description:'',is_required:0},
+      ],
+      bid_file:[],
+      bid_unit_type:[],
+      file_compilation:[]
     }
   }
 }
@@ -158,6 +161,15 @@ const mutations = {
   },
   update_resultData:(state,form)=>{
     state.thirdData.resultData = form;
+  },
+  update_resultData_bid_unit_type:(state,list)=>{
+    state.thirdData.resultData.bid_unit_type = list;
+  },
+  update_resultData_bid_file:(state,list)=>{
+    state.thirdData.resultData.bid_file = list;
+  },
+  update_resultData_file_compilation:(state,list)=>{
+    state.thirdData.resultData.file_compilation = list;
   },
 }
 

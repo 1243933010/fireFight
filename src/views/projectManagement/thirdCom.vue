@@ -105,28 +105,6 @@
         </div>
       </el-col>
     </el-row>
-    <div>
-      <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14].includes(projectInfo.reject_log.status)">
-        <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-        <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-          v-model="projectInfo.reject_log.description"></el-input>
-      </div>
-    </div>
-    <div v-if="projectInfo.failDataBool" style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc(false)" v-if="[11, 12, 14].includes(projectInfo.status)"
-        v-permission="['project_registrar']" type="normal">保存草稿</el-button>
-      <el-button @click="saveFnc(true)" v-if="[11, 12, 14].includes(projectInfo.status)"
-        v-permission="['project_registrar']" type="primary">提交</el-button>
-      <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
-        type="primary">审核</el-button>
-      <!-- <el-button @click="auditFncEnd" v-if="projectInfo.status == 15" v-permission="['department_auditor']"
-        type="primary">终审</el-button> -->
-
-    </div>
-    <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
-      :radioList="[{ label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
-    <!-- <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
-      :radioList="[{ label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" /> -->
 
 
   </div>

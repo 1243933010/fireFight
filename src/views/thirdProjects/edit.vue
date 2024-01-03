@@ -363,12 +363,16 @@ export default {
           "thirdProjects/update_startData_project_attachments",
           res.data.project_attachments2
         );
+        
         // if(res.data.status>=24){
         let data1 = {
           ...res.data.bid_info,
           bid_success_photo: res.data.bid_success_photo,
           bid_success_notice: res.data.bid_success_notice,
           project_attachments: res.data.project_attachments3,
+          bid_unit_type:res.data.bid_unit_type,
+          bid_file:res.data.bid_file,
+          file_compilation:res.data.file_compilation,
         };
         this.$store.commit("thirdProjects/update_resultData", data1);
         // }
