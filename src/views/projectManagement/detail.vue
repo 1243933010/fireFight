@@ -248,8 +248,12 @@ export default {
                 bid_open_date: "",
                 doubt: "",
               }),
-          bid_success_photo: res.data.bid_success_photo,
+              bid_success_photo: res.data.bid_success_photo,
           bid_success_notice: res.data.bid_success_notice,
+          project_attachments: res.data.project_attachments3,
+          bid_unit_type:res.data.bid_unit_type,
+          bid_file:res.data.bid_file,
+          file_compilation:res.data.file_compilation,
         };
         data1.project_attachments = res.data.project_attachments3;
         this.$store.commit("projectManagementAdd/update_resultData", data1);

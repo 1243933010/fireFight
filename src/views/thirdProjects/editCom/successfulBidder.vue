@@ -101,43 +101,22 @@
         
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="bid_file" :fileList="resultData.bid_file"
+          <UploadCom title="投标文件" :fileList="resultData.bid_file"
             @updateFile="(e) => updateFile(e, resultData.bid_file)" />
         <!-- </div> -->
       </div>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.file_compilation"
-            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
+          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments"
+            @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
         <!-- </div> -->
       </div>
       </div>
     </el-form>
 
-    <div class="box-right1">
+    <!-- <div class="box-right1">
       <div class="files">
-        <div class="title1">
-          <img src="../../../assets/liucheng.png" alt="" />
-          <span>附件</span>
-        </div>
         <div class="file-form">
-          <!-- <div class="file-form-item">
-                <div class="left">
-                  <div class="title"><span>举报/质疑/投诉</span></div>
-                  <div class="input">
-                    <el-input
-                    v-model="resultData."
-                      type="textarea"
-                      :rows="4"
-                      placeholder="举报/质疑/投诉。"
-                    >
-                    </el-input>
-                  </div>
-                </div>
-                <div class="right">
-                  <UploadCom title="附件" :fileList="resultData.project_attachments[0].files" @updateFile="(e)=>updateFile(e,resultData.project_attachments[0].files)" />
-                </div>
-              </div> -->
           <div class="file-form-item" style="width: 60%;" v-for="(item, index) in resultData.project_attachments"
             :key="index">
             <div class="left">
@@ -153,7 +132,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div>
       <div style="display: flex;flex-direction: row;"
         v-if="projectInfo.reject_log && [26].includes(projectInfo.reject_log.status)">
@@ -248,6 +227,19 @@ export default {
             this.$message.error('请上传中标通知书/成交结果通知书');
             return
           }
+          if (!resultData.bid_file.length) {
+            this.$message.error('请上传投标文件');
+            return
+          }
+          if (!resultData.bid_unit_type.length) {
+            this.$message.error('请上传中标企业类型');
+            return
+          }
+          if (!resultData.file_compilation.length) {
+            this.$message.error('请上传档案汇编');
+            return
+          }
+          
           // if(!resultData.project_attachments[0].files.length){
           // this.$message.error('请上传附件');
           // return

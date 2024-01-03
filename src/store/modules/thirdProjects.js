@@ -102,7 +102,7 @@ const state = {
       bid_success_photo:[],
       bid_success_notice:[],
       project_attachments:[
-        {type:'accusation_question',title:'举报/质疑/投诉',files:[],description:'',is_required:1},
+        {type:'accusation_question',title:'相关资料（如质疑答复、投书处理决定等）',files:[],description:'',is_required:0},
       ],
       //------
       bid_file:[],

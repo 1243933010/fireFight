@@ -162,15 +162,15 @@ const mutations = {
   update_resultData:(state,form)=>{
     state.thirdData.resultData = form;
   },
-  update_resultData_bid_unit_type:(state,list)=>{
-    state.thirdData.resultData.bid_unit_type = list;
-  },
-  update_resultData_bid_file:(state,list)=>{
-    state.thirdData.resultData.bid_file = list;
-  },
-  update_resultData_file_compilation:(state,list)=>{
-    state.thirdData.resultData.file_compilation = list;
-  },
+  // update_resultData_bid_unit_type:(state,list)=>{
+  //   state.thirdData.resultData.bid_unit_type = list;
+  // },
+  // update_resultData_bid_file:(state,list)=>{
+  //   state.thirdData.resultData.bid_file = list;
+  // },
+  // update_resultData_file_compilation:(state,list)=>{
+  //   state.thirdData.resultData.file_compilation = list;
+  // },
 }
 
 export default {

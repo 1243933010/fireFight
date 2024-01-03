@@ -279,7 +279,7 @@ export default {
                 white-space: normal;
                 // display: -webkit-box;
                 // -webkit-box-orient: vertical;
-                // -webkit-line-clamp: 1;
+                -webkit-line-clamp: 1;
               }
 
               .delete {}
