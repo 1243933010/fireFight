@@ -67,12 +67,12 @@
         </el-table-column>
         <el-table-column label="部门" align="center">
           <template slot-scope="scope">
-            <span>占位</span>
+            <span>{{ scope.row.demand_department }}</span>
           </template>
         </el-table-column>
         <el-table-column label="经办人" align="center">
           <template slot-scope="scope">
-            <span>占位</span>
+            <span>{{ scope.row.project_leader }}</span>
           </template>
         </el-table-column>
         <el-table-column label="项目状态" align="center">
@@ -82,7 +82,7 @@
         </el-table-column>
         <el-table-column label="审核时间" align="center">
           <template slot-scope="scope">
-            <span>占位</span>
+            <span>{{ scope.row.updated_at }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">

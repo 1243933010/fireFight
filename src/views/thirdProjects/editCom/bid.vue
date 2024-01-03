@@ -11,143 +11,80 @@
       </div>
     </div>
     <div class="item-form">
-      <div
-        class="item"
-        v-for="(item, index) in startData.bid_units"
-        :key="index"
-      >
+      <div class="item" v-for="(item, index) in bid_units" :key="index">
         <!-- <el-input type="text" :rows="4" v-model="item.name" placeholder="我部已申请采购一批消防器材望上级批准。" v-show="true">  </el-input> -->
+        <div style="width: 100%;margin-bottom: 20px;"><el-checkbox v-model="item.status" @change="(e)=>changeCheck(e,item,index)">该单位是否合格</el-checkbox></div>
         <div class="input1">
-          <span class="color" >*</span>参与投标单位:
-          <el-input
-            style="width: 200px"
-            v-model="item.name"
-            type="text"
-            placeholder="请输入参与投标单位"
-          >
+          <span class="color">*</span>参与投标单位:
+          <el-input style="width: 200px" v-model="item.name" type="text" placeholder="请输入参与投标单位">
           </el-input>
-          
+
         </div>
-        
+
         <div class="input1">
           <span class="color">*</span>参与投标联系人:
-          <el-input
-            style="width: 200px"
-            v-model="item.contact"
-            type="text"
-            placeholder="请输入参与投标联系人"
-          ></el-input>
+          <el-input style="width: 200px" v-model="item.contact" type="text" placeholder="请输入参与投标联系人"></el-input>
         </div>
         <div class="input1">
           <span class="color">*</span>参与投标报价金额:
-          <el-input
-            style="width: 200px"
-            v-model="item.amount"
-            type="text"
-            placeholder="请输入参与投标报价金额"
-          ></el-input>
+          <el-input style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
         </div>
-        <UploadCom
-          title="投标文件"
-          :fileList="item.files"
-          @updateFile="(e) => updateFile(e, item.files, index)"
-        />
+        <UploadCom style="width: 50%;" title="单位档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
+        <UploadCom style="width: 50%;" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+       
+
         <div class="float" v-if="index > 2" @click="deleteItem(index)">
-            <div>删除</div>
+          <div>删除</div>
+        </div>
+        <div style="clear: both;"></div>
+        <div style="width: 100%;">
+          <div class="fen-float" style="" v-if="item.status"><el-button type="primary" @click="addScore(item)">添加打分</el-button></div>
+          <div class="fen"  v-if="item.status">
+            <div v-for="(value,inde) in item.scores" :key="inde" class="fen-it">
+            <span>{{ enIndex[inde]||'aa' }}:</span>
+           <div class="fen-item">
+            <span class="fen-item-text">商务分</span>
+            <el-input-number  v-model="value.business_score"  :min="0"  :controls="false"></el-input-number>
+           </div>
+           <div class="fen-item">
+            <span class="fen-item-text">技术分</span>
+            <el-input-number v-model="value.tech_score"  :min="0"  :controls="false"></el-input-number>
+           </div>
+           <div class="fen-item">
+            <span class="fen-item-text">价格分</span>
+            <el-input-number v-model="value.price_score"  :min="0"  :controls="false"></el-input-number>
+           </div>
+           <div class="fen-item">
+            <span class="fen-item-text">总分</span>
+            <el-input-number v-model="value.total_score"  :min="0"  :controls="false"></el-input-number>
+           </div>
           </div>
+          </div>
+        </div>
       </div>
     </div>
-    <el-row>
-      <el-col :span="14">
-        <div class="box-right">
-          <div class="files">
-            <div class="title1">
-              <img src="../../../assets/liucheng.png" alt="" />
-              <span>附件</span>
-            </div>
-            <div class="file-form">
-              <div
-                class="file-form-item"
-                style="width: 100%;"
-                v-for="(item, index) in startData.project_attachments"
-                :key="index"
-              >
-                <div class="left">
-                  <div class="title">
-                    <span>{{ item.title }}</span>
-                  </div>
-                  <div class="input">
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      v-model="item.description"
-                      :placeholder="item.title"
-                    >
-                    </el-input>
-                  </div>
-                </div>
-                <div class="right">
-                  <UploadCom
-                    title="附件"
-                    :fileList="item.files"
-                    @updateFile="(e) => updateFile(e, item.files, index)"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <!-- <div style="display: flex;flex-direction: row;padding-top: 60px;"   v-if="[20,22].includes(projectInfo.status)">
-            <span style="color: red;font-size: 14px;">开标审核意见:</span>
-            <el-input  :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="projectInfo.description" ></el-input>
-          </div> -->
-          <div  v-for="(item,index) in projectInfo.audit_log" :key="index">
-            <div style="display: flex;flex-direction: row;" v-if="[20,22].includes(item.status)" >
-            <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4" v-model="item.description" ></el-input>
-          </div>
-          </div>
-      </el-col>
-    </el-row>
+   
     <div>
-      <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[20].includes(projectInfo.reject_log.status)">
+      <div style="display: flex;flex-direction: row;"
+        v-if="projectInfo.reject_log && [20].includes(projectInfo.reject_log.status)">
         <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.reject_log.description"></el-input>
       </div>
     </div>
-    <div
-      style="
+    <div style="
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-      "
-    >
+      ">
       <!-- v-if="projectInfo.status == 17" -->
-      <el-button
-        v-if="[15, 18, 20].includes(projectInfo.status)"
-        @click="saveFnc(false)"
-        v-permission="['project_registrar']"
-        type="normal"
-        >保存草稿</el-button
-      >
-      <el-button
-        @click="saveFnc(true)"
-        v-if="[15, 18, 20].includes(projectInfo.status)"
-        v-permission="['project_registrar']"
-        type="primary"
-        >提交</el-button
-      >
-      <el-button
-        @click="auditFnc"
-        v-if="projectInfo.status == 19"
-        v-permission="['department_auditor']"
-        type="primary"
-        >审核</el-button
-      >
+      <el-button v-if="[15, 18, 20].includes(projectInfo.status)" @click="saveFnc(false)"
+        v-permission="['project_registrar']" type="normal">保存草稿</el-button>
+      <el-button @click="saveFnc(true)" v-if="[15, 18, 20].includes(projectInfo.status)"
+        v-permission="['project_registrar']" type="primary">提交</el-button>
+      <el-button @click="auditFnc" v-if="projectInfo.status == 19" v-permission="['department_auditor']"
+        type="primary">审核</el-button>
       <!-- <el-button
         @click="auditFncEnd"
         v-if="projectInfo.status == 21"
@@ -156,15 +93,10 @@
         >终审</el-button
       > -->
     </div>
-    <checkDialog
-      ref="checkDialog"
-      title="审核"
-      @auditEmit="auditEmit"
-      :radioList="[
-        { label: '拒绝', value: 20 },
-        { label: '通过', value: 21 },
-      ]"
-    />
+    <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit" :radioList="[
+      { label: '拒绝', value: 20 },
+      { label: '通过', value: 21 },
+    ]" />
     <!-- <checkDialog
       ref="checkDialogEnd"
       title="终审"
@@ -185,7 +117,9 @@ import { bidOpenSave, bidOpenSubmit, projectAudit } from "@/api/project";
 export default {
   components: { UploadCom, checkDialog },
   data() {
-    return {};
+    return {
+      enIndex:['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','R','S','T','U','V','W','X','Y','Z']
+    };
   },
   computed: {
     projectInfo() {
@@ -195,8 +129,27 @@ export default {
       console.log(this.$store.state.thirdProjects.thirdData.startData);
       return this.$store.state.thirdProjects.thirdData.startData;
     },
+    bid_units(){
+      let bid_units= this.$store.state.thirdProjects.thirdData.startData.bid_units;
+      bid_units.forEach((val)=>{
+        // val.bool = val.status==1?true:false
+        val.scores.forEach((item)=>{
+          item.total_score = item.business_score+item.tech_score+item.price_score
+        })
+      })
+      return bid_units;
+    }
   },
   methods: {
+    changeCheck(e,item,index){
+      console.log(e,item,index)
+      if(e){
+        item.scores=[{business_score:0,tech_score:0,price_score:0,total_score:0,}]
+      }
+    },
+    addScore(item){
+      item.scores.push({business_score:0,tech_score:0,price_score:0,total_score:0,})
+    },
     updateFile(e, item, index) {
       console.log(e, item, index);
       if (typeof e == "number") {
@@ -212,6 +165,8 @@ export default {
         name: "",
         contact: "",
         files: [],
+        status:false,
+        scores:[{business_score:0,tech_score:0,price_score:0,total_score:0,}]
       });
     },
     deleteItem(index) {
@@ -270,6 +225,7 @@ export default {
           !bid_units[i].name ||
           !bid_units[i].contact ||
           bid_units[i].files.length == 0
+          || bid_units[i].unit_file_compilation.length == 0
         ) {
           this.$message.error("请填写满单位信息");
           return;
@@ -278,7 +234,7 @@ export default {
       }
 
       for (let i = 0; i < bid_files_list.length; i++) {
-        if (!bid_files_list[i].files) {
+        if (!bid_files_list[i].files&&bid_files_list[i].is_required==1) {
           this.$message.error("请上传文件");
           return;
         }
@@ -323,25 +279,62 @@ export default {
 <style lang="scss" scoped>
 .item-form {
   .item {
-    margin-bottom: 10px;
+    margin-bottom: 80px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
+
     .input,
     .input1 {
       width: 100%;
       font-size: 14px;
       margin-bottom: 15px;
+
       .color {
         color: red;
       }
     }
+    .fen-float{
+      margin-right: 41px;
+        float: right;
+      }
+    .fen{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      // justify-content: space-between;
+      align-items: center;
+      
+      .fen-it{
+        width: 100%;
+      display: flex;
+      flex-direction: row;
+      // justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+        .fen-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 10px;
+        .fen-item-text{
+          font-size: 16px;
+          margin-right: 10px;
+        }
+        .fen-item-input{
+          width: 200px;
+        }
+      }
+      }
+    }
+
     .input1 {
-      width: 50%;
+      width: 33%;
     }
   }
 }
+
 .float {
   // padding-right: 30px;
   // padding-bottom: 20px;
@@ -408,6 +401,7 @@ export default {
     }
   }
 }
+
 .box-right {
   display: flex;
   flex-grow: 1;

@@ -251,28 +251,25 @@ export default {
           bid_register_file: res.data.bid_register_file,
           project_attachments: res.data.project_attachments1,
         };
-        console.log()
+        
         this.$store.commit("thirdProjects/update_bidBaseProject", data);
-        // }
-
-        // if(res.data.status>=18){
         this.$store.commit(
           "thirdProjects/update_startData_bid_files_list",
           res.data.bid_files_list
         );
-        if(res.data.bid_units.length>0){
-          this.$store.commit(
+        console.log(this.$store.state.thirdProjects.thirdData.startData.bid_units,'}}}')
+
+        this.$store.commit(
           "thirdProjects/update_startData_bid_units",
           res.data.bid_units
         );
-        }
+        console.log()
        
-        this.$store.commit(
-          "thirdProjects/update_startData_project_attachments",
-          res.data.project_attachments2
-        );
-        // }
-        // if(res.data.status>=24){
+        // this.$store.commit(
+        //   "thirdProjects/update_startData_project_attachments",
+        //   res.data.project_attachments2
+        // );
+        
         let data1 = {
           ...res.data.bid_info,
           bid_success_photo: res.data.bid_success_photo,
@@ -353,7 +350,7 @@ export default {
         };
         this.$store.commit("thirdProjects/update_bidBaseProject", data);
 
-        // if(res.data.status>=18){
+       
         this.$store.commit(
           "thirdProjects/update_startData_bid_files_list",
           res.data.bid_files_list
@@ -366,7 +363,6 @@ export default {
           "thirdProjects/update_startData_project_attachments",
           res.data.project_attachments2
         );
-        // }
         // if(res.data.status>=24){
         let data1 = {
           ...res.data.bid_info,

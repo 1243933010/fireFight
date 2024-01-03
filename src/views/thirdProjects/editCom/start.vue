@@ -11,6 +11,7 @@
             <UploadCom
               :title="item.title"
               :fileList="item.files"
+              :is_required="item.is_required"
               @updateFile="(e) => updateFile(e, item.files)"
             />
           </div>
@@ -19,7 +20,7 @@
     </el-row>
 
    <div style="width: 80%;">
-    <BidCom />
+    <BidCom @updateDetail="updateDetail" />
    </div>
   </div>
 </template>
@@ -46,6 +47,9 @@ export default {
     },
   },
   methods: {
+    updateDetail(){
+      this.$emit("updateDetail");
+    },
     updateFile(e, item, index) {
       console.log(e, item, index, "|||");
       if (typeof e == "number") {

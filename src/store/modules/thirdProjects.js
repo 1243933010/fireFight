@@ -80,9 +80,9 @@ const state = {
         {type:'bid_result_confirm',title:'评标结果确认函',files:[],is_required:1},
       ],
       bid_units:[
-        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
-        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
-        {amount:'',name:"",contact:'',files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+        {amount:'',name:"",contact:'',unit_file_compilation:[],files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+        {amount:'',name:"",contact:'',unit_file_compilation:[],files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
+        {amount:'',name:"",contact:'',unit_file_compilation:[],files:[],scores:[{business_score:'',tech_score:'',price_score:'',total_score:'',}]},
 
       ],
       project_attachments:[
@@ -120,7 +120,6 @@ const mutations = {
     state.radioLabelList = list;
   },
   update_ImplementationCommissionForm:(state,data)=>{
-    console.log(data,'}}}11')
     if(data.type=='form'){
       state.ImplementationCommissionForm.choose_no = data.data.choose_no;
       state.ImplementationCommissionForm.choose_time = data.data.choose_time;
@@ -131,7 +130,6 @@ const mutations = {
     }else if(data.type=='chooseFile'){
       state.ImplementationCommissionForm.agent_receipt = data.data;
     }else if(data.type=='purchase'){
-      console.log('||||||||||||||=====',data.data)
       state.ImplementationCommissionForm.purchase_meeting = data.data;
     }
   },

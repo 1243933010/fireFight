@@ -63,10 +63,10 @@ const state = {
       bid_open_date:'',
       doubt:"",
       bid_publish_photo:[],
-      bid_register_file:[],
+      // bid_register_file:[],
       bid_file_issue:[],
       project_attachments:[
-        {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[],is_required:1},
+        // {type:'purchase_meeting',title:'支队/大队采购例会',description:'',files:[],is_required:1},
         {type:'bid_authorization',title:'委托招标函',description:'',files:[],is_required:1},
         {type:'purchase_file_confirm',title:'采购文件确认函',description:'',files:[],is_required:1},
       ]
