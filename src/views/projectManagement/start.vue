@@ -2,7 +2,7 @@
   <div style="padding-left: 30px;">
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
             <div style=" width: 100%;"   v-for="(item, index) in startData.bid_files_list"  :key="index">
-        <UploadCom :title="item.title" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item)" />
+        <UploadCom type="see" :title="item.title" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item)" />
       </div>
         </div>
       <BidCom /> 

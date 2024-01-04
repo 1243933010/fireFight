@@ -220,18 +220,6 @@ export default {
           "projectManagementAdd/update_startData_bid_units",
           res.data.bid_units
         );
-        this.$store.commit(
-          "thirdProjects/update_startData_bid_unit_type",
-          res.data.bid_unit_type
-        );
-        this.$store.commit(
-          "thirdProjects/update_startData_bid_file",
-          res.data.bid_file
-        );
-        this.$store.commit(
-          "thirdProjects/update_startData_file_compilation",
-          res.data.file_compilation
-        );
         // this.$store.commit(
         //   "projectManagementAdd/update_startData_project_attachments",
         //   res.data.project_attachments2

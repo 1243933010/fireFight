@@ -85,7 +85,7 @@
        
       </div>
       <div style="display: flex;flex-direction: row;">
-        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 50%;">
+        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 45%;">
           <el-input v-model="resultData.bid_success_unit_per" placeholder="请输入中标供应商企份额">
             <span slot="suffix">%</span>
           </el-input>
@@ -246,6 +246,8 @@ export default {
           // }
           let form = this.$store.state.thirdProjects.thirdData.resultData;
           form.id = this.projectInfo.id;
+          form.project_attachments3 = form.project_attachments;
+          form.project_attachments = []
           form.is_submit = 1;
           console.log(form);
           //  return

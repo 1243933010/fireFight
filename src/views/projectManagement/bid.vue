@@ -7,21 +7,21 @@
         <div style="width: 100%;margin-bottom: 20px;"><el-checkbox v-model="item.status" @change="(e)=>changeCheck(e,item,index)">该单位是否合格</el-checkbox></div>
         <div class="input1">
           <span class="color">*</span>参与投标单位:
-          <el-input style="width: 200px" v-model="item.name" type="text" placeholder="请输入参与投标单位">
+          <el-input :disabled="true" style="width: 200px" v-model="item.name" type="text" placeholder="请输入参与投标单位">
           </el-input>
 
         </div>
 
         <div class="input1">
           <span class="color">*</span>参与投标联系人:
-          <el-input style="width: 200px" v-model="item.contact" type="text" placeholder="请输入参与投标联系人"></el-input>
+          <el-input :disabled="true" style="width: 200px" v-model="item.contact" type="text" placeholder="请输入参与投标联系人"></el-input>
         </div>
         <div class="input1">
           <span class="color">*</span>参与投标报价金额:
-          <el-input style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
+          <el-input :disabled="true" style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
         </div>
-        <UploadCom style="width: 50%;" title="单位档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
-        <UploadCom style="width: 50%;" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+        <UploadCom style="width: 50%;" type="see" title="单位档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
+        <UploadCom  style="width: 50%;" type="see" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
        
 
         
@@ -33,19 +33,19 @@
             <span>{{ enIndex[inde]||'aa' }}:</span>
            <div class="fen-item">
             <span class="fen-item-text">商务分</span>
-            <el-input-number class="fen-item-input"  v-model="value.business_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="true" class="fen-item-input"  v-model="value.business_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">技术分</span>
-            <el-input-number class="fen-item-input" v-model="value.tech_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="true" class="fen-item-input" v-model="value.tech_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">价格分</span>
-            <el-input-number class="fen-item-input" v-model="value.price_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="true" class="fen-item-input" v-model="value.price_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">总分</span>
-            <el-input-number class="fen-item-input" v-model="value.total_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number  :disabled="true" class="fen-item-input" v-model="value.total_score"  :min="0"  :controls="false"></el-input-number>
            </div>
           </div>
           </div>
