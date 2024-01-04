@@ -540,3 +540,12 @@ export function bidFailDetail(params) {
   })
 }
 
+//下载附件
+export function downloadFiles(data) {
+  return request({
+    url: `/project/download_files_zip`,
+    method: 'post',
+    data
+  })
+}
+

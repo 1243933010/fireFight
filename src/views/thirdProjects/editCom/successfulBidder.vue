@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form ref="thirdForm" style="" :inline="true" :rules="thirdFormRules" :model="resultData" class="demo-form-inline"
-      :disabled="![21, 24,26].includes(projectInfo.status)" label-width="180px">
+      :disabled="![21, 24,26,38].includes(projectInfo.status)" label-width="180px">
 
       <div style="display: flex;flex-direction: row;margin-bottom: 20px;">
         <el-form-item label="中标金额" prop="bid_success_amount" style="width: 50%;">

@@ -1,10 +1,10 @@
 <template>
   <div style="height: auto">
     <div style="
-        width: 100%;
-        padding-left: 20px;
-        margin: 20px 0;
-      ">
+          width: 100%;
+          padding-left: 20px;
+          margin: 20px 0;
+        ">
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="新招标信息" :value="0">
           <!-- 默认空数据 -->
@@ -60,24 +60,24 @@
               <div></div>
             </div>
             <div style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          background-color: white;
-          padding-bottom: 40px;
-        ">
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: white;
+            padding-bottom: 40px;
+          ">
               <div>
                 <el-button @click="bidFailFnc" v-if="[
                   11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
                   27, 28, 29,
                 ].includes(projectInfo.status)
-                  " type="primary">招标失败</el-button>
+                " type="primary">招标失败</el-button>
               </div>
             </div>
           </template>
         </el-tab-pane>
-        <el-tab-pane v-for="(item, index) in projectInfo.bid_fail_times" :key="index" :label="`第${index + 1}次招标失败信息`"
+        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${index + 1}次招标失败信息`"
           :value="index + 1">
           <!-- 默认空数据 -->
           <template>
@@ -124,10 +124,12 @@
               <!-- <AnnexCom /> -->
               <div></div>
             </div>
-            <div style="display: flex;justify-content: center; align-items: center;width: 100%;background-color: white;padding-bottom: 40px;">
+            <div
+              style="display: flex;justify-content: center; align-items: center;width: 100%;background-color: white;padding-bottom: 40px;">
               <div>
-                <el-button @click="bidFailFnc" v-if="[ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,27, 28, 29,].includes(projectInfo.status)"
-                type="primary">招标失败</el-button>
+                <el-button @click="bidFailFnc"
+                  v-if="[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,].includes(projectInfo.status)"
+                  type="primary">招标失败</el-button>
               </div>
             </div>
           </template>
@@ -210,7 +212,7 @@ export default {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
           ...res.data,
           failDataBool: false,
-          bid_fail_times: res.data.bid_times,
+          bid_total_times: res.data.bid_total_times,
           input12: "true",
         });
         this.$store.commit(
@@ -251,25 +253,25 @@ export default {
           bid_register_file: res.data.bid_register_file,
           project_attachments: res.data.project_attachments1,
         };
-        
+
         this.$store.commit("thirdProjects/update_bidBaseProject", data);
         this.$store.commit(
           "thirdProjects/update_startData_bid_files_list",
           res.data.bid_files_list
         );
-        console.log(this.$store.state.thirdProjects.thirdData.startData.bid_units,'}}}')
+        console.log(this.$store.state.thirdProjects.thirdData.startData.bid_units, '}}}')
 
         this.$store.commit(
           "thirdProjects/update_startData_bid_units",
           res.data.bid_units
         );
         console.log()
-       
+
         // this.$store.commit(
         //   "thirdProjects/update_startData_project_attachments",
         //   res.data.project_attachments2
         // );
-        
+
         let data1 = {
           ...res.data.bid_info,
           bid_success_photo: res.data.bid_success_photo,
@@ -299,7 +301,7 @@ export default {
         this.$store.commit("thirdProjects/UPDATE_FORMINFO", {
           ...res.data,
           failDataBool: true,
-          bid_fail_times: res.data.bid_fail_times,
+          bid_total_times: res.data.bid_total_times,
           input12: "true",
         });
         this.$store.commit(
@@ -350,7 +352,7 @@ export default {
         };
         this.$store.commit("thirdProjects/update_bidBaseProject", data);
 
-       
+
         this.$store.commit(
           "thirdProjects/update_startData_bid_files_list",
           res.data.bid_files_list
@@ -363,16 +365,16 @@ export default {
           "thirdProjects/update_startData_project_attachments",
           res.data.project_attachments2
         );
-        
+
         // if(res.data.status>=24){
         let data1 = {
           ...res.data.bid_info,
           bid_success_photo: res.data.bid_success_photo,
           bid_success_notice: res.data.bid_success_notice,
           project_attachments: res.data.project_attachments3,
-          bid_unit_type:res.data.bid_unit_type,
-          bid_file:res.data.bid_file,
-          file_compilation:res.data.file_compilation,
+          bid_unit_type: res.data.bid_unit_type,
+          bid_file: res.data.bid_file,
+          file_compilation: res.data.file_compilation,
         };
         this.$store.commit("thirdProjects/update_resultData", data1);
         // }

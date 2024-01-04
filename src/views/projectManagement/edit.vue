@@ -17,10 +17,10 @@
 
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div >
-            <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14][2,4].includes(projectInfo.reject_log.status)">
+            <div style="display: flex;flex-direction: row;" v-if="formInfo.reject_log&&[2,4].includes(formInfo.reject_log.status)">
               <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
               <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="projectInfo.reject_log.description"></el-input>
+                v-model="formInfo.reject_log.description"></el-input>
             </div>
           </div>
           <div class="btnn">

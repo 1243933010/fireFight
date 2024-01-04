@@ -26,7 +26,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-form ref="thirdForm" :disabled="![11, 12, 14, 16].includes(projectInfo.status)" style="padding-left: 30px"
+      <el-form ref="thirdForm" :disabled="![11, 12, 14, 16,38].includes(projectInfo.status)" style="padding-left: 30px"
         :inline="true" :rules="thirdFormRules" :model="bidBaseProject" class="demo-form-inline">
 
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
@@ -64,7 +64,7 @@
               <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16].includes(projectInfo.status)"></i>
               <div slot="file" slot-scope="{ file }">
                 <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                <span class="el-upload-list__item-actions" v-if="[11, 12, 14, 16].includes(projectInfo.status)">
+                <span class="el-upload-list__item-actions" v-if="[11, 12, 14, 16,38].includes(projectInfo.status)">
                   <span class="el-upload-list__item-delete" @click="handleRemove(file)">
                     <i class="el-icon-delete"></i>
                   </span>

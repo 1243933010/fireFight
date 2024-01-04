@@ -20,7 +20,7 @@
           <span class="color">*</span>参与投标报价金额:
           <el-input :disabled="true" style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
         </div>
-        <UploadCom style="width: 50%;" type="see" title="单位档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
+        <UploadCom style="width: 50%;" type="see" title="档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
         <UploadCom  style="width: 50%;" type="see" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
        
 

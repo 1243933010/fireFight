@@ -29,7 +29,9 @@
               <div></div>
             </div>
           </div>
-
+          <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
+            <el-button type="primary" @click="downAll" v-if="formInfo.status == 35" >下载所有项目附件</el-button>
+          </div>
           <BasicMsg :disabled="true" />
 
           <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
@@ -112,7 +114,7 @@ import { addMixins } from "./mixins";
 import AnnexCom from "./annex.vue";
 import BasicMsg from "./basicMsg.vue";
 import { mapState, mapGetters } from "vuex";
-import { projectEdit, projectDetail, projectAudit } from "@/api/project";
+import { projectEdit, projectDetail, projectAudit,downloadFiles } from "@/api/project";
 import checkDialog from "@/components/checkDialog.vue";
 import ImplementationCommissionInfo from "./ImplementationCommissionInfo.vue";
 import thirdCom from "./thirdCom.vue";
@@ -152,6 +154,13 @@ export default {
     },
   },
   methods: {
+    async downAll(){
+      let res = await downloadFiles({id:this.formInfo.id})
+      // console.log(res)
+      if(res.code==200){
+        location.href = res.data.url
+      }
+    },
     async getDetail(id) {
       let res = await projectDetail(id);
       // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
@@ -163,7 +172,7 @@ export default {
         this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
           ...res.data,
            failDataBool: false,
-          bid_fail_times: res.data.bid_times,
+           bid_total_times: res.data.bid_total_times,
           input12: "true",
         });
         this.$store.commit(
@@ -205,7 +214,7 @@ export default {
           bid_file_issue: res.data.bid_file_issue,
           bid_publish_photo: res.data.bid_publish_photo,
           bid_register_file: res.data.bid_register_file,
-          bid_fail_times: res.data.bid_fail_times,
+          bid_total_times: res.data.bid_total_times,
 
           project_attachments: res.data.project_attachments1,
         };

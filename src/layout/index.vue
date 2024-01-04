@@ -1,6 +1,6 @@
 <template>
   <div class="pages">
-    <!-- <div class="header">
+    <div class="header">
       <div class="city-bg">
         <img src="../assets/city_bg.png" class="img" />
       </div>
@@ -37,7 +37,7 @@
           </el-dropdown>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div :class="classObj" class="app-wrapper">
       <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -169,7 +169,7 @@ export default {
             }
         },
     handleData(item){
-      // console.log(item)
+      console.log(item)
       //this.$router.push({ path: "/projectManagementDetail",query:{id:item.id} }),
       let url = '';
       if([0,2,4].includes(item.status)){
@@ -179,13 +179,13 @@ export default {
          url = '/projectManagementDetail'
       }
       if([5,6,7,8,9,10].includes(item.status)){
-        url = 'ImplementationCommission/edit'
+        url = '/ImplementationCommission/edit'
       }
       if([11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(item.status)){
-         url = 'thirdProjects/edit'
+         url = 'thirdProjects/thirdProjects/edit'
       }
       if([29,30,31,32,33,34,35].includes(item.status)){
-         url = 'contractManagement/edit'
+         url = '/contractManagement/edit'
       }
       this.dialogVisible = false;
       this.$router.push({ path: url,query:{id:item.id} });
