@@ -181,7 +181,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/projectManagement',
     meta: {
-      title: '项目管理',
+      title: '分散采购',
       icon: 'svg_icon1',
       // icon:'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
@@ -191,7 +191,7 @@ export const asyncRoutes = [
         path: 'projectManagement',
         component: () => import('@/views/projectManagement/index'),
         name: 'projectManagement',
-        meta: { title: '项目管理', affix: true }
+        meta: { title: '列表', affix: true }
       },
       {
         path: 'projectManagementAdd',
@@ -245,6 +245,25 @@ export const asyncRoutes = [
       meta: { title: '合同编辑', },
       hidden:true
     }
+    ]
+  },
+  {
+    path: '/projectManagementT',
+    component: Layout,
+    redirect: '/projectManagementT',
+    meta: {
+      title: '集中采购',
+      icon: 'svg_icon1',
+      // icon:'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'projectManagementT',
+        component: () => import('@/views/projectManagement/index'),
+        name: 'projectManagementT',
+        meta: { title: '列表', affix: true }
+      }
     ]
   },
   {

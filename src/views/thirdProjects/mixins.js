@@ -14,7 +14,7 @@ export const addMixins = {
                     isActive: true,
                 },
                 {
-                    title: "开标",
+                    title: "开评标",
                     isInput: this.bid_files_list_bool&&this.bid_units_bool&&this.project_attachments_bool,
                     isActive: true,
                 },

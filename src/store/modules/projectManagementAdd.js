@@ -23,11 +23,11 @@ const state = {
     {type:'purchase_demand',title:'采购需求',description:'',files:[],is_required:1},
     {type:'act_plan',title:'实施计划',description:'',files:[],is_required:1},
     {type:'check_opinion',title:'一般性审查意见书',description:'',files:[],is_required:1},
-    {type:'main_party_committee',title:'大队党委会',description:'',files:[],is_required:0},
-    {type:'detachment_party_committee',title:'支队党委会',description:'',files:[],is_required:1},
     {type:'master_check_opinion',title:'重点审查意见书',description:'',files:[],is_required:0},
     {type:'force_check_opinion',title:'驻点审查意见书（支队级）',description:'',files:[],is_required:0},
     {type:'other_opinions',title:'其他意见书',description:'',files:[],is_required:0},
+    {type:'main_party_committee',title:'大队党委会',description:'',files:[],is_required:0},
+    {type:'detachment_party_committee',title:'支队党委会',description:'',files:[],is_required:1},
     {title: "采购计划备案附件", type: "purchase_record",description:'',files:[],is_required:1},
 
 

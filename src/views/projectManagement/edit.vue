@@ -15,7 +15,7 @@
             </div>
           </div>
 
-          <BasicMsg ref="basicMsg" :disabled="false" />
+          <BasicMsg ref="basicMsg" :disabled="![0,2,4].includes(formInfo.status)" />
           <div >
             <div style="display: flex;flex-direction: row;" v-if="formInfo.reject_log&&[2,4].includes(formInfo.reject_log.status)">
               <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <AnnexCom />
+      <AnnexCom :type="[0,2,4].includes(formInfo.status)?'add':'edit'"/>
     </div>
   </div>
 </template>
@@ -130,7 +130,23 @@ export default {
       form.radioLabelList = state.radioLabelList;
       form.small_company = JSON.stringify(state.radioLabelList)
       console.log(reqBool)
-    
+
+      let companyBool = true;
+      state.radioLabelList.forEach(val=>{
+        console.log(val,'------')
+        if(val.child.length>0&&val.checked){
+          val.child.forEach(item=>{
+            console.log(item,'------')
+            if(item.checked&&typeof item.num=='string'&&!item.num){
+              companyBool = false;
+            }
+          })
+        }
+      })
+      if(!companyBool){
+        this.$message.error('面向中小企业百分比不能为空')
+        return
+      }
       if(reqBool){
         let bool = false;
        this.$refs.basicMsg.verifyForm((bools)=>{

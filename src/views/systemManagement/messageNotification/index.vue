@@ -16,9 +16,9 @@
         <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="接收部门">
-        <el-select clearable v-model="form.region">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+        <el-select clearable v-model="form.department">
+          <el-option label="全部" value="" />
+          <el-option v-for="(item, index) in departmentList" :key="index" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
       <el-form-item label="时间">
@@ -33,7 +33,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">搜索</el-button>
+        <el-button type="primary" @click="()=>{form.currentPage=1;query();}">搜索</el-button>
         <el-button type="primary">重置</el-button>
       </el-form-item>
     </el-form>
@@ -106,7 +106,7 @@
 
 <script>
 // import Pagination from '@/components/Pagination'
-import { noticeList,noticeDelete } from "@/api/project";
+import { noticeList,noticeDelete,departmentArr } from "@/api/project";
 import AddDialog from "./add.vue";
 export default {
   components: { AddDialog },
@@ -114,19 +114,28 @@ export default {
     return {
       form: {
         name: "",
-        region: "",
+        department: "",
         current_page: 1,
         per_page: 10,
         total: 10,
       },
       list: [],
+      departmentList:[]
     };
   },
   mounted() {
         console.log(this.$store.state.user);
         this.query();
+        this.departmentFnc();
     },
   methods: {
+    async departmentFnc(){
+      let res = await departmentArr({per_page:1000});
+            console.log(res)
+            if (res.code == 200) {
+                this.departmentList = res.data.list;
+            }
+    },
     updateData(){
         this.form.current_page = 1;
         this.query();

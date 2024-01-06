@@ -21,7 +21,7 @@
           <el-input
             type="textarea"
             :rows="4"
-            placeholder="驳回意见"
+            placeholder="审核意见"
             v-model="description"
           >
           </el-input>

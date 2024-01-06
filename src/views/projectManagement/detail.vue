@@ -32,7 +32,7 @@
           <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
             <el-button type="primary" @click="downAll" v-if="formInfo.status == 35" >下载所有项目附件</el-button>
           </div>
-          <BasicMsg :disabled="true" />
+          <BasicMsg  :disabled="true" />
 
           <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
 
@@ -45,7 +45,7 @@
 
           <div v-if="formInfo.status >= 18">
             <div class="background-icon">
-              <span class="title">开标</span>
+              <span class="title">开评标</span>
             </div>
             <startCom />
           </div>
@@ -78,7 +78,7 @@
       </div>
       <div class="box-right">
         <div class="file-form">
-          <AnnexCom type="detail" />
+          <AnnexCom  type="detail" />
 
           <div class="background-icon" v-if="formInfo.status >= 31">
             <span class="title">合同列表</span>
@@ -92,8 +92,8 @@
       title="初审"
       @auditEmit="auditEmit"
       :radioList="[
+        { label: '驳回', value: 2 },
         { label: '通过', value: 3 },
-        { label: '拒绝', value: 2 },
       ]"
     />
     <checkDialog
@@ -101,8 +101,8 @@
       title="终审"
       @auditEmit="auditEmitEnd"
       :radioList="[
+        { label: '驳回', value: 4 },
         { label: '通过', value: 5 },
-        { label: '拒绝', value: 4 },
       ]"
     />
   </div>
@@ -163,7 +163,7 @@ export default {
     },
     async getDetail(id) {
       let res = await projectDetail(id);
-      // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
+      console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
       if (res.code == 200) {
         this.$store.commit(
           "projectManagementAdd/UPDATE_RADIOLABELLIST",

@@ -42,7 +42,7 @@
 import Steps from "@/components/steps.vue";
 import { addMixins } from './mixins'
 import AnnexCom from './annex.vue'
-import BasicMsg from './basicMsg.vue'
+import BasicMsg from './basicMsg1.vue'
 import { mapState, mapGetters } from 'vuex'
 import {projectAdd} from '@/api/project'
 export default {
@@ -53,11 +53,15 @@ export default {
 
     };
   },
+
   mounted() {
+    let state = this.$store.state.projectManagementAdd;
+      console.log(state)
   },
   methods: {
    async submitFnc(reqBool) {
       let state = this.$store.state.projectManagementAdd;
+      console.log(state)
       let form = {...state.formInfo};
       form.project_attachments = state.project_attachments
       form.radioLabelList = state.radioLabelList;
@@ -75,6 +79,22 @@ export default {
           fileBool = false;
         }
       })
+      let companyBool = true;
+      state.radioLabelList.forEach(val=>{
+        console.log(val,'------')
+        if(val.child.length>0&&val.checked){
+          val.child.forEach(item=>{
+            console.log(item,'------')
+            if(item.checked&&typeof item.num=='string'&&!item.num){
+              companyBool = false;
+            }
+          })
+        }
+      })
+      if(!companyBool){
+        this.$message.error('面向中小企业百分比不能为空')
+        return
+      }
       if(!bool){
         this.$message.error('表单必须填写')
         return

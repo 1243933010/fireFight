@@ -29,14 +29,14 @@
               <div class="file-form" style="padding-left: 30px;">
                 <div class="file-form-item" v-for="(item, index) in formInfo.agent_receipt" :key="index">
                   <div class="left">
-                    <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
+                    <div class="title"><span>{{ item.title }}</span></div>
                     <div class="input">
                       <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
                       </el-input>
                     </div>
                   </div>
                   <div class="right">
-                    <UploadCom type="see"  title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                    <UploadCom type="see"  :is_required="item.is_required"  title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
                   </div>
                 </div>
 
@@ -66,14 +66,14 @@
               <div class="file-form" style="padding-left: 10px;">
                 <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
                   <div class="left">
-                    <div class="title"><span><span style="color: red;">*</span>{{ item.title }}</span></div>
+                    <div class="title"><span>{{ item.title }}</span></div>
                     <div class="input">
                       <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
                       </el-input>
                     </div>
                   </div>
                   <div class="right">
-                    <UploadCom type="see" title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                    <UploadCom type="see"  :is_required="item.is_required" title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
                   </div>
                 </div>
 

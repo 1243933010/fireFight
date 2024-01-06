@@ -117,6 +117,7 @@
               <div
                 class="radio-class"
                 :class="item.checked ? 'active' : ''"
+                v-if="[undefined,0,2,4].includes(formInfo.status)"
               ></div>
               <span>{{ item.label }}</span>
             </div>
@@ -133,6 +134,7 @@
                 <div
                   class="radio-class"
                   :class="ite.checked ? 'active' : ''"
+                  v-if="[undefined,0,2,4].includes(formInfo.status)"
                 ></div>
                 <span
                   >{{ ite.label1 }}
@@ -142,6 +144,7 @@
                     v-model="ite.num"
                     size="small"
                     type="text"
+                    :disabled="disabled"
                   ></el-input>
                   <span>{{ ite.label2 }}</span>
                 </span>

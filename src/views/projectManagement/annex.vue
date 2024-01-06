@@ -10,12 +10,12 @@
               <div class="left" >
                 <div class="title"><span>{{ item.title }}</span></div>
                 <div class="input">
-                  <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
+                  <el-input type="textarea" :disabled="type!=='add'"  :rows="4" v-model="item.description" :placeholder="item.title">
                   </el-input>
                 </div>
               </div>
               <div class="right">
-                <UploadCom title="附件" :is_required="item.is_required" :type="type" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
+                <UploadCom title="附件"  :is_required="item.is_required" :type="type" :fileList="item.files" @updateFile="(e)=>updateFile(e,item,index)" />
               </div>
             </div>
           </div>

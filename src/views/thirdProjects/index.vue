@@ -75,8 +75,8 @@
             <div class="status2" v-if="item.procurement_method_text">
               <span>{{ item.procurement_method_text }}</span>
             </div>
-            <div class="status3" v-if="item.bid_total_times">
-              <span>第{{ item.bid_total_times }}次招标</span>
+            <div class="status3" v-if="item.bid_total_times&&item.bid_total_times>1">
+              <span>第{{chinese_numbers[item.bid_total_times-1] }}次招标</span>
             </div>
           </div>
           <div class="item-con">
@@ -114,9 +114,9 @@
               <div class="item-con-right-btn1" @click="openDetail(item)">
                 详情
               </div>
-              <div class="item-con-right-btn2"  v-if="[11,12,14,16,17,18,20,22,23,24,26,28].includes(item.status)" @click="openDetail(item)">
+              <!-- <div class="item-con-right-btn2"  v-if="[11,12,14,16,17,18,20,22,23,24,26,28].includes(item.status)" @click="openDetail(item)">
                   编辑
-                </div>
+                </div> -->
               <div
                 v-permission="['admin', 'project_registrar']"
                 class="item-con-right-btn3"
@@ -189,6 +189,9 @@ export default {
       ],
       stateList: [],
       departmentList: [],
+      chinese_numbers:['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+                   '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+                   '二十一', '二十二', '二十三', '二十四', '二十五', '二十六', '二十七', '二十八', '二十九', '三十']
     };
   },
   watch: {

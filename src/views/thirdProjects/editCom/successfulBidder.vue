@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width: 1300px;">
     <el-form ref="thirdForm" style="" :inline="true" :rules="thirdFormRules" :model="resultData" class="demo-form-inline"
       :disabled="![21, 24,26,38].includes(projectInfo.status)" label-width="180px">
 
@@ -41,15 +41,27 @@
       <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <el-form-item :label="`公示图`" prop="input3" style="width: 50%;">
           <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
-            :file-list="resultData.bid_success_photo" :on-progress="handleProgress" :on-success="handleSuccess">
-            <i slot="default" class="el-icon-plus"></i>
+            :file-list="resultData.bid_success_photo" :on-progress="handleProgress" :on-success="handleSuccess" :before-upload="beforeAvatarUpload">
+            <i slot="default" class="el-icon-plus" v-if="[21,24,26].includes(projectInfo.status)"></i>
             <div slot="file" slot-scope="{ file }">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-              <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
+              <img class="el-upload-list__item-thumbnail"
+                  v-if="file.url.includes('jpeg') || file.url.includes('png') || file.url.includes('jpg')" :src="file.url"
+                  alt="" />
+                <img class="el-upload-list__item-thumbnail"
+                  v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" src="../../../assets/video.png"
+                  alt="" />
+
+                <span class="el-upload-list__item-actions">
+                  <span class="el-upload-list__item-preview" style="margin-right: 10px;"
+                    @click="handlePictureCardPreview(file)">
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+                  <span class="el-upload-list__item-delete" @click="handleRemove(file)"
+                    v-if="[21,24,26].includes(projectInfo.status)">
+                    <i class="el-icon-delete"></i>
+                  </span>
                 </span>
-              </span>
             </div>
           </el-upload>
         </el-form-item>
@@ -64,14 +76,14 @@
       <div style="display: flex;flex-direction: row;">
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice"
+          <UploadCom :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice"
             @updateFile="(e) => updateFile(e, resultData.bid_success_notice)" />
         <!-- </div> -->
       </div>
       
       <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="中标供应商企业类型" :fileList="resultData.bid_unit_type"
+          <UploadCom :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="中标供应商企业类型" :fileList="resultData.bid_unit_type"
             @updateFile="(e) => updateFile(e, resultData.bid_unit_type)" />
         <!-- </div> -->
       </div>
@@ -85,14 +97,14 @@
        
       </div>
       <div style="display: flex;flex-direction: row;">
-        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 45%;">
+        <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 36%;">
           <el-input v-model="resultData.bid_success_unit_per" placeholder="请输入中标供应商企份额">
             <span slot="suffix">%</span>
           </el-input>
         </el-form-item>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="档案汇编" :fileList="resultData.file_compilation"
+          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="档案汇编" :fileList="resultData.file_compilation"
             @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
         <!-- </div> -->
       </div>
@@ -101,13 +113,13 @@
         
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="投标文件" :fileList="resultData.bid_file"
+          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="投标文件" :fileList="resultData.bid_file"
             @updateFile="(e) => updateFile(e, resultData.bid_file)" />
         <!-- </div> -->
       </div>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments"
+          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments"
             @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
         <!-- </div> -->
       </div>
@@ -152,7 +164,7 @@
 
     </div>
     <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
-      :radioList="[{ label: '拒绝', value: 26 }, { label: '通过', value: 27 },]" />
+      :radioList="[{ label: '驳回', value: 26 }, { label: '通过', value: 27 },]" />
     <!-- <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 28 }, { label: '通过', value: 29 },]" /> -->
 
 
@@ -181,7 +193,8 @@ export default {
         bid_success_photo: [{ required: true, message: "请上传中标图片", trigger: "blur" },],
         bid_success_notice: [{ required: true, message: "请上传中标告知书", trigger: "blur" },],
       },
-
+      dialogVisible: false,
+      dialogImageUrl: ''
     };
   },
   computed: {
@@ -201,6 +214,21 @@ export default {
     },
   },
   methods: {
+    beforeAvatarUpload(file) {
+      console.log(file.type);
+      const isJPG = file.type.includes("image/");
+      const isVideo = file.type.includes("video/");
+
+      if (!isJPG && !isVideo) {
+        this.$message.error("上传头像图片只能图片或视频!");
+      }
+      return isJPG || isVideo;
+    },
+    handlePictureCardPreview(file) {
+      console.log(file)
+      this.dialogVisible = true;
+      this.dialogImageUrl = file.url;
+    },
     updateFile(e, item, index) {
       console.log(e, item, index)
       if (typeof e == 'number') {
@@ -273,6 +301,8 @@ export default {
     async submitFnc() {
       let form = this.$store.state.thirdProjects.thirdData.resultData;
       form.id = this.projectInfo.id;
+      form.project_attachments3 = form.project_attachments;
+      form.project_attachments = []
       console.log(form);
       //  return
       let res = await bidResultSave(form);

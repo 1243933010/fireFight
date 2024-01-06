@@ -4,59 +4,60 @@
       <!-- <div class="background-icon">
                 <span class="title">投标单位</span>
             </div> -->
-      <div></div>
-      <div class="add" @click="addForm">
+      
+      <div class="add" @click="addForm" v-if="[15, 18, 20].includes(projectInfo.status)">
         <img src="../../../assets/add_icon1.png" alt="" srcset="" />
         <span>添加单位</span>
       </div>
+      <div></div>
     </div>
     <div class="item-form">
       <div class="item" v-for="(item, index) in bid_units" :key="index">
         <!-- <el-input type="text" :rows="4" v-model="item.name" placeholder="我部已申请采购一批消防器材望上级批准。" v-show="true">  </el-input> -->
-        <div style="width: 100%;margin-bottom: 20px;"><el-checkbox v-model="item.status" @change="(e)=>changeCheck(e,item,index)">该单位是否合格</el-checkbox></div>
+        <div style="width: 100%;margin-bottom: 20px;"><el-checkbox  :disabled="![15, 18, 20].includes(projectInfo.status)" v-model="item.status" @change="(e)=>changeCheck(e,item,index)">该单位是否合格</el-checkbox></div>
         <div class="input1">
           <span class="color">*</span>参与投标单位:
-          <el-input style="width: 200px" v-model="item.name" type="text" placeholder="请输入参与投标单位">
+          <el-input :disabled="![15, 18, 20].includes(projectInfo.status)" style="width: 200px" v-model="item.name" type="text" placeholder="请输入参与投标单位">
           </el-input>
 
         </div>
 
         <div class="input1">
           <span class="color">*</span>参与投标联系人:
-          <el-input style="width: 200px" v-model="item.contact" type="text" placeholder="请输入参与投标联系人"></el-input>
+          <el-input :disabled="![15, 18, 20].includes(projectInfo.status)" style="width: 200px" v-model="item.contact" type="text" placeholder="请输入参与投标联系人"></el-input>
         </div>
         <div class="input1">
           <span class="color">*</span>参与投标报价金额:
-          <el-input style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
+          <el-input  :disabled="![15, 18, 20].includes(projectInfo.status)" style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
         </div>
-        <UploadCom style="width: 50%;" title="档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
-        <UploadCom style="width: 50%;" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+        <UploadCom :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'" style="width: 33%;" title="档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
+        <UploadCom :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'" style="width: 33%;" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
        
 
-        <div class="float" v-if="index > 2" @click="deleteItem(index)">
+        <div class="float" v-if="index > 2&&[15, 18, 20].includes(projectInfo.status)" @click="deleteItem(index)">
           <div>删除</div>
         </div>
         <div style="clear: both;"></div>
         <div style="width: 100%;">
-          <div class="fen-float" style="" v-if="item.status"><el-button type="primary" @click="addScore(item)">添加打分</el-button></div>
+          <div class="fen-float" style="" v-if="item.status&&[15, 18, 20].includes(projectInfo.status)"><el-button type="primary" @click="addScore(item)">添加打分</el-button></div>
           <div class="fen"  v-if="item.status">
             <div v-for="(value,inde) in item.scores" :key="inde" class="fen-it">
             <span>{{ enIndex[inde]||'aa' }}:</span>
            <div class="fen-item">
             <span class="fen-item-text">商务分</span>
-            <el-input-number  v-model="value.business_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="![15, 18, 20].includes(projectInfo.status)"  v-model="value.business_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">技术分</span>
-            <el-input-number v-model="value.tech_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="![15, 18, 20].includes(projectInfo.status)" v-model="value.tech_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">价格分</span>
-            <el-input-number v-model="value.price_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="![15, 18, 20].includes(projectInfo.status)" v-model="value.price_score"  :min="0"  :controls="false"></el-input-number>
            </div>
            <div class="fen-item">
             <span class="fen-item-text">总分</span>
-            <el-input-number v-model="value.total_score"  :min="0"  :controls="false"></el-input-number>
+            <el-input-number :disabled="![15, 18, 20].includes(projectInfo.status)" v-model="value.total_score"  :min="0"  :controls="false"></el-input-number>
            </div>
           </div>
           </div>
@@ -94,7 +95,7 @@
       > -->
     </div>
     <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit" :radioList="[
-      { label: '拒绝', value: 20 },
+      { label: '驳回', value: 20 },
       { label: '通过', value: 21 },
     ]" />
     <!-- <checkDialog
@@ -166,6 +167,7 @@ export default {
         contact: "",
         files: [],
         status:false,
+        unit_file_compilation:[],
         scores:[{business_score:0,tech_score:0,price_score:0,total_score:0,}]
       });
     },
@@ -297,7 +299,8 @@ export default {
     }
     .fen-float{
       margin-right: 41px;
-        float: right;
+        float: left;
+        margin-bottom: 10px;
       }
     .fen{
       width: 100%;
@@ -375,7 +378,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  margin-bottom: 20px;
   .add {
     width: 100px;
     height: 36px;

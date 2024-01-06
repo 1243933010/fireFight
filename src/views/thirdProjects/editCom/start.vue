@@ -9,6 +9,7 @@
             :key="index"
           >
             <UploadCom
+            :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'"
               :title="item.title"
               :fileList="item.files"
               :is_required="item.is_required"

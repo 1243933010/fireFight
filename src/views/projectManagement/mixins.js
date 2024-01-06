@@ -100,14 +100,29 @@ export const addMixins = {
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[4].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0),
                 },
                 {
-                    title: "大队党委会",
+                    title: "重点审查意见书",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[5].files.length > 0,
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0),
                 },
                 {
-                    title: "支队党委会",
+                    title: "驻点审查意见书（支队级）",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0,
-                    isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length - 1].files.length > 0),
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[6].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[7].files.length > 0),
+                },
+                {
+                    title: "其他意见书",
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[7].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[7].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[8].files.length > 0),
+                },
+                {
+                    title: "大队党委会",
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[8].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[8].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[9].files.length > 0),
+                },
+                {
+                    title: "支队党委会",
+                    isInput: this.$store.state.projectManagementAdd.project_attachments[9].files.length > 0,
+                    isActive: (this.$store.state.projectManagementAdd.project_attachments[9].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[this.$store.state.projectManagementAdd.project_attachments.length - 1].files.length > 0),
                 },
                 {
                     title: "采购计划备案附件",
@@ -132,7 +147,7 @@ export const addMixins = {
             }
             if (this.$store.state.projectManagementAdd.formInfo.status >= 18) {
                 stepArr.push({
-                    title: "开标",
+                    title: "开评标",
                     isInput: true,
                     isActive: false,
                 },)
@@ -172,12 +187,13 @@ export const addMixins = {
                 { type: 'purchase_demand', title: '采购需求', description: '', files: [], is_required: 1 },
                 { type: 'act_plan', title: '实施计划', description: '', files: [], is_required: 1 },
                 { type: 'check_opinion', title: '一般性审查意见书', description: '', files: [], is_required: 1 },
-                { type: 'main_party_committee', title: '大队党委会', description: '', files: [], is_required: 0 },
-                { type: 'detachment_party_committee', title: '支队党委会', description: '', files: [], is_required: 1 },
+               
                 { type: 'master_check_opinion', title: '重点审查意见书', description: '', files: [], is_required: 0 },
                 { type: 'force_check_opinion', title: '驻点审查意见书（支队级）', description: '', files: [], is_required: 0 },
                 { type: 'other_opinions', title: '其他意见书', description: '', files: [], is_required: 0 },
-                { title: "采购计划备案附件", type: "purchase_record", description: '', files: [], is_required: 1 },
+                { type: 'main_party_committee', title: '大队党委会', description: '', files: [], is_required: 0 },
+                { type: 'detachment_party_committee', title: '支队党委会', description: '', files: [], is_required: 1 },
+                {  type: "purchase_record",title: "采购计划备案附件", description: '', files: [], is_required: 1 },
             ])
             this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', [
                 { label: '是:整体专门面向中小企业采购 (即100%)', child: [], checked: false, },

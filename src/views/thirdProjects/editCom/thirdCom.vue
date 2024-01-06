@@ -6,8 +6,7 @@
           <div class="files">
             <div class="file-form"
               style="display: flex;flex-direction: row;align-items: center;flex-wrap: wrap;justify-content: space-between;">
-              <div class="file-form-item" style="width: 50%;" v-for="(item, index) in project_attachments0"
-                :key="index">
+              <div class="file-form-item" style="width: 50%;" v-for="(item, index) in project_attachments0" :key="index">
 
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
@@ -17,7 +16,9 @@
                   </div>
                 </div>
                 <div class="right">
-                  <UploadCom title="附件" :is_required="item.is_required" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+                  <UploadCom :type="![11, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" title="附件"
+                    :is_required="item.is_required" :fileList="item.files"
+                    @updateFile="(e) => updateFile(e, item.files, index)" />
                 </div>
               </div>
             </div>
@@ -26,7 +27,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-form ref="thirdForm" :disabled="![11, 12, 14, 16,38].includes(projectInfo.status)" style="padding-left: 30px"
+      <el-form ref="thirdForm" :disabled="![11, 12, 14, 16, 38].includes(projectInfo.status)" style="padding-left: 30px"
         :inline="true" :rules="thirdFormRules" :model="bidBaseProject" class="demo-form-inline">
 
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
@@ -35,9 +36,10 @@
               placeholder="请选择采购文件修订日期">
             </el-date-picker>
           </el-form-item>
-          <UploadCom title="采购文件（发售稿）" flex="row" :fileList="bidBaseProject.bid_file_issue"
-            @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)" style="width: 50%;" />
-            <!-- <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 33%;">
+          <UploadCom title="采购文件（发售稿）" :type="![11, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="bidBaseProject.bid_file_issue" @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)"
+            style="width: 50%;" />
+          <!-- <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 33%;">
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
             </el-date-picker>
@@ -51,21 +53,32 @@
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
             </el-date-picker>
-          </el-form-item> 
+          </el-form-item>
           <el-form-item label="采购公告链接" prop="publish_link" style="width: 50%;">
             <el-input v-model="bidBaseProject.publish_link" placeholder="请输入采购公告链接" />
-          </el-form-item>        
+          </el-form-item>
         </div>
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
-          <el-form-item :label="`公示图（${bidBaseProject.bid_publish_photo.length}/4）`" prop="bid_publish_photo"
-            style="width: 50%;">
+          <el-form-item :label="`公示图`" prop="bid_publish_photo" style="width: 50%;">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
-              :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess">
+              :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess" :before-upload="beforeAvatarUpload" >
               <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16].includes(projectInfo.status)"></i>
               <div slot="file" slot-scope="{ file }">
-                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                <span class="el-upload-list__item-actions" v-if="[11, 12, 14, 16,38].includes(projectInfo.status)">
-                  <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                <!-- <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" /> -->
+                <img class="el-upload-list__item-thumbnail"
+                  v-if="file.url.includes('jpeg') || file.url.includes('png') || file.url.includes('jpg')" :src="file.url"
+                  alt="" />
+                <img class="el-upload-list__item-thumbnail"
+                  v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" src="../../../assets/video.png"
+                  alt="" />
+
+                <span class="el-upload-list__item-actions">
+                  <span class="el-upload-list__item-preview" style="margin-right: 10px;"
+                    @click="handlePictureCardPreview(file)">
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+                  <span class="el-upload-list__item-delete" @click="handleRemove(file)"
+                    v-if="[11, 12, 14, 16, 38].includes(projectInfo.status)">
                     <i class="el-icon-delete"></i>
                   </span>
                 </span>
@@ -86,8 +99,7 @@
           <div class="files">
             <div class="file-form"
               style="display: flex;flex-direction: row;align-items: center;flex-wrap: wrap;justify-content: space-between;">
-              <div class="file-form-item" style="width: 50%;" v-for="(item, index) in project_attachments1"
-                :key="index">
+              <div class="file-form-item" style="width: 50%;" v-for="(item, index) in project_attachments1" :key="index">
 
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
@@ -97,7 +109,9 @@
                   </div>
                 </div>
                 <div class="right">
-                  <UploadCom title="附件" :is_required="item.is_required" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+                  <UploadCom title="附件" :type="![11, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'"
+                    :is_required="item.is_required" :fileList="item.files"
+                    @updateFile="(e) => updateFile(e, item.files, index)" />
                 </div>
               </div>
             </div>
@@ -106,16 +120,17 @@
       </el-col>
     </el-row>
     <div>
-      <div style="display: flex;flex-direction: row;" v-if="projectInfo.reject_log&&[14].includes(projectInfo.reject_log.status)">
+      <div style="display: flex;flex-direction: row;"
+        v-if="projectInfo.reject_log && [14].includes(projectInfo.reject_log.status)">
         <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.reject_log.description"></el-input>
       </div>
     </div>
     <div v-if="projectInfo.failDataBool" style="display: flex;justify-content: center;align-items: center;width: 100%;">
-      <el-button @click="saveFnc(false)" v-if="[11, 12, 14,38].includes(projectInfo.status)"
+      <el-button @click="saveFnc(false)" v-if="[11, 12, 14, 38].includes(projectInfo.status)"
         v-permission="['project_registrar']" type="normal">保存草稿</el-button>
-      <el-button @click="saveFnc(true)" v-if="[11, 12, 14,38].includes(projectInfo.status)"
+      <el-button @click="saveFnc(true)" v-if="[11, 12, 14, 38].includes(projectInfo.status)"
         v-permission="['project_registrar']" type="primary">提交</el-button>
       <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
         type="primary">审核</el-button>
@@ -124,11 +139,16 @@
 
     </div>
     <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
-      :radioList="[{ label: '拒绝', value: 14 }, { label: '通过', value: 15 },]" />
+      :radioList="[{ label: '驳回', value: 14 }, { label: '通过', value: 15 },]" />
     <!-- <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
       :radioList="[{ label: '拒绝', value: 16 }, { label: '通过', value: 17 },]" /> -->
-
-
+    <el-dialog :visible.sync="dialogVisible">
+      <img style="width:100%;"
+        v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
+        :src="dialogImageUrl" alt="">
+      <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')"
+        :src="dialogImageUrl"></video>
+    </el-dialog>
   </div>
 </template>
 
@@ -178,6 +198,8 @@ export default {
           { required: true, message: "请上传公示图", trigger: "blur" },
         ],
       },
+      dialogVisible: false,
+      dialogImageUrl: ''
     };
   },
   computed: {
@@ -197,26 +219,41 @@ export default {
     bidBaseProject() {
       return this.$store.state.thirdProjects.thirdData.bidBaseProject;
     },
-    project_attachments0(){
+    project_attachments0() {
       let arr = []
-       this.bidBaseProject.project_attachments.forEach(val=>{
-        if(['委托招标函','采购文件确认函'].includes(val.title)){
+      this.bidBaseProject.project_attachments.forEach(val => {
+        if (['委托招标函', '采购文件确认函'].includes(val.title)) {
           arr.push(val)
         }
-       })
-       return arr
+      })
+      return arr
     },
-    project_attachments1(){
+    project_attachments1() {
       let arr = []
-       this.bidBaseProject.project_attachments.forEach(val=>{
-        if(['质疑/澄清'].includes(val.title)){
+      this.bidBaseProject.project_attachments.forEach(val => {
+        if (['质疑/澄清'].includes(val.title)) {
           arr.push(val)
         }
-       })
-       return arr
+      })
+      return arr
     }
   },
   methods: {
+    beforeAvatarUpload(file) {
+      console.log(file.type);
+      const isJPG = file.type.includes("image/");
+      const isVideo = file.type.includes("video/");
+
+      if (!isJPG && !isVideo) {
+        this.$message.error("上传头像图片只能图片或视频!");
+      }
+      return isJPG || isVideo;
+    },
+    handlePictureCardPreview(file) {
+      console.log(file)
+      this.dialogVisible = true;
+      this.dialogImageUrl = file.url;
+    },
     handleRemove(file) {
       this.bidBaseProject.bid_publish_photo.forEach((val, index) => {
         if (val == file) {
@@ -253,7 +290,7 @@ export default {
     },
     async auditEmit(e) {
       // console.log(e)
-      let res = await projectAudit({ id: this.projectInfo.id,...e });
+      let res = await projectAudit({ id: this.projectInfo.id, ...e });
       // console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
@@ -289,10 +326,10 @@ export default {
               return
             }
             // console.log(this.bidBaseProject.project_attachments)
-            for(let i =0;i<this.bidBaseProject.project_attachments.length;i++){
-              if(this.bidBaseProject.project_attachments[i].is_required==1&&this.bidBaseProject.project_attachments[i].files.length==0){
+            for (let i = 0; i < this.bidBaseProject.project_attachments.length; i++) {
+              if (this.bidBaseProject.project_attachments[i].is_required == 1 && this.bidBaseProject.project_attachments[i].files.length == 0) {
                 this.$message.error('附件不能为空')
-                 return
+                return
               }
             }
 

@@ -22,11 +22,11 @@
                         <span>{{ scope.row.notice.created_at }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="notice" label="更新时间" >
+                <!-- <el-table-column prop="notice" label="更新时间" >
                     <template slot-scope="scope">
                         <span>{{ scope.row.notice.updated_at }}</span>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column align="center" prop="created_at" label="操作" width="300">
                     <template slot-scope="scope">
                         <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">

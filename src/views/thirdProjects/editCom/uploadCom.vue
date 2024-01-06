@@ -29,8 +29,8 @@
                   <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="" />
                   <!-- :action="uploadUrl"
                                         :headers="headers" -->
-                  <el-upload class="upload-demo" :action="uploadUrl" :headers="headers" :show-file-list="false" :limit="3"
-                    :on-exceed="handleExceed" :file-list="fileList" :on-progress="uploadVideoProcess"
+                  <el-upload class="upload-demo" :action="uploadUrl" :headers="headers" :show-file-list="false" 
+                     :file-list="fileList" :on-progress="uploadVideoProcess"
                     :http-request="httpRequest" :on-success="handleSuccess">
                     <!-- :http-request="httpRequest" -->
                     <div style="
@@ -134,12 +134,7 @@ export default {
       // this.fileList.splice(index,1)
       this.$emit("updateFile", index, item);
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length
-        } 个文件`
-      );
-    },
+   
     handleProgress(e, file, fileList) {
       // console.log(e, file, fileList);
     },

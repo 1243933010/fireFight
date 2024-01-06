@@ -74,7 +74,7 @@
       <el-col :span="12">
         <el-form-item label="采购方式" prop="procurement_method">
           <el-select
-            v-model="formInfo.procurement_method"
+            v-model="formInfo.procurement_method_text"
             placeholder="请选择采购方式"
           >
             <el-option
@@ -107,7 +107,7 @@
           <el-input v-model="formInfo.notice_link" type="text" />
         </el-form-item>
       </el-col>
-      <el-col :span="14">
+      <el-col :span="24">
         <!-- <el-form-item label="" prop="input12"> -->
           <div class="form-title" style="padding-left:20px;margin-bottom: 10px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
@@ -121,8 +121,9 @@
               <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind" >
                 <div class="radio-class " v-if="ite.checked" :class="ite.checked ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
-                  <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
-                    type="text"></el-input>
+                  <!-- <el-input v-if="ite.num !== undefined" style="width: 50px;" v-model="ite.num" size="small"
+                    type="text"></el-input> -->
+                    <span t v-if="ite.num !== undefined" >{{ ite.num }}</span>
                   <span>{{ ite.label2 }}</span>
                 </span>
               </div>
@@ -246,6 +247,7 @@ export default {
       return this.$store.state.projectManagementAdd.formInfo;
     },
     procurementMethodList(){
+      return this.procurementMethodSelect[0].concat( this.procurementMethodSelect[1])
          let price = 1000000;
       if(this.formInfo.type=='engineering'){
         price = 1200000;

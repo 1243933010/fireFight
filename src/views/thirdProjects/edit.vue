@@ -77,7 +77,7 @@
             </div>
           </template>
         </el-tab-pane>
-        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${index + 1}次招标失败信息`"
+        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${chinese_numbers[index]}次招标失败信息`"
           :value="index + 1">
           <!-- 默认空数据 -->
           <template>
@@ -126,11 +126,11 @@
             </div>
             <div
               style="display: flex;justify-content: center; align-items: center;width: 100%;background-color: white;padding-bottom: 40px;">
-              <div>
+              <!-- <div>
                 <el-button @click="bidFailFnc"
                   v-if="[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,].includes(projectInfo.status)"
                   type="primary">招标失败</el-button>
-              </div>
+              </div> -->
             </div>
           </template>
         </el-tab-pane>
@@ -168,7 +168,10 @@ export default {
   },
   data() {
     return {
-      activeName: 0
+      activeName: 0,
+      chinese_numbers:['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+                   '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+                   '二十一', '二十二', '二十三', '二十四', '二十五', '二十六', '二十七', '二十八', '二十九', '三十']
       // failDataBool:false
     };
   },

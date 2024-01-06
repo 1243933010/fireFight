@@ -15,6 +15,66 @@
           <div>
             <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="projectInfo" class="demo-form-inline"
               label-width="100px">
+              <el-col :span="14">
+                <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
+                  <el-input v-model="projectInfo.no" type="text" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
+                  <el-input v-model="projectInfo.choose_no" type="text" />
+                </el-form-item>
+              </el-col>
+              
+              <el-col :span="14">
+                <el-form-item label="抽取时间" prop="choose_time">
+                  <el-date-picker value-format="yyyy-MM-dd" v-model="projectInfo.choose_time" type="date"
+                    placeholder="请选择抽取时间">
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+              <div class="file-form" style="padding-left: 30px;">
+                <div class="file-form-item" v-for="(item, index) in projectInfo.agent_receipt" :key="index">
+                  <div class="left">
+                    <div class="title"><span>{{ item.title }}</span></div>
+                    <div class="input">
+                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      </el-input>
+                    </div>
+                  </div>
+                  <div class="right">
+                    <UploadCom   :is_required="item.is_required" type="see"  title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                  </div>
+                </div>
+
+              </div>
+            </el-col>
+              <el-col :span="24">
+                <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
+                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
+                    :file-list="projectInfo.files" >
+                    <!-- <i slot="default" class="el-icon-plus"></i> -->
+                    <div slot="file" slot-scope="{file,index,list}">
+                      <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
+                      <img class="el-upload-list__item-thumbnail" v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" src="../../assets/video.png" alt="" />
+                      <span class="el-upload-list__item-actions" >
+                        <span class="el-upload-list__item-delete">
+                          <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
+                            <i class="el-icon-zoom-in"></i>
+                          </span>
+
+                        </span>
+                      </span>
+                    </div>
+                    <div class="el-upload__tip" slot="tip">
+                      只能上传图片或视频
+                    </div>
+                   
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+              
               <el-col :span="12">
                 <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
                   <el-select v-model="projectInfo.agent_id" placeholder="请选择采购代理名称">
@@ -23,24 +83,22 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
-                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
-                    :file-list="projectInfo.files" >
-                    <i slot="default" class="el-icon-plus"></i>
-                    <div class="el-upload__tip" slot="tip">
-                      只能上传图片或视频
+              <div class="file-form" style="padding-left: 10px;">
+                <div class="file-form-item" v-for="(item, index) in projectInfo.purchase_meeting" :key="index">
+                  <div class="left" >
+                    <div class="title"><span>{{ item.title }}</span></div>
+                    <div class="input">
+                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
+                      </el-input>
                     </div>
-                    <div slot="file" slot-scope="{ file }">
-                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                      <span class="el-upload-list__item-actions">
-                        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
+                  </div>
+                  <div class="right">
+                    <UploadCom  :is_required="item.is_required" type="see" title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
+                  </div>
+                </div>
+
+              </div>
+            </el-col>
             </el-form>
           </div>
         </div>
@@ -52,10 +110,11 @@
             <div class="title1">
               <img src="../../assets/liucheng.png" alt="">
               <span>附件</span>
-            </div>
-            <div class="upload" @click="uploadFile" v-if="[27,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
+              <div class="upload" style="margin-left: 10px;" @click="uploadFile" v-if="[27,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
               <span>上传合同</span>
             </div>
+            </div>
+            
           </div>
           <div>
 
@@ -85,8 +144,13 @@
       </div>
     </div>
     <Dialog ref="dialog" />
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '拒绝', value: 32 }, { label: '通过', value: 33 },]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '拒绝', value: 34 }, { label: '通过', value: 35 },]" />
+    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '驳回', value: 32 }, { label: '通过', value: 33 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '驳回', value: 34 }, { label: '通过', value: 35 },]" />
+
+    <el-dialog :visible.sync="dialogVisible">
+      <img style="width:100%;" v-if="dialogImageUrl.includes('jpeg')||dialogImageUrl.includes('png')||dialogImageUrl.includes('jpg')" :src="dialogImageUrl" alt="">
+      <video  controls  v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" :src="dialogImageUrl" ></video>
+    </el-dialog>
   </div>
 </template>
     
@@ -98,9 +162,10 @@ import { submitContract,projectDetail,projectAudit,agentList,deleteContract  } f
 import { getToken } from "@/utils/auth";
 import { addMixins } from './mixins'
 import checkDialog from "@/components/checkDialog.vue";
+import UploadCom from '../thirdProjects/editCom/uploadCom.vue'
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg,Dialog,checkDialog },
+  components: { Steps, BasicMsg,Dialog,checkDialog,UploadCom},
   data() {
     return {
       rules: {
@@ -111,6 +176,8 @@ export default {
       },
       tableData:[],
       agentArr: [],
+      dialogVisible: false,
+      dialogImageUrl: ''
     };
   },
 
@@ -142,6 +209,11 @@ export default {
     
   },
   methods: {
+    handlePictureCardPreview(file) {
+      console.log(file)
+      this.dialogVisible = true;
+      this.dialogImageUrl = file.url;
+    },
     deleteItem(item){
       this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -178,30 +250,32 @@ export default {
       let res = await projectDetail(id);
       // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
       if(res.code==200){
-        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
-          ...res.data,
-          input12: "true",
+        res.data.input12 = 'true';
+        this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', res.data);
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'file',
+          data: res.data.agent_check_videos
         });
         this.$store.commit(
-          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
-          res.data.attachments_content
-        );
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'chooseFile',
+          data: res.data.project_attachments4
+        });
         this.$store.commit(
-          "projectManagementAdd/UPDATE_RADIOLABELLIST",
-          JSON.parse(res.data.small_company)
-        );
-        this.$store.commit(
-          "projectManagementAdd/update_contractList",
-          res.data.contract
-        );
-        this.$store.commit(
-          "projectManagementAdd/update_ImplementationCommissionForm",{type:'file',
-          data:res.data.agent_check_videos}
-        );
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
+        });
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm",
-          {type:'form',
-          data:res.data.agent_id});
+          {
+            type: 'form',
+            data: { agent_id: res.data.agent_id, choose_no: res.data.choose_no, choose_time: res.data.choose_time, no: res.data.no, }
+          });
+        this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', JSON.parse(res.data.small_company));
+
+        this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS', res.data.project_attachments0);
       }
     },
     async getAgentList() {
@@ -558,6 +632,94 @@ export default {
       }
 
     }
+  }
+}
+
+.file-form {
+  .file-form-item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 40px;
+
+    .left {
+      width: 35%;
+
+      .title {
+        color: #404659;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+    }
+
+    .right {
+      width: 65%;
+      box-sizing: border-box;
+      padding-left: 16px;
+
+      .title {
+        color: #404659;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+
+      .upload {
+        display: flex;
+        flex-direction: column;
+
+        .file-list {
+          display: flex;
+          flex-direction: column;
+
+          .item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 13px;
+
+            .file-icon {
+              width: 16px;
+              height: 13px;
+              margin-right: 6px;
+            }
+
+            span {
+              color: #404659;
+              font-size: 14px;
+              margin-right: 12px;
+            }
+
+            .delete {
+              width: 14px;
+              height: 15px;
+            }
+          }
+        }
+
+        .upload-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .btn {
+            width: 100px;
+            height: 36px;
+            border: 1px solid #2D6CFF;
+            // background: #FFFFFF;
+            border-radius: 4px;
+            margin-right: 19px;
+          }
+
+          span {
+            font-size: 12px;
+            color: #A6A9BC;
+          }
+        }
+      }
+    }
+
+    // align-items: center;
   }
 }
 </style>

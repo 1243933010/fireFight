@@ -112,9 +112,9 @@
                 <div class="item-con-right-btn1" @click="openDetail(item)">
                   详情
                 </div>
-                <div class="item-con-right-btn2" @click="openDetail(item)"  v-if="[5,6,8,10].includes(item.status)">
+                <!-- <div class="item-con-right-btn2" @click="openDetail(item)"  v-if="[5,6,8,10].includes(item.status)">
                 编辑
-              </div>
+              </div> -->
                 <!-- v-if="[5,6].includes(projectInfo.status)" -->
                 <div  v-permission="['admin','project_registrar']"  class="item-con-right-btn3" @click="deleteItem(item)">删除</div>
               </div>
@@ -233,7 +233,7 @@ async departmentFnc(){
       openDetail(item) {
         this.resetFields();
         // this.$router.push({ name: "ImplementationCommissionEdit",params:{id:item.id} });
-      this.$router.push({ path: "ImplementationCommission/edit",query:{id:item.id} });
+      this.$router.push({ path: "/ImplementationCommission/edit",query:{id:item.id} });
        
       },
 
