@@ -182,7 +182,7 @@ export const asyncRoutes = [
     redirect: '/projectManagement',
     meta: {
       title: '分散采购',
-      icon: 'svg_icon1',
+      icon: 'excel',
       // icon:'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -253,7 +253,7 @@ export const asyncRoutes = [
     redirect: '/projectManagementT',
     meta: {
       title: '集中采购',
-      icon: 'svg_icon1',
+      icon: 'el-icon-s-help',
       // icon:'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },

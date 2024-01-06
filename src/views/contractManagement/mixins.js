@@ -14,76 +14,76 @@ export const addMixins = {
         stepList() {
             console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
             return [
-                {
-                    title: "需求单位",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.demand_department_id,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.demand_department_id && this.$store.state.projectManagementAdd.formInfo.project_leader,
-                },
-                {
-                    title: "项目负责人",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.project_leader,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.project_leader && this.$store.state.projectManagementAdd.formInfo.contact_phone,
-                },
-                {
-                    title: "联系电话",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.contact_phone,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.contact_phone && this.$store.state.projectManagementAdd.formInfo.name,
-                },
-                {
-                    title: "项目名称",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.name,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.name && this.$store.state.projectManagementAdd.formInfo.type,
-                },
-                {
-                    title: "项目类型",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.type,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.no,
-                },
-                {
-                    title: "项目编号",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.no,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.no && this.$store.state.projectManagementAdd.formInfo.audit_amount,
-                },
-                {
-                    title: "审计金额",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.audit_amount,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.audit_amount && this.$store.state.projectManagementAdd.formInfo.budget,
-                },
-                {
-                    title: "预算金额",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.budget,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.budget && this.$store.state.projectManagementAdd.formInfo.procurement_method,
-                },
-                {
-                    title: "采购方式",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.procurement_method,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.procurement_method && this.$store.state.projectManagementAdd.formInfo.public_date,
-                },
-                {
-                    title: "采购意向公开日期",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.public_date,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.public_date && this.$store.state.projectManagementAdd.formInfo.notice_link,
-                },
-                {
-                    title: "采购意向公告链接",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.notice_link,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.notice_link && this.$store.state.projectManagementAdd.formInfo.input12,
-                },
-                {
-                    title: "是否面向中小微企",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.input12,
-                    // isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.input),
+                // {
+                //     title: "需求单位",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.demand_department_id,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.demand_department_id && this.$store.state.projectManagementAdd.formInfo.project_leader,
+                // },
+                // {
+                //     title: "项目负责人",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.project_leader,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.project_leader && this.$store.state.projectManagementAdd.formInfo.contact_phone,
+                // },
+                // {
+                //     title: "联系电话",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.contact_phone,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.contact_phone && this.$store.state.projectManagementAdd.formInfo.name,
+                // },
+                // {
+                //     title: "项目名称",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.name,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.name && this.$store.state.projectManagementAdd.formInfo.type,
+                // },
+                // {
+                //     title: "项目类型",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.type,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.no,
+                // },
+                // {
+                //     title: "项目编号",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.no,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.no && this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                // },
+                // {
+                //     title: "审计金额",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.audit_amount && this.$store.state.projectManagementAdd.formInfo.budget,
+                // },
+                // {
+                //     title: "预算金额",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.budget,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.budget && this.$store.state.projectManagementAdd.formInfo.procurement_method,
+                // },
+                // {
+                //     title: "采购方式",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.procurement_method,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.procurement_method && this.$store.state.projectManagementAdd.formInfo.public_date,
+                // },
+                // {
+                //     title: "采购意向公开日期",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.public_date,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.public_date && this.$store.state.projectManagementAdd.formInfo.notice_link,
+                // },
+                // {
+                //     title: "采购意向公告链接",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.notice_link,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.notice_link && this.$store.state.projectManagementAdd.formInfo.input12,
+                // },
+                // {
+                //     title: "是否面向中小微企",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.input12,
+                //     // isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.input),
                    
-                },
+                // },
+                // {
+                //     title: "采购代理名称",
+                //     isInput: this.$store.state.projectManagementAdd.formInfo.agent_id,
+                //     isActive: !this.$store.state.projectManagementAdd.formInfo.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
+                // },
                 {
-                    title: "采购代理名称",
-                    isInput: this.$store.state.projectManagementAdd.formInfo.agent_id,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
-                },
-                {
-                    title: "抽取采购代理机构登记",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
+                    title: "上传合同",
+                    isInput: this.$store.state.projectManagementAdd.contractList.length>0,
                     isActive: true,
                 },
 

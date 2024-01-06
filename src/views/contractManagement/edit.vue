@@ -276,6 +276,10 @@ export default {
         this.$store.commit('projectManagementAdd/UPDATE_RADIOLABELLIST', JSON.parse(res.data.small_company));
 
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS', res.data.project_attachments0);
+        this.$store.commit(
+          "projectManagementAdd/update_contractList",
+          res.data.contract
+        );
       }
     },
     async getAgentList() {

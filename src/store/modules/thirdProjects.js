@@ -56,7 +56,7 @@ const state = {
       bid_publish_date:'',
       publish_link:'',
       bid_open_date:'',
-      doubt:"",
+      // doubt:"",
       bid_publish_photo:[],
       // bid_register_file:[],
       bid_file_issue:[],
