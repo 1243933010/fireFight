@@ -1,14 +1,7 @@
 <template>
   <div>
-    <el-form
-      ref="formInfo"
-      :disabled="disabled"
-      :inline="true"
-      :rules="rules"
-      :model="formInfo"
-      class="demo-form-inline"
-      label-width="100px"
-    >
+    <el-form ref="formInfo" :disabled="disabled" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
+      label-width="100px">
       <!-- <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">
           <el-select v-model="formInfo.demand_department_id" placeholder="请选择需求单位">
@@ -17,20 +10,12 @@
         </el-form-item>
       </el-col> -->
       <el-col :span="12">
-        <el-form-item
-          label="项目负责人"
-          prop="project_leader"
-          placeholder="请输入项目负责人"
-        >
+        <el-form-item label="项目负责人" prop="project_leader" placeholder="请输入项目负责人">
           <el-input v-model="formInfo.project_leader" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item
-          label="联系电话"
-          prop="contact_phone"
-          placeholder="请输入联系电话"
-        >
+        <el-form-item label="联系电话" prop="contact_phone" placeholder="请输入联系电话">
           <el-input v-model="formInfo.contact_phone" />
         </el-form-item>
       </el-col>
@@ -54,56 +39,32 @@
         </el-form-item>
       </el-col> -->
       <el-col :span="12">
-        <el-form-item
-          label="审计金额"
-          prop="audit_amount"
-          placeholder="请输入审计金额"
-        >
-          <el-input v-model="formInfo.audit_amount" type="number"  />
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item
-          label="预算金额"
-          prop="budget"
-          placeholder="请输入预算金额"
-        >
+        <el-form-item label="预算金额" prop="budget" placeholder="请输入预算金额">
           <el-input v-model="formInfo.budget" type="number" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
+        <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
+          <el-input v-model="formInfo.audit_amount" type="number" />
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
         <el-form-item label="采购方式" prop="procurement_method">
-          <el-select
-            v-model="formInfo.procurement_method"
-            placeholder="请选择采购方式"
-          >
-            <el-option
-              :label="item.label"
-              :value="item.value"
-              v-for="(item, index) in procurementMethodList"
-              :key="index"
-            />
+          <el-select v-model="formInfo.procurement_method" placeholder="请选择采购方式">
+            <el-option :label="item.label" :value="item.value" v-for="(item, index) in procurementMethodList"
+              :key="index" />
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="采购意向公开日期" prop="public_date">
-          <el-date-picker
-            value-format="yyyy-MM-dd"
-            v-model="formInfo.public_date"
-            type="date"
-            placeholder="请选择采购意向公开日期"
-          >
+          <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.public_date" type="date" placeholder="请选择采购意向公开日期">
           </el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item
-          label="采购意向公告链接"
-          prop="notice_link"
-          placeholder="请输入采购意向公告链接"
-          label-width="150px"
-        >
+        <el-form-item label="采购意向公告链接" prop="notice_link" placeholder="请输入采购意向公告链接" label-width="150px">
           <el-input v-model="formInfo.notice_link" type="text" />
         </el-form-item>
       </el-col>
@@ -114,38 +75,17 @@
           </div>
           <div v-for="(item, index) in radioLabelList" :key="index">
             <div class="radio-item" @click="setIndex(index)">
-              <div
-                class="radio-class"
-                :class="item.checked ? 'active' : ''"
-                v-if="[undefined,0,2,4].includes(formInfo.status)"
-              ></div>
+              <div class="radio-class" :class="item.checked ? 'active' : ''"
+                v-if="[undefined, 0, 2, 4].includes(formInfo.status)"></div>
               <span>{{ item.label }}</span>
             </div>
-            <div
-              class="radio-item-child"
-              v-if="item.child.length > 0 && item.checked"
-            >
-              <div
-                class="radio-item"
-                v-for="(ite, ind) in item.child"
-                :key="ind"
-                @click="setChildIndex(item, ite, ind)"
-              >
-                <div
-                  class="radio-class"
-                  :class="ite.checked ? 'active' : ''"
-                  v-if="[undefined,0,2,4].includes(formInfo.status)"
-                ></div>
-                <span
-                  >{{ ite.label1 }}
-                  <el-input
-                    v-if="ite.num !== undefined"
-                    style="width: 10%"
-                    v-model="ite.num"
-                    size="small"
-                    type="text"
-                    :disabled="disabled"
-                  ></el-input>
+            <div class="radio-item-child" v-if="item.child.length > 0 && item.checked">
+              <div class="radio-item" v-for="(ite, ind) in item.child" :key="ind" @click="setChildIndex(item, ite, ind)">
+                <div class="radio-class" :class="ite.checked ? 'active' : ''"
+                  v-if="[undefined, 0, 2, 4].includes(formInfo.status)"></div>
+                <span>{{ ite.label1 }}
+                  <el-input v-if="ite.num !== undefined" style="width: 10%" v-model="ite.num" size="small" type="text"
+                    :disabled="disabled"></el-input>
                   <span>{{ ite.label2 }}</span>
                 </span>
               </div>
@@ -222,8 +162,8 @@ export default {
           { label: '邀请招标', value: 2 },
           { label: '竞争性谈判', value: 3 },
           { label: '竞争性磋商', value: 4 },
-          { label: '单一来源采购', value: 5},
-          { label: '询价', value: 6},
+          { label: '单一来源采购', value: 5 },
+          { label: '询价', value: 6 },
           { label: '其他', value: 7 },
 
         ], [
@@ -262,38 +202,38 @@ export default {
       },
       deep: true,
     },
-    'formInfo.audit_amount'(newValue,oldValue){
+    'formInfo.audit_amount'(newValue, oldValue) {
       let price = 1000000;
-      if(this.formInfo.type=='engineering'){
+      if (this.formInfo.type == 'engineering') {
         price = 1200000;
-      }else{
+      } else {
         price = 1000000;
       }
       // console.log(oldValue,'oldvalue')
-      if((+oldValue)>=price&&newValue<price){
+      if ((+oldValue) >= price && newValue < price) {
         this.formInfo.procurement_method = ''
-      }else if((+newValue)>=price&&oldValue<price){
-        
-        if(oldValue==''){
-          
-        }else{
+      } else if ((+newValue) >= price && oldValue < price) {
+
+        if (oldValue == '') {
+
+        } else {
           this.formInfo.procurement_method = ''
         }
       }
     }
   },
   computed: {
-    procurementMethodList(){
-         let price = 1000000;
-      if(this.formInfo.type=='engineering'){
+    procurementMethodList() {
+      let price = 1000000;
+      if (this.formInfo.type == 'engineering') {
         price = 1200000;
-      }else{
+      } else {
         price = 1000000;
       }
-      console.log('this.formInfo.audit_amount',this.isFirstTime)
-      if((+this.formInfo.audit_amount)>=price){
+      console.log('this.formInfo.audit_amount', this.isFirstTime)
+      if ((+this.formInfo.audit_amount) >= price) {
         return this.procurementMethodSelect[0]
-      }else{
+      } else {
         return this.procurementMethodSelect[1]
       }
     },
@@ -470,11 +410,9 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(
-            90deg,
-            #1d70ff 0%,
-            rgba(29, 112, 255, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #1d70ff 0%,
+              rgba(29, 112, 255, 0) 100%);
         }
       }
 
@@ -482,11 +420,9 @@ export default {
         color: #a6a9bc;
 
         div {
-          background: linear-gradient(
-            90deg,
-            #a6a9bc 0%,
-            rgba(166, 169, 188, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #a6a9bc 0%,
+              rgba(166, 169, 188, 0) 100%);
         }
       }
     }

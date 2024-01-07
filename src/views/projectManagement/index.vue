@@ -199,11 +199,11 @@ export default {
   methods: {
     async getState(){
       let res = await projectStateList();
-     
+     console.log(res,'----------')
       if(res.code==200){
         let arr = [];
-        res.data.forEach((element,index) => {
-          arr.push({label:element,value:index})
+        Object.keys(res.data).forEach((element,index) => {
+          arr.push({label:res.data[element],value:element})
         });
         this.stateList =arr;
       }

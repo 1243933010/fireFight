@@ -27,7 +27,7 @@
             <el-input v-model="bidBaseProject.publish_link" placeholder="请输入公示链接" />
           </el-form-item>
           <!-- <div style="display: block;"> -->
-          <el-form-item :label="`公示图（${bidBaseProject.bid_publish_photo.length}/4）`" prop="bid_publish_photo"  style="width: 33%;">
+          <el-form-item :label="`公示图`" prop="bid_publish_photo"  style="width: 33%;">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
               :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess">
               <i slot="default" class="el-icon-plus"  v-if="[11,12,14,16].includes(projectInfo.status)"></i>

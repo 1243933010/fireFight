@@ -369,7 +369,7 @@ export const asyncRoutes = [
       path: 'agent',
       name: 'agent',
       component: () => import('@/views/systemManagement/agent/index'),
-      meta: { title: '三方代理管理',  }
+      meta: { title: '代理机构管理',  }
     },
   ]
   },

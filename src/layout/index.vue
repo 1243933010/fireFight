@@ -13,7 +13,7 @@
       </div>
 
       <div class="avatar-team-name">
-        <div class="message-icon" @click="openMessage" v-if="noticeNum>0">
+        <div class="message-icon" @click="openMessage" >
           <el-badge :value="noticeNum" class="item">
             <img src="../assets/message_yellow.png" class="img" />
           </el-badge>
@@ -162,7 +162,7 @@ export default {
             let res = await userNoticeList(this.form);
             // console.log(res);
             if (res.code == 200) {
-                this.noticeNum = res.data.length;
+                this.noticeNum = res.data.unread;
             //     this.list = [
             // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
             // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]

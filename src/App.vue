@@ -14,4 +14,7 @@ export default {
 #app {
   font-family: "PingFang SC", Arial, sans-serif;
 }
+div{
+  cursor: pointer;
+}
 </style>

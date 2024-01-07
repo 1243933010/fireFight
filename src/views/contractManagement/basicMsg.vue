@@ -39,15 +39,16 @@
         </el-form-item>
       </el-col> -->
       <el-col :span="12">
-        <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
-          <el-input v-model="formInfo.audit_amount" type="number" />
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
         <el-form-item label="预算金额" prop="budget" placeholder="请输入预算金额">
           <el-input v-model="formInfo.budget" type="number" />
         </el-form-item>
       </el-col>
+      <el-col :span="12">
+        <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
+          <el-input v-model="formInfo.audit_amount" type="number" />
+        </el-form-item>
+      </el-col>
+      
       <el-col :span="12">
         <el-form-item label="采购方式" prop="procurement_method">
           <el-select v-model="formInfo.procurement_method" placeholder="请选择采购方式">

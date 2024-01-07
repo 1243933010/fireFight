@@ -11,7 +11,7 @@
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
                   <div class="input">
-                    <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
+                    <el-input :disabled="![11, 12, 14, 38].includes(projectInfo.status)" type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
                     </el-input>
                   </div>
                 </div>
@@ -61,7 +61,8 @@
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
           <el-form-item :label="`公示图`" prop="bid_publish_photo" style="width: 50%;">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
-              :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess" :before-upload="beforeAvatarUpload" >
+              :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess"
+              :before-upload="beforeAvatarUpload">
               <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16].includes(projectInfo.status)"></i>
               <div slot="file" slot-scope="{ file }">
                 <!-- <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" /> -->
@@ -104,7 +105,7 @@
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
                   <div class="input">
-                    <el-input type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
+                    <el-input :disabled="![11, 12, 14, 38].includes(projectInfo.status)" type="textarea" :rows="4" v-model="item.description" :placeholder="item.title">
                     </el-input>
                   </div>
                 </div>
@@ -121,10 +122,18 @@
     </el-row>
     <div>
       <div style="display: flex;flex-direction: row;"
-        v-if="projectInfo.reject_log && [14].includes(projectInfo.reject_log.status)">
+        v-if="projectInfo.reject_log && [14].includes(projectInfo.reject_log.status)&&projectInfo.reject_log.description">
         <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.reject_log.description"></el-input>
+      </div>
+    </div>
+    <div>
+      <div style="display: flex;flex-direction: row;"
+        v-if="projectInfo.pass_log && [15].includes(projectInfo.pass_log.status)&&projectInfo.pass_log.description">
+        <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+        <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+          v-model="projectInfo.pass_log.description"></el-input>
       </div>
     </div>
     <div v-if="projectInfo.failDataBool" style="display: flex;justify-content: center;align-items: center;width: 100%;">

@@ -65,9 +65,9 @@
             </div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="中标通知书日期" prop="bid_success_notice_date" style="width: 50%;">
+        <el-form-item label="中标通知书/成交结果通知书日期" prop="bid_success_notice_date" style="width: 50%;">
           <el-date-picker v-model="resultData.bid_success_notice_date" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择开评标日期">
+            placeholder="请选择日期">
           </el-date-picker>
         </el-form-item>
         
@@ -119,7 +119,7 @@
       </div>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments"
+          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="相关资料（如质疑答复、投诉处理决定等)" :fileList="resultData.project_attachments"
             @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
         <!-- </div> -->
       </div>
@@ -147,10 +147,18 @@
     </div> -->
     <div>
       <div style="display: flex;flex-direction: row;"
-        v-if="projectInfo.reject_log && [26].includes(projectInfo.reject_log.status)">
+        v-if="projectInfo.reject_log && [26].includes(projectInfo.reject_log.status)&&projectInfo.reject_log.description">
         <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.reject_log.description"></el-input>
+      </div>
+    </div>
+    <div>
+      <div style="display: flex;flex-direction: row;"
+        v-if="projectInfo.pass_log && [27].includes(projectInfo.pass_log.status)&&projectInfo.pass_log.description">
+        <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+        <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+          v-model="projectInfo.pass_log.description"></el-input>
       </div>
     </div>
     <div style="display: flex;justify-content: center;align-items: center;width: 100%;">

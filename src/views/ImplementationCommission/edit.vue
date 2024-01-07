@@ -65,12 +65,12 @@
                     <div slot="file" slot-scope="{file,index,list}">
                       <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
                       <img class="el-upload-list__item-thumbnail" v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" src="../../assets/video.png" alt="" />
-                      <span class="el-upload-list__item-actions" v-if="[5, 6, 8, 10].includes(projectInfo.status)">
+                      <span class="el-upload-list__item-actions" >
                         <span class="el-upload-list__item-delete">
                           <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
                             <i class="el-icon-zoom-in"></i>
                           </span>
-                          <i class="el-icon-delete"  @click="handleRemove(file)"></i>
+                          <i class="el-icon-delete"  @click="handleRemove(file)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
 
                         </span>
                       </span>
@@ -114,10 +114,17 @@
           </div> -->
           <div>
             <div style="display: flex;flex-direction: row;"
-              v-if="projectInfo.reject_log && [8, 10].includes(projectInfo.reject_log.status)">
+              v-if="projectInfo.reject_log && [8, 10].includes(projectInfo.reject_log.status)&&projectInfo.reject_log.description">
               <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
               <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
                 v-model="projectInfo.reject_log.description"></el-input>
+            </div>
+          </div>
+          <div >
+            <div style="display: flex;flex-direction: row;" v-if="projectInfo.pass_log&&[9,11].includes(projectInfo.pass_log.status)&&projectInfo.pass_log.description">
+              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                v-model="projectInfo.pass_log.description"></el-input>
             </div>
           </div>
           <div class="btnn">

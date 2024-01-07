@@ -37,7 +37,7 @@ export const addMixins = {
                 {
                     title: "项目类型",
                     isInput: this.$store.state.projectManagementAdd.formInfo.type,
-                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                    isActive: !this.$store.state.projectManagementAdd.formInfo.type && this.$store.state.projectManagementAdd.formInfo.budget,
                 },
                 // {
                 //     title: "项目编号",
@@ -45,15 +45,16 @@ export const addMixins = {
                 //     isActive: !this.$store.state.projectManagementAdd.formInfo.no && (+this.$store.state.projectManagementAdd.formInfo.audit_amount),
                 // },
                 {
-                    title: "审计金额",
-                    isInput: +this.$store.state.projectManagementAdd.formInfo.audit_amount,
-                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.audit_amount) && (+this.$store.state.projectManagementAdd.formInfo.budget),
-                },
-                {
                     title: "预算金额",
                     isInput: +this.$store.state.projectManagementAdd.formInfo.budget,
-                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.budget) && this.$store.state.projectManagementAdd.formInfo.procurement_method,
+                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.budget) && this.$store.state.projectManagementAdd.formInfo.audit_amount,
                 },
+                {
+                    title: "审计金额",
+                    isInput: +this.$store.state.projectManagementAdd.formInfo.audit_amount,
+                    isActive: !(+this.$store.state.projectManagementAdd.formInfo.audit_amount) && (+this.$store.state.projectManagementAdd.formInfo.procurement_method),
+                },
+                
                 {
                     title: "采购方式",
                     isInput: this.$store.state.projectManagementAdd.formInfo.procurement_method,
@@ -155,6 +156,13 @@ export const addMixins = {
             if (this.$store.state.projectManagementAdd.formInfo.status >= 24) {
                 stepArr.push({
                     title: "中标",
+                    isInput: true,
+                    isActive: false,
+                },)
+            }
+            if (this.$store.state.projectManagementAdd.formInfo.status >= 30) {
+                stepArr.push({
+                    title: "上传合同",
                     isInput: true,
                     isActive: false,
                 },)

@@ -6,8 +6,7 @@
           <div class="files">
             <div class="file-form"
               style="display: flex;flex-direction: row;align-items: center;flex-wrap: wrap;justify-content: space-between;">
-              <div class="file-form-item" style="width: 100%;" v-for="(item, index) in project_attachments0"
-                :key="index">
+              <div class="file-form-item" style="width: 100%;" v-for="(item, index) in project_attachments0" :key="index">
 
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
@@ -17,7 +16,8 @@
                   </div>
                 </div>
                 <div class="right">
-                  <UploadCom title="附件" :is_required="item.is_required" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+                  <UploadCom type="see" title="附件" :is_required="item.is_required" :fileList="item.files"
+                    @updateFile="(e) => updateFile(e, item.files, index)" />
                 </div>
               </div>
             </div>
@@ -36,8 +36,8 @@
             </el-date-picker>
           </el-form-item>
           <UploadCom title="采购文件（发售稿）" flex="row" :fileList="bidBaseProject.bid_file_issue"
-            @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)" style="width: 100%;" />
-            <!-- <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 33%;">
+          type="see"  @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)" style="width: 100%;" />
+          <!-- <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 33%;">
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
             </el-date-picker>
@@ -51,22 +51,30 @@
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
             </el-date-picker>
-          </el-form-item> 
+          </el-form-item>
           <el-form-item label="采购公告链接" prop="publish_link" style="width: 50%;">
             <el-input v-model="bidBaseProject.publish_link" placeholder="请输入采购公告链接" />
-          </el-form-item>        
+          </el-form-item>
         </div>
         <div style="width: 100%;display: flex;flex-direction: column;align-items: center;justify-content: space-between;">
-          <el-form-item :label="`公示图（${bidBaseProject.bid_publish_photo.length}/4）`" prop="bid_publish_photo"
-            style="width: 100%;">
+          <el-form-item :label="`公示图`" prop="bid_publish_photo" style="width: 100%;">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
               :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess">
-              <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16].includes(projectInfo.status)"></i>
-              <div slot="file" slot-scope="{ file }">
-                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                <span class="el-upload-list__item-actions" v-if="[11, 12, 14, 16].includes(projectInfo.status)">
-                  <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                    <i class="el-icon-delete"></i>
+              <!-- <i slot="default" class="el-icon-plus" ></i> -->
+              <div slot="file" slot-scope="{file,index,list}">
+                <img class="el-upload-list__item-thumbnail"
+                  v-if="file.url.includes('jpeg') || file.url.includes('png') || file.url.includes('jpg')" :src="file.url"
+                  alt="" />
+                <img class="el-upload-list__item-thumbnail"
+                  v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" src="../../assets/video.png"
+                  alt="" />
+                <span class="el-upload-list__item-actions">
+                  <span class="el-upload-list__item-delete">
+                    <span class="el-upload-list__item-preview" style="margin-right: 10px;"
+                      @click="handlePictureCardPreview(file)">
+                      <i class="el-icon-zoom-in"></i>
+                    </span>
+
                   </span>
                 </span>
               </div>
@@ -86,8 +94,7 @@
           <div class="files">
             <div class="file-form"
               style="display: flex;flex-direction: row;align-items: center;flex-wrap: wrap;justify-content: space-between;">
-              <div class="file-form-item" style="width: 100%;" v-for="(item, index) in project_attachments1"
-                :key="index">
+              <div class="file-form-item" style="width: 100%;" v-for="(item, index) in project_attachments1" :key="index">
 
                 <div class="left">
                   <div class="title"><span>{{ item.title }}</span></div>
@@ -97,7 +104,8 @@
                   </div>
                 </div>
                 <div class="right">
-                  <UploadCom title="附件" :is_required="item.is_required" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
+                  <UploadCom title="附件" type="see" :is_required="item.is_required" :fileList="item.files"
+                    @updateFile="(e) => updateFile(e, item.files, index)" />
                 </div>
               </div>
             </div>
@@ -106,7 +114,12 @@
       </el-col>
     </el-row>
 
-
+    <el-dialog :visible.sync="dialogVisible">
+      <img style="width:100%;"
+        v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
+        :src="dialogImageUrl" alt="">
+      <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" :src="dialogImageUrl"></video>
+    </el-dialog>
   </div>
 </template>
 
@@ -156,6 +169,8 @@ export default {
           { required: true, message: "请上传公示图", trigger: "blur" },
         ],
       },
+      dialogVisible: false,
+      dialogImageUrl: ''
     };
   },
   computed: {
@@ -175,26 +190,31 @@ export default {
     bidBaseProject() {
       return this.$store.state.projectManagementAdd.thirdData.bidBaseProject;
     },
-    project_attachments0(){
+    project_attachments0() {
       let arr = []
-       this.bidBaseProject.project_attachments.forEach(val=>{
-        if(['委托招标函','采购文件确认函'].includes(val.title)){
+      this.bidBaseProject.project_attachments.forEach(val => {
+        if (['委托招标函', '采购文件确认函'].includes(val.title)) {
           arr.push(val)
         }
-       })
-       return arr
+      })
+      return arr
     },
-    project_attachments1(){
+    project_attachments1() {
       let arr = []
-       this.bidBaseProject.project_attachments.forEach(val=>{
-        if(['质疑/澄清'].includes(val.title)){
+      this.bidBaseProject.project_attachments.forEach(val => {
+        if (['质疑/澄清'].includes(val.title)) {
           arr.push(val)
         }
-       })
-       return arr
+      })
+      return arr
     }
   },
   methods: {
+    handlePictureCardPreview(file) {
+      console.log(file)
+      this.dialogVisible = true;
+      this.dialogImageUrl = file.url;
+    },
     handleRemove(file) {
       this.bidBaseProject.bid_publish_photo.forEach((val, index) => {
         if (val == file) {
@@ -231,7 +251,7 @@ export default {
     },
     async auditEmit(e) {
       // console.log(e)
-      let res = await projectAudit({ id: this.projectInfo.id,...e });
+      let res = await projectAudit({ id: this.projectInfo.id, ...e });
       // console.log(res)
       if (res.code == 200) {
         this.$message.success(res.msg);
@@ -267,10 +287,10 @@ export default {
               return
             }
             // console.log(this.bidBaseProject.project_attachments)
-            for(let i =0;i<this.bidBaseProject.project_attachments.length;i++){
-              if(this.bidBaseProject.project_attachments[i].is_required==1&&this.bidBaseProject.project_attachments[i].files.length==0){
+            for (let i = 0; i < this.bidBaseProject.project_attachments.length; i++) {
+              if (this.bidBaseProject.project_attachments[i].is_required == 1 && this.bidBaseProject.project_attachments[i].files.length == 0) {
                 this.$message.error('附件不能为空')
-                 return
+                return
               }
             }
 
@@ -558,4 +578,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

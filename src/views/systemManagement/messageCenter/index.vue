@@ -131,7 +131,7 @@ export default {
             let res = await userNoticeList(this.form);
             console.log(res);
             if (res.code == 200) {
-                this.list = res.data;
+                this.list = res.data.list;
             //     this.list = [
             // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
             // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]

@@ -39,15 +39,16 @@
         </el-form-item>
       </el-col> -->
       <el-col :span="8">
-        <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
-          <el-input v-model="formInfo.audit_amount" type="number" />
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
         <el-form-item label="预算金额" prop="budget" placeholder="请输入预算金额">
           <el-input v-model="formInfo.budget" type="number" />
         </el-form-item>
       </el-col>
+      <el-col :span="8">
+        <el-form-item label="审计金额" prop="audit_amount" placeholder="请输入审计金额">
+          <el-input v-model="formInfo.audit_amount" type="number" />
+        </el-form-item>
+      </el-col>
+      
       <el-col :span="8">
         <el-form-item label="采购方式" prop="procurement_method">
           <el-select v-model="formInfo.procurement_method" placeholder="请选择采购方式">
@@ -68,28 +69,26 @@
         </el-form-item>
       </el-col>
       <el-col :span="14">
-        <!-- <el-form-item label="" prop="input12"> -->
+        <el-form-item label="" prop="input12">
           <div class="form-title" style="padding-left:20px;margin-bottom: 10px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
-          <div v-for="(item, index) in radioLabelList" :key="index" style="margin-bottom: 20px;">
-            <div class="radio-item"  v-if="item.child.length == 0">
-              <div  v-if="item.child.length == 0" class="radio-class" :class="item.checked ? 'active' : ''"></div>
+          <div v-for="(item, index) in radioLabelList" :key="index">
+            <div class="radio-item" >
+              <div class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
-
             </div>
             <div class="radio-item-child" v-if="item.child.length > 0 && item.checked">
-              <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind" >
-                <div class="radio-class " v-if="ite.checked" :class="ite.checked ? 'active' : ''"></div>
+              <div class="radio-item" v-for="(ite, ind) in item.child" :key="ind" >
+                <div class="radio-class" :class="ite.checked ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
-                  <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
-                    type="text"></el-input>
+                  <el-input v-if="ite.num !== undefined" style="width: 10%" v-model="ite.num" size="small" type="text"
+                    :disabled="disabled"></el-input>
                   <span>{{ ite.label2 }}</span>
                 </span>
               </div>
             </div>
-
           </div>
-        <!-- </el-form-item> -->
+        </el-form-item>
       </el-col>
     </el-form>
     <implementCom />

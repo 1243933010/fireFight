@@ -11,17 +11,17 @@ export const addMixins = {
                 {
                     title: "招标",
                     isInput: this.bidBaseActive,
-                    isActive: this.bidBaseActive&&this.bid_files_list_bool&&this.bid_units_bool&&this.project_attachments_bool,
+                    isActive: false,
                 },
                 {
                     title: "开评标",
                     isInput: this.bid_files_list_bool&&this.bid_units_bool&&this.project_attachments_bool,
-                    isActive: true,
+                    isActive: false,
                 },
                 {
                     title: "中标",
                     isInput: this.resultDataActive,
-                    isActive: true,
+                    isActive: false,
                 },
                
             ]

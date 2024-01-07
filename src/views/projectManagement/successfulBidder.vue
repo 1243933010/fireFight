@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form ref="thirdForm" style="" :inline="true" :rules="thirdFormRules" :model="resultData" class="demo-form-inline"
-      :disabled="![21, 24,26].includes(projectInfo.status)"  label-width="140px">
+      :disabled="![21, 24, 26].includes(projectInfo.status)" label-width="140px">
 
       <div style="display: flex;flex-direction: row;margin-bottom: 20px;">
         <el-form-item label="中标金额" prop="bid_success_amount" style="width: 50%;">
@@ -43,11 +43,20 @@
           <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
             :file-list="resultData.bid_success_photo" :on-progress="handleProgress" :on-success="handleSuccess">
             <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{ file }">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+            <div slot="file" slot-scope="{file,index,list}">
+              <img class="el-upload-list__item-thumbnail"
+                v-if="file.url.includes('jpeg') || file.url.includes('png') || file.url.includes('jpg')" :src="file.url"
+                alt="" />
+              <img class="el-upload-list__item-thumbnail"
+                v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" src="../../assets/video.png"
+                alt="" />
               <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
+                <span class="el-upload-list__item-delete">
+                  <span class="el-upload-list__item-preview" style="margin-right: 10px;"
+                    @click="handlePictureCardPreview(file)">
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+
                 </span>
               </span>
             </div>
@@ -58,24 +67,24 @@
             placeholder="请选择开评标日期">
           </el-date-picker>
         </el-form-item>
-        
+
 
       </div>
       <div style="display: flex;flex-direction: row;">
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
-          <UploadCom title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice"
-          type="see" @updateFile="(e) => updateFile(e, resultData.bid_success_notice)" />
-        <!-- </div> -->
-      </div>
-      
-      <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
-          <UploadCom title="中标供应商企业类型" :fileList="resultData.bid_unit_type"
-          type="see" @updateFile="(e) => updateFile(e, resultData.bid_unit_type)" />
-        <!-- </div> -->
-      </div>
-       
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="中标通知书/成交结果通知书" :fileList="resultData.bid_success_notice" type="see"
+            @updateFile="(e) => updateFile(e, resultData.bid_success_notice)" />
+          <!-- </div> -->
+        </div>
+
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="中标供应商企业类型" :fileList="resultData.bid_unit_type" type="see"
+            @updateFile="(e) => updateFile(e, resultData.bid_unit_type)" />
+          <!-- </div> -->
+        </div>
+
       </div>
       <div style="display: flex;flex-direction: row;">
         <el-form-item label="中标供应商企份额" prop="bid_success_unit_per" style="width: 45%;">
@@ -84,28 +93,35 @@
           </el-input>
         </el-form-item>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
-          <UploadCom title="档案汇编" :fileList="resultData.file_compilation"
-           type="see"  @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
-        <!-- </div> -->
-      </div>
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="档案汇编" :fileList="resultData.file_compilation" type="see"
+            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
+          <!-- </div> -->
+        </div>
       </div>
       <div style="display: flex;flex-direction: row;">
-        
+
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
-          <UploadCom title="投标文件" :fileList="resultData.bid_file"
-          type="see" @updateFile="(e) => updateFile(e, resultData.bid_file)" />
-        <!-- </div> -->
-      </div>
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="投标文件" :fileList="resultData.bid_file" type="see"
+            @updateFile="(e) => updateFile(e, resultData.bid_file)" />
+          <!-- </div> -->
+        </div>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
-          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments"
-          type="see" @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
-        <!-- </div> -->
-      </div>
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments" type="see"
+            @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
+          <!-- </div> -->
+        </div>
       </div>
     </el-form>
+
+    <el-dialog :visible.sync="dialogVisible">
+      <img style="width:100%;"
+        v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
+        :src="dialogImageUrl" alt="">
+      <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" :src="dialogImageUrl"></video>
+    </el-dialog>
   </div>
 </template>
 
@@ -131,7 +147,8 @@ export default {
         bid_success_photo: [{ required: true, message: "请上传中标图片", trigger: "blur" },],
         bid_success_notice: [{ required: true, message: "请上传中标告知书", trigger: "blur" },],
       },
-
+      dialogVisible: false,
+      dialogImageUrl: ''
     };
   },
   computed: {
@@ -151,6 +168,11 @@ export default {
     },
   },
   methods: {
+    handlePictureCardPreview(file) {
+      console.log(file)
+      this.dialogVisible = true;
+      this.dialogImageUrl = file.url;
+    },
     updateFile(e, item, index) {
       console.log(e, item, index)
       if (typeof e == 'number') {
@@ -189,7 +211,7 @@ export default {
             this.$message.error('请上传档案汇编');
             return
           }
-          
+
           // if(!resultData.project_attachments[0].files.length){
           // this.$message.error('请上传附件');
           // return
@@ -524,5 +546,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>

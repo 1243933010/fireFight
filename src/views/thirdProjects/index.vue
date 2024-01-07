@@ -217,8 +217,8 @@ export default {
 
       if (res.code == 200) {
         let arr = [];
-        res.data.forEach((element, index) => {
-          arr.push({ label: element, value: index });
+        Object.keys(res.data).forEach((element,index) => {
+          arr.push({label:res.data[element],value:element})
         });
         this.stateList = arr;
       }
@@ -231,15 +231,12 @@ export default {
       }
     },
     async query() {
-      let form = {
-        current_page: this.form.current_page,
-        per_page: this.form.per_page,
-      };
+     
       let res = await agentProjectList(this.form);
       console.log(res);
       if (res.code == 200) {
         this.form.total = res.data.total;
-        this.list = res.data;
+        this.list = res.data.list;
       }
     },
     handleSizeChange(val) {
