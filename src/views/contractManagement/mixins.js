@@ -84,7 +84,7 @@ export const addMixins = {
                 {
                     title: "上传合同",
                     isInput: this.$store.state.projectManagementAdd.contractList.length>0,
-                    isActive: true,
+                    isActive: false,
                 },
 
 

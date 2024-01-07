@@ -17,4 +17,7 @@ export default {
 div{
   cursor: pointer;
 }
+::v-deep .el-input{
+  width: 200px !important;
+}
 </style>

@@ -317,6 +317,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
+::v-deep .el-input{
+  width: 210px;
+}
 .form-container {
   background-color: #fff;
   // padding-top: 20px;

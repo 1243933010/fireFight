@@ -14,7 +14,7 @@
           <BasicMsg :disabled="true" />
           <div>
             <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="projectInfo" class="demo-form-inline"
-              label-width="100px">
+              label-width="110px">
               <el-col :span="14">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
                   <el-input v-model="projectInfo.no" type="text" />
@@ -338,6 +338,9 @@ export default {
     
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
+::v-deep .el-input{
+  width: 210px;
+}
 
 .upload-class {
   .label {
@@ -497,7 +500,7 @@ export default {
     display: flex;
     height: auto;
     background-color: white;
-    width: 50%;
+    width: 60%;
 
     .form {
       min-width: 500px;
@@ -587,7 +590,7 @@ export default {
   .box-right {
     display: flex;
     // flex-grow: 1;
-    width: 50%;
+    width: 40%;
     background-color: white;
     box-sizing: border-box;
     border-left: 1px solid #EAEDEC;

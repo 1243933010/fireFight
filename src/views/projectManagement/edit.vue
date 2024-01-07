@@ -191,6 +191,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-input{
+  width: 210px;
+}
 .radio-item-child {
   padding-left: 20px;
 }

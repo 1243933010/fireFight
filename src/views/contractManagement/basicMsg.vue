@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form ref="formInfo" :disabled="disabled" :inline="true" :rules="rules" :model="formInfo" class="demo-form-inline"
-      label-width="100px">
+      label-width="150px">
       <el-col :span="12">
         <el-form-item label="需求单位" prop="demand_department_id">
           <el-select v-model="formInfo.demand_department_id" placeholder="请选择需求单位">
@@ -73,22 +73,20 @@
           <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
           <div v-for="(item, index) in radioLabelList" :key="index">
-            <div class="radio-item"  v-if="item.child.length == 0">
-              <div  v-if="item.child.length == 0" class="radio-class" :class="item.checked ? 'active' : ''"></div>
+            <div class="radio-item" >
+              <div class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
-
             </div>
             <div class="radio-item-child" v-if="item.child.length > 0 && item.checked">
-              <div class="radio-item" v-for="(ite, ind) in item.child" v-if="ite.checked" :key="ind" >
-                <div class="radio-class " v-if="ite.checked" :class="ite.checked ? 'active' : ''"></div>
+              <div class="radio-item" v-for="(ite, ind) in item.child" :key="ind" >
+                <div class="radio-class" :class="ite.checked ? 'active' : ''"></div>
                 <span>{{ ite.label1 }}
-                  <el-input v-if="ite.num !== undefined" style="width: 10%;" v-model="ite.num" size="small"
-                    type="text"></el-input>
+                  <el-input v-if="ite.num !== undefined" style="width: 10%" v-model="ite.num" size="small" type="text"
+                    :disabled="disabled"></el-input>
                   <span>{{ ite.label2 }}</span>
                 </span>
               </div>
             </div>
-
           </div>
         </el-form-item>
       </el-col>

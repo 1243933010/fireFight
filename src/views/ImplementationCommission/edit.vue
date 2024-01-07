@@ -423,7 +423,9 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../thirdProjects/mixins.scss");
-
+::v-deep .el-input{
+  width: 210px;
+}
 .background-icon {
   width: 300px;
   height: 29px;
