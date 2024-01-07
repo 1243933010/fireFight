@@ -1,116 +1,161 @@
 <template>
   <div style="height: auto">
-    <div class="box">
-      <div class="box-left">
-        <div class="steps">
-          <Steps :stepList="stepList" />
-        </div>
-        <div class="form">
-          <div class="step1">
-            <div
-              class="item"
-              :class="index !== 0 ? 'active' : ''"
-              v-for="(item, index) in stepsList"
-              :key="index"
-            >
-              <img
-                v-if="index == 0"
-                src="../../assets/step_icon_check.png"
-                alt=""
-                srcset=""
-              />
-              <img
-                v-if="index !== 0"
-                src="../../assets/step_icon.png"
-                alt=""
-                srcset=""
-              />
-              <span>{{ item.title }}</span>
-              <div></div>
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="新招标信息" :value="0">
+        <div class="box">
+          <div class="box-left">
+            <div class="steps">
+              <Steps :stepList="stepList" />
             </div>
-          </div>
-          <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
-            <el-button type="primary" @click="downAll" v-if="formInfo.status == 35" >下载所有项目附件</el-button>
-          </div>
-          <BasicMsg  :disabled="true" />
+            <div class="form">
+              <div class="step1">
+                <div class="item" :class="index !== 0 ? 'active' : ''" v-for="(item, index) in stepsList" :key="index">
+                  <img v-if="index == 0" src="../../assets/step_icon_check.png" alt="" srcset="" />
+                  <img v-if="index !== 0" src="../../assets/step_icon.png" alt="" srcset="" />
+                  <span>{{ item.title }}</span>
+                  <div></div>
+                </div>
+              </div>
+              <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
+                <el-button type="primary" @click="downAll" v-if="formInfo.status == 35">下载所有项目附件</el-button>
+              </div>
+              <BasicMsg :disabled="true" />
 
-          <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
+              <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
 
-          <div v-if="formInfo.status >= 11">
-            <div class="background-icon">
-              <span class="title">招标</span>
-            </div>
-            <thirdCom />
-          </div>
+              <div v-if="formInfo.status >= 11">
+                <div class="background-icon">
+                  <span class="title">招标</span>
+                </div>
+                <thirdCom />
+              </div>
 
-          <div v-if="formInfo.status >= 18">
-            <div class="background-icon">
-              <span class="title">开评标</span>
+              <div v-if="formInfo.status >= 18">
+                <div class="background-icon">
+                  <span class="title">开评标</span>
+                </div>
+                <startCom />
+              </div>
+              <div v-if="formInfo.status >= 24">
+                <div class="background-icon">
+                  <span class="title">中标</span>
+                </div>
+                <successfulBidder />
+              </div>
+              <div>
+                <div style="display: flex;flex-direction: row;"
+                  v-if="formInfo.pass_log && [3, 5].includes(formInfo.pass_log.status)">
+                  <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+                  <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                    v-model="formInfo.pass_log.description"></el-input>
+                </div>
+              </div>
+              <div class="btnn">
+                <div class="btn2" @click="auditFnc" v-if="formInfo.status == 1" v-permission="['department_auditor']">
+                  初审
+                </div>
+                <div class="btn2" @click="auditFncEnd" v-if="formInfo.status == 3" v-permission="['procure_auditor']">
+                  终审
+                </div>
+              </div>
             </div>
-            <startCom />
           </div>
-          <div v-if="formInfo.status >= 24">
-            <div class="background-icon">
-              <span class="title">中标</span>
-            </div>
-            <successfulBidder />
-          </div>
-          <div >
-            <div style="display: flex;flex-direction: row;" v-if="formInfo.pass_log&&[3,5].includes(formInfo.pass_log.status)">
-              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="formInfo.pass_log.description"></el-input>
-            </div>
-          </div>
-          <div class="btnn">
-            <div
-              class="btn2"
-              @click="auditFnc"
-              v-if="formInfo.status == 1"
-              v-permission="['department_auditor']"
-            >
-              初审
-            </div>
-            <div
-              class="btn2"
-              @click="auditFncEnd"
-              v-if="formInfo.status == 3"
-              v-permission="['procure_auditor']"
-            >
-              终审
+          <div class="box-right">
+            <div class="file-form">
+              <AnnexCom type="detail" />
+
+              <div class="background-icon" v-if="formInfo.status >= 31">
+                <span class="title">合同列表</span>
+              </div>
+              <contractCom v-if="formInfo.status >= 31" />
             </div>
           </div>
         </div>
-      </div>
-      <div class="box-right">
-        <div class="file-form">
-          <AnnexCom  type="detail" />
+      </el-tab-pane>
+      <el-tab-pane v-for="(item, index) in (formInfo.bid_total_times - 1)" :key="index"
+        :label="`第${chinese_numbers[index]}次招标失败信息`" :value="index + 1">
+        <!-- 默认空数据 -->
+        <template>
+          <div class="box">
+            <div class="box-left">
+              <div class="steps">
+                <Steps :stepList="stepList" />
+              </div>
+              <div class="form">
+                <div class="step1">
+                  <div class="item" :class="index !== 0 ? 'active' : ''" v-for="(item, index) in stepsList" :key="index">
+                    <img v-if="index == 0" src="../../assets/step_icon_check.png" alt="" srcset="" />
+                    <img v-if="index !== 0" src="../../assets/step_icon.png" alt="" srcset="" />
+                    <span>{{ item.title }}</span>
+                    <div></div>
+                  </div>
+                </div>
+                <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
+                  <el-button type="primary" @click="downAll" v-if="formInfo.status == 35">下载所有项目附件</el-button>
+                </div>
+                <BasicMsg :disabled="true" />
 
-          <div class="background-icon" v-if="formInfo.status >= 31">
-            <span class="title">合同列表</span>
+                <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
+
+                <div v-if="formInfo.status >= 11">
+                  <div class="background-icon">
+                    <span class="title">招标</span>
+                  </div>
+                  <thirdCom />
+                </div>
+
+                <div v-if="formInfo.status >= 18">
+                  <div class="background-icon">
+                    <span class="title">开评标</span>
+                  </div>
+                  <startCom />
+                </div>
+                <div v-if="formInfo.status >= 24">
+                  <div class="background-icon">
+                    <span class="title">中标</span>
+                  </div>
+                  <successfulBidder />
+                </div>
+                <div>
+                  <div style="display: flex;flex-direction: row;"
+                    v-if="formInfo.pass_log && [3, 5].includes(formInfo.pass_log.status)">
+                    <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+                    <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                      v-model="formInfo.pass_log.description"></el-input>
+                  </div>
+                </div>
+                <div class="btnn">
+                  <div class="btn2" @click="auditFnc" v-if="formInfo.status == 1" v-permission="['department_auditor']">
+                    初审
+                  </div>
+                  <div class="btn2" @click="auditFncEnd" v-if="formInfo.status == 3" v-permission="['procure_auditor']">
+                    终审
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-right">
+              <div class="file-form">
+                <AnnexCom type="detail" />
+
+                <div class="background-icon" v-if="formInfo.status >= 31">
+                  <span class="title">合同列表</span>
+                </div>
+                <contractCom v-if="formInfo.status >= 31" />
+              </div>
+            </div>
           </div>
-          <contractCom v-if="formInfo.status >= 31" />
-        </div>
-      </div>
-    </div>
-    <checkDialog
-      ref="checkDialog"
-      title="初审"
-      @auditEmit="auditEmit"
-      :radioList="[
-        { label: '驳回', value: 2 },
-        { label: '通过', value: 3 },
-      ]"
-    />
-    <checkDialog
-      ref="checkDialogEnd"
-      title="终审"
-      @auditEmit="auditEmitEnd"
-      :radioList="[
-        { label: '驳回', value: 4 },
-        { label: '通过', value: 5 },
-      ]"
-    />
+        </template>
+      </el-tab-pane>
+    </el-tabs>
+    <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit" :radioList="[
+      { label: '驳回', value: 2 },
+      { label: '通过', value: 3 },
+    ]" />
+    <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd" :radioList="[
+      { label: '驳回', value: 4 },
+      { label: '通过', value: 5 },
+    ]" />
   </div>
 </template>
 
@@ -120,7 +165,7 @@ import { addMixins } from "./mixins";
 import AnnexCom from "./annex.vue";
 import BasicMsg from "./basicMsg.vue";
 import { mapState, mapGetters } from "vuex";
-import { projectEdit, projectDetail, projectAudit,downloadFiles } from "@/api/project";
+import { projectEdit, projectDetail, projectAudit, downloadFiles, bidFailDetail } from "@/api/project";
 import checkDialog from "@/components/checkDialog.vue";
 import ImplementationCommissionInfo from "./ImplementationCommissionInfo.vue";
 import thirdCom from "./thirdCom.vue";
@@ -142,7 +187,12 @@ export default {
     contractCom,
   },
   data() {
-    return {};
+    return {
+      activeName: 0,
+      chinese_numbers:['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+                   '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+                   '二十一', '二十二', '二十三', '二十四', '二十五', '二十六', '二十七', '二十八', '二十九', '三十']
+    };
   },
 
   mounted() {
@@ -160,16 +210,26 @@ export default {
     },
   },
   methods: {
-    async downAll(){
-      let res = await downloadFiles({id:this.formInfo.id})
+    handleClick(e) {
+      console.log(e.index)
+      if ((+e.index) == 0) {
+        // this.failDataBool = false;
+        this.getDetail(this.$route.query.id);
+      } else {
+        // this.failDataBool = true;
+        this.getBidFailDetail(this.$route.query.id, e.index);
+      }
+    },
+    async downAll() {
+      let res = await downloadFiles({ id: this.formInfo.id })
       // console.log(res)
-      if(res.code==200){
+      if (res.code == 200) {
         location.href = res.data.url
       }
     },
     async getDetail(id) {
       let res = await projectDetail(id);
-      console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
+      console.log(res.data.attachments_content, JSON.parse(res.data.small_company))
       if (res.code == 200) {
         this.$store.commit(
           "projectManagementAdd/UPDATE_RADIOLABELLIST",
@@ -177,8 +237,8 @@ export default {
         );
         this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
           ...res.data,
-           failDataBool: false,
-           bid_total_times: res.data.bid_total_times,
+          failDataBool: false,
+          bid_total_times: res.data.bid_total_times,
           input12: "true",
         });
         this.$store.commit(
@@ -201,22 +261,22 @@ export default {
           data: res.data.agent_check_videos
         });
         // if (res.data.status > 6) {
-          this.$store.commit(
-            "projectManagementAdd/update_ImplementationCommissionForm",
-            { type: "form", data: {agent_id:res.data.agent_id,choose_no:res.data.choose_no,choose_time:res.data.choose_time,no:res.data.no,} }
-          );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",
+          { type: "form", data: { agent_id: res.data.agent_id, choose_no: res.data.choose_no, choose_time: res.data.choose_time, no: res.data.no, } }
+        );
         // }
 
         let data = {
           ...(res.data.bid_info
             ? res.data.bid_info
             : {
-                bid_file_date: "",
-                bid_publish_date: "",
-                publish_link: "",
-                bid_open_date: "",
-                doubt: "",
-              }),
+              bid_file_date: "",
+              bid_publish_date: "",
+              publish_link: "",
+              bid_open_date: "",
+              doubt: "",
+            }),
           bid_file_issue: res.data.bid_file_issue,
           bid_publish_photo: res.data.bid_publish_photo,
           bid_register_file: res.data.bid_register_file,
@@ -245,18 +305,121 @@ export default {
           ...(res.data.bid_info
             ? res.data.bid_info
             : {
-                bid_file_date: "",
-                bid_publish_date: "",
-                publish_link: "",
-                bid_open_date: "",
-                doubt: "",
-              }),
-              bid_success_photo: res.data.bid_success_photo,
+              bid_file_date: "",
+              bid_publish_date: "",
+              publish_link: "",
+              bid_open_date: "",
+              doubt: "",
+            }),
+          bid_success_photo: res.data.bid_success_photo,
           bid_success_notice: res.data.bid_success_notice,
           project_attachments: res.data.project_attachments3,
-          bid_unit_type:res.data.bid_unit_type,
-          bid_file:res.data.bid_file,
-          file_compilation:res.data.file_compilation,
+          bid_unit_type: res.data.bid_unit_type,
+          bid_file: res.data.bid_file,
+          file_compilation: res.data.file_compilation,
+        };
+        data1.project_attachments = res.data.project_attachments3;
+        this.$store.commit("projectManagementAdd/update_resultData", data1);
+        // }
+        // if(res.data.status>=31){
+        this.$store.commit(
+          "projectManagementAdd/update_contractList",
+          res.data.contract
+        );
+        // }
+      }
+    },
+    async getBidFailDetail(id, bid_times) {
+      this.$loading();
+      let res = await bidFailDetail({ id, bid_times });
+      this.$loading().close();
+      if (res.code == 200) {
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_RADIOLABELLIST",
+          JSON.parse(res.data.small_company)
+        );
+        this.$store.commit("projectManagementAdd/UPDATE_FORMINFO", {
+          ...res.data,
+          failDataBool: false,
+          bid_total_times: res.data.bid_total_times,
+          input12: "true",
+        });
+        this.$store.commit(
+          "projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS",
+          res.data.project_attachments0
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'chooseFile',
+          data: res.data.project_attachments4
+        });
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'purchase',
+          data: res.data.project_attachments5
+        });
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'file',
+          data: res.data.agent_check_videos
+        });
+        // if (res.data.status > 6) {
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm",
+          { type: "form", data: { agent_id: res.data.agent_id, choose_no: res.data.choose_no, choose_time: res.data.choose_time, no: res.data.no, } }
+        );
+        // }
+
+        let data = {
+          ...(res.data.bid_info
+            ? res.data.bid_info
+            : {
+              bid_file_date: "",
+              bid_publish_date: "",
+              publish_link: "",
+              bid_open_date: "",
+              doubt: "",
+            }),
+          bid_file_issue: res.data.bid_file_issue,
+          bid_publish_photo: res.data.bid_publish_photo,
+          bid_register_file: res.data.bid_register_file,
+          bid_total_times: res.data.bid_total_times,
+
+          project_attachments: res.data.project_attachments1,
+        };
+        this.$store.commit("projectManagementAdd/update_bidBaseProject", data);
+
+        // if(res.data.status>=18){
+        this.$store.commit(
+          "projectManagementAdd/update_startData_bid_files_list",
+          res.data.bid_files_list
+        );
+        this.$store.commit(
+          "projectManagementAdd/update_startData_bid_units",
+          res.data.bid_units
+        );
+        // this.$store.commit(
+        //   "projectManagementAdd/update_startData_project_attachments",
+        //   res.data.project_attachments2
+        // );
+        // }
+        // if(res.data.status>=24){
+        let data1 = {
+          ...(res.data.bid_info
+            ? res.data.bid_info
+            : {
+              bid_file_date: "",
+              bid_publish_date: "",
+              publish_link: "",
+              bid_open_date: "",
+              doubt: "",
+            }),
+          bid_success_photo: res.data.bid_success_photo,
+          bid_success_notice: res.data.bid_success_notice,
+          project_attachments: res.data.project_attachments3,
+          bid_unit_type: res.data.bid_unit_type,
+          bid_file: res.data.bid_file,
+          file_compilation: res.data.file_compilation,
         };
         data1.project_attachments = res.data.project_attachments3;
         this.$store.commit("projectManagementAdd/update_resultData", data1);
@@ -351,9 +514,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-input{
-  width: 210px ;
+::v-deep .el-input {
+  width: 210px;
 }
+
 .background-icon {
   width: 300px;
   height: 29px;
@@ -531,11 +695,9 @@ export default {
         div {
           width: 80px;
           height: 2px;
-          background: linear-gradient(
-            90deg,
-            #1d70ff 0%,
-            rgba(29, 112, 255, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #1d70ff 0%,
+              rgba(29, 112, 255, 0) 100%);
         }
       }
 
@@ -543,11 +705,9 @@ export default {
         color: #a6a9bc;
 
         div {
-          background: linear-gradient(
-            90deg,
-            #a6a9bc 0%,
-            rgba(166, 169, 188, 0) 100%
-          );
+          background: linear-gradient(90deg,
+              #a6a9bc 0%,
+              rgba(166, 169, 188, 0) 100%);
         }
       }
     }
