@@ -4,7 +4,7 @@
       <img src="../../../assets/liucheng.png" alt="" />
       <span>筛选</span>
     </div>
-    <el-form
+    <!-- <el-form
       class="form"
       ref="form"
       size="small"
@@ -36,7 +36,7 @@
         <el-button type="primary" @click="()=>{form.currentPage=1;query();}">搜索</el-button>
         <el-button type="primary">重置</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> -->
     <div style="margin-bottom: 10px; padding-left: 50px">
       <el-button size="small" @click="addBtn" type="primary">新增</el-button>
     </div>
