@@ -47,7 +47,7 @@
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
                     :file-list="formInfo.files">
-                    <i slot="default" class="el-icon-plus"></i>
+                    <!-- <i slot="default" class="el-icon-plus"></i> -->
                     <div class="el-upload__tip" slot="tip">
                       只能上传图片或视频
                     </div>
