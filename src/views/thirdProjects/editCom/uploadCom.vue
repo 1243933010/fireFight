@@ -14,7 +14,10 @@
                   <div class="file-icon">
                     <img src="../../../assets/file_icon.png" alt="" srcset="" />
                   </div>
-                  <span class="span">{{ item.title }}.{{ item.type }}</span>
+                 
+                  <el-tooltip class="item" effect="dark" :content="`${item.title}`" placement="top-start">
+                    <span class="span">{{ item.title }}.{{ item.type }}</span>
+                 </el-tooltip>
                   <div class="delete" style="width: 20px; margin-right: 10px" @click="deleteFile(item, index)">
                     <img v-if="type == 'add'" style="width: 100%" src="../../../assets/delete_icon.png" alt=""
                       srcset="" />

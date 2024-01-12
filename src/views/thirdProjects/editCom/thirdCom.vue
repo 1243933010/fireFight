@@ -63,7 +63,7 @@
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
               :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess"
               :before-upload="beforeAvatarUpload">
-              <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16].includes(projectInfo.status)"></i>
+              <i slot="default" class="el-icon-plus" v-if="[11, 12, 14, 16,38].includes(projectInfo.status)"></i>
               <div slot="file" slot-scope="{ file }">
                 <!-- <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" /> -->
                 <img class="el-upload-list__item-thumbnail"
@@ -251,12 +251,12 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type);
       const isJPG = file.type.includes("image/");
-      const isVideo = file.type.includes("video/");
+      // const isVideo = file.type.includes("video/");
 
-      if (!isJPG && !isVideo) {
-        this.$message.error("上传头像图片只能图片或视频!");
+      if (!isJPG) {
+        this.$message.error("只能上传图片!");
       }
-      return isJPG || isVideo;
+      return isJPG;
     },
     handlePictureCardPreview(file) {
       console.log(file)

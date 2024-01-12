@@ -15,7 +15,10 @@ export default {
   font-family: "PingFang SC", Arial, sans-serif;
 }
 div{
-  cursor: pointer;
+  /* cursor: pointer; */
+}
+span{
+  cursor: progress;
 }
 ::v-deep .el-input{
   width: 200px !important;

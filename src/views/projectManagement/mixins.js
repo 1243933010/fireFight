@@ -132,35 +132,36 @@ export const addMixins = {
                 },
 
             ]
-            if (this.$store.state.projectManagementAdd.formInfo.status >= 5) {
+            let stepStatus = this.$store.state.projectManagementAdd.formInfo.status ;
+            if (stepStatus >= 5&&stepStatus!==38) {
                 stepArr.push({
                     title: "实施委托",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if (this.$store.state.projectManagementAdd.formInfo.status > 11) {
+            if (stepStatus > 11&&stepStatus!==38) {
                 stepArr.push({
                     title: "招标",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if (this.$store.state.projectManagementAdd.formInfo.status >= 18) {
+            if (stepStatus >= 18&&stepStatus!==38) {
                 stepArr.push({
                     title: "开评标",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if (this.$store.state.projectManagementAdd.formInfo.status >= 24) {
+            if (stepStatus >= 24&&stepStatus!==38) {
                 stepArr.push({
                     title: "中标",
                     isInput: true,
                     isActive: false,
                 },)
             }
-            if (this.$store.state.projectManagementAdd.formInfo.status >= 30) {
+            if (stepStatus >= 30&&stepStatus!==38) {
                 stepArr.push({
                     title: "上传合同",
                     isInput: true,

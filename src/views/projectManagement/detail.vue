@@ -16,9 +16,7 @@
                   <div></div>
                 </div>
               </div>
-              <div style="width: 100px;margin-bottom: 20px;padding-left: 50px;">
-                <el-button type="primary" @click="downAll" v-if="formInfo.status == 35">下载所有项目附件</el-button>
-              </div>
+              
               <BasicMsg :disabled="true" />
 
               <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
@@ -68,6 +66,9 @@
                 <span class="title">合同列表</span>
               </div>
               <contractCom v-if="formInfo.status >= 31" />
+                <div style="width: 100%;text-align: center; margin-bottom: 20px;padding-top: 20px;">
+                <el-button type="primary" @click="downAll" v-if="formInfo.status == 35">下载项目所有附件</el-button>
+              </div>
             </div>
           </div>
         </div>
@@ -141,7 +142,9 @@
                 <div class="background-icon" v-if="formInfo.status >= 31">
                   <span class="title">合同列表</span>
                 </div>
+                
                 <contractCom v-if="formInfo.status >= 31" />
+                  
               </div>
             </div>
           </div>

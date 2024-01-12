@@ -10,7 +10,7 @@
             <div class="left">
               <div class="title"><span>{{ item.title }}</span></div>
               <div class="input">
-                <el-input type="textarea" :disabled="true" :rows="4" v-model="item.description" placeholder="我部已申请采购一批消防器材望上级批准。">
+                <el-input type="textarea" :disabled="true" :rows="4" v-model="item.description" :placeholder="item.title">
                 </el-input>
               </div>
             </div>

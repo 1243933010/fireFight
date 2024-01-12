@@ -135,7 +135,7 @@
               </el-table-column>
             </el-table>
            <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
-            <el-button type="primary"  v-if="formInfo.status == 30"  @click="submitFnc"  v-permission="['project_registrar']">提交合同</el-button>
+            <el-button type="primary"  v-if="[30,32,34].includes(formInfo.status)"  @click="submitFnc"  v-permission="['project_registrar']">提交合同</el-button>
             <el-button  @click="auditFnc"  v-if="formInfo.status == 31" v-permission="['department_auditor']"  type="primary">初审</el-button>
             <el-button   @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"  type="primary">终审</el-button>
            </div>

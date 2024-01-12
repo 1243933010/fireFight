@@ -147,12 +147,12 @@
               </div>
             </div>
             <div class="item-con-right">
-              <div class="item-con-right-btn1" @click="openDetail(item)">
+              <div class="item-con-right-btn1"  v-if="[27,29,30,32,34].includes(item.status)" @click="openDetail(item)">
                 详情
               </div>
-              <div class="item-con-right-btn2" v-if="[27,29,30,32,34].includes(item.status)" @click="openDetail(item)">
+              <!-- <div class="item-con-right-btn2" v-if="[27,29,30,32,34].includes(item.status)" @click="openDetail(item)">
                 编辑
-              </div>
+              </div> -->
               <div
                 v-permission="['admin', 'project_registrar']"
                 class="item-con-right-btn3"

@@ -41,43 +41,30 @@
       <el-button size="small" @click="addBtn" type="primary">新增</el-button>
     </div>
     <div class="list">
-      <el-table
-        :data="list"
-        :header-cell-style="setTitle"
-        style="width: 100%"
-        border
-        fit
-        highlight-current-row
-      >
-        <el-table-column
-          type="index"
-          label="序号"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="title"
-          label="标题"
-          width="180"
-        ></el-table-column>
-        <el-table-column
-          prop="department"
-          label="接收部门"
-          width="180"
-        >
-        <template slot-scope="scope"><span>{{ scope.row.department.name }}</span></template>
-    </el-table-column>
-        <el-table-column prop="content" label="内容"></el-table-column>
-        <el-table-column prop="created_at" label="发布时间"></el-table-column>
-        <el-table-column
-          align="center"
-          prop="created_at"
-          label="操作"
-          width="300"
-        >
+      <el-table :data="list" :header-cell-style="setTitle" style="width: 100%" border fit highlight-current-row>
+        <el-table-column type="index" label="序号" width="80"></el-table-column>
+        <el-table-column prop="title" label="消息标题" width="300">
+                    <template slot-scope="scope">
+                        <el-tooltip class="" effect="dark" :content="scope.row.title" placement="top">
+                            <div class="span">{{ scope.row.title }}</div>
+                        </el-tooltip>
+                    </template>
+                </el-table-column>
+        <el-table-column prop="department" label="接收部门" width="180">
+          <template slot-scope="scope"><span>{{ scope.row.department.name }}</span></template>
+        </el-table-column>
+        <el-table-column prop="content" label="内容">
           <template slot-scope="scope">
-            <div
-              style="display: flex; flex-direction: row; align-items: center"
-            >
+                        <el-tooltip class="" effect="dark" :content="scope.row.content" placement="top">
+                            <div class="span">{{ scope.row.content }}</div>
+                        </el-tooltip>
+                    </template>
+
+        </el-table-column>
+        <el-table-column prop="created_at" label="发布时间" width="180"></el-table-column>
+        <el-table-column align="center" prop="created_at" label="操作" width="300">
+          <template slot-scope="scope">
+            <div style="display: flex; flex-direction: row; align-items: center">
               <div class="btn btn1" @click="handleEdit(scope.row)">编辑</div>
               <div class="btn btn2" @click="deleteItem(scope.row)">删除</div>
               <!-- <div class="btn btn3" @click="handleType(2)">详情</div> -->
@@ -88,25 +75,18 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        style="text-align: right"
-        :current-page="form.current_page"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="form.per_page"
-        :total="form.total"
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="pageSizeChangeHandle"
-        @current-change="pageCurrentChangeHandle"
-      />
+      <el-pagination style="text-align: right" :current-page="form.current_page" :page-sizes="[10, 20, 50, 100]"
+        :page-size="form.per_page" :total="form.total" layout="total, sizes, prev, pager, next, jumper"
+        @size-change="pageSizeChangeHandle" @current-change="pageCurrentChangeHandle" />
     </div>
 
-    <AddDialog ref="add"  @updateData="updateData" />
+    <AddDialog ref="add" @updateData="updateData" />
   </div>
 </template>
 
 <script>
 // import Pagination from '@/components/Pagination'
-import { noticeList,noticeDelete,departmentArr } from "@/api/project";
+import { noticeList, noticeDelete, departmentArr } from "@/api/project";
 import AddDialog from "./add.vue";
 export default {
   components: { AddDialog },
@@ -120,25 +100,25 @@ export default {
         total: 10,
       },
       list: [],
-      departmentList:[]
+      departmentList: []
     };
   },
   mounted() {
-        console.log(this.$store.state.user);
-        this.query();
-        this.departmentFnc();
-    },
+    console.log(this.$store.state.user);
+    this.query();
+    this.departmentFnc();
+  },
   methods: {
-    async departmentFnc(){
-      let res = await departmentArr({per_page:1000});
-            console.log(res)
-            if (res.code == 200) {
-                this.departmentList = res.data.list;
-            }
+    async departmentFnc() {
+      let res = await departmentArr({ per_page: 1000 });
+      console.log(res)
+      if (res.code == 200) {
+        this.departmentList = res.data.list;
+      }
     },
-    updateData(){
-        this.form.current_page = 1;
-        this.query();
+    updateData() {
+      this.form.current_page = 1;
+      this.query();
     },
     setTitle({ rowIndex, columnIndex }) {
       return "background:#D2DFF9;color:#404659;font-size:14px;";
@@ -207,6 +187,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
+.span {
+    // max-width: 1000px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn {
   width: 59px;
   height: 28px;

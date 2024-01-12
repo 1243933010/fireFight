@@ -4,20 +4,26 @@
             <div class="botton btn5" @click="addBtnFnc">标记已读</div>
         </div>
         <div class="list">
-            <el-table :data="list" style="width: 100%" border fit highlight-current-row  @selection-change="handleSelectionChange">
+            <el-table :data="list" style="width: 100%" border fit highlight-current-row
+                @selection-change="handleSelectionChange">
                 <el-table-column type="selection" label="勾选" width="45"></el-table-column>
-                <el-table-column type="index" label="序号" width="100"></el-table-column>
-                <el-table-column prop="notice" label="消息标题" >
+                <el-table-column type="index" label="序号" width="50"></el-table-column>
+                <el-table-column prop="notice" label="消息标题" width="300">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.notice.title }}</span>
+                        <el-tooltip class="" effect="dark" :content="scope.row.notice.title" placement="top">
+                            <div class="span">{{ scope.row.notice.title }}</div>
+                        </el-tooltip>
                     </template>
                 </el-table-column>
-                <el-table-column prop="notice" label="消息内容" >
+                <el-table-column prop="notice" label="消息内容">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.notice.content }}</span>
+                        <el-tooltip class="" effect="dark" :content="scope.row.notice.content" placement="top">
+                            <span class="span">{{ scope.row.notice.content }}</span>
+                        </el-tooltip>
+
                     </template>
                 </el-table-column>
-                <el-table-column prop="notice" label="创建时间" >
+                <el-table-column prop="notice" label="接收时间" width="180">
                     <template slot-scope="scope">
                         <span>{{ scope.row.notice.created_at }}</span>
                     </template>
@@ -27,9 +33,9 @@
                         <span>{{ scope.row.notice.updated_at }}</span>
                     </template>
                 </el-table-column> -->
-                <el-table-column align="center" prop="created_at" label="操作" width="300">
+                <el-table-column align="center" prop="created_at" label="操作" width="150">
                     <template slot-scope="scope">
-                        <div style="margin-bottom: 10px;display: flex;flex-direction: row;padding-left: 50px;">
+                        <div style="margin-bottom: 10px;display: flex;flex-direction: row;">
                             <!-- <div class="botton btn5" @click="goDetail(item)">详情</div> -->
                             <div class="botton btn7" @click="addBtn(scope.row)">标记已读</div>
                             <!-- <div class="botton btn6" @click="addBtn">删除</div> -->
@@ -51,7 +57,7 @@
 
 <script>
 
-import { noticeList, userNoticeList,userRead } from '@/api/project'
+import { noticeList, userNoticeList, userRead } from '@/api/project'
 export default {
     data() {
         return {
@@ -60,7 +66,7 @@ export default {
                 // region: ''
             },
             list: [],
-            selectList:[]
+            selectList: []
         }
     },
     mounted() {
@@ -68,38 +74,38 @@ export default {
         this.query();
     },
     methods: {
-        handleSelectionChange(e){
+        handleSelectionChange(e) {
             console.log(e)
             this.selectList = e;
         },
         goDetail(item) {
             this.$router.push({ path: '/messageCenter/detail' })
         },
-        async addBtnFnc(){
-            if(this.selectList.length==0){
+        async addBtnFnc() {
+            if (this.selectList.length == 0) {
                 this.$message({
-                        type: 'error',
-                        message: '请先勾选数据'
-                    });
-                    return
+                    type: 'error',
+                    message: '请先勾选数据'
+                });
+                return
             }
-            let ids = this.selectList.map((val)=>val.id)
+            let ids = this.selectList.map((val) => val.id)
             console.log(ids)
-            let res = await userRead({ids});
-                console.log(res)
-                if (res.code === 200) {
-                    this.$message({
-                        type: 'success',
-                        message: res.msg
-                    });
-                    this.form.property = 1;
-                    this.query()
-                } else {
-                    this.$message({
-                        type: 'error',
-                        message: res.msg
-                    });
-                }
+            let res = await userRead({ ids });
+            console.log(res)
+            if (res.code === 200) {
+                this.$message({
+                    type: 'success',
+                    message: res.msg
+                });
+                this.form.property = 1;
+                this.query()
+            } else {
+                this.$message({
+                    type: 'error',
+                    message: res.msg
+                });
+            }
 
         },
         addBtn(item) {
@@ -109,7 +115,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(async () => {
-                let res = await userRead({ids:[item.id]});
+                let res = await userRead({ ids: [item.id] });
                 console.log(res)
                 if (res.code === 200) {
                     this.$message({
@@ -132,9 +138,9 @@ export default {
             console.log(res);
             if (res.code == 200) {
                 this.list = res.data.list;
-            //     this.list = [
-            // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
-            // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]
+                //     this.list = [
+                // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
+                // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]
             }
         },
         deleteItem(item) {
@@ -195,6 +201,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
+
+.span {
+    // max-width: 1000px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .botton {
     width: 59px;
@@ -291,4 +306,5 @@ export default {
             }
         }
     }
-}</style>
+}
+</style>

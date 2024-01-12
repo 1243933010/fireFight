@@ -273,8 +273,12 @@ export default {
           margin-right: 10px;
         }
         .fen-item-input{
-          width: 100px;
+          max-width: 100px;
+          // background-color: red;
         }
+         ::v-deep .el-input{
+            max-width: 100px;
+          }
       }
       }
     }
