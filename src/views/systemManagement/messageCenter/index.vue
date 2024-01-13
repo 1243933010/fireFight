@@ -10,22 +10,22 @@
                 <el-table-column type="index" label="序号" width="50"></el-table-column>
                 <el-table-column prop="notice" label="消息标题" width="300">
                     <template slot-scope="scope">
-                        <el-tooltip class="" effect="dark" :content="scope.row.notice.title" placement="top">
-                            <div class="span">{{ scope.row.notice.title }}</div>
+                        <el-tooltip class="" effect="dark" :content="scope.row.notice?scope.row.notice.title:''" placement="top">
+                            <div class="span">{{ scope.row.notice?scope.row.notice.title:'' }}</div>
                         </el-tooltip>
                     </template>
                 </el-table-column>
                 <el-table-column prop="notice" label="消息内容">
                     <template slot-scope="scope">
-                        <el-tooltip class="" effect="dark" :content="scope.row.notice.content" placement="top">
-                            <span class="span">{{ scope.row.notice.content }}</span>
+                        <el-tooltip class="" effect="dark" :content="scope.row.notice?scope.row.notice.content:''" placement="top">
+                            <span class="span">{{scope.row.notice?scope.row.notice.content:'' }}</span>
                         </el-tooltip>
 
                     </template>
                 </el-table-column>
                 <el-table-column prop="notice" label="接收时间" width="180">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.notice.created_at }}</span>
+                        <span>{{ scope.row.notice? scope.row.notice.created_at:'' }}</span>
                     </template>
                 </el-table-column>
                 <!-- <el-table-column prop="notice" label="更新时间" >
@@ -138,7 +138,15 @@ export default {
             let res = await userNoticeList(this.form);
             console.log(res);
             if (res.code == 200) {
-                this.list = res.data.list;
+
+               
+                let arr = [];
+                res.data.list.forEach(element => {
+                    if(element.notice){
+                        arr.push(element)
+                    }
+                });
+                this.list = arr;
                 //     this.list = [
                 // {id:1,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}},
                 // {id:2,notice:{content: "22233444",created_at: "2023-12-26T05:52:51.000000Z",department_id: 1,id: 7,title: "test2",updated_at: "2023-12-26T05:52:51.000000Z"}}]

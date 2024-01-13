@@ -10,10 +10,11 @@
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
+        active-text-color="white"
         :collapse-transition="false"
         mode="vertical"
       >
+      <!-- :active-text-color="variables.menuActiveText" -->
         <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
@@ -55,7 +56,7 @@ export default {
   },
   methods:{
     handleSelect(e){
-      // console.log(e,this.item)
+      console.log(e,this.item)
     },
     open(e){
       // console.log(e,'---')

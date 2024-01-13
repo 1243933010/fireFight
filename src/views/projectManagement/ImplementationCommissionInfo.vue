@@ -101,7 +101,14 @@
         </div>
       </div>
     </div>
-
+    <div>
+            <div style="display: flex;flex-direction: row;"
+              v-if="formInfo.implement_last_log &&formInfo.implement_last_log.description">
+              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                v-model="formInfo.implement_last_log.description"></el-input>
+            </div>
+          </div>
     <el-dialog :visible.sync="dialogVisible">
       <img style="width:100%;"
         v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"

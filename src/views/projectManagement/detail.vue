@@ -40,14 +40,13 @@
                 </div>
                 <successfulBidder />
               </div>
-              <!-- <div>
-                <div style="display: flex;flex-direction: row;"
-                  v-if="formInfo.pass_log && [3, 5].includes(formInfo.pass_log.status)">
-                  <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-                  <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                    v-model="formInfo.pass_log.description"></el-input>
-                </div>
-              </div> -->
+              <div >
+            <div style="display: flex;flex-direction: row;" v-if="formInfo.info_last_log&&formInfo.info_last_log.description">
+              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                v-model="formInfo.info_last_log.description"></el-input>
+            </div>
+          </div>
               <div class="btnn">
                 <div class="btn2" @click="auditFnc" v-if="formInfo.status == 1" v-permission="['department_auditor']">
                   初审

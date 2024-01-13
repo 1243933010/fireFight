@@ -52,7 +52,14 @@
         </div>
       </div>
     </div>
-   
+    <div>
+      <div style="display: flex;flex-direction: row;"
+        v-if="projectInfo.bid_open_last_log &&projectInfo.bid_open_last_log.description">
+        <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+        <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+          v-model="projectInfo.bid_open_last_log.description"></el-input>
+      </div>
+    </div>
     
   </div>
 </template>

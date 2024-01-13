@@ -17,17 +17,10 @@
 
           <BasicMsg ref="basicMsg" :disabled="![0,2,4].includes(formInfo.status)" />
           <div >
-            <div style="display: flex;flex-direction: row;" v-if="formInfo.reject_log&&[2,4].includes(formInfo.reject_log.status)&&formInfo.reject_log.description">
+            <div style="display: flex;flex-direction: row;" v-if="formInfo.info_last_log&&formInfo.info_last_log.description">
               <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
               <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="formInfo.reject_log.description"></el-input>
-            </div>
-          </div>
-          <div >
-            <div style="display: flex;flex-direction: row;" v-if="formInfo.pass_log&&[3,5].includes(formInfo.pass_log.status)&&formInfo.pass_log.description">
-              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="formInfo.pass_log.description"></el-input>
+                v-model="formInfo.info_last_log.description"></el-input>
             </div>
           </div>
           <div class="btnn">
