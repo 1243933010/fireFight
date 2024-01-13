@@ -51,7 +51,7 @@
                     </template>
                 </el-table-column>
         <el-table-column prop="department" label="接收部门" width="180">
-          <template slot-scope="scope"><span>{{ scope.row.department.name }}</span></template>
+          <template slot-scope="scope"><span>{{ scope.row.department?scope.row.department.name:'' }}</span></template>
         </el-table-column>
         <el-table-column prop="content" label="内容">
           <template slot-scope="scope">

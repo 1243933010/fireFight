@@ -107,7 +107,7 @@ export default {
             let res = await departmentArr({per_page:1000});
             console.log(res)
             if (res.code == 200) {
-                this.list = res.data.list;
+                this.list = [{id:0,name:'全部'},...res.data.list];
             }
            
         },

@@ -37,7 +37,8 @@
                     <template slot-scope="scope">
                         <div style="margin-bottom: 10px;display: flex;flex-direction: row;">
                             <!-- <div class="botton btn5" @click="goDetail(item)">详情</div> -->
-                            <div class="botton btn7" @click="addBtn(scope.row)">标记已读</div>
+                            <div class="botton btn7" v-if="scope.row.is_read==1" @click="addBtn(scope.row)">标记已读</div>
+                            <div class="botton btn6" v-if="scope.row.is_read==2" >已读</div>
                             <!-- <div class="botton btn6" @click="addBtn">删除</div> -->
                         </div>
 
