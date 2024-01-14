@@ -18,34 +18,34 @@
               </div>
               
               <BasicMsg :disabled="true" />
-
+              <div style="display: flex;flex-direction: row;margin-bottom: 15px;" v-if="formInfo.info_last_log&&formInfo.info_last_log.description">
+              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+                v-model="formInfo.info_last_log.description"></el-input>
+            </div>
               <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
 
               <div v-if="formInfo.status >= 11">
                 <div class="background-icon">
                   <span class="title">招标</span>
                 </div>
-                <thirdCom />
+                <thirdCom @updateDetail="getDetail($route.query.id)" />
               </div>
 
               <div v-if="formInfo.status >= 18">
                 <div class="background-icon">
                   <span class="title">开评标</span>
                 </div>
-                <startCom />
+                <startCom  @updateDetail="getDetail($route.query.id)" />
               </div>
               <div v-if="formInfo.status >= 24">
                 <div class="background-icon">
                   <span class="title">中标</span>
                 </div>
-                <successfulBidder />
+                <successfulBidder  @updateDetail="getDetail($route.query.id)" />
               </div>
               <div >
-            <div style="display: flex;flex-direction: row;" v-if="formInfo.info_last_log&&formInfo.info_last_log.description">
-              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
-              <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-                v-model="formInfo.info_last_log.description"></el-input>
-            </div>
+            
           </div>
               <div class="btnn">
                 <div class="btn2" @click="auditFnc" v-if="formInfo.status == 1" v-permission="['department_auditor']">

@@ -113,6 +113,8 @@
         </div>
       </el-col>
     </el-row>
+    <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
+        type="primary">审核</el-button>
     <div>
       <div style="display: flex;flex-direction: row;"
         v-if="projectInfo.bid_base_last_log&&projectInfo.bid_base_last_log.description">
@@ -127,6 +129,8 @@
         :src="dialogImageUrl" alt="">
       <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" :src="dialogImageUrl"></video>
     </el-dialog>
+    <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
+      :radioList="[{ label: '驳回', value: 14 }, { label: '通过', value: 15 },]" />
   </div>
 </template>
 

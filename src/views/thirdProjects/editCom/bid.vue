@@ -84,8 +84,8 @@
         v-permission="['project_registrar']" type="normal">保存草稿</el-button>
       <el-button @click="saveFnc(true)" v-if="[15, 18, 20].includes(projectInfo.status)"
         v-permission="['project_registrar']" type="primary">提交</el-button>
-      <el-button @click="auditFnc" v-if="projectInfo.status == 19" v-permission="['department_auditor']"
-        type="primary">审核</el-button>
+      <!-- <el-button @click="auditFnc" v-if="projectInfo.status == 19" v-permission="['department_auditor']"
+        type="primary">审核</el-button> -->
       <!-- <el-button
         @click="auditFncEnd"
         v-if="projectInfo.status == 21"

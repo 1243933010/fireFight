@@ -138,7 +138,7 @@ export const asyncRoutes = [
     meta: {
       title: '个人中心',
       // icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
+      roles: ['admin', 'agent','project_registrar','procure_auditor','procure_auditor'], // you can set roles in root nav
     },
     children: [{
       path: 'meCenter',
@@ -184,7 +184,7 @@ export const asyncRoutes = [
       title: '分散采购',
       icon: 'excel',
       // icon:'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin','project_registrar','procure_auditor','procure_auditor'] // you can set roles in root nav
     },
     children: [
       {
@@ -255,7 +255,7 @@ export const asyncRoutes = [
       title: '集中采购',
       icon: 'el-icon-s-help',
       // icon:'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin','project_registrar','procure_auditor','procure_auditor'] // you can set roles in root nav
     },
     children: [
       {
@@ -270,7 +270,7 @@ export const asyncRoutes = [
     path: '/thirdProjects',
     component: Layout,
     redirect: '/thirdProjects',
-    meta: { title: '第三方代理机构管理', icon: 'nested' },
+    meta: { title: '第三方代理机构管理', icon: 'nested', roles: ['admin', 'agent'] },
     children: [{
       path: 'thirdProjects',
       name: 'thirdProjects',
@@ -313,7 +313,7 @@ export const asyncRoutes = [
       title: '统计分析',
       icon: 'lock',
       // icon:'lock',
-      roles: [ 'admin','editor'] // you can set roles in root nav
+      roles: ['admin','department_auditor','procure_auditor']  // you can set roles in root nav
     },
     children: [{
       path: 'statistics',
@@ -326,8 +326,8 @@ export const asyncRoutes = [
     path: '/systemManagement',
     component: Layout,
     redirect: '/systemManagement/user',
-    meta: { title: '系统管理', icon: 'table' },
-    roles: ['admin', 'editor'],
+    meta: { title: '系统管理', icon: 'table',roles:[ 'admin']  },
+    
     children: [{
       path: 'user',
       name: 'user',

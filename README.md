@@ -3,7 +3,7 @@ project_registrar  录入人员：负责录入及合同管理
 department_auditor  部门审核人员：初审
 procure_auditor   采购审核人员 ：终审
 agent  三方代理
-
+admin 最高级别管理员
 
 
 

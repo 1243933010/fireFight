@@ -5,7 +5,7 @@
         <UploadCom type="see" :title="item.title" :fileList="item.files"  @updateFile="(e)=>updateFile(e,item)" />
       </div>
         </div>
-      <BidCom /> 
+      <BidCom @updateDetail="updateDetail" /> 
   </div>
 </template>
 
@@ -27,6 +27,9 @@ export default {
     },
   },
   methods: {
+    updateDetail(){
+      this.$emit("updateDetail");
+    },
     updateFile(e,item,index){
         console.log(e,item,index)
         if(typeof e =='number'){

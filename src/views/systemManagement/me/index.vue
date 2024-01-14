@@ -13,13 +13,13 @@
                     <el-input :disabled="true" v-model="department" placeholder="" />
                 </el-form-item>
                 <el-form-item label="姓名">
-                    <el-input v-model="form.name" placeholder="请输入姓名" />
+                    <el-input v-model="form.nickname" placeholder="请输入姓名" />
                 </el-form-item>
                 <el-form-item label="手机号">
-                    <el-input v-model="form.name" placeholder="请输入手机号" />
+                    <el-input v-model="form.mobile" placeholder="请输入手机号" />
                 </el-form-item>
                 <el-form-item label="邮箱">
-                    <el-input v-model="form.name" placeholder="请输入邮箱" />
+                    <el-input v-model="form.email" placeholder="请输入邮箱" />
                 </el-form-item>
                 <el-form-item label="旧密码">
                     <el-input v-model="form.old_password" placeholder="请输入我的密码">
@@ -60,27 +60,37 @@ export default {
                 old_password:"",
                 new_password:'',
                 confirm_password:'',
-                name:"",
-                region:""
+                email:"",
+                nickname:"",
+                mobile:''
             }
         }
     },
     mounted(){
         // this.getDepart();
-        console.log(this.$store.state.user,'---')
+        console.log(this.user,'---')
+        this.form.nickname = this.user.name||'';
+        this.form.mobile = this.user.mobile||'';
+        this.form.email = this.user.email||'';
     },
     computed:{
         department(){
             return this.$store.state.user.department||''
         },
         user(){
-            return this.$store.state.user||{}
+            return JSON.parse(JSON.stringify(this.$store.state.user||{}))
         }
     },
     methods:{
         async updatePassword(){
             let res = await resetUser(this.form);
             console.log(res)
+           if(res.code==200){
+            this.$message.success('修改成功')
+           }else{
+            this.$message.error(res.msg)
+           }
+
         },
         forget(){
             this.$router.push({name:'password'})

@@ -9,20 +9,20 @@
                
                     <el-form-item label="消息标题" prop="name">
                         <el-col :span="8">
-                        <el-input type="text" v-model="formInfo.title"  placeholder="请输入消息标题" /> 
+                        <el-input type="text" v-model="formInfo.title" clearable  placeholder="请输入消息标题" /> 
                     </el-col>
                     </el-form-item>
                
                 <el-form-item label="接收部门" prop="department_id" placeholder="请选择接收部门">
                     <el-col :span="8">
-                    <el-select v-model="formInfo.department_id" placeholder="请选择">
+                    <el-select v-model="formInfo.department_id" placeholder="请选择" clearable >
                         <el-option v-for="(item, index) in list" :key="index" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-col>
                 </el-form-item>
                 <el-form-item label="消息内容" prop="content" style="width: 100%;">
                 <el-col :span="8">
-                    <el-input v-model="formInfo.content" type="textarea" />
+                    <el-input  clearable v-model="formInfo.content" type="textarea" />
                 </el-col>
                 </el-form-item>
                 <!-- <el-form-item label="附件上传" prop="name" style="width: 100%;">
