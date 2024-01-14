@@ -60,8 +60,11 @@
           v-model="projectInfo.bid_open_last_log.description"></el-input>
       </div>
     </div>
-    <el-button @click="auditFnc" v-if="projectInfo.status == 19" v-permission="['department_auditor']"
+    <div style="width:100%;display: flex;justify-content: center;align-items: center;">
+      <el-button @click="auditFnc" v-if="projectInfo.status == 19" v-permission="['department_auditor']"
         type="primary">审核</el-button>
+    </div>
+   
         <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit" :radioList="[
       { label: '驳回', value: 20 },
       { label: '通过', value: 21 },

@@ -113,8 +113,10 @@
         </div>
       </el-col>
     </el-row>
+   <div style="width:100%;display: flex;justify-content: center;align-items: center;">
     <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
         type="primary">审核</el-button>
+  </div>
     <div>
       <div style="display: flex;flex-direction: row;"
         v-if="projectInfo.bid_base_last_log&&projectInfo.bid_base_last_log.description">

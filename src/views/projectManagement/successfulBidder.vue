@@ -123,8 +123,10 @@
           v-model="projectInfo.bid_result_last_log.description"></el-input>
       </div>
     </div>
+    <div style="width:100%;display: flex;justify-content: center;align-items: center;">
     <el-button @click="auditFnc" v-if="projectInfo.status == 25" v-permission="['department_auditor']"
         type="primary">审核</el-button>
+      </div>
         <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
       :radioList="[{ label: '驳回', value: 26 }, { label: '通过', value: 27 },]" />
     <el-dialog :visible.sync="dialogVisible">

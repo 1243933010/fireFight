@@ -5,10 +5,10 @@
                 <span class="title">投标单位</span>
             </div> -->
       
-      <div class="add" @click="addForm" v-if="[15, 18, 20].includes(projectInfo.status)">
+      <!-- <div class="add" @click="addForm" v-if="[15, 18, 20].includes(projectInfo.status)">
         <img src="../../../assets/add_icon1.png" alt="" srcset="" />
         <span>添加单位</span>
-      </div>
+      </div> -->
       <div></div>
     </div>
     <div class="item-form">
@@ -80,6 +80,8 @@
         width: 100%;
       ">
       <!-- v-if="projectInfo.status == 17" -->
+     
+      <el-button  @click="addForm" v-if="[15, 18, 20].includes(projectInfo.status)" type="success">添加单位</el-button>
       <el-button v-if="[15, 18, 20].includes(projectInfo.status)" @click="saveFnc(false)"
         v-permission="['project_registrar']" type="normal">保存草稿</el-button>
       <el-button @click="saveFnc(true)" v-if="[15, 18, 20].includes(projectInfo.status)"
