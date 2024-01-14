@@ -28,25 +28,41 @@
                 </div>
               </div>
               <div class="upload-btn">
-                <div class="btn" v-if="type == 'add'">
+                <!-- <div class="btn" v-if="type == 'add'"  style="cursor: pointer;">
                   <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="" />
-                  <!-- :action="uploadUrl"
-                                        :headers="headers" -->
                   <el-upload class="upload-demo" :action="uploadUrl" :headers="headers" :show-file-list="false" 
                      :file-list="fileList" :on-progress="uploadVideoProcess"
                     :http-request="httpRequest" :on-success="handleSuccess">
-                    <!-- :http-request="httpRequest" -->
                     <div style="
                           display: flex;
                           flex-direction: row;
                           align-items: center;
+                          cursor: pointer;
                         ">
                       <div class="upload">
                         <span class="span">上传文件</span>
                       </div>
                     </div>
                   </el-upload>
-                </div>
+                </div> -->
+                <!-- <div class="btn" v-if="type == 'add'"  style="cursor: pointer;"> -->
+                  <!-- <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="" /> -->
+                  <el-upload class="btn" v-if="type == 'add'"  style="cursor: pointer;" :action="uploadUrl" :headers="headers" :show-file-list="false" 
+                     :file-list="fileList" :on-progress="uploadVideoProcess"
+                    :http-request="httpRequest" :on-success="handleSuccess">
+                    <img class="img" src="../../../assets/upload_icon.png" alt="" srcset="" />
+                    <div style="
+                          display: flex;
+                          flex-direction: row;
+                          align-items: center;
+                          cursor: pointer;
+                        ">
+                      <div class="upload">
+                        <span class="span">上传文件</span>
+                      </div>
+                    </div>
+                  </el-upload>
+                <!-- </div> -->
                 <span>文件名格式：xxxxx项目-文件名称(例委托招标函) 支持扩展名: .rar .zip .doc 、docx .pdf.jpg..</span>
 
 
@@ -212,6 +228,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-upload{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 // @import url('../mixins.scss');
 .left-form {
   .file-form {
@@ -245,7 +269,7 @@ export default {
         .upload {
           display: flex;
           flex-direction: column;
-
+          
           .file-list {
             display: flex;
             flex-direction: column;
@@ -304,6 +328,7 @@ export default {
               align-items: center;
 
               .upload-demo {
+                // width: 100%;
                 display: flex;
                 justify-content: row;
                 align-items: center;

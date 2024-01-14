@@ -18,7 +18,7 @@ div{
   /* cursor: pointer; */
 }
 span{
-  cursor: progress;
+  /* cursor: progress; */
 }
 ::v-deep .el-input{
   width: 200px !important;

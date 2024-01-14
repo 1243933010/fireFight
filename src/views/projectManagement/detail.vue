@@ -1,7 +1,7 @@
 <template>
   <div style="height: auto">
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="新招标信息" :value="0">
+      <el-tab-pane label="新采购信息" :value="0">
         <div class="box">
           <div class="box-left">
             <div class="steps">
@@ -19,7 +19,7 @@
               
               <BasicMsg :disabled="true" />
               <div style="display: flex;flex-direction: row;margin-bottom: 15px;" v-if="formInfo.info_last_log&&formInfo.info_last_log.description">
-              <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+              <span style="color: red;font-size: 14px;">审核意见:</span>
               <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
                 v-model="formInfo.info_last_log.description"></el-input>
             </div>
@@ -73,7 +73,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-for="(item, index) in (formInfo.bid_total_times - 1)" :key="index"
-        :label="`第${chinese_numbers[index]}次招标失败信息`" :value="index + 1">
+        :label="`第${chinese_numbers[index]}次采购失败信息`" :value="index + 1">
         <!-- 默认空数据 -->
         <template>
           <div class="box">
@@ -119,7 +119,7 @@
                 <!-- <div>
                   <div style="display: flex;flex-direction: row;"
                     v-if="formInfo.pass_log && [3, 5].includes(formInfo.pass_log.status)">
-                    <span style="color: red;font-size: 14px;">部门录入审核意见:</span>
+                    <span style="color: red;font-size: 14px;">审核意见:</span>
                     <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
                       v-model="formInfo.pass_log.description"></el-input>
                   </div>

@@ -75,7 +75,7 @@
             <div class="status2" v-if="item.procurement_method_text">
               <span>{{ item.procurement_method_text }}</span>
             </div>
-            <div class="status3" v-if="item.bid_total_times&&item.bid_total_times>1">
+            <div class="status222" v-if="item.bid_total_times&&item.bid_total_times>1">
               <span>第{{chinese_numbers[item.bid_total_times-1] }}次招标</span>
             </div>
           </div>

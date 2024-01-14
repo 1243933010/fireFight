@@ -6,7 +6,7 @@
           margin: 20px 0;
         ">
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="新招标信息" :value="0">
+        <el-tab-pane label="新采购信息" :value="0">
           <!-- 默认空数据 -->
           <template>
             <div class="box">
@@ -77,7 +77,7 @@
             </div>
           </template>
         </el-tab-pane>
-        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${chinese_numbers[index]}次招标失败信息`"
+        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${chinese_numbers[index]}次采购失败信息`"
           :value="index + 1">
           <!-- 默认空数据 -->
           <template>
