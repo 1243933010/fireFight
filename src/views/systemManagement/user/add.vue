@@ -139,10 +139,10 @@ export default {
         },
 
        async  getAgent(){
-        let res = await agentArr({});
+        let res = await agentArr({per_page:10000});
             console.log(res)
             if (res.code == 200) {
-                this.agentList = res.data;
+                this.agentList = res.data.list;
             }
         },
         async getDepartment(){

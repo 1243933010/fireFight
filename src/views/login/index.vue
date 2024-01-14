@@ -224,7 +224,8 @@ export default {
           from.timestamp = this.captcha.slice(this.captcha.indexOf('=')+1,this.captcha.length);
           this.$store
             .dispatch("user/login", from)
-            .then(() => {
+            .then(async() => {
+               this.$store.dispatch("user/getInfo", from)
               localStorage.setItem('dialog',true)
               this.$router.push({
                 path: this.redirect || "/",

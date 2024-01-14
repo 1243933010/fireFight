@@ -1,6 +1,6 @@
 <template>
   <div>
-      <el-dialog title="添加用户" center :visible.sync="dialogVisible" width="50%" :show-close="false">
+      <el-dialog title="重置密码" center :visible.sync="dialogVisible" width="50%" :show-close="false">
           <div class="close">
               <img @click="dialogVisible=false" src="../../../assets/close_icon.png" alt="" srcset="">
           </div>

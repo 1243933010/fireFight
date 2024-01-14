@@ -301,7 +301,14 @@ export function roluserPermissionseList() {
   })
 }
 
-
+//用户重置密码
+export function resetUser(data) {
+  return request({
+    url: `/user/reset_user_password`,
+    method: 'post',
+    data
+  })
+}
 
 
 //-----
@@ -548,4 +555,5 @@ export function downloadFiles(data) {
     data
   })
 }
+
 

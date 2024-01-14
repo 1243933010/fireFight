@@ -50,11 +50,16 @@
         <el-table-column
           prop="name"
           label="部门名称"
-          width="180"
+          width="280"
         ></el-table-column>
-        <el-table-column prop="sort" label="排序" width="180"></el-table-column>
-        <el-table-column prop="state" label="状态"></el-table-column>
-        <el-table-column prop="created_at" label="创建时间"></el-table-column>
+        <el-table-column prop="sort" label="排序" ></el-table-column>
+        <el-table-column prop="state" label="状态" >
+          <template slot-scope="scope">
+            <span v-if="scope.row.state == 1">正常</span>
+            <span v-if="scope.row.state == 0">异常</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="created_at" label="创建时间" ></el-table-column>
         <el-table-column
           align="center"
           prop="created_at"
