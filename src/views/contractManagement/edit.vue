@@ -1,5 +1,5 @@
 <template>
-  <div style="height: auto">
+  
     <div class="box">
       <div class="box-left">
         <div class="steps">
@@ -13,8 +13,8 @@
           </div>
           <BasicMsg :disabled="true" />
           <div>
-            <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="projectInfo" class="demo-form-inline"
-              label-width="110px">
+            <el-form ref="formInfo" :inline="true" :rules="rules" :disabled="true" :model="projectInfo"
+              class="demo-form-inline" label-width="110px">
               <el-col :span="14">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
                   <el-input v-model="projectInfo.no" type="text" />
@@ -25,7 +25,7 @@
                   <el-input v-model="projectInfo.choose_no" type="text" />
                 </el-form-item>
               </el-col>
-              
+
               <el-col :span="14">
                 <el-form-item label="抽取时间" prop="choose_time">
                   <el-date-picker value-format="yyyy-MM-dd" v-model="projectInfo.choose_time" type="date"
@@ -34,33 +34,39 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-              <div class="file-form" style="padding-left: 30px;">
-                <div class="file-form-item" v-for="(item, index) in projectInfo.agent_receipt" :key="index">
-                  <div class="left">
-                    <div class="title"><span>{{ item.title }}</span></div>
-                    <div class="input">
-                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
-                      </el-input>
+                <div class="file-form" style="padding-left: 30px;">
+                  <div class="file-form-item" v-for="(item, index) in projectInfo.agent_receipt" :key="index">
+                    <div class="left">
+                      <div class="title"><span>{{ item.title }}</span></div>
+                      <div class="input">
+                        <el-input type="textarea" :rows="4" v-model="item.description" placeholder="">
+                        </el-input>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <UploadCom :is_required="item.is_required" type="see" title="附件" :fileList="item.files"
+                        @updateFile="(e) => updateFile(e, item, index)" />
                     </div>
                   </div>
-                  <div class="right">
-                    <UploadCom   :is_required="item.is_required" type="see"  title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
-                  </div>
-                </div>
 
-              </div>
-            </el-col>
+                </div>
+              </el-col>
               <el-col :span="24">
                 <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="1"
-                    :file-list="projectInfo.files" >
+                    :file-list="projectInfo.files">
                     <!-- <i slot="default" class="el-icon-plus"></i> -->
                     <div slot="file" slot-scope="{file,index,list}">
-                      <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
-                      <img class="el-upload-list__item-thumbnail" v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" src="../../assets/video.png" alt="" />
-                      <span class="el-upload-list__item-actions" >
+                      <img class="el-upload-list__item-thumbnail"
+                        v-if="file.url.includes('jpeg') || file.url.includes('png') || file.url.includes('jpg')"
+                        :src="file.url" alt="" />
+                      <img class="el-upload-list__item-thumbnail"
+                        v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" src="../../assets/video.png"
+                        alt="" />
+                      <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-delete">
-                          <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
+                          <span class="el-upload-list__item-preview" style="margin-right: 10px;"
+                            @click="handlePictureCardPreview(file)">
                             <i class="el-icon-zoom-in"></i>
                           </span>
 
@@ -70,11 +76,11 @@
                     <div class="el-upload__tip" slot="tip">
                       只能上传图片或视频
                     </div>
-                   
+
                   </el-upload>
                 </el-form-item>
               </el-col>
-              
+
               <el-col :span="12">
                 <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
                   <el-select v-model="projectInfo.agent_id" placeholder="请选择采购代理名称">
@@ -83,22 +89,23 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-              <div class="file-form" style="padding-left: 10px;">
-                <div class="file-form-item" v-for="(item, index) in projectInfo.purchase_meeting" :key="index">
-                  <div class="left" >
-                    <div class="title"><span>{{ item.title }}</span></div>
-                    <div class="input">
-                      <el-input  type="textarea" :rows="4" v-model="item.description" placeholder="">
-                      </el-input>
+                <div class="file-form" style="padding-left: 10px;">
+                  <div class="file-form-item" v-for="(item, index) in projectInfo.purchase_meeting" :key="index">
+                    <div class="left">
+                      <div class="title"><span>{{ item.title }}</span></div>
+                      <div class="input">
+                        <el-input type="textarea" :rows="4" v-model="item.description" placeholder="">
+                        </el-input>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <UploadCom :is_required="item.is_required" type="see" title="附件" :fileList="item.files"
+                        @updateFile="(e) => updateFile(e, item, index)" />
                     </div>
                   </div>
-                  <div class="right">
-                    <UploadCom  :is_required="item.is_required" type="see" title="附件" :fileList="item.files" @updateFile="(e) => updateFile(e, item, index)" />
-                  </div>
-                </div>
 
-              </div>
-            </el-col>
+                </div>
+              </el-col>
             </el-form>
           </div>
         </div>
@@ -110,11 +117,12 @@
             <div class="title1">
               <img src="../../assets/liucheng.png" alt="">
               <span>附件</span>
-              <div class="upload" style="margin-left: 10px;" @click="uploadFile" v-if="[27,30,32,34].includes(+formInfo.status)"   v-permission="['project_registrar']">
-              <span>上传合同</span>
+              <div class="upload" style="margin-left: 10px;" @click="uploadFile"
+                v-if="[27, 30, 32, 34].includes(+formInfo.status)" v-permission="['project_registrar']">
+                <span>上传合同</span>
+              </div>
             </div>
-            </div>
-            
+
           </div>
           <div>
 
@@ -128,44 +136,63 @@
               <el-table-column fixed="right" label="操作" width="300">
                 <template slot-scope="scope">
                   <div class="btnn">
-                    <div class="btn5"  v-if="[27,29,30,32,34].includes(+formInfo.status)" @click="deleteItem(scope.row)"   v-permission="['project_registrar']">删除</div>
+                    <div class="btn5" v-if="[27, 29, 30, 32, 34].includes(+formInfo.status)" @click="deleteItem(scope.row)"
+                      v-permission="['project_registrar']">删除</div>
                     <div class="btn4" @click="downLoadFile(scope)">下载</div>
                   </div>
                 </template>
               </el-table-column>
             </el-table>
-           <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
-            <el-button type="primary"  v-if="[30,32,34].includes(formInfo.status)"  @click="submitFnc"  v-permission="['project_registrar']">提交合同</el-button>
-            <el-button  @click="auditFnc"  v-if="formInfo.status == 31" v-permission="['department_auditor']"  type="primary">初审</el-button>
-            <el-button   @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"  type="primary">终审</el-button>
-           </div>
+            <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
+              <el-button type="primary" v-if="[30, 32, 34].includes(formInfo.status)" @click="submitFnc"
+                v-permission="['project_registrar']">提交合同</el-button>
+              <el-button @click="auditFnc" v-if="formInfo.status == 31" v-permission="['department_auditor']"
+                type="primary">初审</el-button>
+              <el-button @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"
+                type="primary">终审</el-button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <Dialog ref="dialog" />
-    <checkDialog ref="checkDialog" title="初审"  @auditEmit="auditEmit" :radioList="[ { label: '驳回', value: 32 }, { label: '通过', value: 33 },]" />
-    <checkDialog ref="checkDialogEnd" title="终审"  @auditEmit="auditEmitEnd" :radioList="[ { label: '驳回', value: 34 }, { label: '通过', value: 35 },]" />
+        <div>
+          <div style="display: flex;flex-direction: row;"
+            v-if="formInfo.contract_last_log && formInfo.contract_last_log.description">
+            <span style="color: red;font-size: 14px;">审核意见:</span>
+            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+              v-model="formInfo.contract_last_log.description"></el-input>
+          </div>
 
-    <el-dialog :visible.sync="dialogVisible">
-      <img style="width:100%;" v-if="dialogImageUrl.includes('jpeg')||dialogImageUrl.includes('png')||dialogImageUrl.includes('jpg')" :src="dialogImageUrl" alt="">
-      <video  controls  v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" :src="dialogImageUrl" ></video>
-    </el-dialog>
-  </div>
+
+
+        </div>
+      </div>
+      <Dialog ref="dialog" />
+      <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit"
+        :radioList="[{ label: '驳回', value: 32 }, { label: '通过', value: 33 },]" />
+      <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
+        :radioList="[{ label: '驳回', value: 34 }, { label: '通过', value: 35 },]" />
+
+      <el-dialog :visible.sync="dialogVisible">
+        <img style="width:100%;"
+          v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
+          :src="dialogImageUrl" alt="">
+        <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')"
+          :src="dialogImageUrl"></video>
+      </el-dialog>
+    </div>
 </template>
     
 <script>
 import Steps from "@/components/steps.vue";
 import BasicMsg from './basicMsg.vue'
 import Dialog from './dialog.vue'
-import { submitContract,projectDetail,projectAudit,agentList,deleteContract  } from "@/api/project";
+import { submitContract, projectDetail, projectAudit, agentList, deleteContract } from "@/api/project";
 import { getToken } from "@/utils/auth";
 import { addMixins } from './mixins'
 import checkDialog from "@/components/checkDialog.vue";
 import UploadCom from '../thirdProjects/editCom/uploadCom.vue'
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg,Dialog,checkDialog,UploadCom},
+  components: { Steps, BasicMsg, Dialog, checkDialog, UploadCom },
   data() {
     return {
       rules: {
@@ -174,7 +201,7 @@ export default {
         ],
         files: [{ required: true, message: "请上传图片或者视频", trigger: "blur" }],
       },
-      tableData:[],
+      tableData: [],
       agentArr: [],
       dialogVisible: false,
       dialogImageUrl: ''
@@ -188,7 +215,7 @@ export default {
     this.getAgentList();
   },
   computed: {
-    contractList(){
+    contractList() {
       return this.$store.state.projectManagementAdd.contractList;
     },
     uploadUrl() {
@@ -206,7 +233,7 @@ export default {
     formInfo() {
       return this.$store.state.projectManagementAdd.formInfo;
     },
-    
+
   },
   methods: {
     handlePictureCardPreview(file) {
@@ -214,42 +241,42 @@ export default {
       this.dialogVisible = true;
       this.dialogImageUrl = file.url;
     },
-    deleteItem(item){
+    deleteItem(item) {
       this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async() => {
-          let res = await deleteContract(item.id);
-          // console.log(res)
-          if(res.code===200){
-            this.$message({
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        let res = await deleteContract(item.id);
+        // console.log(res)
+        if (res.code === 200) {
+          this.$message({
             type: 'success',
             message: res.msg
           });
           this.getDetail(this.formInfo.id);
 
-          }else{
-            this.$message({
+        } else {
+          this.$message({
             type: 'error',
             message: res.msg
           });
-          }
-         
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+        }
+
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         });
+      });
     },
-    downLoadFile(scope){
+    downLoadFile(scope) {
       window.open(scope.row.url)
     },
-    async getDetail(id){
+    async getDetail(id) {
       let res = await projectDetail(id);
       // console.log(res.data.attachments_content,JSON.parse(res.data.small_company))
-      if(res.code==200){
+      if (res.code == 200) {
         res.data.input12 = 'true';
         this.$store.commit('projectManagementAdd/UPDATE_FORMINFO', res.data);
         this.$store.commit(
@@ -289,56 +316,57 @@ export default {
         this.agentArr = res.data;
       }
     },
-    async submitFnc(){
-           let res = await submitContract(this.formInfo.id);
-          //  console.log(res)
-           if(res.code==200){
-            this.$message.success(res.msg)
-            this.getDetail(this.$route.query.id)
-            return
-           }
-           this.$message.error(res.msg)
+    async submitFnc() {
+      let res = await submitContract(this.formInfo.id);
+      //  console.log(res)
+      if (res.code == 200) {
+        this.$message.success(res.msg)
+        this.getDetail(this.$route.query.id)
+        return
+      }
+      this.$message.error(res.msg)
     },
-    uploadFile(){
+    uploadFile() {
       this.$refs.dialog.open()
     },
-    async auditFnc(){
-            this.$refs.checkDialog.openDialog(true)
-          },
-          async auditFncEnd(){
-            this.$refs.checkDialogEnd.openDialog(true)
-          },
-          async auditEmit(e){
-            // console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            // console.log(res)
-            if(res.code==200){
-              this.$message.success(res.msg);
-              this.$refs.checkDialog.openDialog(false)
-              this.getDetail(this.$route.query.id)
-              return
-            }
-            this.$message.error(res.msg);
-          },
-          async auditEmitEnd(e){
-            // console.log(e)
-            let res = await projectAudit({id:this.$store.state.projectManagementAdd.formInfo.id,...e});
-            // console.log(res)
-            if(res.code==200){
-              this.$message.success(res.msg);
-              this.$refs.checkDialogEnd.openDialog(false)
-              this.getDetail(this.$route.query.id)
-              return
-            }
-            this.$message.error(res.msg);
-          },
+    async auditFnc() {
+      this.$refs.checkDialog.openDialog(true)
+    },
+    async auditFncEnd() {
+      this.$refs.checkDialogEnd.openDialog(true)
+    },
+    async auditEmit(e) {
+      // console.log(e)
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, ...e });
+      // console.log(res)
+      if (res.code == 200) {
+        this.$message.success(res.msg);
+        this.$refs.checkDialog.openDialog(false)
+        this.getDetail(this.$route.query.id)
+        return
+      }
+      this.$message.error(res.msg);
+    },
+    async auditEmitEnd(e) {
+      // console.log(e)
+      let res = await projectAudit({ id: this.$store.state.projectManagementAdd.formInfo.id, ...e });
+      // console.log(res)
+      if (res.code == 200) {
+        this.$message.success(res.msg);
+        this.$refs.checkDialogEnd.openDialog(false)
+        this.getDetail(this.$route.query.id)
+        return
+      }
+      this.$message.error(res.msg);
+    },
   },
 };
 </script>
     
 <style lang="scss" scoped>
 @import "~@/styles/btn.scss";
-::v-deep .el-input{
+
+::v-deep .el-input {
   width: 210px;
 }
 
@@ -728,6 +756,5 @@ export default {
 
     // align-items: center;
   }
-}
-</style>
+}</style>
     

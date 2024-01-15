@@ -76,6 +76,7 @@
               </div>
             </div>
           </template>
+         
         </el-tab-pane>
         <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${chinese_numbers[index]}次采购失败信息`"
           :value="index + 1">
@@ -136,13 +137,15 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-
-
+    
+   
   </div>
 </template>
 
 <script>
 import Steps from "@/components/steps.vue";
+import ScrollTop from "@/components/scrollTop.vue";
+
 import { addMixins } from "./mixins";
 import BasicMsg from "./editCom/basicMsg.vue";
 import ThirdCom from "./editCom/thirdCom.vue";
@@ -165,6 +168,7 @@ export default {
     StartCom,
     // AnnexCom,
     SuccessfulBidder,
+    ScrollTop
   },
   data() {
     return {
@@ -186,6 +190,7 @@ export default {
     this.getAgentList();
   },
   methods: {
+   
     handleClick(e) {
       console.log(e.index)
       if ((+e.index) == 0) {
@@ -396,6 +401,8 @@ export default {
 
 <style lang="scss" scoped>
 @import url("./mixins.scss");
+
+
 ::v-deep .el-input{
   width: 210px;
 }

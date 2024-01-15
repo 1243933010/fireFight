@@ -34,6 +34,17 @@
             </el-table>
           </div>
         </div>
+        <div>
+          <div style="display: flex;flex-direction: row;"
+            v-if="formInfo.contract_last_log && formInfo.contract_last_log.description">
+            <span style="color: red;font-size: 14px;">审核意见:</span>
+            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+              v-model="formInfo.contract_last_log.description"></el-input>
+          </div>
+
+
+
+        </div>
       </div>
     </div>
   </div>
