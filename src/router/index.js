@@ -181,7 +181,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/projectManagement',
     meta: {
-      title: '分散采购',
+      title: '采购立项审批管理',
       icon: 'excel',
       // icon:'lock',
       roles: ['admin','project_registrar','procure_auditor','procure_auditor'] // you can set roles in root nav
@@ -191,7 +191,13 @@ export const asyncRoutes = [
         path: 'projectManagement',
         component: () => import('@/views/projectManagement/index'),
         name: 'projectManagement',
-        meta: { title: '列表', affix: true }
+        meta: { title: '分散采购', affix: true }
+      },
+      {
+        path: 'projectManagementT',
+        component: () => import('@/views/projectManagement/index'),
+        name: 'projectManagementT',
+        meta: { title: '集中采购', affix: true }
       },
       {
         path: 'projectManagementAdd',
@@ -213,12 +219,12 @@ export const asyncRoutes = [
         meta: { title: '项目管理编辑', affix: true },
         hidden:true
       },
-      {
-        path: 'ImplementationCommission',
-        component: () => import('@/views/ImplementationCommission/index'),
-        name: 'ImplementationCommission',
-        meta: { title: '实施委托代理机构', affix: true }
-      },
+      // {
+      //   path: 'ImplementationCommission',
+      //   component: () => import('@/views/ImplementationCommission/index'),
+      //   name: 'ImplementationCommission',
+      //   meta: { title: '实施委托代理机构', affix: true }
+      // },
       {
         path: 'ImplementationCommission/edit',
         component: () => import('@/views/ImplementationCommission/edit'),
@@ -248,35 +254,70 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/projectManagementT',
+    path: '/implementationCommission',
     component: Layout,
-    redirect: '/projectManagementT',
+    redirect: '/implementationCommission',
     meta: {
-      title: '集中采购',
+      title: '采购实施审批管理',
       icon: 'el-icon-s-help',
       // icon:'lock',
       roles: ['admin','project_registrar','procure_auditor','procure_auditor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'projectManagementT',
-        component: () => import('@/views/projectManagement/index'),
-        name: 'projectManagementT',
-        meta: { title: '列表', affix: true }
-      }
+        path: 'implementationCommission',
+        component: () => import('@/views/ImplementationCommission/index'),
+        name: 'implementationCommission',
+        meta: { title: '抽取采购代理机构管理', affix: true }
+      },
+      {
+        path: 'ImplementationCommission/edit',
+        component: () => import('@/views/ImplementationCommission/edit'),
+        name: 'ImplementationCommissionEdit',
+        meta: { title: '抽取采购代理机构管理', affix: true },
+        hidden:true
+      },
+      {
+        path: 'implementationCommission2',
+        component: () => import('@/views/ImplementationCommission2/index'),
+        name: 'implementationCommission2',
+        meta: { title: '采购文件', affix: true }
+      },
+      {
+        path: 'implementationCommission2/edit',
+        component: () => import('@/views/ImplementationCommission2/edit'),
+        name: 'ImplementationCommission2Edit',
+        meta: { title: '采购文件', affix: true },
+        hidden:true
+      },
+      {
+        path: 'implementationCommission3',
+        component: () => import('@/views/ImplementationCommission3/index'),
+        name: 'implementationCommission3',
+        meta: { title: '实施采购审批', affix: true }
+      },
+      {
+        path: 'implementationCommission3/edit',
+        component: () => import('@/views/ImplementationCommission3/edit'),
+        name: 'ImplementationCommission3Edit',
+        meta: { title: '实施采购审批', affix: true },
+        hidden:true
+      },
     ]
   },
   {
     path: '/thirdProjects',
     component: Layout,
-    redirect: '/thirdProjects',
+    redirect: '/thirdProjects/index',
     meta: { title: '第三方代理机构管理', icon: 'nested', roles: ['admin', 'agent'] },
     children: [{
-      path: 'thirdProjects',
-      name: 'thirdProjects',
+      path: 'index',
+      name: 'index',
       component: () => import('@/views/thirdProjects/index'),
-      meta: { title: '第三方代理机构管理',}
+      meta: { title: '第三方代理机构管理',},
+      // hidden:true,
     },
+    
     {
       path: 'thirdProjects/edit',
       name: 'thirdProjectsEdit',
