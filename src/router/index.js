@@ -238,25 +238,25 @@ export const asyncRoutes = [
       //   name: 'evaluation',
       //   meta: { title: '开评标', affix: true }
       // },
-      {
-        path: 'contractManagement',
-        name: 'contractManagement',
-        component: () => import('@/views/contractManagement/index'),
-        meta: { title: '合同管理', }
-      },
-      {
-      path: 'contractManagement/edit',
-      name: 'contractEdit',
-      component: () => import('@/views/contractManagement/edit'),
-      meta: { title: '合同编辑', },
-      hidden:true
-    }
+    //   {
+    //     path: 'contractManagement',
+    //     name: 'contractManagement',
+    //     component: () => import('@/views/contractManagement/index'),
+    //     meta: { title: '合同管理', }
+    //   },
+    //   {
+    //   path: 'contractManagement/edit',
+    //   name: 'contractEdit',
+    //   component: () => import('@/views/contractManagement/edit'),
+    //   meta: { title: '合同编辑', },
+    //   hidden:true
+    // }
     ]
   },
   {
-    path: '/implementationCommission',
+    path: '/ImplementationCommission',
     component: Layout,
-    redirect: '/implementationCommission',
+    redirect: '/ImplementationCommission',
     meta: {
       title: '采购实施审批管理',
       icon: 'el-icon-s-help',
@@ -265,7 +265,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'implementationCommission',
+        path: 'ImplementationCommission',
         component: () => import('@/views/ImplementationCommission/index'),
         name: 'implementationCommission',
         meta: { title: '抽取采购代理机构管理', affix: true }
@@ -278,26 +278,26 @@ export const asyncRoutes = [
         hidden:true
       },
       {
-        path: 'implementationCommission2',
+        path: 'ImplementationCommission2',
         component: () => import('@/views/ImplementationCommission2/index'),
-        name: 'implementationCommission2',
+        name: 'ImplementationCommission2',
         meta: { title: '采购文件', affix: true }
       },
       {
-        path: 'implementationCommission2/edit',
+        path: 'ImplementationCommission2/edit',
         component: () => import('@/views/ImplementationCommission2/edit'),
         name: 'ImplementationCommission2Edit',
         meta: { title: '采购文件', affix: true },
         hidden:true
       },
       {
-        path: 'implementationCommission3',
+        path: 'ImplementationCommission3',
         component: () => import('@/views/ImplementationCommission3/index'),
-        name: 'implementationCommission3',
+        name: 'ImplementationCommission3',
         meta: { title: '实施采购审批', affix: true }
       },
       {
-        path: 'implementationCommission3/edit',
+        path: 'ImplementationCommission3/edit',
         component: () => import('@/views/ImplementationCommission3/edit'),
         name: 'ImplementationCommission3Edit',
         meta: { title: '实施采购审批', affix: true },
@@ -327,25 +327,25 @@ export const asyncRoutes = [
     },
   ]
   },
-  // {
-  //   path: '/contractManagement',
-  //   component: Layout,
-  //   redirect: '/contractManagement',
-  //   meta: { title: '合同管理', icon: 'svg_icon3' },
-  //   children: [{
-  //     path: 'contractManagement',
-  //     name: 'contractManagement',
-  //     component: () => import('@/views/contractManagement/index'),
-  //     meta: { title: '合同管理', }
-  //   },
-  //   {
-  //     path: 'contractManagement/edit',
-  //     name: 'contractEdit',
-  //     component: () => import('@/views/contractManagement/edit'),
-  //     meta: { title: '合同编辑', },
-  //     hidden:true
-  //   }]
-  // },
+  {
+    path: '/contractManagement',
+    component: Layout,
+    redirect: '/contractManagement',
+    meta: { title: '合同管理', icon: 'svg_icon3' },
+    children: [{
+      path: 'contractManagement',
+      name: 'contractManagement',
+      component: () => import('@/views/contractManagement/index'),
+      meta: { title: '合同管理', }
+    },
+    {
+      path: 'contractManagement/edit',
+      name: 'contractEdit',
+      component: () => import('@/views/contractManagement/edit'),
+      meta: { title: '合同编辑', },
+      hidden:true
+    }]
+  },
   {
     path: '/statistics',
     component: Layout,

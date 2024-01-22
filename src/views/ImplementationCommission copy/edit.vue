@@ -16,13 +16,13 @@
 
             <el-form ref="formInfo" :disabled="![5, 6, 8, 10].includes(projectInfo.status)" :inline="true" :rules="rules"
               :model="formInfo" class="demo-form-inline" label-width="100px">
-              <!-- <el-col :span="14">
+              <el-col :span="14">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
                   <el-input v-model="formInfo.no" type="text" />
                 </el-form-item>
-              </el-col> -->
+              </el-col>
               <el-col :span="12">
-                <el-form-item label="抽取序列" prop="choose_no" placeholder="请输入抽取序列">
+                <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
                   <el-input v-model="formInfo.choose_no" type="text" />
                 </el-form-item>
               </el-col>
@@ -85,7 +85,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <!-- <el-col :span="24">
+              <el-col :span="24">
                 <div class="file-form" style="padding-left: 10px;">
                   <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
                     <div class="left">
@@ -103,7 +103,7 @@
                   </div>
 
                 </div>
-              </el-col> -->
+              </el-col>
               <!-- v-if="[14,16].includes(projectInfo.status)" -->
 
             </el-form>
@@ -295,11 +295,6 @@ export default {
           data: res.data.project_attachments5
         });
         this.$store.commit(
-          "projectManagementAdd/update_ImplementationCommissionForm", {
-          type: 'before_meeting',
-          data: res.data.before_meeting
-        });
-        this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm",
           {
             type: 'form',
@@ -365,10 +360,10 @@ export default {
               this.$message.error('请上传附件');
               return
             }
-            // if (this.formInfo.purchase_meeting[0].files.length == 0) {
-            //   this.$message.error('请上传附件');
-            //   return
-            // }
+            if (this.formInfo.purchase_meeting[0].files.length == 0) {
+              this.$message.error('请上传附件');
+              return
+            }
             let res = await saveImplement(form);
             // console.log(res);
             if (res.code == 200) {

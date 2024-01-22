@@ -52,7 +52,8 @@ const state = {
     agent_id: '',
     agent_receipt:[{type:'agent_receipt',title:'抽取代理机构回执',description:'',files:[],is_required:1}],
     purchase_meeting:[{type:'purchase_meeting',title:'采购例会（支队/大队）',description:'',files:[],is_required:1}],
-    files: []
+    files: [],
+    before_meeting:[]
   },
   contractList:[],
   thirdData:{
@@ -138,6 +139,8 @@ const mutations = {
       state.ImplementationCommissionForm.agent_receipt = data.data;
     }else if(data.type=='purchase'){
       state.ImplementationCommissionForm.purchase_meeting = data.data;
+    }else if(data.type=='before_meeting'){
+      state.ImplementationCommissionForm.before_meeting = data.data;
     }
     
   },

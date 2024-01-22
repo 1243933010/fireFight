@@ -16,75 +16,8 @@
 
             <el-form ref="formInfo" :disabled="![5, 6, 8, 10].includes(projectInfo.status)" :inline="true" :rules="rules"
               :model="formInfo" class="demo-form-inline" label-width="100px">
-              <el-col :span="14">
-                <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
-                  <el-input v-model="formInfo.no" type="text" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="抽取编号" prop="choose_no" placeholder="请输入抽取编号">
-                  <el-input v-model="formInfo.choose_no" type="text" />
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="14">
-                <el-form-item label="抽取时间" prop="choose_time">
-                  <el-date-picker value-format="yyyy-MM-dd" v-model="formInfo.choose_time" type="date"
-                    placeholder="请选择抽取时间">
-                  </el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <div class="file-form" style="padding-left: 30px;">
-                  <div class="file-form-item" v-for="(item, index) in formInfo.agent_receipt" :key="index">
-                    <div class="left">
-                      <div class="title"><span>{{ item.title }}</span></div>
-                      <div class="input">
-                        <el-input type="textarea" :rows="4" v-model="item.description" placeholder="">
-                        </el-input>
-                      </div>
-                    </div>
-                    <div class="right">
-                      <UploadCom :is_required="item.is_required" title="附件"
-                        :type="[5, 6, 8, 10].includes(projectInfo.status) ? 'add' : 'see'" :fileList="item.files"
-                        @updateFile="(e) => updateFile(e, item, index)" />
-                    </div>
-                  </div>
-
-                </div>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
-                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
-                    :file-list="formInfo.files" :before-upload="beforeAvatarUpload" :on-success="handleSuccess"
-                    >
-                    <i slot="default" class="el-icon-plus" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
-                    <div class="el-upload__tip" slot="tip">
-                      只能上传图片或视频
-                    </div>
-                    <div slot="file" slot-scope="{file,index,list}">
-                      <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
-                      <img class="el-upload-list__item-thumbnail" v-if="dialogImageUrl.includes('mp4')||dialogImageUrl.includes('ogg')" src="../../assets/video.png" alt="" />
-                      <span class="el-upload-list__item-actions" >
-                        <span class="el-upload-list__item-delete">
-                          <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
-                            <i class="el-icon-zoom-in"></i>
-                          </span>
-                          <i class="el-icon-delete"  @click="handleRemove(file)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
-
-                        </span>
-                      </span>
-                    </div>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
-                  <el-select v-model="formInfo.agent_id" placeholder="请选择采购代理名称">
-                    <el-option v-for="(item, index) in agentArr" :key="index" :label="item.name" :value="item.id" />
-                  </el-select>
-                </el-form-item>
-              </el-col>
+             
+            
               <el-col :span="24">
                 <div class="file-form" style="padding-left: 10px;">
                   <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
@@ -295,6 +228,11 @@ export default {
           data: res.data.project_attachments5
         });
         this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'before_meeting',
+          data: res.data.before_meeting
+        });
+        this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm",
           {
             type: 'form',
@@ -356,10 +294,7 @@ export default {
         form.is_submit = 1;
         this.$refs.formInfo.validate(async (valid) => {
           if (valid) {
-            if (this.formInfo.agent_receipt[0].files.length == 0) {
-              this.$message.error('请上传附件');
-              return
-            }
+          
             if (this.formInfo.purchase_meeting[0].files.length == 0) {
               this.$message.error('请上传附件');
               return

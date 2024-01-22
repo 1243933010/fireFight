@@ -69,10 +69,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="24" style="margin: 10px 0;">
-        <el-form-item label="" prop="input12" style="width: 100%;">
+        <el-form-item label="" prop="input12" >
           <div class="form-title" style="padding-left:20px;"><span><span style="color: red;">*</span> 是否面向中小微企：</span>
           </div>
-          <div v-for="(item, index) in radioLabelList" :key="index"  style="width: 100%;">
+          <div v-for="(item, index) in radioLabelList" :key="index">
             <div class="radio-item" >
               <div class="radio-class" :class="item.checked ? 'active' : ''"></div>
               <span>{{ item.label }}</span>
@@ -202,14 +202,14 @@ export default {
       return this.$store.state.projectManagementAdd.formInfo
     },
     radioLabelList(){
-      // let arr = [];
-      // this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
-      //   if(val.checked){
-      //     arr.push(val)
-      //   }
-      // })
-      // return arr
-      return this.$store.state.projectManagementAdd.radioLabelList
+      let arr = [];
+      this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
+        if(val.checked){
+          arr.push(val)
+        }
+      })
+      return arr
+      // return this.$store.state.projectManagementAdd.radioLabelList
     },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]
@@ -235,7 +235,6 @@ export default {
 
 
 <style lang="scss" scoped>
-
 .radio-item-child {
   padding-left: 20px;
 }
@@ -248,7 +247,7 @@ export default {
   cursor: pointer;
   margin-top: 10px;
   span {
-    // max-width: 80%;
+    max-width: 80%;
     display: flex;
     flex-wrap: wrap;
   }

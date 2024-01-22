@@ -233,7 +233,7 @@ async departmentFnc(){
       openDetail(item) {
         this.resetFields();
         // this.$router.push({ name: "ImplementationCommissionEdit",params:{id:item.id} });
-      this.$router.push({ path: "/ImplementationCommission/ImplementationCommission2/edit",query:{id:item.id} });
+      this.$router.push({ path: "/ImplementationCommission/edit",query:{id:item.id} });
        
       },
 

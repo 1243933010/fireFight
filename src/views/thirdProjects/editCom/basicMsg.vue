@@ -245,7 +245,7 @@ export default {
   display: flex;
   flex-direction: row;
   padding-left: 20px;
-  // align-items: center;
+  align-items: center;
   cursor: pointer;
 
   span {

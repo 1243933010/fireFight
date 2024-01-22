@@ -186,7 +186,7 @@ export default {
             })
           }
         })
-        // console.log(this.formInfo.input12, this.$store.state.projectManagementAdd.formInfo.input12,'6666666')
+        // console.log(this.formInfo.input12, this.$store.state.thirdProjects.formInfo.input12,'6666666')
       },
       deep: true
     }
@@ -202,14 +202,14 @@ export default {
       return this.$store.state.projectManagementAdd.formInfo
     },
     radioLabelList(){
-      let arr = [];
-      this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
-        if(val.checked){
-          arr.push(val)
-        }
-      })
-      return arr
-      // return this.$store.state.projectManagementAdd.radioLabelList
+      // let arr = [];
+      // this.$store.state.projectManagementAdd.radioLabelList.forEach((val)=>{
+      //   if(val.checked){
+      //     arr.push(val)
+      //   }
+      // })
+      // return arr
+      return this.$store.state.projectManagementAdd.radioLabelList
     },
     selectList(){
       return [{label:this.$store.state.user.department,value:this.$store.state.user.department}]
@@ -247,7 +247,7 @@ export default {
   cursor: pointer;
   margin-top: 10px;
   span {
-    max-width: 80%;
+    // max-width: 80%;
     display: flex;
     flex-wrap: wrap;
   }
