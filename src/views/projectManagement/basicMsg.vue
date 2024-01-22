@@ -18,6 +18,15 @@
       </el-col> -->
       <el-col :span="12">
         <el-form-item
+          label="需求单位"
+          prop=""
+          placeholder="请输入项目负责人"
+        >
+          <el-input :disabled="true" v-model="$store.state.user.department" />
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item
           label="项目负责人"
           prop="project_leader"
           placeholder="请输入项目负责人"
