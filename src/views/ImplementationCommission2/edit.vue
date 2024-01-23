@@ -14,7 +14,7 @@
 
           <div style="padding-top: 30px;">
 
-            <el-form ref="formInfo" :disabled="![5, 6, 8, 10].includes(projectInfo.status)" :inline="true" :rules="rules"
+            <el-form ref="formInfo" :disabled="![11,70,72,74].includes(projectInfo.status)" :inline="true" :rules="rules"
               :model="formInfo" class="demo-form-inline" label-width="90px">
               <el-col :span="24">
                 <el-form-item label="项目编号" prop="no" placeholder="请输入项目编号">
@@ -22,7 +22,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-              <UploadCom title="开会前审批稿" :type="![11, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+              <UploadCom title="开会前审批稿" :type="![11,70,72,74].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
             :fileList="formInfo.before_meeting" @updateFile="(e) => updateFile(e,formInfo.before_meeting)"
             style="width: 50%;" />
           </el-col>
@@ -50,18 +50,18 @@
               ">
               返回
             </div> -->
-            <div class="btn2" @click="saveFnc(true)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"
+            <div class="btn2" @click="saveFnc(true)" v-if="[11,70,72,74].includes(projectInfo.status)"
               v-permission="['project_registrar']">
               提交
             </div>
-            <div class="btn3" @click="saveFnc(false)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"
+            <div class="btn3" @click="saveFnc(false)" v-if="[11,70,72,74].includes(projectInfo.status)"
               v-permission="['project_registrar']">
               保存草稿
             </div>
-            <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 7" v-permission="['department_auditor']">
+            <div class="btn4" @click="auditFnc" v-if="projectInfo.status == 71" v-permission="['department_auditor']">
               初审
             </div>
-            <div class="btn4" @click="auditFncEnd" v-if="projectInfo.status == 9" v-permission="['department_auditor']">
+            <div class="btn4" @click="auditFncEnd" v-if="projectInfo.status == 73" v-permission="['department_auditor']">
               终审
             </div>
           </div>
@@ -71,12 +71,12 @@
     </div>
 
     <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit" :radioList="[
-      { label: '驳回', value: 8 },
-      { label: '通过', value: 9 },
+      { label: '驳回', value: 72 },
+      { label: '通过', value: 73 },
     ]" />
     <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd" :radioList="[
-      { label: '驳回', value: 10 },
-      { label: '通过', value: 11 },
+      { label: '驳回', value: 74 },
+      { label: '通过', value: 75 },
     ]" />
 
     <el-dialog :visible.sync="dialogVisible">

@@ -9,7 +9,7 @@
           </el-select>
         </el-form-item>
       </el-col> -->
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item
           label="需求单位"
           prop=""

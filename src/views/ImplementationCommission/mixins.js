@@ -230,6 +230,16 @@ export const addMixins = {
                 data: []
             });
             this.$store.commit(
+              "projectManagementAdd/update_ImplementationCommissionForm", {
+              type: 'purchase',
+              data: []
+            });
+            this.$store.commit(
+              "projectManagementAdd/update_ImplementationCommissionForm", {
+              type: 'before_meeting',
+              data: []
+            });
+            this.$store.commit(
                 "projectManagementAdd/update_ImplementationCommissionForm", {
                 type: 'chooseFile',
                 data: [{ type: 'agent_receipt', title: '抽取代理机构回执', description: '', files: [], is_required: 1 }]

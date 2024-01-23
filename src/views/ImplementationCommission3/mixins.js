@@ -234,6 +234,16 @@ export const addMixins = {
                 type: 'chooseFile',
                 data: [{ type: 'agent_receipt', title: '抽取代理机构回执', description: '', files: [], is_required: 1 }]
             });
+            this.$store.commit(
+              "projectManagementAdd/update_ImplementationCommissionForm", {
+              type: 'purchase',
+              data: []
+            });
+            this.$store.commit(
+              "projectManagementAdd/update_ImplementationCommissionForm", {
+              type: 'before_meeting',
+              data: []
+            });
             this.$store.commit("projectManagementAdd/update_ImplementationCommissionForm",{type: 'form', data: { choose_no: '',choose_time: '', no: '', agent_id: '',}});
         },
         async auditFnc(){

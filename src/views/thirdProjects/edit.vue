@@ -23,7 +23,7 @@
                   </div>
                   <!-- 三方基本信息录入 -->
                   <div class="background-icon">
-                    <span class="title">招标</span>
+                    <span class="title">采购公告</span>
                   </div>
 
                   <div style="width: 80%">
@@ -69,7 +69,7 @@
           ">
               <div>
                 <el-button @click="bidFailFnc" v-if="[
-                  11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                  81, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
                   27, 28, 29,
                 ].includes(projectInfo.status)
                 " type="primary">招标失败</el-button>

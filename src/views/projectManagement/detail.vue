@@ -259,6 +259,11 @@ export default {
         });
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
+          type: 'before_meeting',
+          data: res.data.before_meeting
+        });
+        this.$store.commit(
+          "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'file',
           data: res.data.agent_check_videos
         });

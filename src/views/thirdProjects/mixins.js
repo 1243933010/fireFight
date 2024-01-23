@@ -9,7 +9,7 @@ export const addMixins = {
         stepList() {
             return [
                 {
-                    title: "招标",
+                    title: "采购公告",
                     isInput: this.bidBaseActive,
                     isActive: false,
                 },

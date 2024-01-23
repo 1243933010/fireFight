@@ -1,6 +1,6 @@
 <template>
   <div style="height: auto">
-    <div class="box">
+    <div class="box1">
       <div class="box-left">
 
         <div class="form">
@@ -322,7 +322,7 @@ export default {
   }
 }
 
-.box {
+.box1 {
   // padding-bottom: 35px;
   width: 100%;
   height: 100%;
