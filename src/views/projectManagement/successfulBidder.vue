@@ -92,25 +92,25 @@
             <span slot="suffix">%</span>
           </el-input>
         </el-form-item>
-        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-          <!-- <div style="width: 50%;"> -->
-          <UploadCom title="档案汇编" :fileList="resultData.file_compilation" type="see"
-            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
-          <!-- </div> -->
-        </div>
-      </div>
-      <div style="display: flex;flex-direction: row;">
-
+        
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
           <!-- <div style="width: 50%;"> -->
           <UploadCom title="投标文件" :fileList="resultData.bid_file" type="see"
             @updateFile="(e) => updateFile(e, resultData.bid_file)" />
           <!-- </div> -->
         </div>
+      </div>
+      <div style="display: flex;flex-direction: row;">
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
           <!-- <div style="width: 50%;"> -->
           <UploadCom title="相关资料（如质疑答复、投书处理决定等)" :fileList="resultData.project_attachments" type="see"
             @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
+          <!-- </div> -->
+        </div>
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+          <!-- <div style="width: 50%;"> -->
+          <UploadCom title="档案汇编" :fileList="resultData.file_compilation" type="see"
+            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
           <!-- </div> -->
         </div>
       </div>

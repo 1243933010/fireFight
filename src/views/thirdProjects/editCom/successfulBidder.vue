@@ -104,25 +104,26 @@
         </el-form-item>
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
-          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="档案汇编" :fileList="resultData.file_compilation"
-            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
-        <!-- </div> -->
-      </div>
-      </div>
-      <div style="display: flex;flex-direction: row;">
-        
-        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
-        <!-- <div style="width: 50%;"> -->
           <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="投标文件" :fileList="resultData.bid_file"
             @updateFile="(e) => updateFile(e, resultData.bid_file)" />
         <!-- </div> -->
       </div>
+        
+      </div>
+      <div style="display: flex;flex-direction: row;">
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
         <!-- <div style="width: 50%;"> -->
           <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="相关资料（如质疑答复、投诉处理决定等)" :fileList="resultData.project_attachments"
             @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
         <!-- </div> -->
       </div>
+        <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
+        <!-- <div style="width: 50%;"> -->
+          <UploadCom  :type="![21, 24, 26].includes(projectInfo.status)?'see':'add'" title="档案汇编" :fileList="resultData.file_compilation"
+            @updateFile="(e) => updateFile(e, resultData.file_compilation)" />
+        <!-- </div> -->
+      </div>
+        
       </div>
     </el-form>
 
