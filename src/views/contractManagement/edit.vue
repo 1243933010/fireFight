@@ -6,13 +6,13 @@
           <Steps :stepList="stepList" />
         </div>
 
-        <div>
+        <div class="left-box">
           <div class="tab-icon">
             <img class="img" src="../../assets/liucheng.png" alt="">
             <span class="span">项目新建</span>
           </div>
-          <BasicMsg :disabled="true" />
-          <div>
+          <div class="left-con">
+            <BasicMsg :disabled="true" />
             <ImplementationCommissionInfo  v-if="formInfo.status >= 6"  />
           </div>
         </div>
@@ -525,6 +525,18 @@ export default {
           color: #404659;
           font-size: 16px;
         }
+      }
+    }
+
+    .left-box {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+
+      .left-con {
+        flex-grow: 1;
+        overflow-y: auto;
       }
     }
   }
