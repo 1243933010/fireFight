@@ -13,7 +13,7 @@
            </div>
             <div class="btn">
                 <div class="btn1">取消</div>
-                <div class="btn2"  v-if="[27,29,30,32,34].includes(+formInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']">保存</div>
+                <div class="btn2"  v-if="[29,30,32,34].includes(+formInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']">保存</div>
             </div>
         </el-dialog>
     </div>

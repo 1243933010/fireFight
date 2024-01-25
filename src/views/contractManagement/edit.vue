@@ -1,91 +1,128 @@
 <template>
-  
-    <div class="box">
-      <div class="box-left">
-        <div class="steps">
-          <Steps :stepList="stepList" />
-        </div>
-
-        <div class="left-box">
-          <div class="tab-icon">
-            <img class="img" src="../../assets/liucheng.png" alt="">
-            <span class="span">项目新建</span>
-          </div>
-          <div class="left-con">
-            <BasicMsg :disabled="true" />
-            <ImplementationCommissionInfo  v-if="formInfo.status >= 6"  />
-          </div>
-        </div>
-
+  <div class="box">
+    <div class="box-left">
+      <div class="steps">
+        <Steps :stepList="stepList" />
       </div>
-      <div class="box-right">
-        <div class="files">
-          <div class="header">
-            <div class="title1">
-              <img src="../../assets/liucheng.png" alt="">
-              <span>附件</span>
-              <div class="upload" style="margin-left: 10px;" @click="uploadFile"
-                v-if="[27, 30, 32, 34].includes(+formInfo.status)" v-permission="['project_registrar']">
-                <span>上传合同</span>
-              </div>
-            </div>
 
-          </div>
-          <div>
+      <div class="left-box">
+        <div class="tab-icon">
+          <img class="img" src="../../assets/liucheng.png" alt="">
+          <span class="span">项目新建</span>
+        </div>
+        <div class="left-con">
+          <BasicMsg :disabled="true" />
+          <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
+        </div>
+      </div>
 
-            <el-table :data="contractList" style="width: 100%">
-              <el-table-column type="index" label="序号" width="100">
-              </el-table-column>
-              <el-table-column prop="name" label="合同名称" width="350">
-              </el-table-column>
-              <el-table-column prop="created_at" label="上传时间" width="350">
-              </el-table-column>
-              <el-table-column fixed="right" label="操作" width="300">
-                <template slot-scope="scope">
-                  <div class="btnn">
-                    <div class="btn5" v-if="[27, 29, 30, 32, 34].includes(+formInfo.status)" @click="deleteItem(scope.row)"
-                      v-permission="['project_registrar']">删除</div>
-                    <div class="btn4" @click="downLoadFile(scope)">下载</div>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-            <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
-              <el-button type="primary" v-if="[30, 32, 34].includes(formInfo.status)" @click="submitFnc"
-                v-permission="['project_registrar']">提交合同</el-button>
-              <el-button @click="auditFnc" v-if="formInfo.status == 31" v-permission="['department_auditor']"
-                type="primary">初审</el-button>
-              <el-button @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"
-                type="primary">终审</el-button>
+    </div>
+    <div class="box-right">
+      <div class="files">
+        <div class="header">
+          <div class="title1">
+            <img src="../../assets/liucheng.png" alt="">
+            <span>附件</span>
+            <div class="upload" style="margin-left: 10px;" @click="uploadFile"
+              v-if="[ 30, 32, 34].includes(+formInfo.status)" v-permission="['project_registrar']">
+              <span>上传合同</span>
             </div>
           </div>
+
         </div>
         <div>
-          <div style="display: flex;flex-direction: row;"
-            v-if="formInfo.contract_last_log && formInfo.contract_last_log.description">
-            <span style="color: red;font-size: 14px;">审核意见:</span>
-            <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
-              v-model="formInfo.contract_last_log.description"></el-input>
+
+          <el-table :data="contractList" style="width: 100%">
+            <el-table-column type="index" label="序号" width="100">
+            </el-table-column>
+            <el-table-column prop="name" label="合同名称" width="350">
+            </el-table-column>
+            <el-table-column prop="created_at" label="上传时间" width="350">
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="300">
+              <template slot-scope="scope">
+                <div class="btnn">
+                  <div class="btn5" v-if="[ 29, 30, 32, 34].includes(+formInfo.status)" @click="deleteItem(scope.row)"
+                    v-permission="['project_registrar']">删除</div>
+                  <div class="btn4" @click="downLoadFile(scope)">下载</div>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div style="padding-top: 20px;">
+            <el-form ref="formInfo" :inline="true" :disabled="![ 29, 30, 32, 34].includes(+formInfo.status)" :rules="rules"  :model="formInfo"
+              class="demo-form-inline" label-width="100px">
+              <el-col :span="24">
+                <el-form-item label="合同公告链接" prop="contract_notice_link" placeholder="请输入合同公告链接">
+                  <el-input v-model="contract_notice_link" type="text" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="合同公告网站公示图" prop="files" label-width="170px">
+                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
+                    :file-list="contract_notice_picture" :before-upload="beforeAvatarUpload" :on-success="handleSuccess"
+                    >
+                    <!-- v-if="[5, 6, 8, 10].includes(projectInfo.status)" -->
+                    <i slot="default" class="el-icon-plus" ></i>  
+                    <div class="el-upload__tip" slot="tip">
+                      只能上传图片
+                    </div>
+                    <div slot="file" slot-scope="{file,index,list}">
+                      <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
+              
+                      <span class="el-upload-list__item-actions" >
+                        <span class="el-upload-list__item-delete">
+                          <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
+                            <i class="el-icon-zoom-in"></i>
+                          </span>
+                          <i class="el-icon-delete"  @click="handleRemove(file)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
+
+                        </span>
+                      </span>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-form>
           </div>
 
 
+          <div style="display: flex;justify-content: center;align-items: center;width: 100%;padding-top: 40px;">
+            <el-button  v-if="[29,30,32,34].includes(+formInfo.status)"  @click="saveFnc"  v-permission="['project_registrar']">保存</el-button>
 
+            <el-button type="primary" v-if="[29,30, 32, 34].includes(formInfo.status)" @click="submitFnc"
+              v-permission="['project_registrar']">提交合同</el-button>
+            <el-button @click="auditFnc" v-if="formInfo.status == 31" v-permission="['department_auditor']"
+              type="primary">初审</el-button>
+            <el-button @click="auditFncEnd" v-if="formInfo.status == 33" v-permission="['department_auditor']"
+              type="primary">终审</el-button>
+          </div>
         </div>
       </div>
-      <Dialog ref="dialog" />
-      <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit"
-        :radioList="[{ label: '驳回', value: 32 }, { label: '通过', value: 33 },]" />
-      <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
-        :radioList="[{ label: '驳回', value: 34 }, { label: '通过', value: 35 },]" />
+      <div>
+        <div style="display: flex;flex-direction: row;"
+          v-if="formInfo.contract_last_log && formInfo.contract_last_log.description">
+          <span style="color: red;font-size: 14px;">审核意见:</span>
+          <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
+            v-model="formInfo.contract_last_log.description"></el-input>
+        </div>
 
-      <el-dialog :visible.sync="dialogVisible">
-        <img style="width:100%;"
-          v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
-          :src="dialogImageUrl" alt="">
-        <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')"
-          :src="dialogImageUrl"></video>
-      </el-dialog>
+
+
+      </div>
     </div>
+    <Dialog ref="dialog" />
+    <checkDialog ref="checkDialog" title="初审" @auditEmit="auditEmit"
+      :radioList="[{ label: '驳回', value: 32 }, { label: '通过', value: 33 },]" />
+    <checkDialog ref="checkDialogEnd" title="终审" @auditEmit="auditEmitEnd"
+      :radioList="[{ label: '驳回', value: 34 }, { label: '通过', value: 35 },]" />
+
+    <el-dialog :visible.sync="dialogVisible">
+      <img style="width:100%;"
+        v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
+        :src="dialogImageUrl" alt="">
+    </el-dialog>
+  </div>
 </template>
     
 <script>
@@ -101,14 +138,14 @@ import ImplementationCommissionInfo from "./ImplementationCommissionInfo.vue";
 
 export default {
   mixins: [addMixins],
-  components: { Steps, BasicMsg, Dialog, checkDialog, UploadCom,ImplementationCommissionInfo },
+  components: { Steps, BasicMsg, Dialog, checkDialog, UploadCom, ImplementationCommissionInfo },
   data() {
     return {
       rules: {
         agent_id: [
           { required: true, message: "请选择需求单位", trigger: "blur" },
         ],
-        files: [{ required: true, message: "请上传图片或者视频", trigger: "blur" }],
+        files: [{ required: true, message: "请上传图片", trigger: "blur" }],
       },
       tableData: [],
       agentArr: [],
@@ -124,6 +161,12 @@ export default {
     this.getAgentList();
   },
   computed: {
+    contract_notice_link() {
+      return this.$store.state.projectManagementAdd.contract_notice_link;
+    },
+    contract_notice_picture() {
+      return this.$store.state.projectManagementAdd.contract_notice_picture;
+    },
     contractList() {
       return this.$store.state.projectManagementAdd.contractList;
     },
@@ -145,6 +188,33 @@ export default {
 
   },
   methods: {
+    async saveFnc(){
+        let form =  {contract_notice_link:this.contract_notice_link,contract_notice_picture:this.contract_notice_picture};
+           form.id= this.formInfo.id;
+           let res = await saveContract(form);
+        //    console.log(res)
+           if(res.code==200){
+            this.$message.success(res.msg)
+            this.getDetail(this.formInfo.id);
+            return
+           }
+           this.$message.error(res.msg)
+    },
+    handleSuccess(e, file, fileList) {
+      // console.log(e, file, fileList, "----");
+      if (e.code === 200) {
+        this.contract_notice_picture.push(e.data);
+      }
+    },
+    beforeAvatarUpload(file) {
+      console.log(file.type);
+      const isJPG = file.type.includes("image/");
+
+      if (!isJPG ) {
+        this.$message.error("只能上传图片!");
+      }
+      return isJPG ;
+    },
     handlePictureCardPreview(file) {
       console.log(file)
       this.dialogVisible = true;
@@ -219,7 +289,7 @@ export default {
         this.$store.commit('projectManagementAdd/UPDATE_PROJECT_ATTACHMENTS', res.data.project_attachments0);
         this.$store.commit(
           "projectManagementAdd/update_contractList",
-          res.data.contract
+          { contract: res.data.contract, contract_notice_link: res.data.contract_notice_link, contract_notice_picture: res.data.contract_notice_picture }
         );
       }
     },
@@ -682,5 +752,6 @@ export default {
 
     // align-items: center;
   }
-}</style>
+}
+</style>
     

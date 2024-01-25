@@ -56,6 +56,8 @@ const state = {
     before_meeting:[]
   },
   contractList:[],
+  contract_notice_link:[],
+  contract_notice_picture:[],
   thirdData:{
     bidBaseProject:{
       bid_file_date:'',
@@ -144,8 +146,10 @@ const mutations = {
     }
     
   },
-  update_contractList:(state,list)=>{
-    state.contractList = list;
+  update_contractList:(state,info)=>{
+    state.contractList = info.contract;
+    state.contract_notice_link = info.contract_notice_link;
+    state.contract_notice_picture = info.contract_notice_picture;
   },
 
    ///==========

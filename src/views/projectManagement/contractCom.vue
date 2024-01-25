@@ -32,6 +32,43 @@
                 </template>
               </el-table-column>
             </el-table>
+
+            <div style="padding-top: 20px;">
+            <el-form ref="formInfo" :inline="true" :disabled="true" :rules="rules"  :model="formInfo"
+              class="demo-form-inline" label-width="100px">
+              <el-col :span="24">
+                <el-form-item label="合同公告链接" prop="contract_notice_link" placeholder="请输入合同公告链接">
+                  <el-input v-model="contract_notice_link" type="text" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="合同公告网站公示图" prop="files" label-width="170px">
+                  <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
+                    :file-list="contract_notice_picture" :before-upload="beforeAvatarUpload" :on-success="handleSuccess"
+                    >
+                    <!-- v-if="[5, 6, 8, 10].includes(projectInfo.status)" -->
+                    <!-- <i slot="default" class="el-icon-plus" ></i>   -->
+                    <div class="el-upload__tip" slot="tip">
+                      只能上传图片
+                    </div>
+                    <div slot="file" slot-scope="{file,index,list}">
+                      <img class="el-upload-list__item-thumbnail" v-if="file.url.includes('jpeg')||file.url.includes('png')||file.url.includes('jpg')" :src="file.url" alt="" />
+              
+                      <span class="el-upload-list__item-actions" >
+                        <span class="el-upload-list__item-delete">
+                          <span class="el-upload-list__item-preview" style="margin-right: 10px;" @click="handlePictureCardPreview(file)">
+                            <i class="el-icon-zoom-in"></i>
+                          </span>
+                          <i class="el-icon-delete"  @click="handleRemove(file)" v-if="[5, 6, 8, 10].includes(projectInfo.status)"></i>
+
+                        </span>
+                      </span>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-form>
+          </div>
           </div>
         </div>
         <div>
@@ -70,6 +107,12 @@ export default {
     };
   },
   computed: {
+    contract_notice_link() {
+      return this.$store.state.projectManagementAdd.contract_notice_link;
+    },
+    contract_notice_picture() {
+      return this.$store.state.projectManagementAdd.contract_notice_picture;
+    },
     contractList(){
       return this.$store.state.projectManagementAdd.contractList;
     },
