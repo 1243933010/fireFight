@@ -44,7 +44,7 @@
               <el-col :span="24">
                 <el-form-item label="合同公告网站公示图" prop="files" label-width="170px">
                   <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
-                    :file-list="contract_notice_picture" :before-upload="beforeAvatarUpload" :on-success="handleSuccess"
+                    :file-list="contract_notice_picture" 
                     >
                     <!-- v-if="[5, 6, 8, 10].includes(projectInfo.status)" -->
                     <!-- <i slot="default" class="el-icon-plus" ></i>   -->
