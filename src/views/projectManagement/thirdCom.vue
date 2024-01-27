@@ -26,30 +26,45 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-form ref="thirdForm" :disabled="![11, 12, 14, 16].includes(projectInfo.status)" style="padding-left: 30px"
-        :inline="true" :rules="thirdFormRules" :model="bidBaseProject" class="demo-form-inline">
+      <!-- ![11, 12, 14, 16].includes(projectInfo.status) -->
+      <el-form ref="thirdForm" :disabled="true" style="padding-left: 30px" :inline="true" :rules="thirdFormRules"
+        :model="bidBaseProject" class="demo-form-inline" label-width="140px">
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+          <el-form-item label="" prop="bid_file_date" style="width: 50%;">
+            <el-radio v-model="projectInfo.self_selection" label="1">自行组织</el-radio>
+          </el-form-item>
+          <UploadCom title="采购文件（发售稿）" :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="bidBaseProject.bid_file_issue" @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)"
+            style="width: 50%;" />
+        </div>
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
 
-        <div style="width: 100%;display: flex;flex-direction: column;align-items: center;justify-content: space-between;">
-          <el-form-item label="采购文件修订日期" prop="bid_file_date" style="width: 100%;">
+          <UploadCom :title="project_attachments0[0].title"
+            :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="project_attachments0[0].files" @updateFile="(e) => updateFile(e, project_attachments0[0].files)"
+            style="width: 50%;" />
+          <UploadCom :title="project_attachments0[1].title"
+            :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="project_attachments0[1].files" @updateFile="(e) => updateFile(e, project_attachments0[1].files)"
+            style="width: 50%;" />
+        </div>
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+          <el-form-item label="采购文件修订日期" prop="bid_file_date" style="width: 50%;">
             <el-date-picker v-model="bidBaseProject.bid_file_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购文件修订日期">
             </el-date-picker>
           </el-form-item>
-          <UploadCom title="采购文件（发售稿）" flex="row" :fileList="bidBaseProject.bid_file_issue"
-          type="see"  @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)" style="width: 100%;" />
-          <!-- <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 33%;">
-            <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
-              placeholder="请选择采购公告发布日期">
-            </el-date-picker>
-          </el-form-item> -->
-          <!-- <UploadCom title="投标报名登记表" :fileList="bidBaseProject.bid_register_file"
-            @updateFile="(e) => updateFile(e, bidBaseProject.bid_register_file)" style="width: 33%;" /> -->
-        </div>
-
-        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
           <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 50%;">
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
+            </el-date-picker>
+          </el-form-item>
+        </div>
+
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+          <el-form-item label="开评标日期" prop="bid_open_date" style="width: 50%;">
+            <el-date-picker value-format="yyyy-MM-dd" v-model="bidBaseProject.bid_open_date" type="date"
+              placeholder="请选择开评标日期">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="采购公告链接" prop="publish_link" style="width: 50%;">
@@ -113,13 +128,13 @@
         </div>
       </el-col>
     </el-row>
-   <div style="width:100%;display: flex;justify-content: center;align-items: center;">
-    <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
+    <div style="width:100%;display: flex;justify-content: center;align-items: center;">
+      <el-button @click="auditFnc" v-if="projectInfo.status == 13" v-permission="['department_auditor']"
         type="primary">审核</el-button>
-  </div>
+    </div>
     <div>
       <div style="display: flex;flex-direction: row;"
-        v-if="projectInfo.bid_base_last_log&&projectInfo.bid_base_last_log.description">
+        v-if="projectInfo.bid_base_last_log && projectInfo.bid_base_last_log.description">
         <span style="color: red;font-size: 14px;">审核意见:</span>
         <el-input :disabled="true" style="max-width: 300px;" type="textarea" :rows="4"
           v-model="projectInfo.bid_base_last_log.description"></el-input>
@@ -129,7 +144,8 @@
       <img style="width:100%;"
         v-if="dialogImageUrl.includes('jpeg') || dialogImageUrl.includes('png') || dialogImageUrl.includes('jpg')"
         :src="dialogImageUrl" alt="">
-      <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')" :src="dialogImageUrl"></video>
+      <video controls v-if="dialogImageUrl.includes('mp4') || dialogImageUrl.includes('ogg')"
+        :src="dialogImageUrl"></video>
     </el-dialog>
     <checkDialog ref="checkDialog" title="审核" @auditEmit="auditEmit"
       :radioList="[{ label: '驳回', value: 14 }, { label: '通过', value: 15 },]" />
@@ -591,5 +607,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>

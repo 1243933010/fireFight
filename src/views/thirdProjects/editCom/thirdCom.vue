@@ -27,45 +27,53 @@
     </el-row> -->
     <el-row>
       <el-form ref="thirdForm" :disabled="![81, 12, 14, 16, 38].includes(projectInfo.status)" style="padding-left: 30px"
-        :inline="true" :rules="thirdFormRules" :model="bidBaseProject" class="demo-form-inline">
-
+        :inline="true" :rules="thirdFormRules" :model="bidBaseProject" class="demo-form-inline" label-width="150px">
+        <!-- procurement_method   v-if="projectInfo.procurement_method=='8'" -->
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+          <el-form-item label="" prop="bid_file_date" style="width: 50%;">
+            <el-radio v-model="projectInfo.self_selection" label="1">自行组织</el-radio>
+          </el-form-item>
           <UploadCom title="采购文件（发售稿）" :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
             :fileList="bidBaseProject.bid_file_issue" @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)"
             style="width: 50%;" />
-            <UploadCom :title="project_attachments0[0].title" :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'"
-                  flex="row" :fileList="project_attachments0[0].files"
-                  @updateFile="(e) => updateFile(e, project_attachments0[0].files)" style="width: 50%;" />
-
         </div>
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
-            <UploadCom :title="project_attachments0[1].title" :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'"
-                  flex="row" :fileList="project_attachments0[1].files"
-                  @updateFile="(e) => updateFile(e, project_attachments0[1].files)" style="width: 50%;" />
+
+          <UploadCom :title="project_attachments0[0].title"
+            :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="project_attachments0[0].files" @updateFile="(e) => updateFile(e, project_attachments0[0].files)"
+            style="width: 50%;" />
+          <UploadCom :title="project_attachments0[1].title"
+            :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
+            :fileList="project_attachments0[1].files" @updateFile="(e) => updateFile(e, project_attachments0[1].files)"
+            style="width: 50%;" />
+        </div>
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+
           <el-form-item label="采购文件修订日期" prop="bid_file_date" style="width: 50%;">
             <el-date-picker v-model="bidBaseProject.bid_file_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购文件修订日期">
             </el-date-picker>
           </el-form-item>
-
-        </div>
-        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
           <el-form-item label="采购公告发布日期" prop="bid_publish_date" style="width: 50%;">
             <el-date-picker v-model="bidBaseProject.bid_publish_date" value-format="yyyy-MM-dd" type="date"
               placeholder="请选择采购公告发布日期">
             </el-date-picker>
           </el-form-item>
+        </div>
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+
           <el-form-item label="开评标日期" prop="bid_open_date" style="width: 50%;">
             <el-date-picker value-format="yyyy-MM-dd" v-model="bidBaseProject.bid_open_date" type="date"
               placeholder="请选择开评标日期">
             </el-date-picker>
           </el-form-item>
-          
-        </div>
-        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
           <el-form-item label="采购公告链接" prop="publish_link" style="width: 50%;">
             <el-input v-model="bidBaseProject.publish_link" placeholder="请输入采购公告链接" />
           </el-form-item>
+        </div>
+        <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+
           <el-form-item :label="`采购公告网站公示图`" prop="bid_publish_photo" style="width: 50%;">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="4"
               :file-list="bidBaseProject.bid_publish_photo" :on-progress="handleProgress" :on-success="handleSuccess"
@@ -93,7 +101,7 @@
               </div>
             </el-upload>
           </el-form-item>
-          
+
         </div>
       </el-form>
     </el-row>
@@ -341,6 +349,7 @@ export default {
             let form = this.bidBaseProject;
             form.id = this.projectInfo.id;
             form.is_submit = 1;
+            form.self_selection = this.projectInfo.self_selection;
             let res = await bidBaseSave(form);
             // console.log(res)
             if (res.code == 200) {
