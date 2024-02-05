@@ -145,6 +145,7 @@
     data() {
       return {
         form: {
+          implement_type:2,
           name: "",
         region: [],
         current_page: 1,

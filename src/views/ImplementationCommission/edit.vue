@@ -358,6 +358,8 @@ export default {
     async saveFnc(reqBool) {
       let form = this.formInfo;
       form.id = this.projectInfo.id;
+      form.implement_type = 0;
+
       if (reqBool) {
         form.is_submit = 1;
         this.$refs.formInfo.validate(async (valid) => {
