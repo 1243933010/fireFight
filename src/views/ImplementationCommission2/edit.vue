@@ -157,11 +157,11 @@ export default {
       this.dialogImageUrl = file.url;
     },
     updateFile(e, item, index) {
-      // console.log(e,item,index)
+      console.log(e,item,index)
       if (typeof e == 'number') {
-        item.files.splice(e, 1)
+        item.splice(e, 1)
       } else {
-        item.files.push(e)
+        item.push(e)
       }
       // console.log( this.$store.state.projectManagementAdd.ImplementationCommissionForm)
     },

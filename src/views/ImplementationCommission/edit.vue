@@ -289,6 +289,7 @@ export default {
           type: 'chooseFile',
           data: res.data.project_attachments4
         });
+       
         this.$store.commit(
           "projectManagementAdd/update_ImplementationCommissionForm", {
           type: 'purchase',

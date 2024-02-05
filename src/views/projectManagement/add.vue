@@ -18,8 +18,9 @@
           <BasicMsg ref="basicMsg" :disabled="false" />
           <div class="btnn">
             <!-- <div class="btn1">取消</div> -->
-            <div class="btn3" @click="submitFnc(false)">保存草稿</div>
             <div class="btn2" @click="submitFnc(true)" >提交</div>
+            <div class="btn3" @click="submitFnc(false)">保存草稿</div>
+           
             
             <!-- <div class="btn4">通过</div> -->
             <!-- <div class="btn5">驳回</div> -->

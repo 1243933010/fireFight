@@ -110,7 +110,7 @@ export const addMixins = {
                 },
                 {
                     title: "大队/支队采购例会",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0].files.length>0,
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length>0,
                     isActive: false,
                 },
                 // {
