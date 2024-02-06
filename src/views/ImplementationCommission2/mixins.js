@@ -79,40 +79,45 @@ export const addMixins = {
                 {
                     title: "项目编号",
                     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.no,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no ),
+                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.no && ( this.$store.state.projectManagementAdd.ImplementationCommissionForm.before_meeting.length>0 ),
                 },
                 {
-                    title: "抽取编号",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time),
-                },
-                {
-                    title: "抽取时间",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
-                },
-                {
-                    title: "抽取代理机构回执",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length>0,
-                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length==0 && this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
-                },
-                {
-                    title: "抽取采购代理机构登记",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
-                    // isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length==0 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
-                    isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length==0  && this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
-                },
+                  title: "开会前审批稿",
+                  isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.before_meeting.length>0,
+                  isActive: false,
+              },
+                // {
+                //     title: "抽取编号",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no,
+                //     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time),
+                // },
+                // {
+                //     title: "抽取时间",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time,
+                //     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
+                // },
+                // {
+                //     title: "抽取代理机构回执",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length>0,
+                //     isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_receipt[0].files.length==0 && this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
+                // },
+                // {
+                //     title: "抽取采购代理机构登记",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length>0,
+                //     // isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length==0 && (this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0),
+                //     isActive: this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length==0  && this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
+                // },
 
-                {
-                    title: "采购代理名称",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
-                },
-                {
-                    title: "大队/支队采购例会",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length>0,
-                    isActive: false,
-                },
+                // {
+                //     title: "采购代理名称",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
+                //     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
+                // },
+                // {
+                //     title: "大队/支队采购例会",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length>0,
+                //     isActive: false,
+                // },
                 // {
                 //     title: "采购意向",
                 //     isInput: this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0,

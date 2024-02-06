@@ -75,13 +75,13 @@ export const addMixins = {
                 //     isActive: !this.$store.state.projectManagementAdd.formInfo.input12 && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.input),
                    
                 // },
+                // {
+                //     title: "项目编号",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.no,
+                //     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no ),
+                // },
                 {
-                    title: "项目编号",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.no,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no ),
-                },
-                {
-                    title: "抽取编号",
+                    title: "抽取序列",
                     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no,
                     isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_no && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.choose_time),
                 },
@@ -105,13 +105,13 @@ export const addMixins = {
                 {
                     title: "采购代理名称",
                     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id,
-                    isActive: !this.$store.state.projectManagementAdd.ImplementationCommissionForm.agent_id && (this.$store.state.projectManagementAdd.ImplementationCommissionForm.files.length > 0),
-                },
-                {
-                    title: "大队/支队采购例会",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length>0,
                     isActive: false,
                 },
+                // {
+                //     title: "大队/支队采购例会",
+                //     isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length>0,
+                //     isActive: false,
+                // },
                 // {
                 //     title: "采购意向",
                 //     isInput: this.$store.state.projectManagementAdd.project_attachments[0].files.length > 0,

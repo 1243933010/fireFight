@@ -331,7 +331,7 @@ export const asyncRoutes = [
     path: '/contractManagement',
     component: Layout,
     redirect: '/contractManagement',
-    meta: { title: '合同管理', icon: 'svg_icon3' },
+    meta: { title: '合同管理',  icon: 'nested', },
     children: [{
       path: 'contractManagement',
       name: 'contractManagement',

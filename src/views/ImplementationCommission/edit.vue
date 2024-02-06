@@ -386,6 +386,7 @@ export default {
           }
         });
       } else {
+        form.is_submit = undefined;
         let res = await saveImplement(form);
         // console.log(res);
         if (res.code == 200) {
