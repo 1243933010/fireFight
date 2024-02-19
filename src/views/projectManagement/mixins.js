@@ -106,12 +106,12 @@ export const addMixins = {
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[5].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0),
                 },
                 {
-                    title: "驻点审查意见书（支队级）",
+                    title: "咨询审查意见书（支队级）",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[6].files.length > 0,
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[6].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[7].files.length > 0),
                 },
                 {
-                    title: "其他意见书",
+                    title: "其他相关业务部门意见书",
                     isInput: this.$store.state.projectManagementAdd.project_attachments[7].files.length > 0,
                     isActive: (this.$store.state.projectManagementAdd.project_attachments[7].files.length == 0) && (this.$store.state.projectManagementAdd.project_attachments[8].files.length > 0),
                 },
@@ -132,7 +132,7 @@ export const addMixins = {
                 },
 
             ]
-            let stepStatus = this.$store.state.projectManagementAdd.formInfo.status ;
+            let stepStatus = this.$store.state.projectManagementAdd.formInfo.status;
             if (stepStatus >= 5&&stepStatus!==38) {
                 stepArr.push({
                     title: "实施委托",

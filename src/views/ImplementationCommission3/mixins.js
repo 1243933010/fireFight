@@ -12,7 +12,7 @@ export const addMixins = {
     },
     computed: {
         stepList() {
-            // console.log(this.$store.state.projectManagementAdd.formInfo.input12,'----||')
+            // console.log(this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting,'----||')
             return [
                 // {
                 //     title: "需求单位",
@@ -115,7 +115,7 @@ export const addMixins = {
                 // },
                 {
                     title: "实施采购审批文件",
-                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0].files.length > 0,
+                    isInput: this.$store.state.projectManagementAdd.ImplementationCommissionForm.purchase_meeting[0]?.files.length > 0,
                     isActive: false,
                 },
                 // {

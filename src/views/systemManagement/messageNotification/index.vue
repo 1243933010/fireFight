@@ -169,13 +169,13 @@ export default {
     },
     // 分页, 每页条数
     pageSizeChangeHandle(val) {
-      this.page = 1;
-      this.pageSize = val;
+      this.form.current_page = 1;
+      this.form.per_page = val;
       this.query();
     },
     // 分页, 当前页
     pageCurrentChangeHandle(val) {
-      this.page = val;
+      this.form.current_page = val;
       this.query();
     },
     handleType(type) {
