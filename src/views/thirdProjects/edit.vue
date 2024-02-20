@@ -29,9 +29,9 @@
                   <div style="width: 80%">
                     <ThirdCom @updateDetail="getDetail($route.query.id)" />
                   </div>
-                  <!-- 开标 -->
+                  <!-- 开评标信息 -->
                   <div class="background-icon">
-                    <span class="title">开评标</span>
+                    <span class="title">开评标信息</span>
                   </div>
                   <!-- <div></div> -->
                   <div style="padding-left: 30px">
@@ -40,9 +40,9 @@
 
                   <!-- <BidCom /> -->
 
-                  <!-- 中标单位 -->
+                  <!-- 中标公告 -->
                   <div class="background-icon">
-                    <span class="title">中标</span>
+                    <span class="title">中标公告</span>
                   </div>
                   <div style="padding-left: 30px; width: 80%">
                     <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
@@ -72,14 +72,14 @@
                   81, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
                   27, 28, 29,
                 ].includes(projectInfo.status)
-                " type="primary">招标失败</el-button>
+                  " type="primary">招标失败</el-button>
               </div>
             </div>
           </template>
-         
+
         </el-tab-pane>
-        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times-1)" :key="index" :label="`第${chinese_numbers[index]}次采购失败信息`"
-          :value="index + 1">
+        <el-tab-pane v-for="(item, index) in (projectInfo.bid_total_times - 1)" :key="index"
+          :label="`第${chinese_numbers[index]}次采购失败信息`" :value="index + 1">
           <!-- 默认空数据 -->
           <template>
             <div class="box">
@@ -102,9 +102,9 @@
                   <div style="width: 80%">
                     <ThirdCom @updateDetail="getDetail($route.query.id)" />
                   </div>
-                  <!-- 开标 -->
+                  <!-- 开评标信息 -->
                   <div class="background-icon">
-                    <span class="title">开评标</span>
+                    <span class="title">开评标信息</span>
                   </div>
                   <!-- <div></div> -->
                   <div style="padding-left: 30px">
@@ -113,9 +113,9 @@
 
                   <!-- <BidCom /> -->
 
-                  <!-- 中标单位 -->
+                  <!-- 中标公告 -->
                   <div class="background-icon">
-                    <span class="title">中标</span>
+                    <span class="title">中标公告</span>
                   </div>
                   <div style="padding-left: 30px; width: 80%">
                     <SuccessfulBidder @updateDetail="getDetail($route.query.id)" />
@@ -137,8 +137,8 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    
-   
+
+
   </div>
 </template>
 
@@ -173,9 +173,9 @@ export default {
   data() {
     return {
       activeName: 0,
-      chinese_numbers:['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
-                   '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
-                   '二十一', '二十二', '二十三', '二十四', '二十五', '二十六', '二十七', '二十八', '二十九', '三十']
+      chinese_numbers: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+        '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+        '二十一', '二十二', '二十三', '二十四', '二十五', '二十六', '二十七', '二十八', '二十九', '三十']
       // failDataBool:false
     };
   },
@@ -190,7 +190,7 @@ export default {
     this.getAgentList();
   },
   methods: {
-   
+
     handleClick(e) {
       console.log(e.index)
       if ((+e.index) == 0) {
@@ -403,9 +403,10 @@ export default {
 @import url("./mixins.scss");
 
 
-::v-deep .el-input{
+::v-deep .el-input {
   width: 210px;
 }
+
 .background-icon {
   width: 300px;
   height: 29px;

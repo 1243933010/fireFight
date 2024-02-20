@@ -100,6 +100,9 @@
           <!-- </div> -->
         </div>
       </div>
+      <div class="background-icon">
+        <span class="title">相关资料</span>
+      </div>
       <div style="display: flex;flex-direction: row;">
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
           <!-- <div style="width: 50%;"> -->
@@ -107,6 +110,13 @@
             @updateFile="(e) => updateFile(e, resultData.project_attachments)" />
           <!-- </div> -->
         </div>
+       
+      </div>
+      <div class="background-icon">
+        <span class="title">档案汇编</span>
+      </div>
+      <div style="display: flex;flex-direction: row;">
+       
         <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;">
           <!-- <div style="width: 50%;"> -->
           <UploadCom title="档案汇编" :fileList="resultData.file_compilation" type="see"
@@ -317,6 +327,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.background-icon {
+  width: 300px;
+  height: 29px;
+  // margin-left: 30px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background: url("../../assets/background_icon.png") no-repeat 100% 100%;
+  padding-top: 5px;
+
+  .title {
+    padding-left: 9px;
+    color: white;
+    font-size: 14px;
+  }
+}
+
 .radio-item-child {
   padding-left: 20px;
 }

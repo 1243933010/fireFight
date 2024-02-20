@@ -21,7 +21,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
+        <!-- <el-col :span="24">
           <div class="file-form" style="padding-left: 30px;">
             <div class="file-form-item" v-for="(item, index) in formInfo.agent_receipt" :key="index">
               <div class="left">
@@ -37,8 +37,8 @@
             </div>
 
           </div>
-        </el-col>
-        <el-col :span="24">
+        </el-col> -->
+        <!-- <el-col :span="24">
           <el-form-item label="抽取采购代理机构登记" prop="files" label-width="170px">
             <el-upload :action="uploadUrl" :headers="headers" list-type="picture-card" :limit="5"
               :file-list="formInfo.files">
@@ -67,7 +67,7 @@
               </div>
             </el-upload>
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :span="12">
           <el-form-item label="采购代理名称" prop="agent_id" label-width="115px">
             <el-select v-model="projectInfo.agent_id" placeholder="请选择采购代理名称">
@@ -75,7 +75,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
+        <!-- <el-col :span="24">
           <div class="file-form" style="padding-left: 10px;">
             <div class="file-form-item" v-for="(item, index) in formInfo.purchase_meeting" :key="index">
               <div class="left">
@@ -91,7 +91,7 @@
             </div>
 
           </div>
-        </el-col>
+        </el-col> -->
       </el-form>
     </div>
     <el-dialog :visible.sync="dialogVisible">

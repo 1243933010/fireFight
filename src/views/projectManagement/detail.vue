@@ -34,13 +34,13 @@
 
               <div v-if="formInfo.status >= 18&&formInfo.status<70">
                 <div class="background-icon">
-                  <span class="title">开评标</span>
+                  <span class="title">开评标信息</span>
                 </div>
                 <startCom  @updateDetail="getDetail($route.query.id)" />
               </div>
               <div v-if="formInfo.status >= 24&&formInfo.status<70">
                 <div class="background-icon">
-                  <span class="title">中标</span>
+                  <span class="title">中标公告</span>
                 </div>
                 <successfulBidder  @updateDetail="getDetail($route.query.id)" />
               </div>
