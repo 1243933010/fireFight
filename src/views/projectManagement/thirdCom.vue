@@ -31,7 +31,8 @@
         :model="bidBaseProject" class="demo-form-inline" label-width="140px">
         <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
           <el-form-item label="" prop="bid_file_date" style="width: 50%;">
-            <el-radio v-model="projectInfo.self_selection" label="1">自行组织</el-radio>
+            <!-- <el-radio v-model="projectInfo.self_selection" label="1">自行组织</el-radio> -->
+            <el-checkbox v-model="projectInfo.self_selection" :true-label="1" :false-label="0">自行组织</el-checkbox>
           </el-form-item>
           <UploadCom title="采购文件（发售稿）" :type="![81, 12, 14, 38].includes(projectInfo.status) ? 'see' : 'add'" flex="row"
             :fileList="bidBaseProject.bid_file_issue" @updateFile="(e) => updateFile(e, bidBaseProject.bid_file_issue)"

@@ -25,20 +25,20 @@
             </div>
               <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
 
-              <div v-if="formInfo.status >= 11">
+              <div v-if="formInfo.status >= 11&&formInfo.status<70">
                 <div class="background-icon">
                   <span class="title">招标</span>
                 </div>
                 <thirdCom @updateDetail="getDetail($route.query.id)" />
               </div>
 
-              <div v-if="formInfo.status >= 18">
+              <div v-if="formInfo.status >= 18&&formInfo.status<70">
                 <div class="background-icon">
                   <span class="title">开评标</span>
                 </div>
                 <startCom  @updateDetail="getDetail($route.query.id)" />
               </div>
-              <div v-if="formInfo.status >= 24">
+              <div v-if="formInfo.status >= 24&&formInfo.status<70">
                 <div class="background-icon">
                   <span class="title">中标</span>
                 </div>
@@ -61,10 +61,10 @@
             <div class="file-form">
               <AnnexCom type="detail" />
 
-              <div class="background-icon" v-if="formInfo.status >= 31">
+              <div class="background-icon" v-if="formInfo.status >= 31&&formInfo.status<70">
                 <span class="title">合同列表</span>
               </div>
-              <contractCom v-if="formInfo.status >= 31" />
+              <contractCom v-if="formInfo.status >= 31&&formInfo.status<70" />
                 <div style="width: 100%;text-align: center; margin-bottom: 20px;padding-top: 20px;">
                 <el-button type="primary" @click="downAll" v-if="formInfo.status == 35">下载项目所有附件</el-button>
               </div>
@@ -97,20 +97,20 @@
 
                 <ImplementationCommissionInfo v-if="formInfo.status >= 6" />
 
-                <div v-if="formInfo.status >= 11">
+                <div v-if="formInfo.status >= 11&&formInfo.status<70">
                   <div class="background-icon">
                     <span class="title">招标</span>
                   </div>
                   <thirdCom />
                 </div>
 
-                <div v-if="formInfo.status >= 18">
+                <div v-if="formInfo.status >= 18&&formInfo.status<70">
                   <div class="background-icon">
                     <span class="title">开评标</span>
                   </div>
                   <startCom />
                 </div>
-                <div v-if="formInfo.status >= 24">
+                <div v-if="formInfo.status >= 24&&formInfo.status<70">
                   <div class="background-icon">
                     <span class="title">中标</span>
                   </div>
@@ -394,6 +394,7 @@ export default {
 
           project_attachments: res.data.project_attachments1,
         };
+        // if(res.data.status>11&&res.data.status<70){
         this.$store.commit("projectManagementAdd/update_bidBaseProject", data);
 
         // if(res.data.status>=18){
@@ -405,6 +406,7 @@ export default {
           "projectManagementAdd/update_startData_bid_units",
           res.data.bid_units
         );
+      // }
         // this.$store.commit(
         //   "projectManagementAdd/update_startData_project_attachments",
         //   res.data.project_attachments2
@@ -429,6 +431,7 @@ export default {
           file_compilation: res.data.file_compilation,
         };
         data1.project_attachments = res.data.project_attachments3;
+        // if(res.data.status>11&&res.data.status<70){
         this.$store.commit("projectManagementAdd/update_resultData", data1);
         // }
         // if(res.data.status>=31){
@@ -436,6 +439,7 @@ export default {
           "projectManagementAdd/update_contractList",
           res.data.contract
         );
+      // }
         // }
       }
     },
