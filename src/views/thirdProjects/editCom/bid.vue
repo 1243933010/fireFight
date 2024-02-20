@@ -30,7 +30,7 @@
           <span class="color">*</span>参与投标报价金额:
           <el-input  :disabled="![15, 18, 20].includes(projectInfo.status)" style="width: 200px" v-model="item.amount" type="text" placeholder="请输入参与投标报价金额"></el-input>
         </div>
-        <UploadCom :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'" style="width: 33%;" title="档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" />
+        <!-- <UploadCom :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'" style="width: 33%;" title="档案汇编" :fileList="item.unit_file_compilation" @updateFile="(e) => updateFile(e, item.unit_file_compilation, index)" /> -->
         <UploadCom :type="![15, 18, 20].includes(projectInfo.status)?'see':'add'" style="width: 33%;" title="投标文件" :fileList="item.files" @updateFile="(e) => updateFile(e, item.files, index)" />
        
 

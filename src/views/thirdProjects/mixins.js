@@ -14,12 +14,12 @@ export const addMixins = {
                     isActive: false,
                 },
                 {
-                    title: "开评标",
+                    title: "开评标信息",
                     isInput: this.bid_files_list_bool&&this.bid_units_bool&&this.project_attachments_bool,
                     isActive: false,
                 },
                 {
-                    title: "中标",
+                    title: "中标公告",
                     isInput: this.resultDataActive,
                     isActive: false,
                 },

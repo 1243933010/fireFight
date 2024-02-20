@@ -142,21 +142,21 @@ export const addMixins = {
             }
             if (stepStatus > 11&&stepStatus!==38) {
                 stepArr.push({
-                    title: "招标",
+                    title: "采购公告",
                     isInput: true,
                     isActive: false,
                 },)
             }
             if (stepStatus >= 18&&stepStatus!==38) {
                 stepArr.push({
-                    title: "开评标",
+                    title: "开评标信息",
                     isInput: true,
                     isActive: false,
                 },)
             }
             if (stepStatus >= 24&&stepStatus!==38) {
                 stepArr.push({
-                    title: "中标",
+                    title: "中标公告",
                     isInput: true,
                     isActive: false,
                 },)

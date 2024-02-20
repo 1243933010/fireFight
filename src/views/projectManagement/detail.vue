@@ -99,20 +99,20 @@
 
                 <div v-if="formInfo.status >= 11&&formInfo.status<70">
                   <div class="background-icon">
-                    <span class="title">招标</span>
+                    <span class="title">采购公告</span>
                   </div>
                   <thirdCom />
                 </div>
 
                 <div v-if="formInfo.status >= 18&&formInfo.status<70">
                   <div class="background-icon">
-                    <span class="title">开评标</span>
+                    <span class="title">开评标信息</span>
                   </div>
                   <startCom />
                 </div>
                 <div v-if="formInfo.status >= 24&&formInfo.status<70">
                   <div class="background-icon">
-                    <span class="title">中标</span>
+                    <span class="title">中标公告</span>
                   </div>
                   <successfulBidder />
                 </div>
